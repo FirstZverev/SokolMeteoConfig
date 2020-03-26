@@ -9,23 +9,27 @@
 /* Begin PBXBuildFile section */
 		B589CFB0242C876900B547DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFAF242C876900B547DC /* AppDelegate.swift */; };
 		B589CFB2242C876900B547DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFB1242C876900B547DC /* SceneDelegate.swift */; };
-		B589CFB4242C876900B547DC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFB3242C876900B547DC /* ViewController.swift */; };
-		B589CFB7242C876900B547DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B589CFB5242C876900B547DC /* Main.storyboard */; };
+		B589CFB4242C876900B547DC /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFB3242C876900B547DC /* StartViewController.swift */; };
+		B589CFB7242C876900B547DC /* StartView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B589CFB5242C876900B547DC /* StartView.storyboard */; };
 		B589CFBA242C876900B547DC /* SokolMeteoConfig.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B589CFB8242C876900B547DC /* SokolMeteoConfig.xcdatamodeld */; };
 		B589CFBC242C876B00B547DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B589CFBB242C876B00B547DC /* Assets.xcassets */; };
 		B589CFBF242C876B00B547DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B589CFBD242C876B00B547DC /* LaunchScreen.storyboard */; };
+		B589CFD5242CBCE500B547DC /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFD4242CBCE500B547DC /* Menu.swift */; };
+		B589CFD7242CBD8F00B547DC /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFD6242CBD8F00B547DC /* ViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B589CFAC242C876900B547DC /* SokolMeteoConfig.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SokolMeteoConfig.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B589CFAF242C876900B547DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B589CFB1242C876900B547DC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B589CFB3242C876900B547DC /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		B589CFB6242C876900B547DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B589CFB3242C876900B547DC /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		B589CFB6242C876900B547DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/StartView.storyboard; sourceTree = "<group>"; };
 		B589CFB9242C876900B547DC /* SokolMeteoConfig.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SokolMeteoConfig.xcdatamodel; sourceTree = "<group>"; };
 		B589CFBB242C876B00B547DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B589CFBE242C876B00B547DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B589CFC0242C876B00B547DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B589CFD4242CBCE500B547DC /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
+		B589CFD6242CBD8F00B547DC /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,16 +62,90 @@
 		B589CFAE242C876900B547DC /* SokolMeteoConfig */ = {
 			isa = PBXGroup;
 			children = (
+				B589CFC9242C895800B547DC /* Application */,
+				B589CFCA242C898400B547DC /* Start */,
+				B589CFCB242C899700B547DC /* Supporting files */,
+			);
+			path = SokolMeteoConfig;
+			sourceTree = "<group>";
+		};
+		B589CFC6242C893F00B547DC /* Controller */ = {
+			isa = PBXGroup;
+			children = (
 				B589CFAF242C876900B547DC /* AppDelegate.swift */,
 				B589CFB1242C876900B547DC /* SceneDelegate.swift */,
-				B589CFB3242C876900B547DC /* ViewController.swift */,
-				B589CFB5242C876900B547DC /* Main.storyboard */,
-				B589CFBB242C876B00B547DC /* Assets.xcassets */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		B589CFC7242C894900B547DC /* View */ = {
+			isa = PBXGroup;
+			children = (
 				B589CFBD242C876B00B547DC /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B589CFC8242C894F00B547DC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B589CFC9242C895800B547DC /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				B589CFC8242C894F00B547DC /* Model */,
+				B589CFC7242C894900B547DC /* View */,
+				B589CFC6242C893F00B547DC /* Controller */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		B589CFCA242C898400B547DC /* Start */ = {
+			isa = PBXGroup;
+			children = (
+				B589CFCE242C89D000B547DC /* Model */,
+				B589CFCD242C89CB00B547DC /* ViewModel */,
+				B589CFCC242C89C500B547DC /* Controller */,
+			);
+			path = Start;
+			sourceTree = "<group>";
+		};
+		B589CFCB242C899700B547DC /* Supporting files */ = {
+			isa = PBXGroup;
+			children = (
+				B589CFBB242C876B00B547DC /* Assets.xcassets */,
 				B589CFC0242C876B00B547DC /* Info.plist */,
 				B589CFB8242C876900B547DC /* SokolMeteoConfig.xcdatamodeld */,
 			);
-			path = SokolMeteoConfig;
+			path = "Supporting files";
+			sourceTree = "<group>";
+		};
+		B589CFCC242C89C500B547DC /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				B589CFB5242C876900B547DC /* StartView.storyboard */,
+				B589CFB3242C876900B547DC /* StartViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		B589CFCD242C89CB00B547DC /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B589CFD6242CBD8F00B547DC /* ViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B589CFCE242C89D000B547DC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B589CFD4242CBCE500B547DC /* Menu.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -130,7 +208,7 @@
 			files = (
 				B589CFBF242C876B00B547DC /* LaunchScreen.storyboard in Resources */,
 				B589CFBC242C876B00B547DC /* Assets.xcassets in Resources */,
-				B589CFB7242C876900B547DC /* Main.storyboard in Resources */,
+				B589CFB7242C876900B547DC /* StartView.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,22 +219,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B589CFB4242C876900B547DC /* ViewController.swift in Sources */,
+				B589CFB4242C876900B547DC /* StartViewController.swift in Sources */,
 				B589CFBA242C876900B547DC /* SokolMeteoConfig.xcdatamodeld in Sources */,
 				B589CFB0242C876900B547DC /* AppDelegate.swift in Sources */,
 				B589CFB2242C876900B547DC /* SceneDelegate.swift in Sources */,
+				B589CFD7242CBD8F00B547DC /* ViewModel.swift in Sources */,
+				B589CFD5242CBCE500B547DC /* Menu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		B589CFB5242C876900B547DC /* Main.storyboard */ = {
+		B589CFB5242C876900B547DC /* StartView.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				B589CFB6242C876900B547DC /* Base */,
 			);
-			name = Main.storyboard;
+			name = StartView.storyboard;
 			sourceTree = "<group>";
 		};
 		B589CFBD242C876B00B547DC /* LaunchScreen.storyboard */ = {
@@ -220,7 +300,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -274,7 +354,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -289,16 +369,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HVVJT6BNYW;
-				INFOPLIST_FILE = SokolMeteoConfig/Info.plist;
+				INFOPLIST_FILE = "SokolMeteoConfig/Supporting files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.SokolMeteoConfig;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -307,16 +390,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HVVJT6BNYW;
-				INFOPLIST_FILE = SokolMeteoConfig/Info.plist;
+				INFOPLIST_FILE = "SokolMeteoConfig/Supporting files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.SokolMeteoConfig;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
