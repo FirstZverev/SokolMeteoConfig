@@ -8,23 +8,21 @@
 
 import Foundation
 
-class ViewModel {
+class ViewModel: TableViewViewModelType {
     
-    private var menu = Menu(config: "ПОДКЛЮЧЕНИЕ К МЕТЕОСТАНЦИИ", settings: "НАСТРОЙКИ ПРОГРАММЫ", techSupporting: "ТЕХПОДДЕРЖКА", registration: "РЕГИСТРАЦИЯ НА ПЛАТФОРМУ СОКОЛ МЕТЕО")
+    var menuMain = [
+            Menu(id: 1, name: "ПОДКЛЮЧЕНИЕ К МЕТЕОСТАНЦИИ"),
+            Menu(id: 2, name: "НАСТРОЙКИ ПРОГРАММЫ"),
+            Menu(id: 3, name: "ТЕХПОДДЕРЖКА"),
+            Menu(id: 4, name: "РЕГИСТРАЦИЯ НА ПЛАТФОРМУ СОКОЛ МЕТЕО")
+        ]
     
-    var config: String {
-        return menu.config
+    func numberOfRows() -> Int {
+        return menuMain.count
     }
     
-    var settings: String {
-        return menu.settings
-    }
-    
-    var techSupporting: String {
-        return menu.techSupporting
-    }
-    
-    var registration: String {
-        return menu.registration
+    func cellViewModel(forIndexPath indexPath: IndexPath) -> TableViewCellViewModelType? {
+        let menu = menuMain[indexPath.row]
+        return TableViewCellViewModel(menu: menu)
     }
 }

@@ -1,5 +1,5 @@
 //
-//  Menu.swift
+//  TableViewCellViewModelType.swift
 //  SokolMeteoConfig
 //
 //  Created by Володя Зверев on 26.03.2020.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Menu {
-    var id: Int
-    var name: String
+protocol TableViewCellViewModelType: class {
+    var name: String { get }
+    var id: String { get }
 }

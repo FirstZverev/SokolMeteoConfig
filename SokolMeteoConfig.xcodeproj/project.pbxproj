@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B5438D7A242CD9A200FAB0C5 /* TableViewViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5438D79242CD9A200FAB0C5 /* TableViewViewModelType.swift */; };
+		B5438D7C242CD9E300FAB0C5 /* TableViewCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5438D7B242CD9E300FAB0C5 /* TableViewCellViewModelType.swift */; };
+		B5438D7E242CDB1000FAB0C5 /* TableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5438D7D242CDB1000FAB0C5 /* TableViewCellViewModel.swift */; };
+		B5438D80242CDCFF00FAB0C5 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5438D7F242CDCFF00FAB0C5 /* TableViewCell.swift */; };
 		B589CFB0242C876900B547DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFAF242C876900B547DC /* AppDelegate.swift */; };
 		B589CFB2242C876900B547DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFB1242C876900B547DC /* SceneDelegate.swift */; };
 		B589CFB4242C876900B547DC /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFB3242C876900B547DC /* StartViewController.swift */; };
@@ -16,9 +20,17 @@
 		B589CFBF242C876B00B547DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B589CFBD242C876B00B547DC /* LaunchScreen.storyboard */; };
 		B589CFD5242CBCE500B547DC /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFD4242CBCE500B547DC /* Menu.swift */; };
 		B589CFD7242CBD8F00B547DC /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFD6242CBD8F00B547DC /* ViewModel.swift */; };
+		B589CFDD242CCC2800B547DC /* ListOfAvailableMeteoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFDC242CCC2800B547DC /* ListOfAvailableMeteoController.swift */; };
+		B589CFDF242CCC8400B547DC /* Devices.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFDE242CCC8400B547DC /* Devices.swift */; };
+		B589CFE5242CCDBD00B547DC /* ConnectedMeteoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFE4242CCDBD00B547DC /* ConnectedMeteoController.swift */; };
+		B589CFE7242CCE0300B547DC /* ViewModelConnected.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFE6242CCE0300B547DC /* ViewModelConnected.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B5438D79242CD9A200FAB0C5 /* TableViewViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewViewModelType.swift; sourceTree = "<group>"; };
+		B5438D7B242CD9E300FAB0C5 /* TableViewCellViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellViewModelType.swift; sourceTree = "<group>"; };
+		B5438D7D242CDB1000FAB0C5 /* TableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellViewModel.swift; sourceTree = "<group>"; };
+		B5438D7F242CDCFF00FAB0C5 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		B589CFAC242C876900B547DC /* SokolMeteoConfig.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SokolMeteoConfig.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B589CFAF242C876900B547DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B589CFB1242C876900B547DC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -30,6 +42,10 @@
 		B589CFC0242C876B00B547DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B589CFD4242CBCE500B547DC /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		B589CFD6242CBD8F00B547DC /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		B589CFDC242CCC2800B547DC /* ListOfAvailableMeteoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfAvailableMeteoController.swift; sourceTree = "<group>"; };
+		B589CFDE242CCC8400B547DC /* Devices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Devices.swift; sourceTree = "<group>"; };
+		B589CFE4242CCDBD00B547DC /* ConnectedMeteoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedMeteoController.swift; sourceTree = "<group>"; };
+		B589CFE6242CCE0300B547DC /* ViewModelConnected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelConnected.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +59,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B5438D78242CD98B00FAB0C5 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				B5438D79242CD9A200FAB0C5 /* TableViewViewModelType.swift */,
+				B5438D7B242CD9E300FAB0C5 /* TableViewCellViewModelType.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		B589CFA3242C876900B547DC = {
 			isa = PBXGroup;
 			children = (
@@ -64,6 +89,8 @@
 			children = (
 				B589CFC9242C895800B547DC /* Application */,
 				B589CFCA242C898400B547DC /* Start */,
+				B589CFD8242CCBB900B547DC /* ListOfAvailableMeteo */,
+				B589CFE0242CCD6400B547DC /* ConnectedMeteo */,
 				B589CFCB242C899700B547DC /* Supporting files */,
 			);
 			path = SokolMeteoConfig;
@@ -108,7 +135,8 @@
 			children = (
 				B589CFCE242C89D000B547DC /* Model */,
 				B589CFCD242C89CB00B547DC /* ViewModel */,
-				B589CFCC242C89C500B547DC /* Controller */,
+				B589CFCC242C89C500B547DC /* View */,
+				B5438D78242CD98B00FAB0C5 /* Protocols */,
 			);
 			path = Start;
 			sourceTree = "<group>";
@@ -123,19 +151,21 @@
 			path = "Supporting files";
 			sourceTree = "<group>";
 		};
-		B589CFCC242C89C500B547DC /* Controller */ = {
+		B589CFCC242C89C500B547DC /* View */ = {
 			isa = PBXGroup;
 			children = (
 				B589CFB5242C876900B547DC /* StartView.storyboard */,
 				B589CFB3242C876900B547DC /* StartViewController.swift */,
+				B5438D7F242CDCFF00FAB0C5 /* TableViewCell.swift */,
 			);
-			path = Controller;
+			path = View;
 			sourceTree = "<group>";
 		};
 		B589CFCD242C89CB00B547DC /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				B589CFD6242CBD8F00B547DC /* ViewModel.swift */,
+				B5438D7D242CDB1000FAB0C5 /* TableViewCellViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -146,6 +176,72 @@
 				B589CFD4242CBCE500B547DC /* Menu.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		B589CFD8242CCBB900B547DC /* ListOfAvailableMeteo */ = {
+			isa = PBXGroup;
+			children = (
+				B589CFD9242CCBE200B547DC /* Model */,
+				B589CFDB242CCBFA00B547DC /* ViewModel */,
+				B589CFDA242CCBF300B547DC /* View */,
+			);
+			path = ListOfAvailableMeteo;
+			sourceTree = "<group>";
+		};
+		B589CFD9242CCBE200B547DC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B589CFDA242CCBF300B547DC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B589CFDC242CCC2800B547DC /* ListOfAvailableMeteoController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B589CFDB242CCBFA00B547DC /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B589CFDE242CCC8400B547DC /* Devices.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B589CFE0242CCD6400B547DC /* ConnectedMeteo */ = {
+			isa = PBXGroup;
+			children = (
+				B589CFE1242CCD7700B547DC /* Model */,
+				B589CFE2242CCD7E00B547DC /* ViewModel */,
+				B589CFE3242CCD8600B547DC /* View */,
+			);
+			path = ConnectedMeteo;
+			sourceTree = "<group>";
+		};
+		B589CFE1242CCD7700B547DC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B589CFE2242CCD7E00B547DC /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B589CFE6242CCE0300B547DC /* ViewModelConnected.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B589CFE3242CCD8600B547DC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B589CFE4242CCDBD00B547DC /* ConnectedMeteoController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -219,8 +315,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B589CFE7242CCE0300B547DC /* ViewModelConnected.swift in Sources */,
+				B5438D7A242CD9A200FAB0C5 /* TableViewViewModelType.swift in Sources */,
+				B589CFDD242CCC2800B547DC /* ListOfAvailableMeteoController.swift in Sources */,
 				B589CFB4242C876900B547DC /* StartViewController.swift in Sources */,
+				B5438D7C242CD9E300FAB0C5 /* TableViewCellViewModelType.swift in Sources */,
+				B5438D80242CDCFF00FAB0C5 /* TableViewCell.swift in Sources */,
 				B589CFBA242C876900B547DC /* SokolMeteoConfig.xcdatamodeld in Sources */,
+				B589CFDF242CCC8400B547DC /* Devices.swift in Sources */,
+				B589CFE5242CCDBD00B547DC /* ConnectedMeteoController.swift in Sources */,
+				B5438D7E242CDB1000FAB0C5 /* TableViewCellViewModel.swift in Sources */,
 				B589CFB0242C876900B547DC /* AppDelegate.swift in Sources */,
 				B589CFB2242C876900B547DC /* SceneDelegate.swift in Sources */,
 				B589CFD7242CBD8F00B547DC /* ViewModel.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ConnectedMeteoController.swift
 //  SokolMeteoConfig
 //
 //  Created by Володя Зверев on 26.03.2020.
@@ -8,13 +8,9 @@
 
 import UIKit
 
-class StartViewController: UIViewController {
-
+class ConnectedMeteoController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
     }
-
-
 }
-

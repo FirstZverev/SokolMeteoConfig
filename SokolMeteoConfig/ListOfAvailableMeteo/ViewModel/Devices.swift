@@ -1,5 +1,5 @@
 //
-//  Menu.swift
+//  Devices.swift
 //  SokolMeteoConfig
 //
 //  Created by Володя Зверев on 26.03.2020.
@@ -8,7 +8,6 @@
 
 import Foundation
 
-struct Menu {
-    var id: Int
-    var name: String
+struct Devices {
+    var device : String
 }
