@@ -25,11 +25,10 @@ class StartViewController: UIViewController {
         self.tableView.register(TableViewCell.self, forCellReuseIdentifier: "TableViewCell")
     }
     
-    override func loadView() {
-        super.loadView()
+    fileprivate func createTableView() {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
-//        tableView.separatorStyle = .none
+        //        tableView.separatorStyle = .none
         self.view.addSubview(tableView)
         NSLayoutConstraint.activate([
             self.view.safeAreaLayoutGuide.topAnchor.constraint(equalTo: tableView.topAnchor, constant: 0),
@@ -39,13 +38,20 @@ class StartViewController: UIViewController {
         ])
         tableView.showsVerticalScrollIndicator = false
         self.tableView = tableView
+    }
+    
+    override func loadView() {
+        super.loadView()
+        createTableView()
         
     }
 
 }
 
 extension StartViewController: UITableViewDelegate {
-    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
 }
 
 extension StartViewController: UITableViewDataSource {
@@ -63,10 +69,6 @@ extension StartViewController: UITableViewDataSource {
         tableViewCell.viewModel = cellViewModel
         
         return tableViewCell
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
     }
 }
 
