@@ -10,6 +10,8 @@ import Foundation
 
 class ViewModel: TableViewViewModelType {
     
+    private var selectedIndexPath: IndexPath?
+    
     var menuMain = [
             Menu(id: 1, name: "ПОДКЛЮЧЕНИЕ К МЕТЕОСТАНЦИИ"),
             Menu(id: 2, name: "НАСТРОЙКИ ПРОГРАММЫ"),
@@ -24,5 +26,14 @@ class ViewModel: TableViewViewModelType {
     func cellViewModel(forIndexPath indexPath: IndexPath) -> TableViewCellViewModelType? {
         let menu = menuMain[indexPath.row]
         return TableViewCellViewModel(menu: menu)
+    }
+    
+    func viewModelForSelectedRow() -> DetailViewModelType? {
+        guard let selectedIndexPath = selectedIndexPath else { return nil }
+        return DetailModelView(menu: menuMain[selectedIndexPath.row])
+    }
+    
+    func selectRow(atIndexPath indexPath: IndexPath) {
+        self.selectedIndexPath = indexPath
     }
 }

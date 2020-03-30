@@ -29,13 +29,21 @@ class TableViewCell: UITableViewCell {
         self.initialize()
     }
     func initialize() {
+        
         let label = UILabel()
-        label.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 30, height: 50)
         label.font = UIFont(name:"FuturaPT-Medium", size: 20.0)
         label.textAlignment = .center
         label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         self.contentView.addSubview(label)
         self.label = label
+        
+        NSLayoutConstraint.activate([
+            self.contentView.topAnchor.constraint(equalTo: self.label!.topAnchor),
+            self.contentView.bottomAnchor.constraint(equalTo: self.label!.bottomAnchor),
+            self.contentView.leadingAnchor.constraint(equalTo: self.label!.leadingAnchor),
+            self.contentView.trailingAnchor.constraint(equalTo: self.label!.trailingAnchor),
+        ])
     }
 }

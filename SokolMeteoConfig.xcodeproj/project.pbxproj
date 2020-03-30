@@ -11,6 +11,8 @@
 		B5438D7C242CD9E300FAB0C5 /* TableViewCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5438D7B242CD9E300FAB0C5 /* TableViewCellViewModelType.swift */; };
 		B5438D7E242CDB1000FAB0C5 /* TableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5438D7D242CDB1000FAB0C5 /* TableViewCellViewModel.swift */; };
 		B5438D80242CDCFF00FAB0C5 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5438D7F242CDCFF00FAB0C5 /* TableViewCell.swift */; };
+		B5438D82242DEB2500FAB0C5 /* DetailViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5438D81242DEB2500FAB0C5 /* DetailViewModelType.swift */; };
+		B5438D84242DEB4600FAB0C5 /* DetailModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5438D83242DEB4600FAB0C5 /* DetailModelView.swift */; };
 		B589CFB0242C876900B547DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFAF242C876900B547DC /* AppDelegate.swift */; };
 		B589CFB2242C876900B547DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFB1242C876900B547DC /* SceneDelegate.swift */; };
 		B589CFB4242C876900B547DC /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFB3242C876900B547DC /* StartViewController.swift */; };
@@ -31,6 +33,8 @@
 		B5438D7B242CD9E300FAB0C5 /* TableViewCellViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellViewModelType.swift; sourceTree = "<group>"; };
 		B5438D7D242CDB1000FAB0C5 /* TableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellViewModel.swift; sourceTree = "<group>"; };
 		B5438D7F242CDCFF00FAB0C5 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		B5438D81242DEB2500FAB0C5 /* DetailViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModelType.swift; sourceTree = "<group>"; };
+		B5438D83242DEB4600FAB0C5 /* DetailModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailModelView.swift; sourceTree = "<group>"; };
 		B589CFAC242C876900B547DC /* SokolMeteoConfig.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SokolMeteoConfig.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B589CFAF242C876900B547DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B589CFB1242C876900B547DC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -64,6 +68,14 @@
 			children = (
 				B5438D79242CD9A200FAB0C5 /* TableViewViewModelType.swift */,
 				B5438D7B242CD9E300FAB0C5 /* TableViewCellViewModelType.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		B5438D85242E0BA900FAB0C5 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				B5438D81242DEB2500FAB0C5 /* DetailViewModelType.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -184,6 +196,7 @@
 				B589CFD9242CCBE200B547DC /* Model */,
 				B589CFDB242CCBFA00B547DC /* ViewModel */,
 				B589CFDA242CCBF300B547DC /* View */,
+				B5438D85242E0BA900FAB0C5 /* Protocols */,
 			);
 			path = ListOfAvailableMeteo;
 			sourceTree = "<group>";
@@ -191,6 +204,7 @@
 		B589CFD9242CCBE200B547DC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B589CFDE242CCC8400B547DC /* Devices.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -206,7 +220,7 @@
 		B589CFDB242CCBFA00B547DC /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				B589CFDE242CCC8400B547DC /* Devices.swift */,
+				B5438D83242DEB4600FAB0C5 /* DetailModelView.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -318,6 +332,7 @@
 				B589CFE7242CCE0300B547DC /* ViewModelConnected.swift in Sources */,
 				B5438D7A242CD9A200FAB0C5 /* TableViewViewModelType.swift in Sources */,
 				B589CFDD242CCC2800B547DC /* ListOfAvailableMeteoController.swift in Sources */,
+				B5438D82242DEB2500FAB0C5 /* DetailViewModelType.swift in Sources */,
 				B589CFB4242C876900B547DC /* StartViewController.swift in Sources */,
 				B5438D7C242CD9E300FAB0C5 /* TableViewCellViewModelType.swift in Sources */,
 				B5438D80242CDCFF00FAB0C5 /* TableViewCell.swift in Sources */,
@@ -329,6 +344,7 @@
 				B589CFB2242C876900B547DC /* SceneDelegate.swift in Sources */,
 				B589CFD7242CBD8F00B547DC /* ViewModel.swift in Sources */,
 				B589CFD5242CBCE500B547DC /* Menu.swift in Sources */,
+				B5438D84242DEB4600FAB0C5 /* DetailModelView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

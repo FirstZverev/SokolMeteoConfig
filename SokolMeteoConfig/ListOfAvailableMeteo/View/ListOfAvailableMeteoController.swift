@@ -10,8 +10,12 @@ import UIKit
 
 class ListOfAvailableMeteoController: UIViewController {
     
+    var label: UILabel!
+    var devices: Devices?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.backgroundColor = .green
     }
 }

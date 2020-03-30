@@ -52,6 +52,13 @@ extension StartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if indexPath.row == 0 {
+            navigationController?.pushViewController(ListOfAvailableMeteoController(), animated: true)
+        }
+    }
 }
 
 extension StartViewController: UITableViewDataSource {
