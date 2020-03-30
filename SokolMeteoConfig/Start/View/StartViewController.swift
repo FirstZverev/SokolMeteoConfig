@@ -8,39 +8,31 @@
 
 import UIKit
 import Hero
+import Stevia
 
 class StartViewController: UIViewController {
 
     var tableView: UITableView!
     var viewModel: TableViewViewModelType?
     
-    lazy var greenView: UIView = {
-        let v = UIView()
-        v.backgroundColor = .green
-        return v
-    }()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+            
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         registerTableView()
         viewModel = ViewModel()
-        
-        self.hero.isEnabled = true
-        greenView.hero.id = "greenView"
-        
-        view.backgroundColor = .blue
-        
-        greenView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(popVC)))
+        view.backgroundColor = .yellow
 
-//        view.sv(
-//            greenView
-//        )
-//        
-//        greenView.height(150).width(150).centerHorizontally().centerVertically(300)
-    }
-    @objc func popVC() {
-        self.navigationController?.popViewController(animated: true)
-    }
+        let customNavigationBar = createCustomNavigationBar(title: "Меню")
+        view.sv(
+            customNavigationBar
+        )
+//        greenView.height(50).width(50).centerInContainer()
+        
+        }
     
     private func registerTableView() {
         self.tableView.dataSource = self
@@ -50,16 +42,10 @@ class StartViewController: UIViewController {
     
     fileprivate func createTableView() {
         let tableView = UITableView(frame: .zero, style: .plain)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        //        tableView.separatorStyle = .none
-        self.view.addSubview(tableView)
-        NSLayoutConstraint.activate([
-            self.view.safeAreaLayoutGuide.topAnchor.constraint(equalTo: tableView.topAnchor, constant: 0),
-            self.view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 0),
-            self.view.leadingAnchor.constraint(equalTo: tableView.leadingAnchor, constant: 0),
-            self.view.trailingAnchor.constraint(equalTo: tableView.trailingAnchor, constant: 0),
-        ])
+        tableView.separatorStyle = .none
+        self.view.sv(tableView)
         tableView.showsVerticalScrollIndicator = false
+        tableView.height(200).width(screenW).centerInContainer()
         self.tableView = tableView
     }
     
@@ -80,6 +66,8 @@ extension StartViewController: UITableViewDelegate {
         
         if indexPath.row == 0 {
             navigationController?.pushViewController(ListOfAvailableMeteoController(), animated: true)
+        } else {
+            
         }
     }
 }
@@ -91,7 +79,9 @@ extension StartViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as? TableViewCell
-        
+        if indexPath.row == 0 {
+            cell!.hero.id = "ConnectToMeteo"
+        }
         guard let tableViewCell = cell, let viewModel = viewModel else { return UITableViewCell() }
         
         let cellViewModel = viewModel.cellViewModel(forIndexPath: indexPath)
