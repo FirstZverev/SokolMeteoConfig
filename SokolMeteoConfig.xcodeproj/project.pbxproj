@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B69DAD628BA51041E7E1A92 /* Pods_SokolMeteoConfig.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0126A211C4DFEC03A27BB42F /* Pods_SokolMeteoConfig.framework */; };
 		B5438D7A242CD9A200FAB0C5 /* TableViewViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5438D79242CD9A200FAB0C5 /* TableViewViewModelType.swift */; };
 		B5438D7C242CD9E300FAB0C5 /* TableViewCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5438D7B242CD9E300FAB0C5 /* TableViewCellViewModelType.swift */; };
 		B5438D7E242CDB1000FAB0C5 /* TableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5438D7D242CDB1000FAB0C5 /* TableViewCellViewModel.swift */; };
@@ -29,6 +30,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0126A211C4DFEC03A27BB42F /* Pods_SokolMeteoConfig.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SokolMeteoConfig.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		65F29D8085CB9FF4D0562DE5 /* Pods-SokolMeteoConfig.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SokolMeteoConfig.release.xcconfig"; path = "Target Support Files/Pods-SokolMeteoConfig/Pods-SokolMeteoConfig.release.xcconfig"; sourceTree = "<group>"; };
+		8CC4EE35F922265E56FFAAAB /* Pods-SokolMeteoConfig.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SokolMeteoConfig.debug.xcconfig"; path = "Target Support Files/Pods-SokolMeteoConfig/Pods-SokolMeteoConfig.debug.xcconfig"; sourceTree = "<group>"; };
 		B5438D79242CD9A200FAB0C5 /* TableViewViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewViewModelType.swift; sourceTree = "<group>"; };
 		B5438D7B242CD9E300FAB0C5 /* TableViewCellViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellViewModelType.swift; sourceTree = "<group>"; };
 		B5438D7D242CDB1000FAB0C5 /* TableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellViewModel.swift; sourceTree = "<group>"; };
@@ -57,12 +61,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B69DAD628BA51041E7E1A92 /* Pods_SokolMeteoConfig.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		90DA7136C70EB709C09AF406 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8CC4EE35F922265E56FFAAAB /* Pods-SokolMeteoConfig.debug.xcconfig */,
+				65F29D8085CB9FF4D0562DE5 /* Pods-SokolMeteoConfig.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		B5438D78242CD98B00FAB0C5 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +100,8 @@
 			children = (
 				B589CFAE242C876900B547DC /* SokolMeteoConfig */,
 				B589CFAD242C876900B547DC /* Products */,
+				90DA7136C70EB709C09AF406 /* Pods */,
+				DB9B5784B740B297DC09784F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -258,6 +275,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		DB9B5784B740B297DC09784F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0126A211C4DFEC03A27BB42F /* Pods_SokolMeteoConfig.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -265,9 +290,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B589CFC3242C876B00B547DC /* Build configuration list for PBXNativeTarget "SokolMeteoConfig" */;
 			buildPhases = (
+				B96688438C8609A167AB6BA4 /* [CP] Check Pods Manifest.lock */,
 				B589CFA8242C876900B547DC /* Sources */,
 				B589CFA9242C876900B547DC /* Frameworks */,
 				B589CFAA242C876900B547DC /* Resources */,
+				93AAF787D9BF87462EFB734D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -323,6 +350,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		93AAF787D9BF87462EFB734D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SokolMeteoConfig/Pods-SokolMeteoConfig-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SokolMeteoConfig/Pods-SokolMeteoConfig-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SokolMeteoConfig/Pods-SokolMeteoConfig-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B96688438C8609A167AB6BA4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SokolMeteoConfig-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B589CFA8242C876900B547DC /* Sources */ = {
@@ -486,6 +555,7 @@
 		};
 		B589CFC4242C876B00B547DC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8CC4EE35F922265E56FFAAAB /* Pods-SokolMeteoConfig.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -507,6 +577,7 @@
 		};
 		B589CFC5242C876B00B547DC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 65F29D8085CB9FF4D0562DE5 /* Pods-SokolMeteoConfig.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
