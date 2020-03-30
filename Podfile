@@ -6,4 +6,5 @@ target 'SokolMeteoConfig' do
   use_frameworks!
 
 	pod 'Hero'
+	pod 'SteviaLayout'
 end

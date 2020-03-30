@@ -7,16 +7,39 @@
 //
 
 import UIKit
+import Hero
 
 class StartViewController: UIViewController {
 
     var tableView: UITableView!
     var viewModel: TableViewViewModelType?
     
+    lazy var greenView: UIView = {
+        let v = UIView()
+        v.backgroundColor = .green
+        return v
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         registerTableView()
         viewModel = ViewModel()
+        
+        self.hero.isEnabled = true
+        greenView.hero.id = "greenView"
+        
+        view.backgroundColor = .blue
+        
+        greenView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(popVC)))
+
+//        view.sv(
+//            greenView
+//        )
+//        
+//        greenView.height(150).width(150).centerHorizontally().centerVertically(300)
+    }
+    @objc func popVC() {
+        self.navigationController?.popViewController(animated: true)
     }
     
     private func registerTableView() {
