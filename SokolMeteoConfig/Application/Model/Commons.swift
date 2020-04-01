@@ -15,7 +15,7 @@ struct ScreenSize {
 }
 
 let screenW = UIScreen.main.bounds.width
-let screebH = UIScreen.main.bounds.height
+let screenH = UIScreen.main.bounds.height
 
 func createCustomNavigationBar(title: String? = "Контроллер", fontSize: CGFloat? = 22.0) -> CustomNavigationView {
     let v = CustomNavigationView(frame: CGRect(x: 0,

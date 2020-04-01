@@ -1,20 +1,28 @@
 PODS:
   - Hero (1.5.0)
+  - RxBluetoothKit (5.3.0):
+    - RxSwift (~> 5.0)
+  - RxSwift (5.0.1)
   - SteviaLayout (4.7.3)
 
 DEPENDENCIES:
   - Hero
+  - RxBluetoothKit
   - SteviaLayout
 
 SPEC REPOS:
   trunk:
     - Hero
+    - RxBluetoothKit
+    - RxSwift
     - SteviaLayout
 
 SPEC CHECKSUMS:
   Hero: b7385b75e7259da62f4f85462f59a5082d66b058
+  RxBluetoothKit: 0e781978e8a0df70ac3c611dcf44800b76c69f8a
+  RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
 
-PODFILE CHECKSUM: 51da7909e6164fc518e62224162032fc0fccff94
+PODFILE CHECKSUM: 0d986cdd67823ab7c030ef4ab0d03414d6d0988a
 
 COCOAPODS: 1.8.4

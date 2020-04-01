@@ -65,7 +65,7 @@ extension StartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.row == 0 {
-            navigationController?.pushViewController(ListOfAvailableMeteoController(), animated: true)
+            navigationController?.pushViewController(DevicesDUController(), animated: true)
         } else {
             
         }

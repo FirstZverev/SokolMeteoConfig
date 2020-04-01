@@ -7,4 +7,5 @@ target 'SokolMeteoConfig' do
 
 	pod 'Hero'
 	pod 'SteviaLayout'
+	pod 'RxBluetoothKit'
 end

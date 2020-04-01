@@ -32,6 +32,12 @@
 		B589CFDF242CCC8400B547DC /* Devices.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFDE242CCC8400B547DC /* Devices.swift */; };
 		B589CFE5242CCDBD00B547DC /* ConnectedMeteoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFE4242CCDBD00B547DC /* ConnectedMeteoController.swift */; };
 		B589CFE7242CCE0300B547DC /* ViewModelConnected.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFE6242CCE0300B547DC /* ViewModelConnected.swift */; };
+		B5DB4CF72434778F0016A4BD /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DB4CF62434778F0016A4BD /* Color+Hex.swift */; };
+		B5DB4CFB2434788D0016A4BD /* SeacrhBar+TextColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DB4CFA2434788D0016A4BD /* SeacrhBar+TextColor.swift */; };
+		B5DB4CFD243479190016A4BD /* DevicesListCellMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DB4CFC243479190016A4BD /* DevicesListCellMain.swift */; };
+		B5DB4CFF243479230016A4BD /* DevicesListCellHeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DB4CFE243479230016A4BD /* DevicesListCellHeder.swift */; };
+		B5DB4D01243479320016A4BD /* DevicesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DB4D00243479320016A4BD /* DevicesListCell.swift */; };
+		B5DB4D0324347B3D0016A4BD /* UIView+tap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DB4D0224347B3D0016A4BD /* UIView+tap.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +70,12 @@
 		B589CFDE242CCC8400B547DC /* Devices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Devices.swift; sourceTree = "<group>"; };
 		B589CFE4242CCDBD00B547DC /* ConnectedMeteoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedMeteoController.swift; sourceTree = "<group>"; };
 		B589CFE6242CCE0300B547DC /* ViewModelConnected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelConnected.swift; sourceTree = "<group>"; };
+		B5DB4CF62434778F0016A4BD /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
+		B5DB4CFA2434788D0016A4BD /* SeacrhBar+TextColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SeacrhBar+TextColor.swift"; sourceTree = "<group>"; };
+		B5DB4CFC243479190016A4BD /* DevicesListCellMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesListCellMain.swift; sourceTree = "<group>"; };
+		B5DB4CFE243479230016A4BD /* DevicesListCellHeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesListCellHeder.swift; sourceTree = "<group>"; };
+		B5DB4D00243479320016A4BD /* DevicesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesListCell.swift; sourceTree = "<group>"; };
+		B5DB4D0224347B3D0016A4BD /* UIView+tap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+tap.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +153,7 @@
 		B589CFAE242C876900B547DC /* SokolMeteoConfig */ = {
 			isa = PBXGroup;
 			children = (
+				B5DB4CF52434777B0016A4BD /* Extensional */,
 				B589CFC9242C895800B547DC /* Application */,
 				B589CFCA242C898400B547DC /* Start */,
 				B589CFD8242CCBB900B547DC /* ListOfAvailableMeteo */,
@@ -260,6 +273,7 @@
 			children = (
 				B589CFDC242CCC2800B547DC /* ListOfAvailableMeteoController.swift */,
 				B56BEB0C2432206500C42F85 /* ListAvailDevices.swift */,
+				B5DB4CF8243478120016A4BD /* Cell */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -303,6 +317,26 @@
 				B589CFE4242CCDBD00B547DC /* ConnectedMeteoController.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		B5DB4CF52434777B0016A4BD /* Extensional */ = {
+			isa = PBXGroup;
+			children = (
+				B5DB4CF62434778F0016A4BD /* Color+Hex.swift */,
+				B5DB4CFA2434788D0016A4BD /* SeacrhBar+TextColor.swift */,
+				B5DB4D0224347B3D0016A4BD /* UIView+tap.swift */,
+			);
+			path = Extensional;
+			sourceTree = "<group>";
+		};
+		B5DB4CF8243478120016A4BD /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B5DB4CFC243479190016A4BD /* DevicesListCellMain.swift */,
+				B5DB4CFE243479230016A4BD /* DevicesListCellHeder.swift */,
+				B5DB4D00243479320016A4BD /* DevicesListCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		DB9B5784B740B297DC09784F /* Frameworks */ = {
@@ -436,14 +470,20 @@
 				B56BEB082431D10800C42F85 /* ViewModelApp.swift in Sources */,
 				B5438D7C242CD9E300FAB0C5 /* TableViewCellViewModelType.swift in Sources */,
 				B56BEB0B2431F8ED00C42F85 /* CustomNavigationView.swift in Sources */,
+				B5DB4CFD243479190016A4BD /* DevicesListCellMain.swift in Sources */,
 				B5438D80242CDCFF00FAB0C5 /* TableViewCell.swift in Sources */,
+				B5DB4CF72434778F0016A4BD /* Color+Hex.swift in Sources */,
 				B589CFBA242C876900B547DC /* SokolMeteoConfig.xcdatamodeld in Sources */,
 				B589CFDF242CCC8400B547DC /* Devices.swift in Sources */,
 				B589CFE5242CCDBD00B547DC /* ConnectedMeteoController.swift in Sources */,
 				B5438D7E242CDB1000FAB0C5 /* TableViewCellViewModel.swift in Sources */,
 				B589CFB0242C876900B547DC /* AppDelegate.swift in Sources */,
+				B5DB4D0324347B3D0016A4BD /* UIView+tap.swift in Sources */,
 				B56BEB032431D00800C42F85 /* Commons.swift in Sources */,
+				B5DB4D01243479320016A4BD /* DevicesListCell.swift in Sources */,
 				B589CFB2242C876900B547DC /* SceneDelegate.swift in Sources */,
+				B5DB4CFB2434788D0016A4BD /* SeacrhBar+TextColor.swift in Sources */,
+				B5DB4CFF243479230016A4BD /* DevicesListCellHeder.swift in Sources */,
 				B56BEB0D2432206500C42F85 /* ListAvailDevices.swift in Sources */,
 				B589CFD7242CBD8F00B547DC /* ViewModel.swift in Sources */,
 				B589CFD5242CBCE500B547DC /* Menu.swift in Sources */,
