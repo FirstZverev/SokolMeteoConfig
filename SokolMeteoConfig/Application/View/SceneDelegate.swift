@@ -20,7 +20,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let vc = StartViewController()
         let navigationController = UINavigationController(rootViewController: vc)
         navigationController.hero.isEnabled = true
-//        navigationController.navigationItem.title = "123"
         navigationController.navigationBar.isHidden = true
         window?.rootViewController = navigationController
         

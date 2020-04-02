@@ -750,10 +750,10 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
     }()
     fileprivate lazy var backView: UIImageView = {
         let backView = UIImageView()
-        backView.frame = CGRect(x: 0, y: 30, width: 50, height: 40)
+        backView.frame = CGRect(x: 0, y: 30, width: 100, height: 100)
         let back = UIImageView(image: UIImage(named: "img")!)
         back.image = back.image!.withRenderingMode(.alwaysTemplate)
-        back.frame = CGRect(x: 8, y: 0 , width: 8, height: 19)
+        back.frame = CGRect(x: 8, y: 0 , width: 50, height: 50)
         back.center.y = backView.bounds.height/2
         backView.addSubview(back)
         return backView
@@ -812,16 +812,17 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
         registerTableView()
         setupTheme()
         
-        let customNavigationBar = createCustomNavigationBar(title: "ПОДКЛЮЧЕНИЕ К МЕТЕОСТАНЦИИ",fontSize: 16.0)
+        let customNavigationBar = createCustomNavigationBar(title: "СПИСОК ДОСТУПНЫХ МЕТЕОСТАНЦИЙ",fontSize: 16.0)
         self.hero.isEnabled = true
         customNavigationBar.hero.id = "ConnectToMeteo"
-        customNavigationBar.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(popVC)))
-
+        backView.addTapGesture { self.popVC() }
         view.sv(
             customNavigationBar
         )
+        view.addSubview(backView)
     }
-    @objc func popVC() {
+    func popVC() {
+        print("1")
         self.navigationController?.popViewController(animated: true)
     }
     override func viewWillAppear(_ animated: Bool) {

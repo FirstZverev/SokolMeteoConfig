@@ -46,18 +46,18 @@ final class CustomNavigationView: UIView {
     }
     
     private func configure() {
-        addGestureRecognizer(
-            UITapGestureRecognizer(target: self, action: #selector(didTap(recognizer:)))
-        )
+//        addGestureRecognizer(
+//            UITapGestureRecognizer(target: self, action: #selector(didTap(recognizer:)))
+//        )
         
     }
     
     // MARK: - Actions
     
-    @objc
-    private func didTap(recognizer: UITapGestureRecognizer) {
-        print("123")
-    }
+//    @objc
+//    private func didTap(recognizer: UITapGestureRecognizer) {
+//        print("123")
+//    }
     
     // MARK: - Drawing
     
