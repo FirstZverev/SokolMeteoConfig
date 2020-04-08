@@ -25,7 +25,6 @@ class StartViewController: UIViewController {
         registerTableView()
         viewModel = ViewModel()
         view.backgroundColor = .yellow
-
         let customNavigationBar = createCustomNavigationBar(title: "Меню")
         view.sv(
             customNavigationBar
@@ -45,21 +44,20 @@ class StartViewController: UIViewController {
         tableView.separatorStyle = .none
         self.view.sv(tableView)
         tableView.showsVerticalScrollIndicator = false
-        tableView.height(200).width(screenW).centerInContainer()
+        tableView.height(300).width(screenW).centerInContainer()
         self.tableView = tableView
     }
     
     override func loadView() {
         super.loadView()
         createTableView()
-        
     }
 
 }
 
 extension StartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -40,8 +40,8 @@ class TableViewCell: UITableViewCell {
         self.label = label
         
         NSLayoutConstraint.activate([
-            self.contentView.topAnchor.constraint(equalTo: self.label!.topAnchor),
-            self.contentView.bottomAnchor.constraint(equalTo: self.label!.bottomAnchor),
+            self.contentView.topAnchor.constraint(equalTo: self.label!.topAnchor, constant: -20),
+            self.contentView.bottomAnchor.constraint(equalTo: self.label!.bottomAnchor, constant: 20),
             self.contentView.leadingAnchor.constraint(equalTo: self.label!.leadingAnchor),
             self.contentView.trailingAnchor.constraint(equalTo: self.label!.trailingAnchor),
         ])
