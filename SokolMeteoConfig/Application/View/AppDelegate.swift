@@ -8,14 +8,23 @@
 
 import UIKit
 import CoreData
+import Hero
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        self.window = UIWindow.init ()
+        let vc = StartViewController()
+        let navigationController = UINavigationController(rootViewController: vc)
+        navigationController.hero.isEnabled = true
+        navigationController.navigationBar.isHidden = true
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
+//        UIApplication.shared.statusBarStyle = .darkContent
         return true
     }
 

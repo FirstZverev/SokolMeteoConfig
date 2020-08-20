@@ -1,28 +1,65 @@
 PODS:
+  - BottomPopup (0.6.0)
+  - ESTabBarController-swift (2.8.0)
+  - FSCalendar (2.8.1)
   - Hero (1.5.0)
+  - HorizonCalendar (1.3.1)
+  - lottie-ios (3.1.6)
+  - RAMAnimatedTabBarController (5.2.0)
   - RxBluetoothKit (5.3.0):
     - RxSwift (~> 5.0)
   - RxSwift (5.0.1)
   - SteviaLayout (4.7.3)
+  - UIDrawer (1.0)
 
 DEPENDENCIES:
+  - BottomPopup
+  - ESTabBarController-swift
+  - FSCalendar
   - Hero
+  - HorizonCalendar
+  - lottie-ios
+  - RAMAnimatedTabBarController
   - RxBluetoothKit
   - SteviaLayout
+  - UIDrawer (from `https://github.com/Que20/UIDrawer.git`, tag `1.0`)
 
 SPEC REPOS:
   trunk:
+    - BottomPopup
+    - ESTabBarController-swift
+    - FSCalendar
     - Hero
+    - HorizonCalendar
+    - lottie-ios
+    - RAMAnimatedTabBarController
     - RxBluetoothKit
     - RxSwift
     - SteviaLayout
 
+EXTERNAL SOURCES:
+  UIDrawer:
+    :git: https://github.com/Que20/UIDrawer.git
+    :tag: '1.0'
+
+CHECKOUT OPTIONS:
+  UIDrawer:
+    :git: https://github.com/Que20/UIDrawer.git
+    :tag: '1.0'
+
 SPEC CHECKSUMS:
+  BottomPopup: 1d5649a3b29396238f0e8f3c82075a7bfcf37ba7
+  ESTabBarController-swift: 05593a6ad64700b03c0eb60ff625916370aa4136
+  FSCalendar: 5245140456fcbcac5824c203b98bd8068bdfee1a
   Hero: b7385b75e7259da62f4f85462f59a5082d66b058
+  HorizonCalendar: 1218c8f7aab67fdf522f9f04d106372ce05b8f52
+  lottie-ios: 85ce835dd8c53e02509f20729fc7d6a4e6645a0a
+  RAMAnimatedTabBarController: 6863a386e7ae2ab227cd60aa73ab8ff56cdacfdd
   RxBluetoothKit: 0e781978e8a0df70ac3c611dcf44800b76c69f8a
   RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
+  UIDrawer: 1bfbc152fee69f6809a41508000cf1b9bd4b1738
 
-PODFILE CHECKSUM: 0d986cdd67823ab7c030ef4ab0d03414d6d0988a
+PODFILE CHECKSUM: 1c872a1177ca41b2e42cae4275b3a948f5c4d0bc
 
 COCOAPODS: 1.8.4

@@ -22,7 +22,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         navigationController.hero.isEnabled = true
         navigationController.navigationBar.isHidden = true
         window?.rootViewController = navigationController
-        
+        window?.makeKeyAndVisible()
+        UIApplication.shared.statusBarStyle = .darkContent
         guard let _ = (scene as? UIWindowScene) else { return }
     }
 

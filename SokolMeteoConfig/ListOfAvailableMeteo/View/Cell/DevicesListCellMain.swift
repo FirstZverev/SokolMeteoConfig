@@ -56,10 +56,14 @@ class DevicesListCellMain: UITableViewCell {
         
         let btnConnet = UIView(frame: CGRect(x: Int(screenW - 160), y: 12, width: 140, height: 44))
         btnConnet.translatesAutoresizingMaskIntoConstraints = false
-        btnConnet.backgroundColor = UIColor(rgb: 0xE80000)
+        btnConnet.backgroundColor = UIColor(rgb: 0xBE449E)
         btnConnet.layer.cornerRadius = 22
+        btnConnet.layer.shadowColor = UIColor(rgb: 0xB64894).cgColor
+        btnConnet.layer.shadowRadius = 6.0
+        btnConnet.layer.shadowOpacity = 0.5
+        btnConnet.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
         let connect = UILabel(frame: CGRect(x: 0, y: 0, width: 140, height: 44))
-        connect.text = "Connect"
+        connect.text = "Подключиться"
         connect.textColor = .white
         connect.center.y = 22
         connect.font = UIFont(name:"FuturaPT-Medium", size: 18.0)
@@ -111,13 +115,9 @@ class DevicesListCellMain: UITableViewCell {
 
     }
     fileprivate func setupTheme() {
-        if #available(iOS 13.0, *) {
-            let isNight = false
             titleRSSI.textColor = UIColor(rgb: isNight ? 0xFFFFFF : 0x1F1F1F)
             titleLabel.textColor = UIColor(rgb: isNight ? 0xFFFFFF : 0x1F1F1F)
             levelLabel.textColor = UIColor(rgb: isNight ? 0xFFFFFF : 0x1F1F1F)
-
-        }
     }
 }
 

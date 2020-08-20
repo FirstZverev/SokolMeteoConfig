@@ -8,11 +8,33 @@
 
 import Foundation
 
-class ViewModelConnected {
+class ViewModelConnected: TableViewViewModelType {
     
-    private var menu = Menu(id: 1, name: "234")
+    private var selectedIndexPath: IndexPath?
     
-    var name: String {
-        return menu.name
+    var menuMain = [
+            Menu(id: 1, name: "ОНЛАЙН ДАННЫЕ"),
+            Menu(id: 2, name: "ЭКСПОРТ ДАННЫХ (ЧЕРНЫЙ ЯЩИК)"),
+            Menu(id: 3, name: "КОНФИГУРАТОР"),
+            Menu(id: 4, name: "ДИАГНОСТИКА ОБОРУДОВАНИЯ"),
+            Menu(id: 5, name: "ПАРОЛЬ")
+        ]
+    
+    func numberOfRows() -> Int {
+        return menuMain.count
+    }
+    
+    func cellViewModel(forIndexPath indexPath: IndexPath) -> TableViewCellViewModelType? {
+        let menu = menuMain[indexPath.row]
+        return TableViewCellViewModel(menu: menu)
+    }
+    
+    func viewModelForSelectedRow() -> DetailViewModelType? {
+        guard let selectedIndexPath = selectedIndexPath else { return nil }
+        return DetailModelView(menu: menuMain[selectedIndexPath.row])
+    }
+    
+    func selectRow(atIndexPath indexPath: IndexPath) {
+        self.selectedIndexPath = indexPath
     }
 }

@@ -109,9 +109,7 @@ class DevicesListCellHeder: UITableViewCell {
 
     }
     fileprivate func setupTheme() {
-        if #available(iOS 13.0, *) {
             titleLabel.textColor = UIColor(rgb: 0x1F1F1F)
-        }
     }
 }
 

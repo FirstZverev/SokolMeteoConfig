@@ -21,10 +21,10 @@ func createCustomNavigationBar(title: String? = "Контроллер", fontSize
     let v = CustomNavigationView(frame: CGRect(x: 0,
                                                y: 0,
                                                width: screenW,
-                                               height: 100))
+                                               height: screenH / 12))
     v.title = title ?? "Контроллер"
-    v.font = .systemFont(ofSize: fontSize!, weight: .bold)
+    v.font = UIFont(name: "FuturaPT-Medium", size: screenW / 22)!
     return v
 }
 
-var reload = 0
+var reload = -1

@@ -8,4 +8,11 @@ target 'SokolMeteoConfig' do
 	pod 'Hero'
 	pod 'SteviaLayout'
 	pod 'RxBluetoothKit'
+	pod "ESTabBarController-swift"
+	pod "RAMAnimatedTabBarController"
+	pod 'UIDrawer', :git => 'https://github.com/Que20/UIDrawer.git', :tag => '1.0'
+	pod 'lottie-ios'
+	pod 'FSCalendar'
+	pod 'HorizonCalendar'
+	pod 'BottomPopup'
 end

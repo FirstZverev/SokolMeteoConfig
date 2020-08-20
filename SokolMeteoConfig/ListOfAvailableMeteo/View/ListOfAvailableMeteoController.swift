@@ -10,6 +10,10 @@ import UIKit
 import Hero
 import Stevia
 
+protocol MainDelegate: class {
+    func buttonT()
+}
+
 class ListOfAvailableMeteoController: UIViewController {
     
     var label: UILabel!
