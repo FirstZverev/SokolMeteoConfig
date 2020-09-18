@@ -63,7 +63,7 @@ class ThriedMeteoData: BottomPopupViewController {
         delegate?.buttonTapThriedConfigurator()
         //        DispatchQueue.main.async { [self] in
         timer =  Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [self] (timer) in
-            tableView.reloadData()
+            self.tableView.reloadData()
         }
 //        }
     }

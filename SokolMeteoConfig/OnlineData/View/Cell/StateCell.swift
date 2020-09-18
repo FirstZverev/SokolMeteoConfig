@@ -18,6 +18,7 @@ class StateCell: UITableViewCell {
         willSet(viewModel) {
             guard let viewModel = viewModel else { return }
             label?.text = viewModel.name
+            imageUI?.image = UIImage(named: viewModel.image)
         }
     }
     

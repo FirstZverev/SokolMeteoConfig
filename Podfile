@@ -15,4 +15,5 @@ target 'SokolMeteoConfig' do
 	pod 'FSCalendar'
 	pod 'HorizonCalendar'
 	pod 'BottomPopup'
+	pod 'NVActivityIndicatorView'
 end

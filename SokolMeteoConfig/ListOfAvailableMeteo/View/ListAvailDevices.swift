@@ -8,13 +8,17 @@
 
 import UIKit
 import CoreBluetooth
-
+import NVActivityIndicatorView
 
 struct cellDataDU {
     var opened = Bool()
     var title = String()
     var sectionData = [String()]
 }
+
+var a : CBPeripheral!
+var b : CBService!
+
 //var rrsiPink = 0
 //var kCBAdvDataManufacturerData = ""
 class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeripheralDelegate, ConnectedMeteoDelegate {
@@ -24,8 +28,6 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
     func abc() {
         print("StateControllerDelegate")
     }
-    var a : CBPeripheral!
-    var b: CBService!
     lazy var alertView: CustomAlertWarning = {
         let alertView: CustomAlertWarning = CustomAlertWarning.loadFromNib()
         alertView.delegate = self
@@ -37,6 +39,22 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    let cancelLabel: UILabel = {
+        let cancelLabel = UILabel()
+        cancelLabel.text = "Отменить"
+        cancelLabel.translatesAutoresizingMaskIntoConstraints = false
+        cancelLabel.textColor = .purple
+        cancelLabel.clipsToBounds = false
+        cancelLabel.isHidden = true
+        cancelLabel.font = UIFont(name: "FuturaPT-Medium", size: 20)
+        cancelLabel.layer.shadowColor = UIColor.white.cgColor
+        cancelLabel.layer.shadowRadius = 5.0
+        cancelLabel.layer.shadowOpacity = 0.7
+        cancelLabel.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+        return cancelLabel
+    }()
+    
     var delegate: MainDelegate?
 
     let viewAlpha = UIView(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH))
@@ -92,18 +110,13 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        let key = "kCBAdvDataServiceUUIDs"
+        let key = "kCBAdvDataLocalName"
         print("advertisementData: \(advertisementData)")
-        if peripheral.name != nil {
-            let nameDevicesOps = peripheral.name!.components(separatedBy: ["_"])
-            print(nameDevicesOps)
-            if nameDevicesOps[0] == "Sokol-M" && nameDevicesOps[1] != "UPDATE" {
+        if advertisementData["kCBAdvDataLocalName"] as? String != nil {
+            let nameDevicesOps = (advertisementData["kCBAdvDataLocalName"] as? String)?.components(separatedBy: ["_"])
+            if nameDevicesOps?[0] == "Sokol-M" && nameDevicesOps?[1] != "UPDATE" {
                 print("Нашлось")
                 if QRCODE == "" {
-                    print("advertisementData[kCBAdvDataManufacturerData]): \(kCBAdvDataManufacturerData)")
-                    let abc = advertisementData[key] as? [CBUUID]
-                    guard let uniqueID = abc?.first?.uuidString else { return }
-                    _ = uniqueID.components(separatedBy: ["-"])
                     if(!peripherals.contains(peripheral)) {
                         print(RSSI)
                         if RSSI != 127{
@@ -113,17 +126,17 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
                                 rrsiPink = rrsiPink + 1
                                 print("rrsiPink:\(rrsiPink) \(orderNumberInt!)")
                                 peripherals.insert(peripheral, at: rrsiPink - 1)
-                                peripheralName.insert(peripheral.name!, at: rrsiPink - 1)
-                                tableViewData.insert(cellDataDU(opened: false, title: "\(peripheral.name!)", sectionData: ["\(peripheral.name!)"]), at: rrsiPink)
-                                print("RSSIName: \(peripheral.name!) and  RSSI: \(RSSI)")
+                                peripheralName.insert(advertisementData["kCBAdvDataLocalName"] as! String, at: rrsiPink - 1)
+                                tableViewData.insert(cellDataDU(opened: false, title: "\(advertisementData["kCBAdvDataLocalName"] as! String)", sectionData: ["\(advertisementData["kCBAdvDataLocalName"] as! String)"]), at: rrsiPink)
+                                print("RSSIName: \(advertisementData["kCBAdvDataLocalName"] as! String) and  RSSI: \(RSSI)")
                                 RSSIMainArray.insert("\(RSSI)", at: rrsiPink)
                                 stopActivityIndicator()
                                 tableView.reloadData()
                             } else {
                                 peripherals.append(peripheral)
-                                peripheralName.append(peripheral.name!)
-                                print("RSSIName1: \(peripheral.name!) and  RSSI: \(RSSI)")
-                                tableViewData.append(cellDataDU(opened: false, title: "\(peripheral.name!)", sectionData: ["\(peripheral.name!)"]))
+                                peripheralName.append(advertisementData["kCBAdvDataLocalName"] as! String)
+                                print("RSSIName1: \(advertisementData["kCBAdvDataLocalName"] as! String) and  RSSI: \(RSSI)")
+                                tableViewData.append(cellDataDU(opened: false, title: "\(advertisementData["kCBAdvDataLocalName"] as! String)", sectionData: ["\(advertisementData["kCBAdvDataLocalName"] as! String)"]))
                                 RSSIMainArray.append("\(RSSI)")
                                 stopActivityIndicator()
                                 tableView.reloadData()
@@ -179,7 +192,7 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
                         }
                     } else {
                         if RSSI != 127{
-                            print("Снова RSSIName: \(peripheral.name!) and  RSSI: \(RSSI)")
+                            print("Снова RSSIName: \(advertisementData["kCBAdvDataLocalName"] as! String) and  RSSI: \(RSSI)")
                             if let i = peripherals.firstIndex(of: peripheral) {
                                 RSSIMainArray[i] = "\(RSSI)"
                             }
@@ -194,15 +207,17 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
                     if(!peripherals.contains(peripheral)) {
                         if peripheral.name! == "DU_\(QRCODE)" {
                             nameDevice = ""
-                            print("YEEEES \(peripheral.name!)")
+                            print("YEEEES \(advertisementData["kCBAdvDataLocalName"] as! String)")
 //                            temp = nil
                             self.activityIndicator.startAnimating()
                             self.view.addSubview(self.viewAlpha)
+                            self.cancelLabel.superview?.bringSubviewToFront(self.cancelLabel)
+                            self.cancelLabel.isHidden = false
 //                            zeroTwo = 0
 //                            zero = 0
 //                            countNot = 0
                             self.manager?.connect(peripheral, options: nil)
-                            self.view.isUserInteractionEnabled = false
+//                            self.view.isUserInteractionEnabled = false
                             self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
                             self.manager?.stopScan()
                             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(6), execute: {
@@ -213,6 +228,7 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
                                 }
                                 print("Connected to " +  peripheral.name!)
                                 self.viewAlpha.removeFromSuperview()
+                                self.cancelLabel.isHidden = true
                             })
                         }
                     }
@@ -235,9 +251,6 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
         didConnect peripheral: CBPeripheral) {
         
         peripheral.delegate = self
-//        let nameD = peripheral.name!
-//        let nameDOps = nameD.components(separatedBy: ["_"])
-//        nameDevice = nameDOps[1]
         peripheral.discoverServices(nil)
         timer =  Timer.scheduledTimer(withTimeInterval: 4.0, repeats: true) { (timer) in
 //            peripheral.discoverServices(nil)
@@ -275,8 +288,8 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
     }
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         DispatchQueue.main.async {
-            self.a = peripheral
-            self.b = service
+            a = peripheral
+            b = service
             let valueAll = "PWD_USER,\(mainPassword)\r\n"
             let valueAll1 = "Get_State"
             let valueOnline = "Get_Mes"
@@ -990,6 +1003,7 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
         central: CBCentralManager,
         didDisconnectPeripheral peripheral: CBPeripheral,
         error: NSError?) {
+        print("disconect")
         scanBLEDevices()
         
     }
@@ -1090,6 +1104,8 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
             self.refreshControl.endRefreshing()
         }
     }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         connectedMeteoVC.delegate = self
@@ -1105,7 +1121,16 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
         stringAll = ""
         registerTableView()
         setupTheme()
+        view.addSubview(cancelLabel)
         
+        cancelLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        cancelLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 45).isActive = true
+
+        cancelLabel.addTapGesture { [self] in
+            print("Stop")
+            self.navigationController?.popViewController(animated: true)
+
+        }
         let customNavigationBar = createCustomNavigationBar(title: "СПИСОК ДОСТУПНЫХ МЕТЕОСТАНЦИЙ", fontSize: screenW / 22)
         self.hero.isEnabled = true
         customNavigationBar.hero.id = "ConnectToMeteo"
@@ -1123,16 +1148,23 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
     }
     fileprivate func startActivityIndicator() {
         viewAlpha.addSubview(activityIndicator)
+        activityIndicator.center = viewAlpha.center
         view.addSubview(viewAlpha)
+        self.cancelLabel.isHidden = false
+        cancelLabel.superview?.bringSubviewToFront(cancelLabel)
         activityIndicator.startAnimating()
         UIView.animate(withDuration: 0.5, animations: { [self] in
-            tableView.alpha = 0.0
+            self.tableView.alpha = 0.0
         }) { [self] (_) in
-            view.isUserInteractionEnabled = false
+            self.view.isUserInteractionEnabled = false
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        if a != nil {
+            print("discont: \(a)")
+            manager?.cancelPeripheralConnection(a)
+        }
         startActivityIndicator()
 //            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
 //                self.activityIndicator.stopAnimating()
@@ -1145,12 +1177,13 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
     func stopActivityIndicator() {
         activityIndicator.stopAnimating()
         viewAlpha.removeFromSuperview()
+        self.cancelLabel.isHidden = true
         tableView.isHidden = false
         UIView.animate(withDuration: 0.5, animations: { [self] in
-            tableView.alpha = 1.0
+            self.tableView.alpha = 1.0
         }) { [self] (_) in
-            navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-            view.isUserInteractionEnabled = true
+            self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+            self.view.isUserInteractionEnabled = true
         }
     }
     
@@ -1189,7 +1222,7 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
     func scanBLEDevices() {
         peripherals.removeAll()
         manager?.scanForPeripherals(withServices: nil)
-        self.view.isUserInteractionEnabled = false
+//        self.view.isUserInteractionEnabled = false
         var time = 0.0
         if QRCODE != "" {
             time = 12.0
@@ -1220,19 +1253,15 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
         return img
     }()
     
-    fileprivate lazy var activityIndicator: UIActivityIndicatorView = {
-        let activity = UIActivityIndicatorView()
-        if #available(iOS 13.0, *) {
-            activity.style = .medium
-        } else {
-            activity.style = .white
-        }
-        activity.transform = CGAffineTransform(scaleX: 2, y: 2)
-        activity.center = view.center
-        activity.color = .purple
-        activity.hidesWhenStopped = true
-        activity.startAnimating()
-        return activity
+    fileprivate lazy var activityIndicator: NVActivityIndicatorView = {
+        let view = NVActivityIndicatorView(frame: .zero, type: .ballGridPulse, color: UIColor.purple)
+        view.frame.size = CGSize(width: 50, height: 50)
+        view.layer.shadowColor = UIColor.white.cgColor
+        view.layer.shadowRadius = 5.0
+        view.layer.shadowOpacity = 0.7
+        view.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+
+        return view
     }()
     override func viewDidDisappear(_ animated: Bool) {
         print("viewDidDisappear")
@@ -1404,6 +1433,9 @@ extension DevicesDUController: UITableViewDataSource {
 //                        id = ""
                         self.activityIndicator.startAnimating()
                         self.view.addSubview(self.viewAlpha)
+                        self.cancelLabel.isHidden = false
+                        self.cancelLabel.superview?.bringSubviewToFront(self.cancelLabel)
+
 //                        zeroTwo = 0
 //                        zero = 0
 //                        countNot = 0
@@ -1412,15 +1444,15 @@ extension DevicesDUController: UITableViewDataSource {
                             if indexPath.section > rrsiPink {
                                 self.manager?.connect(self.peripherals[indexPath.section-2], options: nil)
                                 print(self.peripherals[indexPath.section-2])
-                                nameDevice = self.peripherals[indexPath.section-2].name!
+                                nameDevice = peripheralName[indexPath.section-2]
                                 print("Connected to " +  nameDevice)
                             } else {
                                 self.manager?.connect(self.peripherals[indexPath.section-1], options: nil)
-                                nameDevice = self.peripherals[indexPath.section-1].name!
+                                nameDevice = peripheralName[indexPath.section-1]
                                 print("Connected to " +  nameDevice)
                             }
                         }
-                        self.view.isUserInteractionEnabled = false
+//                        self.view.isUserInteractionEnabled = false
                         self.manager?.stopScan()
                         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
                         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5), execute: {
@@ -1429,6 +1461,7 @@ extension DevicesDUController: UITableViewDataSource {
                                 navController.pushViewController(self.connectedMeteoVC, animated: true)
                             }
                             self.viewAlpha.removeFromSuperview()
+                            self.cancelLabel.isHidden = true
                         })
                     }
                     return cell
@@ -1449,6 +1482,8 @@ extension DevicesDUController: UITableViewDataSource {
                     mainPassword = ""
                     self.activityIndicator.startAnimating()
                     self.view.addSubview(self.viewAlpha)
+                    self.cancelLabel.superview?.bringSubviewToFront(self.cancelLabel)
+                    self.cancelLabel.isHidden = false
 //                    zeroTwo = 0
 //                    zero = 0
 //                    countNot = 0
@@ -1461,10 +1496,10 @@ extension DevicesDUController: UITableViewDataSource {
                     if self.searching {
                         self.stringAll = ""
                         self.manager?.connect(self.peripherals[index!], options: nil)
-                        nameDevice = self.peripherals[index!].name!
+                        nameDevice = peripheralName[index!]
                         print("Connected to " +  nameDevice)
                     }
-                    self.view.isUserInteractionEnabled = false
+//                    self.view.isUserInteractionEnabled = false
                     self.manager?.stopScan()
                     self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
                     DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5), execute: {
@@ -1473,6 +1508,7 @@ extension DevicesDUController: UITableViewDataSource {
                             navController.pushViewController(self.connectedMeteoVC, animated: true)
                         }
                         self.viewAlpha.removeFromSuperview()
+                        self.cancelLabel.isHidden = true
                     })
                 }
                 return cell

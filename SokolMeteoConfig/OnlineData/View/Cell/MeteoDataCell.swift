@@ -23,6 +23,7 @@ class MeteoDataCell: UITableViewCell {
         willSet(viewModel) {
             guard let viewModel = viewModel else { return }
             label?.text = viewModel.name
+            imageUI?.image = UIImage(named: viewModel.image)
         }
     }
     
@@ -65,18 +66,21 @@ class MeteoDataCell: UITableViewCell {
         
         let saveButton = UIImageView(image: UIImage(named: "imgPush"))
         saveButton.layer.cornerRadius = 10
+        saveButton.isHidden = true
         saveButton.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(saveButton)
         self.saveButton = saveButton
 
         let save2Button = UIImageView(image: UIImage(named: "imgSave"))
         save2Button.layer.cornerRadius = 10
+        save2Button.isHidden = true
         save2Button.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(save2Button)
         self.save2Button = save2Button
 
         let save3Button = UIImageView(image: UIImage(named: "imgDelete"))
         save3Button.layer.cornerRadius = 10
+        save3Button.isHidden = true
         save3Button.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(save3Button)
         self.save3Button = save3Button

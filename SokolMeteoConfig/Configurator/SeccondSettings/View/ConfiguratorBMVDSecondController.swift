@@ -50,7 +50,7 @@ class ConfiguratorBMVDSecondController : UIViewController {
         createTableView()
         registerCell()
         view.sv(customNavigationBar, backView, circlePlus)
-        backView.addTapGesture { [self] in popVC() }
+        backView.addTapGesture { [self] in self.popVC() }
         
         circlePlus.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -25).isActive = true
         circlePlus.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true

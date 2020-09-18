@@ -13,16 +13,23 @@ class ViewModelState: TableViewViewModelType {
     private var selectedIndexPath: IndexPath?
     
     var menuMain = [
-            Menu(id: 1, name: "Системное время"),
-            Menu(id: 2, name: "Состояние GSM"),
-            Menu(id: 3, name: "Количество спутников GSM"),
-            Menu(id: 4, name: "Азимут по компасу"),
-            Menu(id: 5, name: "Продольный наклон"),
-            Menu(id: 6, name: "Поперечный наклон"),
-            Menu(id: 7, name: "Состояние маяка"),
-            Menu(id: 8, name: "Минуты (без часа) когда начнется цикл измерения и отправки сообщения"),
-            Menu(id: 9, name: "Минуты (без часа) когда нанется обмен с БМВД"),
-        ]
+        Menu(id: 1, name: "Системное время", image: "time"),
+        Menu(id: 2, name: "Состояние GSM"),
+        Menu(id: 3, name: "Количество спутников GSM", image: "satellite"),
+        Menu(id: 4, name: "Азимут по компасу", image: "compas"),
+        Menu(id: 5, name: "Продольный наклон", image: "tilt"),
+        Menu(id: 6, name: "Поперечный наклон", image: "tilt-1"),
+        Menu(id: 7, name: "Состояние маяка"),
+        Menu(id: 8, name: "Минуты (без часа) когда начнется цикл измерения и отправки сообщения", image: "min-1"),
+        Menu(id: 9, name: "Минуты (без часа) когда нанется обмен с БМВД", image: "min"),
+//        Menu(id: 10, name: "-", image: "time"),
+        Menu(id: 11, name: "Напряжение внешнего источника ", image: "voltage"),
+//        Menu(id: 12, name: "-", image: "time"),
+        Menu(id: 13, name: "Уровень сигнала GSM", image: "gsm"),
+        Menu(id: 14, name: "Количество переданных сообщений", image: "mail"),
+        Menu(id: 15, name: "Накопленные события и ошибки"),
+
+    ]
     
     func numberOfRows() -> Int {
         return menuMain.count

@@ -14,7 +14,7 @@ extension ConfiguratorFirstController: UITextFieldDelegate {
         super.viewDidLoad()
         pickerChanel.delegate = self
         registerKeyboardNotification()
-        backView.addTapGesture { [self] in popVC() }
+        backView.addTapGesture { [self] in self.popVC() }
         registerDelegateTextFields()
 
         view.backgroundColor = .white
@@ -46,12 +46,12 @@ extension ConfiguratorFirstController: UITextFieldDelegate {
         }
         chanelTextField.addTapGesture { [self] in
             print("chanelTextField")
-            scrollView.endEditing(true)
-            pickerChanel.isHidden = false
-            blurEffect.isHidden = false
-            pickerChanel.selectRow(Channels(string: KCNL).channelsString(), inComponent: 0, animated: true)
+            self.scrollView.endEditing(true)
+            self.pickerChanel.isHidden = false
+            self.blurEffect.isHidden = false
+            self.pickerChanel.selectRow(Channels(string: KCNL).channelsString(), inComponent: 0, animated: true)
             UIView.animate(withDuration: 0.3, animations: {
-                blurEffect.alpha = 1.0
+                self.blurEffect.alpha = 1.0
             }) { _ in
                 UIView.animate(withDuration: 0.5) {
                     NSLayoutConstraint.deactivate(constrainClose)
@@ -68,10 +68,10 @@ extension ConfiguratorFirstController: UITextFieldDelegate {
             UIView.animate(withDuration: 0.3, animations: {
                 NSLayoutConstraint.deactivate(constrainOpen)
                 NSLayoutConstraint.activate(constrainClose)
-                blurEffect.alpha = 0.0
+                self.blurEffect.alpha = 0.0
                 self.view.layoutIfNeeded()
             }) { _ in
-                blurEffect.isHidden = true
+                self.blurEffect.isHidden = true
             }
         }
         let str = "user:password"
@@ -101,7 +101,7 @@ extension ConfiguratorFirstController: UITextFieldDelegate {
         delegate?.buttonTapFirstConfigurator()
         DispatchQueue.main.async { [self] in
 //            timer =  Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [self] (timer) in
-                updateInterface()
+                self.updateInterface()
 //            }
         }
     }

@@ -19,6 +19,9 @@ class TableViewCellViewModel: TableViewCellViewModelType {
     var id: String {
         return String(describing: menu.id)
     }
+    var image: String {
+        return menu.image!
+    }
     
     init(menu: Menu) {
         self.menu = menu

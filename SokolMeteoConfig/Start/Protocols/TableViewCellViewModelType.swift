@@ -11,4 +11,5 @@ import Foundation
 protocol TableViewCellViewModelType: class {
     var name: String { get }
     var id: String { get }
+    var image: String {get}
 }

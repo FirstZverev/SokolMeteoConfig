@@ -76,6 +76,7 @@
 		B5A82A9E2498762700F7A335 /* ConfiguratorThriedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A82A9D2498762700F7A335 /* ConfiguratorThriedController.swift */; };
 		B5B54C5324E3D3F400788359 /* ViewModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B54C5224E3D3F400788359 /* ViewModelData.swift */; };
 		B5BA77CC24ED0CBA0046A2DD /* SecondConfigBMVDCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BA77CB24ED0CBA0046A2DD /* SecondConfigBMVDCell.swift */; };
+		B5BA77CE24EE3AD50046A2DD /* BlackBoxMeteo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BA77CD24EE3AD50046A2DD /* BlackBoxMeteo.swift */; };
 		B5C0514624713B9B00F63357 /* ConnectedMeteoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C0514524713B9B00F63357 /* ConnectedMeteoCell.swift */; };
 		B5C05149247AA89300F63357 /* futura-pt-light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B5C05148247AA89300F63357 /* futura-pt-light.ttf */; };
 		B5C0514B247AA89C00F63357 /* futura-pt-medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B5C0514A247AA89C00F63357 /* futura-pt-medium.ttf */; };
@@ -164,6 +165,7 @@
 		B5A82A9D2498762700F7A335 /* ConfiguratorThriedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguratorThriedController.swift; sourceTree = "<group>"; };
 		B5B54C5224E3D3F400788359 /* ViewModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelData.swift; sourceTree = "<group>"; };
 		B5BA77CB24ED0CBA0046A2DD /* SecondConfigBMVDCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondConfigBMVDCell.swift; sourceTree = "<group>"; };
+		B5BA77CD24EE3AD50046A2DD /* BlackBoxMeteo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBoxMeteo.swift; sourceTree = "<group>"; };
 		B5C0514524713B9B00F63357 /* ConnectedMeteoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedMeteoCell.swift; sourceTree = "<group>"; };
 		B5C05148247AA89300F63357 /* futura-pt-light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "futura-pt-light.ttf"; sourceTree = "<group>"; };
 		B5C0514A247AA89C00F63357 /* futura-pt-medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "futura-pt-medium.ttf"; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 			children = (
 				B5A6D973247BA0D900F9C1C8 /* TabBarController.swift */,
 				B5C05150247B98C000F63357 /* MeteoDataController.swift */,
+				B5BA77CD24EE3AD50046A2DD /* BlackBoxMeteo.swift */,
 				B5311FB824C9B89800DC6C2B /* StretchyTableHeaderView.swift */,
 				B56FD9D6247BA79200DF0B41 /* StateController.swift */,
 				B58492E4247BA99A00C902C7 /* MoreDevicesController.swift */,
@@ -905,6 +908,7 @@
 				B56BEB032431D00800C42F85 /* Commons.swift in Sources */,
 				B5DB4D01243479320016A4BD /* DevicesListCell.swift in Sources */,
 				B58492EB247BB08E00C902C7 /* ViewModelMeteoData.swift in Sources */,
+				B5BA77CE24EE3AD50046A2DD /* BlackBoxMeteo.swift in Sources */,
 				B58217BB247FD7FC00C669CA /* AlertCreateWarning.swift in Sources */,
 				B589CFB2242C876900B547DC /* SceneDelegate.swift in Sources */,
 				B53B916724EBE92F00B388ED /* ModelBMVD.swift in Sources */,

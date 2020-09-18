@@ -11,4 +11,5 @@ import Foundation
 struct Menu {
     var id: Int
     var name: String
+    var image: String? = "setings"
 }

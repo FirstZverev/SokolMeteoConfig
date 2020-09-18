@@ -14,7 +14,7 @@ class MeteoDataController: UIViewController {
     var viewModel: TableViewViewModelType?
     var timer = Timer()
     var delegate: MeteoDelegate?
-    let customNavigationBar = createCustomNavigationBar(title: "",fontSize: 16.0)
+    let customNavigationBar = createCustomNavigationBar(title: "МЕТЕО ДАННЫЕ",fontSize: 16.0)
     var indexPathCounst: IndexPath?
     
     fileprivate lazy var backView: UIImageView = {
@@ -90,7 +90,7 @@ class MeteoDataController: UIViewController {
         tableView.separatorStyle = .singleLine
         self.view.sv(tableView)
         tableView.showsVerticalScrollIndicator = false
-        tableView.height(screenH).width(screenW)
+        tableView.height(screenH - (screenH / 12)).width(screenW)
 //        tableView.top(screenH / 12)
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 30)
         tableView.backgroundColor = UIColor(rgb: 0xECAFCC)
@@ -115,19 +115,6 @@ class MeteoDataController: UIViewController {
         backView.addTapGesture{
             self.navigationController?.popViewController(animated: true)
         }
-        view.addSubview(saveButton)
-        view.addSubview(save2Button)
-        view.addSubview(save3Button)
-        
-        saveButton.topAnchor.constraint(equalTo: backView.topAnchor, constant: 8).isActive = true
-        saveButton.trailingAnchor.constraint(equalTo: save2Button.leadingAnchor, constant: -10).isActive = true
-
-        save2Button.topAnchor.constraint(equalTo: backView.topAnchor, constant: 8).isActive = true
-        save2Button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-
-        save3Button.topAnchor.constraint(equalTo: backView.topAnchor, constant: 8).isActive = true
-        save3Button.leadingAnchor.constraint(equalTo: save2Button.trailingAnchor, constant: 10).isActive = true
-
     }
 }
 
@@ -154,30 +141,17 @@ extension MeteoDataController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "MeteoDataCell", for: indexPath) as? MeteoDataCell
         cell?.selectionStyle = .none
-        cell?.imageUI?.image = UIImage(named: "imageMeteo\(indexPath.row - 1)")
+//        cell?.imageUI?.image = UIImage(named: "imageMeteo\(indexPath.row - 1)")
         cell?.labelTwo?.text = "\(arrayMeteo[indexPath.row])"
         guard let tableViewCell = cell, let viewModel = viewModel else { return UITableViewCell() }
         let cellViewModel = viewModel.cellViewModel(forIndexPath: indexPath)
         if indexPath.row == 0 {
-            indexPathCounst = indexPath
-            cell?.clipsToBounds = true
             cell?.layer.cornerRadius = 40
-            cell?.labelTwo?.textColor = .white
-            cell = accessoryTypeNone(cell: tableViewCell)
-            cell?.saveButton?.isHidden = false
-            cell?.save2Button?.isHidden = false
-            cell?.save3Button?.isHidden = false
-
             cell?.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner] // Top right corner, Top left corner respectively
         } else {
             cell?.layer.cornerRadius = 0
-            cell?.labelTwo?.textColor = .black
-            cell?.saveButton?.isHidden = true
-            cell?.save2Button?.isHidden = true
-            cell?.save3Button?.isHidden = true
-
-            cell = accessoryType(cell: tableViewCell)
         }
+        cell = accessoryType(cell: tableViewCell)
         tableViewCell.viewModel = cellViewModel
 
         return tableViewCell
@@ -206,40 +180,13 @@ extension MeteoDataController: UIScrollViewDelegate {
         let headerView = self.tableView.tableHeaderView as! StretchyTableHeaderView
         headerView.scrollViewDidScroll(scrollView: scrollView)
         
-        let cell = self.tableView.cellForRow(at: indexPathCounst!) as? MeteoDataCell
-        let offset = (scrollView.contentOffset.y - 92) / 3
+        var offset = scrollView.contentOffset.y / 150
         print(offset)
         if offset > 1 {
-//            offset = 1
-//            cell?.saveButton?.alpha = offset - 1
-//            cell?.saveButton?.image = UIImage(named: "imgPushBar")
-//            cell?.saveButton?.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
-            if offset > 4 {
-                customNavigationBar.alpha = offset - 4
-            }
-            saveButton.alpha = offset
-            save2Button.alpha = offset
-            save3Button.alpha = offset
+            offset = 1
+            customNavigationBar.alpha = offset
         } else {
-//            cell?.saveButton?.image = UIImage(named: "imgPush")
-            if -offset / 5 + 1 >= 1.0 {
-                cell?.saveButton?.transform = CGAffineTransform(scaleX: 1, y: 1)
-                cell?.save2Button?.transform = CGAffineTransform(scaleX: 1, y: 1)
-                cell?.save3Button?.transform = CGAffineTransform(scaleX: 1, y: 1)
-
-//                cell?.saveButton?.alpha = -offset
-
-            } else {
-                cell?.saveButton?.transform = CGAffineTransform(scaleX: -offset / 5 + 1, y: -offset / 5 + 1)
-                cell?.save2Button?.transform = CGAffineTransform(scaleX: -offset / 5 + 1, y: -offset / 5 + 1)
-                cell?.save3Button?.transform = CGAffineTransform(scaleX: -offset / 5 + 1, y: -offset / 5 + 1)
-
-//                cell?.saveButton?.alpha = -offset
-            }
-            customNavigationBar.alpha = 0
-            saveButton.alpha = offset
-            save2Button.alpha = offset
-            save3Button.alpha = offset
+            customNavigationBar.alpha = offset
         }
     }
 }

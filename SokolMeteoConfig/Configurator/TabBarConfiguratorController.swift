@@ -56,7 +56,7 @@ class TabBarConfiguratorController: UITabBarController, FirstConfiguratorDelegat
         viewTapThriedVC.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1 / 3).isActive = true
 
         viewTapThriedVC.addTapGesture { [self] in
-            transitionSettingsApp()
+            self.transitionSettingsApp()
         }
         for item in self.tabBar.items!{
               item.selectedImage = item.selectedImage?.withRenderingMode(.alwaysOriginal)

@@ -66,7 +66,7 @@ class StateController: UIViewController {
         tableView.separatorStyle = .singleLine
         self.view.sv(tableView)
         tableView.showsVerticalScrollIndicator = false
-        tableView.height(screenH).width(screenW)
+        tableView.height(screenH - (screenH / 12)).width(screenW)
 //        tableView.top(screenH / 12)
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 30)
         tableView.backgroundColor = UIColor(rgb: 0x7A6B86)
@@ -115,7 +115,6 @@ extension StateController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "StateCell", for: indexPath) as? StateCell
         cell?.selectionStyle = .none
-        cell?.imageUI?.image = UIImage(named: "imageState\(indexPath.row)")
         cell?.labelTwo?.text = "\(arrayState[indexPath.row])"
         if indexPath.row == 0 {
             cell?.clipsToBounds = true

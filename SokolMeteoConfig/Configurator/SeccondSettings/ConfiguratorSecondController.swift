@@ -39,7 +39,7 @@ class ConfiguratorSecondController : UIViewController {
         self.hero.isEnabled = true
         view.sv(customNavigationBar)
         view.addSubview(backView)
-        backView.addTapGesture { [self] in popVC() }
+        backView.addTapGesture { [self] in self.popVC() }
         
         view.addSubview(collectionView)
 
