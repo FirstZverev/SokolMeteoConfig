@@ -12,4 +12,6 @@ protocol TableViewCellViewModelType: class {
     var name: String { get }
     var id: String { get }
     var image: String {get}
+    var ubat: String {get}
+    var rssi: String {get}
 }

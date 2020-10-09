@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TabBarController: UITabBarController, MeteoDelegate, StateDelegate {
+class TabBarController: UITabBarController, MeteoDelegate, StateDelegate, BMVDDelegate {
     
     let kBarHeight = 50
     var delegateConnectedMeteo: TabBarDelegate?
@@ -41,6 +41,7 @@ class TabBarController: UITabBarController, MeteoDelegate, StateDelegate {
         item3.selectedImage = UIImage(named: "generic 1 ON")
         item3.image = UIImage(named: "generic 1 OFF")
         profileVC.tabBarItem = item3
+        profileVC.delegate = self
         viewControllers = [mainVC, searchVC, profileVC]
         self.tabBar.isTranslucent = false
         tabBar.barTintColor = .white
@@ -60,17 +61,16 @@ class TabBarController: UITabBarController, MeteoDelegate, StateDelegate {
         print("buttonTapState")
         delegateConnectedMeteo?.buttonTapTabBar()
     }
+    func buttonTapBMVD() {
+        delegateConnectedMeteo?.buttonTapTabBar()
+    }
   
     
     fileprivate lazy var defaultTabBarHeight = { tabBar.frame.size.height }()
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        let newTabBarHeight = defaultTabBarHeight + 40.0
-        var newFrame = tabBar.frame
-        newFrame.size.height = newTabBarHeight
-        newFrame.origin.y = view.frame.size.height - newTabBarHeight
+
         tabBar.shadowImage = UIImage()
         tabBar.backgroundImage = UIImage.colorForNavBar(color: UIColor(rgb: 0xF7F7F7))
         tabBar.layer.masksToBounds = false
@@ -78,7 +78,5 @@ class TabBarController: UITabBarController, MeteoDelegate, StateDelegate {
         tabBar.layer.shadowOpacity = 0.2
         tabBar.layer.shadowColor = UIColor(rgb: 0xB64894).cgColor
         tabBar.layer.shadowOffset = CGSize.zero
-        
-        tabBar.frame = newFrame
-    }
+        }
 }

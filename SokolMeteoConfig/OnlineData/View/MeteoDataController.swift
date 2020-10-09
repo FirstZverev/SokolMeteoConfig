@@ -14,7 +14,7 @@ class MeteoDataController: UIViewController {
     var viewModel: TableViewViewModelType?
     var timer = Timer()
     var delegate: MeteoDelegate?
-    let customNavigationBar = createCustomNavigationBar(title: "МЕТЕО ДАННЫЕ",fontSize: 16.0)
+    let customNavigationBar = createCustomNavigationBar(title: "МЕТЕО ДАННЫЕ",fontSize: screenW / 22)
     var indexPathCounst: IndexPath?
     
     fileprivate lazy var backView: UIImageView = {
@@ -25,27 +25,8 @@ class MeteoDataController: UIViewController {
         back.frame = CGRect(x: 10, y: 0 , width: 20, height: 20)
         back.center.y = backView.bounds.height / 3 * 2 - 1
         backView.addSubview(back)
+        backView.hero.id = "backView"
         return backView
-    }()
-    fileprivate lazy var saveButton: UIImageView = {
-        let saveButton = UIImageView(image: UIImage(named: "imgPushBar"))
-        saveButton.layer.cornerRadius = 10
-        saveButton.translatesAutoresizingMaskIntoConstraints = false
-        return saveButton
-    }()
-    
-    fileprivate lazy var save2Button: UIImageView = {
-        let saveButton = UIImageView(image: UIImage(named: "imgSaveBar"))
-        saveButton.layer.cornerRadius = 10
-        saveButton.translatesAutoresizingMaskIntoConstraints = false
-        return saveButton
-    }()
-    
-    fileprivate lazy var save3Button: UIImageView = {
-        let saveButton = UIImageView(image: UIImage(named: "imgDeleteBar"))
-        saveButton.layer.cornerRadius = 10
-        saveButton.translatesAutoresizingMaskIntoConstraints = false
-        return saveButton
     }()
     
     override func loadView() {
@@ -60,8 +41,11 @@ class MeteoDataController: UIViewController {
             self.tableView.reloadData()
         })
         timer =  Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { (timer) in
-            self.delegate?.buttonTapMeteo()
-            self.tableView.reloadData()
+            if Access_Allowed == 1 {
+//                reload = 2
+                self.delegate?.buttonTapMeteo()
+                self.tableView.reloadData()
+            }
         }
     }
     
@@ -87,15 +71,13 @@ class MeteoDataController: UIViewController {
     }
     fileprivate func createTableView() {
         let tableView = UITableView(frame: .zero, style: .plain)
-        tableView.separatorStyle = .singleLine
+        tableView.separatorStyle = .none
         self.view.sv(tableView)
         tableView.showsVerticalScrollIndicator = false
         tableView.height(screenH - (screenH / 12)).width(screenW)
 //        tableView.top(screenH / 12)
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 30)
         tableView.backgroundColor = UIColor(rgb: 0xECAFCC)
-
-        
         self.tableView = tableView
     }
     
@@ -139,7 +121,7 @@ extension MeteoDataController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "MeteoDataCell", for: indexPath) as? MeteoDataCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "MeteoDataCell", for: indexPath) as? MeteoDataCell
         cell?.selectionStyle = .none
 //        cell?.imageUI?.image = UIImage(named: "imageMeteo\(indexPath.row - 1)")
         cell?.labelTwo?.text = "\(arrayMeteo[indexPath.row])"
@@ -147,31 +129,13 @@ extension MeteoDataController: UITableViewDataSource {
         let cellViewModel = viewModel.cellViewModel(forIndexPath: indexPath)
         if indexPath.row == 0 {
             cell?.layer.cornerRadius = 40
-            cell?.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner] // Top right corner, Top left corner respectively
+            cell?.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner] 
         } else {
             cell?.layer.cornerRadius = 0
         }
-        cell = accessoryType(cell: tableViewCell)
         tableViewCell.viewModel = cellViewModel
 
         return tableViewCell
-    }
-    
-    func accessoryType(cell: MeteoDataCell) -> MeteoDataCell {
-        cell.accessoryType = .disclosureIndicator
-        cell.tintColor = .gray
-        let image = UIImage(named:"Arrow")?.withRenderingMode(.alwaysTemplate)
-        if let width = image?.size.width, let height = image?.size.height {
-            let disclosureImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: width, height: height))
-            disclosureImageView.image = image
-            cell.accessoryView = disclosureImageView
-        }
-        return cell
-    }
-    func accessoryTypeNone(cell: MeteoDataCell) -> MeteoDataCell {
-        cell.accessoryType = .none
-        cell.accessoryView = .none
-        return cell
     }
 }
 

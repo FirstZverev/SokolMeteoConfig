@@ -46,12 +46,13 @@ extension ConnectedMeteoController {
         }
     }
     
-    func animationError() {
+    func animationError(reloadInt : Int) {
         UIView.animate(withDuration: 0.5, animations: {
             self.aminationBefore()
         }) { (_) in
             self.animationAfter()
             self.animateOut()
+            reload = reloadInt
         }
     }
 }

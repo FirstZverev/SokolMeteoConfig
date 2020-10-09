@@ -47,6 +47,7 @@ class ConfiguratorFirstController : UIViewController {
         back.frame = CGRect(x: 10, y: 0 , width: 20, height: 20)
         back.center.y = backView.bounds.height / 3 * 2 - 1
         backView.addSubview(back)
+        backView.hero.id = "backView"
         return backView
     }()
     lazy var settingsLabel: UILabel = {

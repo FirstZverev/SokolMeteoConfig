@@ -19,6 +19,7 @@ class ConfiguratorSecondController : UIViewController {
         back.frame = CGRect(x: 10, y: 0 , width: 20, height: 20)
         back.center.y = backView.bounds.height / 3 * 2 - 1
         backView.addSubview(back)
+        backView.hero.id = "backView"
         return backView
     }()
     
@@ -35,7 +36,7 @@ class ConfiguratorSecondController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let customNavigationBar = createCustomNavigationBar(title: "ДОП. ДАТЧИКИ",fontSize: 16.0)
+        let customNavigationBar = createCustomNavigationBar(title: "ДОП. ДАТЧИКИ",fontSize: screenW / 22)
         self.hero.isEnabled = true
         view.sv(customNavigationBar)
         view.addSubview(backView)

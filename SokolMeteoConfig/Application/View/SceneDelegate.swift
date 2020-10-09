@@ -16,8 +16,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        window?.makeKeyAndVisible()
-        let vc = StartViewController()
+        Thread.sleep(forTimeInterval: 0.0)
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+
+        let vc = firstOpenApp(viewController: StartViewController(), viewControllerSecond: SwipingStartController(collectionViewLayout: layout))
         let navigationController = UINavigationController(rootViewController: vc)
         navigationController.hero.isEnabled = true
         navigationController.navigationBar.isHidden = true
@@ -57,7 +61,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Save changes in the application's managed object context when the application transitions to the background.
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
-
-
+    
+    func firstOpenApp(viewController: UIViewController,  viewControllerSecond:  UICollectionViewController) -> UIViewController {
+        let launchedBefore = UserDefaults.standard.bool(forKey: "launched")
+        if launchedBefore  {
+            return viewController
+        } else {
+            UserDefaults.standard.set(true, forKey: "launched")
+            return viewControllerSecond
+        }
+    }
 }
 

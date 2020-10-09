@@ -1,45 +1,58 @@
 PODS:
+  - AdvancedPageControl (0.1.4)
   - BottomPopup (0.6.0)
+  - Charts (3.6.0):
+    - Charts/Core (= 3.6.0)
+  - Charts/Core (3.6.0)
   - ESTabBarController-swift (2.8.0)
   - FSCalendar (2.8.1)
   - Hero (1.5.0)
-  - HorizonCalendar (1.3.1)
-  - lottie-ios (3.1.6)
-  - NVActivityIndicatorView (5.0.0):
-    - NVActivityIndicatorView/Base (= 5.0.0)
-  - NVActivityIndicatorView/Base (5.0.0)
+  - HorizonCalendar (1.5.0)
+  - lottie-ios (3.1.8)
+  - MXSegmentedControl (1.1.0)
+  - NVActivityIndicatorView (5.0.1):
+    - NVActivityIndicatorView/Base (= 5.0.1)
+  - NVActivityIndicatorView/Base (5.0.1)
   - RAMAnimatedTabBarController (5.2.0)
-  - RxBluetoothKit (5.3.0):
-    - RxSwift (~> 5.0)
-  - RxSwift (5.0.1)
+  - Realm (5.4.3):
+    - Realm/Headers (= 5.4.3)
+  - Realm/Headers (5.4.3)
+  - RealmSwift (5.4.3):
+    - Realm (= 5.4.3)
   - SteviaLayout (4.7.3)
   - UIDrawer (1.0)
 
 DEPENDENCIES:
+  - AdvancedPageControl
   - BottomPopup
+  - Charts
   - ESTabBarController-swift
   - FSCalendar
   - Hero
   - HorizonCalendar
   - lottie-ios
+  - MXSegmentedControl
   - NVActivityIndicatorView
   - RAMAnimatedTabBarController
-  - RxBluetoothKit
+  - RealmSwift
   - SteviaLayout
   - UIDrawer (from `https://github.com/Que20/UIDrawer.git`, tag `1.0`)
 
 SPEC REPOS:
   trunk:
+    - AdvancedPageControl
     - BottomPopup
+    - Charts
     - ESTabBarController-swift
     - FSCalendar
     - Hero
     - HorizonCalendar
     - lottie-ios
+    - MXSegmentedControl
     - NVActivityIndicatorView
     - RAMAnimatedTabBarController
-    - RxBluetoothKit
-    - RxSwift
+    - Realm
+    - RealmSwift
     - SteviaLayout
 
 EXTERNAL SOURCES:
@@ -53,19 +66,22 @@ CHECKOUT OPTIONS:
     :tag: '1.0'
 
 SPEC CHECKSUMS:
+  AdvancedPageControl: 2bb63992260869ef665e47da39001a432fb48c49
   BottomPopup: 1d5649a3b29396238f0e8f3c82075a7bfcf37ba7
+  Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
   ESTabBarController-swift: 05593a6ad64700b03c0eb60ff625916370aa4136
   FSCalendar: 5245140456fcbcac5824c203b98bd8068bdfee1a
   Hero: b7385b75e7259da62f4f85462f59a5082d66b058
-  HorizonCalendar: 1218c8f7aab67fdf522f9f04d106372ce05b8f52
-  lottie-ios: 85ce835dd8c53e02509f20729fc7d6a4e6645a0a
-  NVActivityIndicatorView: f109ed069924ac1b4adbc1ae9cfaeac0be1d6c2c
+  HorizonCalendar: 7ee0dad09d9240d6ac1582afdd5a5b43ee09796d
+  lottie-ios: 48fac6be217c76937e36e340e2d09cf7b10b7f5f
+  MXSegmentedControl: f39e46199a52cbc03b1c845e150215119f2542f5
+  NVActivityIndicatorView: 738e843cb8924e9e4fc3e559d0728031624bf860
   RAMAnimatedTabBarController: 6863a386e7ae2ab227cd60aa73ab8ff56cdacfdd
-  RxBluetoothKit: 0e781978e8a0df70ac3c611dcf44800b76c69f8a
-  RxSwift: e2dc62b366a3adf6a0be44ba9f405efd4c94e0c4
+  Realm: e3d5fcc50fd79ddf87a2d86301f6edbf57531f84
+  RealmSwift: db608068eccc54bce47928e8118bde13c120c307
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
   UIDrawer: 1bfbc152fee69f6809a41508000cf1b9bd4b1738
 
-PODFILE CHECKSUM: 0c58e936c218756fff5e79024d470b7753aabd58
+PODFILE CHECKSUM: c643640c3b2bb34db6258ee2858c3ba9fbeff3ee
 
 COCOAPODS: 1.8.4

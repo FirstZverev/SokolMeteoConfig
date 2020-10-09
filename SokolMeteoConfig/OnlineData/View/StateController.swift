@@ -14,7 +14,7 @@ class StateController: UIViewController {
     var viewModel: TableViewViewModelType?
     var timer = Timer()
     var delegate: StateDelegate?
-    let customNavigationBar = createCustomNavigationBar(title: "СОСТОЯНИЕ",fontSize: 16.0)
+    let customNavigationBar = createCustomNavigationBar(title: "СОСТОЯНИЕ",fontSize: screenW / 22)
 
     fileprivate lazy var backView: UIImageView = {
         let backView = UIImageView()
@@ -24,6 +24,7 @@ class StateController: UIViewController {
         back.frame = CGRect(x: 10, y: 0 , width: 20, height: 20)
         back.center.y = backView.bounds.height / 3 * 2 - 1
         backView.addSubview(back)
+        backView.hero.id = "backView"
         return backView
     }()
     
@@ -38,8 +39,10 @@ class StateController: UIViewController {
             self.tableView.reloadData()
         })
         timer =  Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { (timer) in
-            self.delegate?.buttonTapState()
-            self.tableView.reloadData()
+            if Access_Allowed == 1 {
+                self.delegate?.buttonTapState()
+                self.tableView.reloadData()
+            }
         }
     }
     
@@ -63,7 +66,7 @@ class StateController: UIViewController {
     }
     fileprivate func createTableView() {
         let tableView = UITableView(frame: .zero, style: .plain)
-        tableView.separatorStyle = .singleLine
+        tableView.separatorStyle = .none
         self.view.sv(tableView)
         tableView.showsVerticalScrollIndicator = false
         tableView.height(screenH - (screenH / 12)).width(screenW)
@@ -113,7 +116,7 @@ extension StateController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "StateCell", for: indexPath) as? StateCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "StateCell", for: indexPath) as? StateCell
         cell?.selectionStyle = .none
         cell?.labelTwo?.text = "\(arrayState[indexPath.row])"
         if indexPath.row == 0 {
@@ -124,24 +127,11 @@ extension StateController: UITableViewDataSource {
             cell?.layer.cornerRadius = 0
         }
         guard let tableViewCell = cell, let viewModel = viewModel else { return UITableViewCell() }
-        cell = accessoryType(cell: tableViewCell)
         let cellViewModel = viewModel.cellViewModel(forIndexPath: indexPath)
         
         tableViewCell.viewModel = cellViewModel
         
         return tableViewCell
-    }
-    
-    func accessoryType(cell: StateCell) -> StateCell {
-        cell.accessoryType = .disclosureIndicator
-        cell.tintColor = .gray
-        let image = UIImage(named:"Arrow")?.withRenderingMode(.alwaysTemplate)
-        if let width = image?.size.width, let height = image?.size.height {
-            let disclosureImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: width, height: height))
-            disclosureImageView.image = image
-            cell.accessoryView = disclosureImageView
-        }
-        return cell
     }
 }
 

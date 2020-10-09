@@ -50,6 +50,7 @@ class CustomAlert: UIView {
     }
     func customeizingContentView() {
         CustomTextField.backgroundColor = .lightGray
+        CustomTextField.tintColor = .purple
         ContentView.layer.cornerRadius = 20
     }
 }

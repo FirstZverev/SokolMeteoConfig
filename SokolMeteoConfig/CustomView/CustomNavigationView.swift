@@ -72,6 +72,7 @@ final class CustomNavigationView: UIView {
         self.layer.shadowOpacity = 0.2
         self.layer.shadowColor = UIColor(rgb: 0xB64894).cgColor
         self.layer.shadowOffset = CGSize.zero
+        
         let backgroundPath = UIBezierPath(rect: rect)
         backgroundPath.fill()
         

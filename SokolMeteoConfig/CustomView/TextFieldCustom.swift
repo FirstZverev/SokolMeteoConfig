@@ -13,7 +13,7 @@ class TextFieldWithPadding: UITextField {
         top: 0,
         left: 10,
         bottom: 0,
-        right: 0
+        right: 10
     )
     init(placeholder string: String) {
         super.init(frame: .zero)
@@ -23,6 +23,7 @@ class TextFieldWithPadding: UITextField {
         backgroundColor = .white
         layer.borderColor = UIColor(rgb: 0xE7E7E7).cgColor
         layer.borderWidth = 1.0
+        tintColor = .purple
         
     }
     

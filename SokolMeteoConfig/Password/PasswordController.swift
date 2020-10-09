@@ -7,93 +7,116 @@
 //
 
 import UIKit
+import MXSegmentedControl
 
-class PasswordController: UIViewController {
+class PasswordController: UIViewController, UITextFieldDelegate, UIScrollViewDelegate {
     
+    var delegatePassword: PasswordDelegate?
+//    var segmentedControl2: MXSegmentedControl!
+
+    fileprivate lazy var segmentedControl1: UISegmentedControl = {
+        let segmentedControl1 = UISegmentedControl(items: ["Пользовательский","Сервисный"])
+        segmentedControl1.selectedSegmentIndex = 0
+        segmentedControl1.backgroundColor = UIColor(rgb: 0xBE449E)
+        segmentedControl1.translatesAutoresizingMaskIntoConstraints = false
+        segmentedControl1.addTarget(self, action: #selector(segmentedValueChanged(_:)), for: .valueChanged)
+        return segmentedControl1
+    }()
+    
+    fileprivate lazy var segmentedControl2: MXSegmentedControl = {
+        let passwordFirst = MXSegmentedControl()
+        passwordFirst.append(title: "First")
+        passwordFirst.append(title: "Second")
+        passwordFirst.append(title: "Third")
+        passwordFirst.translatesAutoresizingMaskIntoConstraints = false
+        return passwordFirst
+    }()
     fileprivate lazy var passwordFirst: UILabel = {
-        let passwordFirst = UILabel(frame: CGRect(x: 30, y: 110, width: screenW - 50, height: 50))
+        let passwordFirst = UILabel()
         passwordFirst.text = "Сменить пароль на метеостанции"
         passwordFirst.textColor = .black
-        passwordFirst.font = UIFont(name:"FuturaPT-Medium", size: 20.0)
+        passwordFirst.numberOfLines = 0
+        passwordFirst.font = UIFont(name:"FuturaPT-Medium", size: screenW / 20)
         return passwordFirst
     }()
     
+    fileprivate func registerDelegateTextFields() {
+        passwordFieldThreed.delegate = self
+        passwordFieldFirst.delegate = self
+        passwordFieldSecond.delegate = self
+    }
+    
     fileprivate lazy var passwordSecond: UILabel = {
-        let password = UILabel(frame: CGRect(x: 30, y: 165, width: screenW - 50, height: 40))
+        let password = UILabel()
         password.text = "Старый пароль"
+        password.sizeToFit()
+        password.numberOfLines = 0
+        password.translatesAutoresizingMaskIntoConstraints = false
         password.textColor = .black
-        password.font = UIFont(name:"FuturaPT-Light", size: 18.0)
+        password.font = UIFont(name:"FuturaPT-Light", size: screenW / 22)
         return password
     }()
     
     fileprivate lazy var passwordThreed: UILabel = {
-        let password = UILabel(frame: CGRect(x: 30, y: 225, width: screenW - 50, height: 40))
+        let password = UILabel()
         password.text = "Новый пароль"
+        password.sizeToFit()
+        password.numberOfLines = 0
+        password.translatesAutoresizingMaskIntoConstraints = false
         password.textColor = .black
-        password.font = UIFont(name:"FuturaPT-Light", size: 18.0)
+        password.font = UIFont(name:"FuturaPT-Light", size: screenW / 22)
         return password
     }()
     
     fileprivate lazy var passwordFour: UILabel = {
-        let password = UILabel(frame: CGRect(x: 30, y: 285, width: screenW - 50, height: 40))
+        let password = UILabel()
         password.text = "Еще раз новый пароль"
+        password.sizeToFit()
+        password.numberOfLines = 0
+        password.translatesAutoresizingMaskIntoConstraints = false
         password.textColor = .black
-        password.font = UIFont(name:"FuturaPT-Light", size: 18.0)
+        password.font = UIFont(name:"FuturaPT-Light", size: screenW / 22)
         return password
     }()
     
     fileprivate lazy var passwordFieldFirst: UITextField = {
-        let input = UITextField(frame: CGRect(x: Int(screenW / 2), y: 160, width: Int(screenW / 2 - 30), height: 40))
-        input.text = ""
-        input.attributedPlaceholder = NSAttributedString(string: "Введите значение...", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 0.777, green: 0.777, blue: 0.777, alpha: 1.0)])
-        input.font = UIFont(name:"FuturaPT-Light", size: 18.0)
-        input.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 40))
-        input.layer.borderWidth = 1.0
-        input.layer.cornerRadius = 4.0
-        input.textColor = .black
-        input.keyboardAppearance = .alert
-        input.layer.borderColor = UIColor(rgb: 0x959595).cgColor
-        input.backgroundColor = .clear
-        input.leftViewMode = .always
-        input.keyboardType = UIKeyboardType.decimalPad
+        let input = TextFieldWithPadding(placeholder: "Введите значение...")
+        input.text = mainPassword
+        input.isSecureTextEntry = true
+        input.translatesAutoresizingMaskIntoConstraints = false
+        input.keyboardAppearance = .light
+        input.keyboardType = UIKeyboardType.numberPad
+        input.font = UIFont(name:"FuturaPT-Light", size: screenW / 22)
         input.addTarget(self, action: #selector(self.textFieldDidMax(_:)),for: UIControl.Event.editingChanged)
         return input
     }()
     
     fileprivate lazy var passwordFieldSecond: UITextField = {
-        let input = UITextField(frame: CGRect(x: Int(screenW / 2), y: 220, width: Int(screenW / 2 - 30), height: 40))
-        input.text = ""
-        input.attributedPlaceholder = NSAttributedString(string: "Введите значение...", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 0.777, green: 0.777, blue: 0.777, alpha: 1.0)])
-        input.font = UIFont(name:"FuturaPT-Light", size: 18.0)
-        input.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 40))
-        input.layer.borderWidth = 1.0
-        input.layer.cornerRadius = 4.0
-        input.textColor = .black
+        let input = TextFieldWithPadding(placeholder: "Введите значение...")
+        input.isSecureTextEntry = true
         input.keyboardAppearance = .light
-        input.layer.borderColor = UIColor(rgb: 0x959595).cgColor
-        input.backgroundColor = .clear
-        input.leftViewMode = .always
-        input.keyboardType = UIKeyboardType.decimalPad
+        input.translatesAutoresizingMaskIntoConstraints = false
+        input.keyboardType = UIKeyboardType.numberPad
+        input.font = UIFont(name:"FuturaPT-Light", size: screenW / 22)
         input.addTarget(self, action: #selector(self.textFieldDidMax(_:)),for: UIControl.Event.editingChanged)
         return input
     }()
     
     fileprivate lazy var passwordFieldThreed: UITextField = {
-        let input = UITextField(frame: CGRect(x: Int(screenW / 2), y: 280, width: Int(screenW / 2 - 30), height: 40))
-        input.text = ""
-        input.attributedPlaceholder = NSAttributedString(string: "Введите значение...", attributes: [NSAttributedString.Key.foregroundColor: UIColor(red: 0.777, green: 0.777, blue: 0.777, alpha: 1.0)])
-        input.font = UIFont(name:"FuturaPT-Light", size: 18.0)
-        input.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 40))
-        input.layer.borderWidth = 1.0
-        input.layer.cornerRadius = 4.0
-        input.textColor = .black
-        input.keyboardAppearance = .dark
-        input.layer.borderColor = UIColor(rgb: 0x959595).cgColor
-        input.backgroundColor = .clear
-        input.leftViewMode = .always
-        input.keyboardType = UIKeyboardType.decimalPad
+        let input = TextFieldWithPadding(placeholder: "Введите значение...")
+        input.isSecureTextEntry = true
+        input.keyboardAppearance = .light
+        input.translatesAutoresizingMaskIntoConstraints = false
+        input.keyboardType = UIKeyboardType.numberPad
+        input.font = UIFont(name:"FuturaPT-Light", size: screenW / 22)
         input.addTarget(self, action: #selector(self.textFieldDidMax(_:)),for: UIControl.Event.editingChanged)
         return input
+    }()
+    
+    lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
     }()
     
     @objc func textFieldDidMax(_ textField: UITextField) {
@@ -105,60 +128,181 @@ class PasswordController: UIViewController {
             textField.deleteBackward()
         }
     }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
     
-    fileprivate lazy var passwordSet: UIView = {
-        let btn = UIView(frame: CGRect(x: 30, y: 340, width: Int(screenW - 60), height: 44))
-        btn.backgroundColor = UIColor(rgb: 0xCF2121)
-        btn.layer.cornerRadius = 22
-        
-        let btnText = UILabel(frame: CGRect(x: 0, y: 0, width: Int(screenW - 60), height: 44))
-        btnText.text = "Установить"
-        btnText.textColor = .white
-        btnText.font = UIFont(name:"FuturaPT-Medium", size: 16.0)
-        btnText.textAlignment = .center
-        btn.addSubview(btnText)
+    fileprivate lazy var passwordSet: UIButton = {
+        let btn = UIButton(frame: CGRect(x: 30, y: Int(screenH) - 100, width: Int(screenW / 2), height: 44))
+        btn.center.x = screenW / 2
+        btn.backgroundColor = UIColor(rgb: 0xBE449E)
+        btn.layer.cornerRadius = 20
+        btn.setTitle("Установить", for: .normal)
+        btn.titleLabel?.font = UIFont(name: "FuturaPT-Medium", size: screenW / 20)
+        btn.addTarget(self, action: #selector(tapPasswordSet), for: .touchUpInside)
         return btn
     }()
     
     fileprivate lazy var backView: UIImageView = {
         let backView = UIImageView()
-        backView.frame = CGRect(x: 0, y: 35, width: 50, height: 50)
+        backView.frame = CGRect(x: 0, y: screenH / 12 - 50, width: 50, height: 50)
         let back = UIImageView(image: UIImage(named: "back")!)
         back.image = back.image!.withRenderingMode(.alwaysTemplate)
-        back.frame = CGRect(x: 15, y: 0 , width: 8, height: 19)
-        back.center.y = backView.bounds.height/2
+        back.frame = CGRect(x: 10, y: 0 , width: 20, height: 20)
+        back.center.y = backView.bounds.height / 3 * 2 - 1
         backView.addSubview(back)
+        backView.hero.id = "backView"
         return backView
+    }()
+    
+    lazy var passwordView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 10
+        view.layer.shadowColor = UIColor(rgb: 0xB64894).cgColor
+        view.layer.shadowRadius = 4.0
+        view.layer.shadowOpacity = 0.1
+        view.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    lazy var passwordViewService: UIView = {
+        let view = UIView(frame: CGRect(x: screenW, y: 10, width: screenW - 40, height: 212))
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 10
+        view.layer.shadowColor = UIColor(rgb: 0xB64894).cgColor
+        view.layer.shadowRadius = 4.0
+        view.layer.shadowOpacity = 0.1
+        view.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
+//        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        let customNavigationBar = createCustomNavigationBar(title: "ПАРОЛЬ",fontSize: 16.0)
         self.hero.isEnabled = true
+        scrollView.delegate = self
+        let customNavigationBar = createCustomNavigationBar(title: "ПАРОЛЬ",fontSize: screenW / 22)
         customNavigationBar.hero.id = "PasswordToMeteo"
 
 
-        view.sv(
-            customNavigationBar
-        )
+        view.sv(customNavigationBar, scrollView)
+        registerDelegateTextFields()
         showView()
+        
     }
     
     func showView() {
-        view.addSubview(passwordFirst)
-        view.addSubview(passwordFieldFirst)
-        view.addSubview(passwordFieldSecond)
-        view.addSubview(passwordFieldThreed)
-        view.addSubview(passwordSecond)
-        view.addSubview(passwordThreed)
-        view.addSubview(passwordFour)
         view.addSubview(passwordSet)
         backView.tintColor = .black
         view.addSubview(backView)
+        view.addSubview(segmentedControl1)
+        
+        segmentedControl1.topAnchor.constraint(equalTo: view.topAnchor, constant: screenH / 12 + 5).isActive = true
+        segmentedControl1.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        segmentedControl1.widthAnchor.constraint(equalToConstant: screenW - 10).isActive = true
+        segmentedControl1.heightAnchor.constraint(equalToConstant: screenH / 20).isActive = true
+
+        scrollView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive = true
+        scrollView.topAnchor.constraint(equalTo: segmentedControl1.bottomAnchor, constant: 10).isActive = true
+        scrollView.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10).isActive = true
+        
+        scrollView.contentSize = CGSize(width: Int(screenW * 2 - 20), height: Int(screenH) / 2)
+        
+        scrollView.sv(passwordView)
+        scrollView.isPagingEnabled = true
+        passwordView.sv(passwordFirst, passwordThreed, passwordFour, passwordFieldSecond, passwordFieldThreed)
+        
+        passwordView.width(screenW - 40).left(10).topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10).isActive = true
+        passwordView.bottomAnchor.constraint(equalTo: passwordFieldThreed.bottomAnchor, constant: 20).isActive = true
+        
+        passwordFirst.left(10).right(10).topAnchor.constraint(equalTo: passwordView.topAnchor, constant: 15).isActive = true
+
+//        passwordFieldFirst.height(50).right(10).topAnchor.constraint(equalTo: passwordFirst.bottomAnchor, constant: 30).isActive = true
+//        passwordFieldFirst.leadingAnchor.constraint(equalTo: passwordSecond.trailingAnchor, constant: 10).isActive = true
+
+//        passwordSecond.left(10).centerYAnchor.constraint(equalTo: passwordFieldFirst.centerYAnchor).isActive = true
+
+        passwordFieldSecond.height(50).right(10).topAnchor.constraint(equalTo: passwordFirst.bottomAnchor, constant: 30).isActive = true
+        passwordFieldSecond.leadingAnchor.constraint(equalTo: passwordThreed.trailingAnchor, constant: 10).isActive = true
+
+        passwordThreed.left(10).centerYAnchor.constraint(equalTo: passwordFieldSecond.centerYAnchor).isActive = true
+
+        passwordFieldThreed.height(50).right(10).topAnchor.constraint(equalTo: passwordFieldSecond.bottomAnchor, constant: 20).isActive = true
+        passwordFieldThreed.leadingAnchor.constraint(equalTo: passwordFour.trailingAnchor, constant: 10).isActive = true
+
+        passwordFour.left(10).centerYAnchor.constraint(equalTo: passwordFieldThreed.centerYAnchor).isActive = true
+
+//        passwordFour.backgroundColor = .green
+        scrollView.addSubview(passwordViewService)
+        
+//        passwordViewService.width(screenW - 40).topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10).isActive = true
+//        passwordViewService.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -20).isActive = true
+//        passwordViewService.bottomAnchor.constraint(equalTo: passwordSet.bottomAnchor, constant: 20).isActive = true
+
+
         
         backView.addTapGesture{
             self.navigationController?.popViewController(animated: true)
         }
+        scrollView.addTapGesture {
+            self.scrollView.endEditing(true)
+        }
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.layer.borderColor = UIColor(rgb: 0xF06BCD).cgColor
+        textField.layer.shadowColor = UIColor(rgb: 0xB64894).cgColor
+        textField.layer.shadowRadius = 3.0
+        textField.layer.shadowOpacity = 0.5
+        textField.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.layer.borderColor = UIColor(rgb: 0xE7E7E7).cgColor
+        textField.layer.shadowOpacity = 0.0
+    }
+    
+    @objc func tapPasswordSet() {
+        
+        reload = 25 + segmentedControl1.selectedSegmentIndex
+        newPassword = passwordFieldSecond.text ?? "123"
+        delegatePassword?.buttonTapPassword()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        reload = 27
+        self.delegatePassword?.buttonTapPassword()
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        scrollView.endEditing(true)
+        let w = scrollView.frame.size.width
+        let page = scrollView.contentOffset.x / w
+        segmentedControl1.selectedSegmentIndex = Int(round(page))
+        passwordSet.backgroundColor = .lightGray
+        passwordSet.isEnabled = false
+        print(page)
+        if page >= 1 || page <= 0 {
+            passwordSet.backgroundColor = UIColor(rgb: 0xBE449E)
+            passwordSet.isEnabled = true
+        }
+    }
+//
+//    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//        let w = scrollView.frame.size.width
+//        let page = scrollView.contentOffset.x / w
+//        scrollView.setContentOffset(CGPoint(x: Int(scrollView.frame.size.width + 20) * Int(round(page)), y: 0), animated: true)
+//    }
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        let w = scrollView.frame.size.width
+//        let page = scrollView.contentOffset.x / w
+//        scrollView.setContentOffset(CGPoint(x: Int(scrollView.frame.size.width + 20) * Int(round(page)), y: 0), animated: true)
+//    }
+    
+    @objc func segmentedValueChanged(_ sender:UISegmentedControl!) {
+        let x = scrollView.frame.size.width * CGFloat(sender.selectedSegmentIndex)
+        scrollView.setContentOffset(CGPoint(x: x, y: 0), animated: true)
     }
 }

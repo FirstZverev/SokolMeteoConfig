@@ -13,8 +13,8 @@ class ViewModelMeteoData: TableViewViewModelType {
     private var selectedIndexPath: IndexPath?
     
     var menuMain = [
-            Menu(id: 2, name: "Температура", image: "temperature"),
-            Menu(id: 3, name: "Напрявление ветра", image: "wind"),
+        Menu(id: 2, name: "Температура", image: "temperature", rssi: arrayState[2]),
+            Menu(id: 3, name: "Направление ветра", image: "wind"),
             Menu(id: 4, name: "Скорость ветра", image: "wind-1"),
             Menu(id: 5, name: "Порыв ветра", image: "wind-2"),
             Menu(id: 6, name: "Атмосферное давление", image: "press"),

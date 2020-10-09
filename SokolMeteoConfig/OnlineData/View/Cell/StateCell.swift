@@ -13,6 +13,7 @@ class StateCell: UITableViewCell {
     var label: UILabel?
     var imageUI: UIImageView?
     var labelTwo: UILabel?
+    var separator: UIView!
 
     weak var viewModel: TableViewCellViewModelType? {
         willSet(viewModel) {
@@ -36,7 +37,7 @@ class StateCell: UITableViewCell {
         backgroundColor = .white
 
         let label = UILabel()
-        label.font = UIFont(name:"FuturaPT-Light", size: 20.0)
+        label.font = UIFont(name:"FuturaPT-Light", size: screenW / 21)
         label.textAlignment = .left
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -45,7 +46,7 @@ class StateCell: UITableViewCell {
         self.label = label
         
         let labelTwo = UILabel()
-        labelTwo.font = UIFont(name:"FuturaPT-Medium", size: 20.0)
+        labelTwo.font = UIFont(name:"FuturaPT-Medium", size: screenW / 21)
         labelTwo.textAlignment = .right
         labelTwo.textColor = .black
         labelTwo.text = "\(QGSM)"
@@ -56,22 +57,46 @@ class StateCell: UITableViewCell {
         
         let imageUI = UIImageView()
         imageUI.translatesAutoresizingMaskIntoConstraints = false
-
         self.contentView.addSubview(imageUI)
         self.imageUI = imageUI
+        
+        let separator = UIView()
+        separator.backgroundColor = UIColor(rgb: 0xECECEC)
+        separator.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(separator)
+        self.separator = separator
         
         NSLayoutConstraint.activate([
             self.contentView.topAnchor.constraint(equalTo: self.label!.topAnchor, constant: -20),
             self.contentView.bottomAnchor.constraint(equalTo: self.label!.bottomAnchor, constant: 20),
-            self.contentView.leadingAnchor.constraint(equalTo: self.label!.leadingAnchor, constant: -70),
-            self.contentView.trailingAnchor.constraint(equalTo: self.label!.trailingAnchor, constant: 70),
-            
             self.contentView.topAnchor.constraint(equalTo: self.labelTwo!.topAnchor, constant: -20),
             self.contentView.bottomAnchor.constraint(equalTo: self.labelTwo!.bottomAnchor, constant: 20),
-            self.contentView.leadingAnchor.constraint(equalTo: self.labelTwo!.leadingAnchor, constant: -screenW / 2),
-            self.contentView.trailingAnchor.constraint(equalTo: self.labelTwo!.trailingAnchor, constant: 15),
+
+            self.label!.leadingAnchor.constraint(equalTo: self.imageUI!.trailingAnchor, constant: 7),
+            self.label!.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+//            self.label!.trailingAnchor.constraint(equalTo: self.labelTwo!.leadingAnchor, constant: -30),
+            self.label!.widthAnchor.constraint(equalToConstant: screenW / 2),
+
+            self.labelTwo!.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            self.labelTwo!.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
+            self.labelTwo!.leadingAnchor.constraint(equalTo: self.label!.trailingAnchor),
+
+            
             self.imageUI!.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
-            self.imageUI!.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 15)
+            self.imageUI!.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 15),
+            self.imageUI!.heightAnchor.constraint(equalToConstant: 40),
+            self.imageUI!.widthAnchor.constraint(equalToConstant: 40),
+            
+//            self.nextImage!.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
+//            self.nextImage!.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+//            self.nextImage!.heightAnchor.constraint(equalToConstant: 25),
+//            self.nextImage!.widthAnchor.constraint(equalToConstant: 25),
+            
+            self.separator!.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
+            self.separator!.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
+            self.separator!.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 30),
+            self.separator!.heightAnchor.constraint(equalToConstant: 2),
+
 
         ])
     }

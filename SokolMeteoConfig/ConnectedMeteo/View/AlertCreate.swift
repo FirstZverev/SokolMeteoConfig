@@ -11,11 +11,13 @@ import UIKit
 extension ConnectedMeteoController: AlertDelegate {
     func buttonClose() {
         animateOut()
+        let  vc =  self.navigationController?.viewControllers.filter({$0 is ConnectedMeteoController}).first
+        self.navigationController?.popToViewController(vc!, animated: true)
     }
     
     func buttonTapped() {
         reload = 0
-        animationError()
+        animationError(reloadInt : 2)
         mainPassword = alertView.CustomTextField.text ?? ""
         delegate?.buttonTap()
 //        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute:{

@@ -45,7 +45,7 @@ class ConfiguratorBMVDSecondController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        let customNavigationBar = createCustomNavigationBar(title: "КОНФИГУРАЦИЯ БМВД",fontSize: 16.0)
+        let customNavigationBar = createCustomNavigationBar(title: "КОНФИГУРАЦИЯ БМВД",fontSize: screenW / 22)
         self.hero.isEnabled = true
         createTableView()
         registerCell()

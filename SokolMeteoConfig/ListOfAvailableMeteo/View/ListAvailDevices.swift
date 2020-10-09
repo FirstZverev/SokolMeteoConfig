@@ -9,6 +9,7 @@
 import UIKit
 import CoreBluetooth
 import NVActivityIndicatorView
+import RealmSwift
 
 struct cellDataDU {
     var opened = Bool()
@@ -86,22 +87,50 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
             print("ON Работает.")
         }
         else {
+            if #available(iOS 13.0, *) {
+                switch central.authorization {
+                case .allowedAlways: print("allowedAlways")
+                case .denied:
+                    let alert = UIAlertController(title: "У вас запрещен доступ к Bluetooth", message: "Для дальнейшей работы необходимо разрешить работу с Bluetooth", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "Настройки", style: .default, handler: { action in
+                        switch action.style{
+                        case .default:
+                            UIApplication.shared.open(URL.init(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+                            print("default")
+                            self.navigationController?.popViewController(animated: true)
+                            self.view.subviews.forEach({ $0.removeFromSuperview() })
+                        case .cancel:
+                            print("cancel")
+                        case .destructive:
+                            print("destructive")
+                        @unknown default:
+                            fatalError()
+                        }}))
+                    self.present(alert, animated: true, completion: nil)
+                case .restricted:print("restricted")
+                case .notDetermined:print("notDetermined")
+                @unknown default:
+                    print("")
+                }
+            } else {
+                // Fallback on earlier versions
+            }
+//                        UIApplication.shared.open(URL.init(string: UIApplication.openSettingsURLString)!, options: [:], completionHandler: nil)
+//            UIApplication.shared.open(URL(string: "App-prefs:Bluetooth")!)
+
             print("Bluetooth OFF.")
-            let alert = UIAlertController(title: "Bluetooth off", message: "For further work, you must enable Bluetooth", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+            let alert = UIAlertController(title: "Bluetooth выключен", message: "Для дальнейшей работы необходимо включить Bluetooth", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Настройки", style: .default, handler: { action in
                 switch action.style{
                 case .default:
+                    UIApplication.shared.open(URL(string: "App-prefs:Bluetooth")!)
                     print("default")
                     self.navigationController?.popViewController(animated: true)
                     self.view.subviews.forEach({ $0.removeFromSuperview() })
-                    
                 case .cancel:
                     print("cancel")
-                    
                 case .destructive:
                     print("destructive")
-                    
-                    
                 @unknown default:
                     fatalError()
                 }}))
@@ -242,13 +271,23 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
         RSSIMain = "\(RSSI)"
     }
     func buttonTap() {
-        stringAll.removeAll()
+        if reload != 6 {
+            stringAll.removeAll()
+        }
         peripheral(a, didDiscoverCharacteristicsFor: b, error: nil)
         print("Password ENTER")
     }
     func centralManager(
         _ central: CBCentralManager,
         didConnect peripheral: CBPeripheral) {
+        
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        if let navController = self.navigationController {
+            Access_Allowed = 0
+            navController.pushViewController(self.connectedMeteoVC, animated: true)
+        }
+        self.viewAlpha.removeFromSuperview()
+        self.cancelLabel.isHidden = true
         
         peripheral.delegate = self
         peripheral.discoverServices(nil)
@@ -282,25 +321,30 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
     }
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         for service in peripheral.services! {
-            stringAll = ""
+            if reload != 6 {
+                stringAll = ""
+            }
             peripheral.discoverCharacteristics(nil, for: service)
         }
     }
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { 
             a = peripheral
             b = service
             let valueAll = "PWD_USER,\(mainPassword)\r\n"
+            let changePassword = "PWD_CHANGE_USER,\(newPassword)\r\n"
+            let changePasswordService = "PWD_CHANGE_SERVICE,\(newPassword)\r\n"
             let valueAll1 = "Get_State"
             let valueOnline = "Get_Mes"
             let blackBox = "Get_BB,\(dateFirst)"
             let blackBoxBreak = "BREAK"
+            let getIMEI = "Get_IMEI\r\n"
             let configSet = "Set,KSPW:3:8002,KSRV:3:tcp.sokolmeteo.com,KPBM:1:30,KCNL:1:4,KBCH:1:0,"
             let configSetNext = "KPWD:3:beeline,KPAK:1:30,KPOR:3:8002,KAPI:3:m2m.beeline.ru"
             let configGet = "Get,B0E,B0M,B0G,B1E,B1M,B1G,B2E,B2M,B2G,"
             let configGetNext = "B3E,B3M,B3G,B4E,B4M,B4G,B5E,B5M,B5G,B6E,B6M,B6G,B7E,B7M,B7G"
             let blackBoxNumber = ",\(dateLast)"
-            let valueNex = "\r"
+//            let valueNex = "\r"
             let valueNext = "\r\n"
             let valueReload = "PR,PW:1:\(mainPassword)"
             let FullReload = "SH,PW:1:"
@@ -327,8 +371,11 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
             print("passInstall: \(passInstall)")
             
             let dataAll = Data(valueAll.utf8)
+            let dataChangePassword = Data(changePassword.utf8)
+            let dataChangePasswordService = Data(changePasswordService.utf8)
+
             let dataAll1 = Data(valueAll1.utf8)
-            _ = Data(valueNex.utf8)
+            let dataGetIMEI = Data(getIMEI.utf8)
             let dataAllNext = Data(valueNext.utf8)
             
             let dataOnline = Data(valueOnline.utf8)
@@ -391,12 +438,8 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
             if reload == 1{
                 for characteristic in service.characteristics! {
                     if characteristic.properties.contains(.write) {
-                        print("Свойство \(characteristic.uuid): .write")
-                        
                         peripheral.writeValue(dataAll1, for: characteristic, type: .withoutResponse)
                         peripheral.writeValue(dataAllNext, for: characteristic, type: .withResponse)
-                        print("State")
-//                        peripheral.writeValue(dataR, for: characteristic, type: .withResponse)
                     }
                 }
             }
@@ -474,7 +517,7 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
                     }
                 }
             }
-            if reload == 6{
+            if reload == 60{
                 for characteristic in service.characteristics! {
                     if characteristic.properties.contains(.write) {
                         print("Свойство \(characteristic.uuid): .write")
@@ -595,6 +638,37 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
                     }
                 }
             }
+            if reload == 25 {
+                for characteristic in service.characteristics! {
+                    if characteristic.properties.contains(.write) {
+                        print("Свойство \(characteristic.uuid): .write")
+                        
+                        peripheral.writeValue(dataChangePassword, for: characteristic, type: .withResponse)
+                        mainPassword = newPassword
+                    }
+                }
+                reload = -1
+            }
+            if reload == 26 {
+                for characteristic in service.characteristics! {
+                    if characteristic.properties.contains(.write) {
+                        print("Свойство \(characteristic.uuid): .write")
+                        peripheral.writeValue(dataChangePasswordService, for: characteristic, type: .withResponse)
+                        mainPassword = newPassword
+                    }
+                }
+                reload = -1
+            }
+            if reload == 27 {
+                for characteristic in service.characteristics! {
+                    if characteristic.properties.contains(.write) {
+                        print("Свойство \(characteristic.uuid): .write")
+                        
+                        peripheral.writeValue(dataGetIMEI, for: characteristic, type: .withResponse)
+                    }
+                }
+                reload = -1
+            }
         }
 ///
     }
@@ -603,8 +677,9 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
     
     let string: String = ""
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        DispatchQueue.main.async { [self] in
         peripheral.readRSSI()
-        print("READ: \(characteristic)")
+//        print("READ: \(characteristic)")
         let rxData = characteristic.value
         if let rxData = rxData {
             let numberOfBytes = rxData.count
@@ -612,381 +687,381 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
             (rxData as NSData).getBytes(&rxByteArray, length: numberOfBytes)
             let string = String(data: Data(rxByteArray), encoding: .utf8)
             stringAll = stringAll + string!
-            print(stringAll)
+            print(string!)
             let result = stringAll.components(separatedBy: [":",";",",","\r","\n"])
-            if result.count >= 0 {
-                if ((string?.contains("End Transmit")) == true) {
+            if result.contains("Begin Transmit") == true {
+                if result.contains("End Transmit") == true {
+                    dataBoxAll = "\(result)"
+                    stringAll.removeAll()
                     stringAllCountBlackBox = stringAll.components(separatedBy: "\r\n").count
                     print("stringAllCountBlackBox: \(stringAllCountBlackBox)")
+                    print(result)
                 }
-                print(result)
-                if result.contains("Access_Denied") {
-                    connectedMeteoVC.setAlert()
-                    connectedMeteoVC.animateIn()
-                }
-                if result.contains("QTIM") {
-                    let indexOfPerson = result.firstIndex{$0 == "QTIM"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        guard let a = Double(result[indexOfPerson! + 2]) else {return}
-                        let date = Date(timeIntervalSince1970: a)
-                        let dateFormatter = DateFormatter()
-                        dateFormatter.timeStyle = DateFormatter.Style.medium //Set time style
-                        dateFormatter.dateStyle = DateFormatter.Style.medium //Set date style
-                        dateFormatter.timeZone = .current
-                        let localDate = dateFormatter.string(from: date)
-                        QTIM = "\(localDate)"
-                        print("QTIM: \(QTIM)")
+            } else {
+                countBMVD = 0
+                if result.count >= 0 {
+                    print(result)
+                    if result.contains("Access_Denied") {
+                        connectedMeteoVC.setAlert()
+                        connectedMeteoVC.animateIn()
+                        Access_Allowed = 0
                     }
-                }
-                if result.contains("QTIMQTIM") {
-                    let indexOfPerson = result.firstIndex{$0 == "QTIMQTIM"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        QTIM = "\(result[indexOfPerson! + 2])"
-                        print("QTIMQTIM: \(QTIM)")
+                    if result.contains("Access_Allowed") {
+                        Access_Allowed = 1
                     }
-                }
-                if result.contains("QGSM") {
-                    let indexOfPerson = result.firstIndex{$0 == "QGSM"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        QGSM = "\(result[indexOfPerson! + 2])"
-                        print("QGSM: \(QGSM)")
+                    if result.contains("QTIM") {
+                        let indexOfPerson = result.firstIndex{$0 == "QTIM"}
+                        if result.count > indexOfPerson! + 2 {
+                            guard let a = Double(result[indexOfPerson! + 2]) else {return}
+                            let date = Date(timeIntervalSince1970: a)
+                            let dateFormatter = DateFormatter()
+                            dateFormatter.timeStyle = DateFormatter.Style.medium
+                            dateFormatter.dateStyle = DateFormatter.Style.medium
+                            dateFormatter.timeZone = .current
+                            let localDate = dateFormatter.string(from: date)
+                            QTIM = "\(localDate)"
+                            //                        print("QTIM: \(QTIM)")
+                        }
                     }
-                }
-                if result.contains("TRAF") {
-                    let indexOfPerson = result.firstIndex{$0 == "TRAF"}
-                    if result.count > indexOfPerson! + 2 {
-                        TRAF = "\(result[indexOfPerson! + 2])"
+                    if result.contains("QTIMQTIM") {
+                        let indexOfPerson = result.firstIndex{$0 == "QTIMQTIM"}
+                        if result.count > indexOfPerson! + 2 {
+                            QTIM = "\(result[indexOfPerson! + 2])"
+                            //                        print("QTIMQTIM: \(QTIM)")
+                        }
                     }
-                }
-                if result.contains("QGPS") {
-                    let indexOfPerson = result.firstIndex{$0 == "QGPS"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        QGPS = "\(result[indexOfPerson! + 2])"
-                        print("QGPS: \(QGPS)")
+                    if result.contains("QGSM") {
+                        let indexOfPerson = result.firstIndex{$0 == "QGSM"}
+                        if result.count > indexOfPerson! + 2 {
+                            QGSM = "\(result[indexOfPerson! + 2])"
+                            //                        print("QGSM: \(QGSM)")
+                        }
                     }
-                }
-                if result.contains("QAZI") {
-                    let indexOfPerson = result.firstIndex{$0 == "QAZI"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        QAZI = "\(result[indexOfPerson! + 2])"
-                        print("QAZI: \(QAZI)")
+                    if result.contains("TRAF") {
+                        let indexOfPerson = result.firstIndex{$0 == "TRAF"}
+                        if result.count > indexOfPerson! + 2 {
+                            TRAF = "\(result[indexOfPerson! + 2])"
+                        }
                     }
-                }
-                if result.contains("QPRO") {
-                    let indexOfPerson = result.firstIndex{$0 == "QPRO"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        QPRO = "\(result[indexOfPerson! + 2])"
-                        print("QPRO: \(QPRO)")
+                    if result.contains("QGPS") {
+                        let indexOfPerson = result.firstIndex{$0 == "QGPS"}
+                        if result.count > indexOfPerson! + 2 {
+                            QGPS = "\(result[indexOfPerson! + 2])"
+                            //                        print("QGPS: \(QGPS)")
+                        }
                     }
-                }
-                if result.contains("QPOP") {
-                    let indexOfPerson = result.firstIndex{$0 == "QPOP"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        QPOP = "\(result[indexOfPerson! + 2])"
-                        print("QPOP: \(QPOP)")
+                    if result.contains("QAZI") {
+                        let indexOfPerson = result.firstIndex{$0 == "QAZI"}
+                        if result.count > indexOfPerson! + 2 {
+                            QAZI = "\(result[indexOfPerson! + 2])"
+                            //                        print("QAZI: \(QAZI)")
+                        }
                     }
-                }
-                if result.contains("QBKN") {
-                    let indexOfPerson = result.firstIndex{$0 == "QBKN"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        QBKN = "\(result[indexOfPerson! + 2])"
-                        print("QBKN: \(QBKN)")
+                    if result.contains("QPRO") {
+                        let indexOfPerson = result.firstIndex{$0 == "QPRO"}
+                        if result.count > indexOfPerson! + 2 {
+                            QPRO = "\(result[indexOfPerson! + 2])"
+                            //                        print("QPRO: \(QPRO)")
+                        }
                     }
-                }
-                if result.contains("QPAK") {
-                    let indexOfPerson = result.firstIndex{$0 == "QPAK"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        QPAK = "\(result[indexOfPerson! + 2])"
-                        print("QPAK: \(QPAK)")
+                    if result.contains("QPOP") {
+                        let indexOfPerson = result.firstIndex{$0 == "QPOP"}
+                        if result.count > indexOfPerson! + 2 {
+                            QPOP = "\(result[indexOfPerson! + 2])"
+                            //                        print("QPOP: \(QPOP)")
+                        }
                     }
-                }
-                if result.contains("QBMT") {
-                    let indexOfPerson = result.firstIndex{$0 == "QBMT"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        QBMT = "\(result[indexOfPerson! + 2])"
-                        print("QBMT: \(QBMT)")
+                    if result.contains("QBKN") {
+                        let indexOfPerson = result.firstIndex{$0 == "QBKN"}
+                        if result.count > indexOfPerson! + 2 {
+                            QBKN = "\(result[indexOfPerson! + 2])"
+                            //                        print("QBKN: \(QBKN)")
+                        }
                     }
-                }
-                if result.contains("QEVS") {
-                    let indexOfPerson = result.firstIndex{$0 == "QEVS"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        QEVS = "\(result[indexOfPerson! + 2])"
-                        print("QEVS: \(QEVS)")
+                    if result.contains("QPAK") {
+                        let indexOfPerson = result.firstIndex{$0 == "QPAK"}
+                        if result.count > indexOfPerson! + 2 {
+                            QPAK = "\(result[indexOfPerson! + 2])"
+                            //                        print("QPAK: \(QPAK)")
+                        }
                     }
-                }
-                arrayState[0] = QTIM
-                arrayState[1] = QGSM
-                arrayState[2] = QGPS
-                arrayState[3] = QAZI
-                arrayState[4] = QPRO
-                arrayState[5] = QPOP
-                arrayState[6] = QBKN
-                arrayState[7] = QPAK
-                arrayState[8] = QBMT
-                arrayState[9] = QTIM
-
-                if result.contains("UpoUpow") {
-                    let indexOfPerson = result.firstIndex{$0 == "UpoUpow"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        Upow = "\(result[indexOfPerson! + 2])"
-                        print("Upow: \(Upow)")
+                    if result.contains("QBMT") {
+                        let indexOfPerson = result.firstIndex{$0 == "QBMT"}
+                        if result.count > indexOfPerson! + 2 {
+                            QBMT = "\(result[indexOfPerson! + 2])"
+                            //                        print("QBMT: \(QBMT)")
+                        }
                     }
-                }
-                if result.contains("Upow") {
-                    let indexOfPerson = result.firstIndex{$0 == "Upow"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        Upow = "\(result[indexOfPerson! + 2])"
-                        print("Upow: \(Upow)")
+                    if result.contains("QEVS") {
+                        let indexOfPerson = result.firstIndex{$0 == "QEVS"}
+                        if result.count > indexOfPerson! + 2 {
+                            QEVS = "\(result[indexOfPerson! + 2])"
+                            //                        print("QEVS: \(QEVS)")
+                        }
                     }
-                }
-                if result.contains("t") {
-                    let indexOfPerson = result.firstIndex{$0 == "t"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        t = "\(result[indexOfPerson! + 2])"
-                        print("t: \(t)")
-                    }
-                }
-                if result.contains("WD") {
-                    let indexOfPerson = result.firstIndex{$0 == "WD"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        WD = "\(result[indexOfPerson! + 2])"
-                        print("WD: \(WD)")
-                    }
-                }
-                if result.contains("WV") {
-                    let indexOfPerson = result.firstIndex{$0 == "WV"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        WV = "\(result[indexOfPerson! + 2])"
-                        print("WV: \(WV)")
-                    }
-                }
-                if result.contains("WM") {
-                    let indexOfPerson = result.firstIndex{$0 == "WM"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        WM = "\(result[indexOfPerson! + 2])"
-                        print("WM: \(WM)")
-                    }
-                }
-                if result.contains("PR") {
-                    let indexOfPerson = result.firstIndex{$0 == "PR"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        PR = "\(result[indexOfPerson! + 2])"
-                        print("PR: \(PR)")
-                    }
-                }
-                if result.contains("HM") {
-                    let indexOfPerson = result.firstIndex{$0 == "HM"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        HM = "\(result[indexOfPerson! + 2])"
-                        print("HM: \(HM)")
-                    }
-                }
-                if result.contains("RN") {
-                    let indexOfPerson = result.firstIndex{$0 == "RN"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        RN = "\(result[indexOfPerson! + 2]) мм."
-                        print("RN: \(RN)")
-                    }
-                }
-                if result.contains("UV") {
-                    let indexOfPerson = result.firstIndex{$0 == "UV"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        UV = "\(result[indexOfPerson! + 2]) Вт./м2"
-                        print("UV: \(UV)")
-                    }
-                }
-                if result.contains("UVI") {
-                    let indexOfPerson = result.firstIndex{$0 == "UVI"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        UVI = "\(result[indexOfPerson! + 2]) Дж."
-                        print("UVI: \(UVI)")
-                    }
-                }
-                if result.contains("L") {
-                    let indexOfPerson = result.firstIndex{$0 == "L"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        L = "\(result[indexOfPerson! + 2]) lux"
-                        print("L: \(L)")
-                    }
-                }
-                if result.contains("LI") {
-                    let indexOfPerson = result.firstIndex{$0 == "LI"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        LI = "\(result[indexOfPerson! + 2]) Дж."
-                        print("LI: \(LI)")
-                    }
-                }
-                if result.contains("KS") {
-                    let indexOfPerson = result.firstIndex{$0 == "KS"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        KS = "\(result[indexOfPerson! + 2])"
-                        print("KS: \(KS)")
-                    }
-                }
-                if result.contains("RSSI") {
-                    let indexOfPerson = result.firstIndex{$0 == "RSSI"}
-                    print(indexOfPerson!)
-                    if result.count > indexOfPerson! + 2 {
-                        RSSI = "\(result[indexOfPerson! + 2])"
-                        print("RSSI: \(RSSI)")
-                    }
-                }
-                //Массив с параметрами ОНЛАЙН ДАННЫХ
-                
-                arrayMeteo[0] = Upow
-                arrayMeteo[1] = t
-                arrayMeteo[2] = WD
-                arrayMeteo[3] = WV
-                arrayMeteo[4] = WM
-                arrayMeteo[5] = PR
-                arrayMeteo[6] = HM
-                arrayMeteo[7] = RN
-                arrayMeteo[8] = UV
-                arrayMeteo[9] = UVI
-                arrayMeteo[10] = L
-                arrayMeteo[11] = LI
-                arrayMeteo[12] = RSSI
-                arrayMeteo[13] = KS
-                
-                //Массив с параметрами СОСТОЯНИЕ ПОДКЛЮЧЕНИЯ
-                
-                arrayStateConnect[0] = QTIM
-                arrayStateConnect[1] = QGSM
-                arrayStateConnect[2] = TRAF
-                arrayStateConnect[3] = QGPS
-                
-                if result.contains("KAPI") {
-                    let indexOfPerson = result.firstIndex{$0 == "KAPI"}
-                    if result.count > indexOfPerson! + 2 {
-                        KAPI = "\(result[indexOfPerson! + 2])"
-                        print("KAPI: \(KAPI)")
-                    }
-                }
-                if result.contains("KUSR") {
-                    let indexOfPerson = result.firstIndex{$0 == "KUSR"}
-                    if result.count > indexOfPerson! + 2 {
-                        KUSR = "\(result[indexOfPerson! + 2])"
-                        print("KUSR: \(KUSR)")
-                    }
-                }
-                if result.contains("KPWD") {
-                    let indexOfPerson = result.firstIndex{$0 == "KPWD"}
-                    if result.count > indexOfPerson! + 2 {
-                        KPWD = "\(result[indexOfPerson! + 2])"
-                        print("KPWD: \(KPWD)")
-                    }
-                }
-                if result.contains("KPIN") {
-                    let indexOfPerson = result.firstIndex{$0 == "KPIN"}
-                    if result.count > indexOfPerson! + 2 {
-                        KPIN = "\(result[indexOfPerson! + 2])"
-                        print("KPIN: \(KPIN)")
-                    }
-                }
-                if result.contains("KSRV") {
-                    let indexOfPerson = result.firstIndex{$0 == "KSRV"}
-                    if result.count > indexOfPerson! + 2 {
-                        KSRV = "\(result[indexOfPerson! + 2])"
-                        print("KSRV: \(KSRV)")
-                    }
-                }
-                if result.contains("KPOR") {
-                    let indexOfPerson = result.firstIndex{$0 == "KPOR"}
-                    if result.count > indexOfPerson! + 2 {
-                        KPOR = "\(result[indexOfPerson! + 2])"
-                        print("KPOR: \(KPOR)")
-                    }
-                }
-                if result.contains("KSPW") {
-                    let indexOfPerson = result.firstIndex{$0 == "KSPW"}
-                    if result.count > indexOfPerson! + 2 {
-                        KSPW = "\(result[indexOfPerson! + 2])"
-                        print("KSPW: \(KSPW)")
-                    }
-                }
-                if result.contains("KPAK") {
-                    let indexOfPerson = result.firstIndex{$0 == "KPAK"}
-                    if result.count > indexOfPerson! + 2 {
-                        KPAK = "\(result[indexOfPerson! + 2])"
-                        print("KPAK: \(KPAK)")
-                    }
-                }
-                if result.contains("KPBM") {
-                    let indexOfPerson = result.firstIndex{$0 == "KPBM"}
-                    if result.count > indexOfPerson! + 2 {
-                        KPBM = "\(result[indexOfPerson! + 2])"
-                        print("KPBM: \(KPBM)")
-                    }
-                }
-                if result.contains("KCNL") {
-                    let indexOfPerson = result.firstIndex{$0 == "KCNL"}
-                    if result.count > indexOfPerson! + 2 {
-                        KCNL = Channels(int: Int(result[indexOfPerson! + 2])!).channelsNumber()
-                        print("KCNL: \(KCNL)")
-                    }
-                }
-                if result.contains("KBCH") {
-                    let indexOfPerson = result.firstIndex{$0 == "KBCH"}
-                    if result.count > indexOfPerson! + 2 {
-                        KBCH = "\(result[indexOfPerson! + 2])"
-                        print("KBCH: \(KBCH)")
-                    }
-                }
-                
-                if result.contains("APO") {
-//                    passNotif = 0
-//                    passwordSuccess = true
-                    print("APO 0")
-                }
-                if result.contains("ADO") {
-//                    passNotif = 0
-//                    passwordSuccess = true
-                    errorWRN = false
-                    print("ADO 0")
-                }
-                if result.contains("WRN") {
-//                    passNotif = 1
-//                    passwordSuccess = false
-                    print("WRN 1")
+                    arrayState[0] = QTIM
+                    arrayState[1] = QGSM
+                    arrayState[2] = QGPS
+                    arrayState[3] = QAZI
+                    arrayState[4] = QPRO
+                    arrayState[5] = QPOP
+                    arrayState[6] = QBKN
+                    arrayState[7] = QPAK
+                    arrayState[8] = QBMT
+                    arrayState[9] = QTIM
                     
-                }
-
-                if result.contains("WRN") {
-                    errorWRN = true
-                }
-                if result.contains("ASA") {
-                    checkASA = true
-                }
-                if result.contains("AWO") {
-                    checkMode = true
+                    if result.contains("UpoUpow") {
+                        let indexOfPerson = result.firstIndex{$0 == "UpoUpow"}
+                        if result.count > indexOfPerson! + 2 {
+                            Upow = "\(result[indexOfPerson! + 2])"
+                            //                        print("Upow: \(Upow)")
+                        }
+                    }
+                    if result.contains("Upow") {
+                        let indexOfPerson = result.firstIndex{$0 == "Upow"}
+                        if result.count > indexOfPerson! + 2 {
+                            Upow = "\(result[indexOfPerson! + 2])"
+                            //                        print("Upow: \(Upow)")
+                        }
+                    }
+                    if result.contains("t") {
+                        let indexOfPerson = result.firstIndex{$0 == "t"}
+                        if result.count > indexOfPerson! + 2 {
+                            t = "\(result[indexOfPerson! + 2])"
+                            //                        print("t: \(t)")
+                        }
+                    }
+                    if result.contains("WD") {
+                        let indexOfPerson = result.firstIndex{$0 == "WD"}
+                        if result.count > indexOfPerson! + 2 {
+                            WD = "\(result[indexOfPerson! + 2])"
+                            //                        print("WD: \(WD)")
+                        }
+                    }
+                    if result.contains("WV") {
+                        let indexOfPerson = result.firstIndex{$0 == "WV"}
+                        if result.count > indexOfPerson! + 2 {
+                            WV = "\(result[indexOfPerson! + 2])"
+                            //                        print("WV: \(WV)")
+                        }
+                    }
+                    if result.contains("WM") {
+                        let indexOfPerson = result.firstIndex{$0 == "WM"}
+                        if result.count > indexOfPerson! + 2 {
+                            WM = "\(result[indexOfPerson! + 2])"
+                            //                        print("WM: \(WM)")
+                        }
+                    }
+                    if result.contains("PR") {
+                        let indexOfPerson = result.firstIndex{$0 == "PR"}
+                        if result.count > indexOfPerson! + 2 {
+                            PR = "\(result[indexOfPerson! + 2])"
+                            //                        print("PR: \(PR)")
+                        }
+                    }
+                    if result.contains("HM") {
+                        let indexOfPerson = result.firstIndex{$0 == "HM"}
+                        if result.count > indexOfPerson! + 2 {
+                            HM = "\(result[indexOfPerson! + 2])"
+                            //                        print("HM: \(HM)")
+                        }
+                    }
+                    if result.contains("RN") {
+                        let indexOfPerson = result.firstIndex{$0 == "RN"}
+                        if result.count > indexOfPerson! + 2 {
+                            RN = "\(result[indexOfPerson! + 2]) мм."
+                            //                        print("RN: \(RN)")
+                        }
+                    }
+                    if result.contains("UV") {
+                        let indexOfPerson = result.firstIndex{$0 == "UV"}
+                        if result.count > indexOfPerson! + 2 {
+                            UV = "\(result[indexOfPerson! + 2]) Вт./м2"
+                            //                        print("UV: \(UV)")
+                        }
+                    }
+                    if result.contains("UVI") {
+                        let indexOfPerson = result.firstIndex{$0 == "UVI"}
+                        if result.count > indexOfPerson! + 2 {
+                            UVI = "\(result[indexOfPerson! + 2]) Дж."
+                            //                        print("UVI: \(UVI)")
+                        }
+                    }
+                    if result.contains("L") {
+                        let indexOfPerson = result.firstIndex{$0 == "L"}
+                        if result.count > indexOfPerson! + 2 {
+                            L = "\(result[indexOfPerson! + 2]) lux"
+                            //                        print("L: \(L)")
+                        }
+                    }
+                    if result.contains("LI") {
+                        let indexOfPerson = result.firstIndex{$0 == "LI"}
+                        if result.count > indexOfPerson! + 2 {
+                            LI = "\(result[indexOfPerson! + 2]) Дж."
+                            //                        print("LI: \(LI)")
+                        }
+                    }
+                    if result.contains("KS") {
+                        let indexOfPerson = result.firstIndex{$0 == "KS"}
+                        if result.count > indexOfPerson! + 2 {
+                            KS = "\(result[indexOfPerson! + 2])"
+                            //                        print("KS: \(KS)")
+                        }
+                    }
+                    if result.contains("RSSI") {
+                        let indexOfPerson = result.firstIndex{$0 == "RSSI"}
+                        if result.count > indexOfPerson! + 2 {
+                            RSSI = "\(result[indexOfPerson! + 2])"
+                            //                        print("RSSI: \(RSSI)")
+                        }
+                    }
+                    for i in 0...7 {
+                        if result.contains("Ex\(i)U") {
+                            let indexOfPerson = result.firstIndex{$0 == "Ex\(i)U"}
+                            if result.count > indexOfPerson! + 2 {
+                                arrayBmvdU[i] = "\(result[indexOfPerson! + 2])"
+                                countBMVD = i + 1
+                            }
+                        }
+                        if result.contains("Ex\(i)R") {
+                            let indexOfPerson = result.firstIndex{$0 == "Ex\(i)R"}
+                            if result.count > indexOfPerson! + 2 {
+                                arrayBmvdR[i] = "\(result[indexOfPerson! + 2])"
+                            }
+                        }
+                    }
+                    //Массив с параметрами ОНЛАЙН ДАННЫХ
+                    
+                    arrayMeteo[0] = Upow
+                    arrayMeteo[1] = t
+                    arrayMeteo[2] = WD
+                    arrayMeteo[3] = WV
+                    arrayMeteo[4] = WM
+                    arrayMeteo[5] = PR
+                    arrayMeteo[6] = HM
+                    arrayMeteo[7] = RN
+                    arrayMeteo[8] = UV
+                    arrayMeteo[9] = UVI
+                    arrayMeteo[10] = L
+                    arrayMeteo[11] = LI
+                    arrayMeteo[12] = RSSI
+                    arrayMeteo[13] = KS
+                    //Массив с параметрами СОСТОЯНИЕ ПОДКЛЮЧЕНИЯ
+                    
+                    arrayStateConnect[0] = QTIM
+                    arrayStateConnect[1] = QGSM
+                    arrayStateConnect[2] = TRAF
+                    arrayStateConnect[3] = QGPS
+                    
+                    if result.contains("KAPI") {
+                        let indexOfPerson = result.firstIndex{$0 == "KAPI"}
+                        if result.count > indexOfPerson! + 2 {
+                            KAPI = "\(result[indexOfPerson! + 2])"
+                            //                        print("KAPI: \(KAPI)")
+                        }
+                    }
+                    if result.contains("KUSR") {
+                        let indexOfPerson = result.firstIndex{$0 == "KUSR"}
+                        if result.count > indexOfPerson! + 2 {
+                            KUSR = "\(result[indexOfPerson! + 2])"
+                            //                        print("KUSR: \(KUSR)")
+                        }
+                    }
+                    if result.contains("KPWD") {
+                        let indexOfPerson = result.firstIndex{$0 == "KPWD"}
+                        if result.count > indexOfPerson! + 2 {
+                            KPWD = "\(result[indexOfPerson! + 2])"
+                            //                        print("KPWD: \(KPWD)")
+                        }
+                    }
+                    if result.contains("KPIN") {
+                        let indexOfPerson = result.firstIndex{$0 == "KPIN"}
+                        if result.count > indexOfPerson! + 2 {
+                            KPIN = "\(result[indexOfPerson! + 2])"
+                            //                        print("KPIN: \(KPIN)")
+                        }
+                    }
+                    if result.contains("KSRV") {
+                        let indexOfPerson = result.firstIndex{$0 == "KSRV"}
+                        if result.count > indexOfPerson! + 2 {
+                            KSRV = "\(result[indexOfPerson! + 2])"
+                            //                        print("KSRV: \(KSRV)")
+                        }
+                    }
+                    if result.contains("KPOR") {
+                        let indexOfPerson = result.firstIndex{$0 == "KPOR"}
+                        if result.count > indexOfPerson! + 2 {
+                            KPOR = "\(result[indexOfPerson! + 2])"
+                            //                        print("KPOR: \(KPOR)")
+                        }
+                    }
+                    if result.contains("KSPW") {
+                        let indexOfPerson = result.firstIndex{$0 == "KSPW"}
+                        if result.count > indexOfPerson! + 2 {
+                            KSPW = "\(result[indexOfPerson! + 2])"
+                            //                        print("KSPW: \(KSPW)")
+                        }
+                    }
+                    if result.contains("KPAK") {
+                        let indexOfPerson = result.firstIndex{$0 == "KPAK"}
+                        if result.count > indexOfPerson! + 2 {
+                            KPAK = "\(result[indexOfPerson! + 2])"
+                            //                        print("KPAK: \(KPAK)")
+                        }
+                    }
+                    if result.contains("KPBM") {
+                        let indexOfPerson = result.firstIndex{$0 == "KPBM"}
+                        if result.count > indexOfPerson! + 2 {
+                            KPBM = "\(result[indexOfPerson! + 2])"
+                            //                        print("KPBM: \(KPBM)")
+                        }
+                    }
+                    if result.contains("KCNL") {
+                        let indexOfPerson = result.firstIndex{$0 == "KCNL"}
+                        if result.count > indexOfPerson! + 2 {
+                            KCNL = Channels(int: Int(result[indexOfPerson! + 2])!).channelsNumber()
+                            //                        print("KCNL: \(KCNL)")
+                        }
+                    }
+                    if result.contains("KBCH") {
+                        let indexOfPerson = result.firstIndex{$0 == "KBCH"}
+                        if result.count > indexOfPerson! + 2 {
+                            KBCH = "\(result[indexOfPerson! + 2])"
+                            //                        print("KBCH: \(KBCH)")
+                        }
+                    }
+                    
+                    if result.contains("APO") {
+                        //                    passNotif = 0
+                        //                    passwordSuccess = true
+                        print("APO 0")
+                    }
+                    if result.contains("ADO") {
+                        //                    passNotif = 0
+                        //                    passwordSuccess = true
+                        errorWRN = false
+                        print("ADO 0")
+                    }
+                    if result.contains("WRN") {
+                        //                    passNotif = 1
+                        //                    passwordSuccess = false
+                        print("WRN 1")
+                        
+                    }
+                    
+                    if result.contains("WRN") {
+                        errorWRN = true
+                    }
+                    if result.contains("ASA") {
+                        checkASA = true
+                    }
+                    if result.contains("AWO") {
+                        checkMode = true
+                    }
                 }
             }
         }
+    }
     }
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
         if let error = error {
@@ -1109,13 +1184,14 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
     override func viewDidLoad() {
         super.viewDidLoad()
         connectedMeteoVC.delegate = self
-        viewAlpha.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        viewAlpha.backgroundColor = UIColor.black.withAlphaComponent(0.7)
         searchBar.delegate = self
         searchBar.searchBarStyle = .minimal
         searchBar.showsCancelButton = true
         searchBar.keyboardType = UIKeyboardType.decimalPad
         view.addSubview(searchBar)
         viewShow()
+        
 //        rightCount = 0
         manager = CBCentralManager ( delegate : self , queue : nil , options : nil )
         stringAll = ""
@@ -1162,7 +1238,7 @@ class DevicesDUController: UIViewController, CBCentralManagerDelegate, CBPeriphe
     
     override func viewWillAppear(_ animated: Bool) {
         if a != nil {
-            print("discont: \(a)")
+//            print("discont: \(a)")
             manager?.cancelPeripheralConnection(a)
         }
         startActivityIndicator()
@@ -1388,7 +1464,7 @@ extension DevicesDUController: UITableViewDataSource {
                 if indexPath.section == 0 {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "DevicesListCellHeder", for: indexPath) as! DevicesListCellHeder
                     cell.titleLabel.text = "Устройства поблизости"
-                    cell.titleLabel.font = UIFont(name: "FuturaPT-Medium", size: 20)
+                    cell.titleLabel.font = UIFont(name: "FuturaPT-Medium", size: screenW / 20)
                     cell.backgroundColor = .clear
                     cell.selectionStyle = .none
                     return cell
@@ -1396,7 +1472,7 @@ extension DevicesDUController: UITableViewDataSource {
                 } else if indexPath.section == rrsiPink+1 {
                     let cell = tableView.dequeueReusableCell(withIdentifier: "DevicesListCellHeder", for: indexPath) as! DevicesListCellHeder
                     cell.titleLabel.text = "Устройства с низким уровнем сигнала"
-                    cell.titleLabel.font = UIFont(name: "FuturaPT-Medium", size: 20)
+                    cell.titleLabel.font = UIFont(name: "FuturaPT-Medium", size: screenW / 20)
 
                     cell.backgroundColor = .clear
                     cell.selectionStyle = .none
@@ -1455,14 +1531,14 @@ extension DevicesDUController: UITableViewDataSource {
 //                        self.view.isUserInteractionEnabled = false
                         self.manager?.stopScan()
                         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-                        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5), execute: {
-                            self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-                            if let navController = self.navigationController {
-                                navController.pushViewController(self.connectedMeteoVC, animated: true)
-                            }
-                            self.viewAlpha.removeFromSuperview()
-                            self.cancelLabel.isHidden = true
-                        })
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5), execute: {
+//                            self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+//                            if let navController = self.navigationController {
+//                                navController.pushViewController(self.connectedMeteoVC, animated: true)
+//                            }
+//                            self.viewAlpha.removeFromSuperview()
+//                            self.cancelLabel.isHidden = true
+//                        })
                     }
                     return cell
                 }
@@ -1504,11 +1580,14 @@ extension DevicesDUController: UITableViewDataSource {
                     self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
                     DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5), execute: {
                         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-                        if let navController = self.navigationController {
-                            navController.pushViewController(self.connectedMeteoVC, animated: true)
-                        }
+//                        if let navController = self.navigationController {
+//                            navController.pushViewController(self.connectedMeteoVC, animated: true)
+//                        }
                         self.viewAlpha.removeFromSuperview()
                         self.cancelLabel.isHidden = true
+                        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+                        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
+
                     })
                 }
                 return cell

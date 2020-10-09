@@ -16,6 +16,19 @@ class RegisterSokolMeteoController: UIViewController, WKNavigationDelegate {
         webView.translatesAutoresizingMaskIntoConstraints = false
         return webView
     }()
+    
+    fileprivate lazy var backView: UIImageView = {
+        let backView = UIImageView()
+        backView.frame = CGRect(x: 0, y: screenH / 12 - 50, width: 50, height: 50)
+        let back = UIImageView(image: UIImage(named: "back")!)
+        back.image = back.image!.withRenderingMode(.alwaysTemplate)
+        back.frame = CGRect(x: 10, y: 0 , width: 20, height: 20)
+        back.center.y = backView.bounds.height / 3 * 2 - 1
+        backView.addSubview(back)
+        backView.tintColor = .black
+        return backView
+    }()
+    
     var activityIndicator: UIActivityIndicatorView = {
         let activity = UIActivityIndicatorView()
         activity.transform = CGAffineTransform(scaleX: 2, y: 2)
@@ -27,15 +40,22 @@ class RegisterSokolMeteoController: UIViewController, WKNavigationDelegate {
 
     let url = "https://sokolmeteo.com/login"
 
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+    }
     override func viewDidLoad() {
-        customNavigationBar = createCustomNavigationBar(title: "МЕНЮ", fontSize: screenW / 22)
+        customNavigationBar = createCustomNavigationBar(title: "РЕГИСТРАЦИЯ НА СОКОЛ МЕТЕО", fontSize: screenW / 22)
         activityIndicator.center = view.center
         view.addSubview(webView)
         view.addSubview(customNavigationBar)
         webView.navigationDelegate = self
         view.addSubview(activityIndicator)
+        view.addSubview(backView)
+        backView.addTapGesture{ [self] in
+            self.navigationController?.popViewController(animated: true)
+        }
         activityIndicator.startAnimating()
-        webView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100).isActive = true
+        webView.topAnchor.constraint(equalTo: view.topAnchor, constant: screenH / 12).isActive = true
         webView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         webView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         webView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true

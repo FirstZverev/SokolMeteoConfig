@@ -16,15 +16,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        Thread.sleep(forTimeInterval: 2.0)
         self.window = UIWindow.init ()
-        let vc = StartViewController()
+            
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+
+        let vc = firstOpenApp(viewController: StartViewController(), viewControllerSecond: SwipingStartController(collectionViewLayout: layout))
         let navigationController = UINavigationController(rootViewController: vc)
         navigationController.hero.isEnabled = true
         navigationController.navigationBar.isHidden = true
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
-//        UIApplication.shared.statusBarStyle = .darkContent
+        //        UIApplication.shared.statusBarStyle = .darkContent
         return true
     }
 
@@ -87,6 +91,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
+    }
+    func firstOpenApp(viewController: UIViewController,  viewControllerSecond: UIViewController) -> UIViewController {
+        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+        if launchedBefore  {
+            return viewController
+        } else {
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+            return viewControllerSecond
+        }
+    }
+    var myOrientation: UIInterfaceOrientationMask = .portrait
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return myOrientation
     }
 
 }

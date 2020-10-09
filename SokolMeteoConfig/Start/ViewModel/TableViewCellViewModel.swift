@@ -10,6 +10,15 @@ import Foundation
 
 class TableViewCellViewModel: TableViewCellViewModelType {
     
+    var ubat: String {
+        return menu.ubat!
+    }
+    
+    var rssi: String {
+        return menu.rssi!
+    }
+    
+    
     private var menu: Menu
     
     var name: String {

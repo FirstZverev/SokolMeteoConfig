@@ -63,16 +63,16 @@ class MenuController: UIViewController {
             }
             isNight = true
             UserDefaults.standard.set(isNight, forKey: "isNight")
-            UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
+//            UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
             themeSwitch.thumbTintColor = UIColor(rgb: 0x1F2222)
             themeSwitch.onTintColor = .gray
         } else {
             if #available(iOS 13.0, *) {
 //                themeService.switch(.light)
-                UIApplication.shared.statusBarStyle = UIStatusBarStyle.darkContent
+//                UIApplication.shared.statusBarStyle = UIStatusBarStyle.darkContent
             } else {
                 dismiss(animated: true, completion: nil)
-                UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+//                UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
             }
             isNight = false
             UserDefaults.standard.set(isNight, forKey: "isNight")
@@ -90,7 +90,7 @@ class MenuController: UIViewController {
         let textMain = UILabel(frame: CGRect(x: 20, y: 20, width: screenW - 40, height: 20))
         textMain.center.x = view.center.x
         textMain.textAlignment = .center
-        textMain.text = "Меню"
+        textMain.text = "НАСТРОЙКИ ПРИЛОЖЕНИЯ"
         textMain.font = UIFont(name:"FuturaPT-Medium", size: 20)
         textMain.frame.origin.x = 20
         return textMain
@@ -111,8 +111,8 @@ class MenuController: UIViewController {
         
         view.addSubview(bgImage)
         view.addSubview(textMain)
-        let lineMain = UIView(frame: CGRect(x: 20, y: 50, width: 142, height: 1))
-        lineMain.backgroundColor = UIColor(rgb: 0xCF2121)
+        let lineMain = UIView(frame: CGRect(x: 20, y: 50, width: 200, height: 1))
+        lineMain.backgroundColor = UIColor(rgb: 0xBE449E)
         lineMain.center.x = view.center.x
         view.addSubview(lineMain)
         

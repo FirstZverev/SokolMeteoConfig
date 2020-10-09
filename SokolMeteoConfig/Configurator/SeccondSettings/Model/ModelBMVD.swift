@@ -33,6 +33,4 @@ let configBMVD: [BMVDType] = [
     BMVDType(name: "БМВД №6", image: "bmvd"),
     BMVDType(name: "БМВД №7", image: "bmvd"),
     BMVDType(name: "БМВД №8", image: "bmvd"),
-    
-
 ]

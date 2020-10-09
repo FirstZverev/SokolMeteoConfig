@@ -25,56 +25,67 @@ class BlackBoxController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
     private var datesRange: [Date]?
 
     weak var delegate: BlackBoxDelegate?
+    
+    lazy var alertView: CustomLoadingBlackBox = {
+        let alertView: CustomLoadingBlackBox = CustomLoadingBlackBox.loadFromNib()
+        alertView.delegate = self
+        return alertView
+    }()
+    let visualEffectView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .dark)
+       let view = UIVisualEffectView(effect: blurEffect)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
 
     fileprivate lazy var backView: UIImageView = {
         let backView = UIImageView()
-        backView.frame = CGRect(x: 0, y: 35, width: 50, height: 50)
+        backView.frame = CGRect(x: 0, y: screenH / 12 - 50, width: 50, height: 50)
         let back = UIImageView(image: UIImage(named: "back")!)
         back.image = back.image!.withRenderingMode(.alwaysTemplate)
-        back.frame = CGRect(x: 15, y: 0 , width: 8, height: 19)
-        back.center.y = backView.bounds.height/2
+        back.frame = CGRect(x: 10, y: 0 , width: 20, height: 20)
+        back.center.y = backView.bounds.height / 3 * 2 - 1
         backView.addSubview(back)
         return backView
     }()
-    fileprivate lazy var breakBox: UIView = {
-        let view = UIView()
-        view.backgroundColor = .green
-        view.frame = CGRect(x: 200, y: 400, width: 200, height: 50)
+    
+    fileprivate lazy var getDataButton: UIButton = {
+        let view = UIButton()
+        view.backgroundColor = UIColor(rgb: 0xBE449E)
+        view.layer.cornerRadius = 20
+        view.setTitle("Запросить данные", for: .normal)
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-        backView.tintColor = .black
+    fileprivate lazy var breakBox: UIButton = {
+        let view = UIButton()
+        view.backgroundColor = UIColor(rgb: 0xBE449E)
+        view.layer.cornerRadius = 10
+        view.setTitle("Стоп", for: .normal)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    fileprivate func constraints() {
+        self.calendar.topAnchor.constraint(equalTo: view.topAnchor, constant: screenH / 12 + 10).isActive = true
+        self.calendar.bottomAnchor.constraint(equalTo: getDataButton.topAnchor, constant: -30).isActive = true
+        self.calendar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        self.calendar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
         
-        let customNavigationBar = createCustomNavigationBar(title: "Черный ящик",fontSize: 16)
-        self.hero.isEnabled = true
-        customNavigationBar.hero.id = "ConnectToMeteo2"
-        view.sv(
-            customNavigationBar
-        )
+//        breakBox.bottomAnchor.constraint(equalTo: self.calendar.topAnchor, constant: -10).isActive = true
+//        breakBox.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+//        breakBox.widthAnchor.constraint(equalToConstant: 70).isActive = true
+//        breakBox.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
-        view.addSubview(backView)
-        view.addSubview(breakBox)
-
-        breakBox.addTapGesture {
-            reload = 6
-            self.delegate?.buttonTapBlackBox()
-        }
-        backView.addTapGesture {
-//            self.navigationController?.popViewController(animated: true)
-            reload = 3
-            let dateRangeFirst = self.datesRange?.first
-            let dateRangeLast = self.datesRange?.last
-            dateFirst = Int(dateRangeFirst?.timeIntervalSince1970 ?? 0)
-            dateLast = Int(dateRangeLast?.timeIntervalSince1970 ?? 0) + 86400
-            print(dateFirst)
-            print(dateLast)
-            self.delegate?.buttonTapBlackBox()
-        }
-        let clAp = FSCalendarAppearance()
-        clAp.todayColor = .black
+        getDataButton.topAnchor.constraint(equalTo: self.calendar.bottomAnchor, constant: 20).isActive = true
+        getDataButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        getDataButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        getDataButton.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        getDataButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30).isActive = true
+    }
+    
+    fileprivate func confirationCalendar() {
         let calendar = FSCalendar()
         calendar.backgroundColor = .white
         calendar.appearance.todayColor = .black
@@ -91,9 +102,7 @@ class BlackBoxController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
         let scopeGesture = UIPanGestureRecognizer(target: calendar, action: #selector(calendar.handleScopeGesture(_:)));
         calendar.addGestureRecognizer(scopeGesture)
         calendar.pagingEnabled = false
-//        calendar.center = view.center
         calendar.dataSource = self
-//        calendar.mo
         calendar.delegate = self
         calendar.locale = Locale(identifier: "RU")
         calendar.allowsMultipleSelection = true
@@ -102,14 +111,59 @@ class BlackBoxController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
         calendar.layer.shadowRadius = 5.0
         calendar.layer.shadowOpacity = 0.2
         calendar.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
-
+        
         view.sv(calendar)
         self.calendar = calendar
         self.calendar.translatesAutoresizingMaskIntoConstraints = false
-        self.calendar.topAnchor.constraint(equalTo: view.topAnchor, constant: 130).isActive = true
-        self.calendar.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -200).isActive = true
-        self.calendar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        self.calendar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        reload = 27
+        self.delegate?.buttonTapBlackBox()
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        backView.tintColor = .black
+        backView.hero.id = "backView"
+        
+        let customNavigationBar = createCustomNavigationBar(title: "ЧЁРНЫЙ ЯЩИК",fontSize: screenW / 22)
+        self.hero.isEnabled = true
+        customNavigationBar.hero.id = "BlackBox"
+        view.sv(
+            customNavigationBar
+        )
+        
+        view.addSubview(backView)
+//        view.addSubview(breakBox)
+        view.addSubview(getDataButton)
+
+        breakBox.addTapGesture {
+            reload = 6
+            self.delegate?.buttonTapBlackBox()
+        }
+        
+        backView.addTapGesture {
+            self.navigationController?.popViewController(animated: true)
+        }
+        
+        getDataButton.addTapGesture {
+            reload = 3
+            let dateRangeFirst = self.datesRange?.first
+            let dateRangeLast = self.datesRange?.last
+            dateFirst = Int(dateRangeFirst?.timeIntervalSince1970 ?? 0)
+            dateLast = Int(dateRangeLast?.timeIntervalSince1970 ?? 0) + 86400
+            print(dateFirst)
+            print(dateLast)
+            self.delegate?.buttonTapBlackBox()
+            if Access_Allowed != 0 {
+                self.setAlert()
+                self.animateIn()
+            }
+        }
+        confirationCalendar()
+        constraints()
     }
     
     func maximumDate(for calendar: FSCalendar) -> Date {

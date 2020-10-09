@@ -14,7 +14,7 @@ protocol ConnectedMeteoDelegate: class {
     func buttonTap()
 }
 
-class ConnectedMeteoController: UIViewController, BlackBoxDelegate, TabBarDelegate, TabBarConfiguratorDelegate, UITabBarControllerDelegate {
+class ConnectedMeteoController: UIViewController, BlackBoxDelegate, TabBarDelegate, TabBarConfiguratorDelegate, PasswordDelegate, UITabBarControllerDelegate {
 
     let starAnimationView = AnimationView(name: "success")
     let nextAnimationView = AnimationView(name: "success")
@@ -24,6 +24,7 @@ class ConnectedMeteoController: UIViewController, BlackBoxDelegate, TabBarDelega
     let blackBoxVC = BlackBoxController()
     let tabBarVC = TabBarController()
     let tabarConfigVC = TabBarConfiguratorController()
+    let passwordVC = PasswordController()
     var initialY: CGFloat!
     var offset: CGFloat!
     let customNavigationBar = createCustomNavigationBar(title: "",fontSize: screenW / 22)
@@ -32,7 +33,7 @@ class ConnectedMeteoController: UIViewController, BlackBoxDelegate, TabBarDelega
     
     let deviceNameLabel: UILabel = {
         let label = UILabel()
-        label.text = nameDevice
+        label.text = nameDevice.lowercased()
         label.font = UIFont(name: "FuturaPT-Medium", size: screenW / 22)
         label.frame = CGRect(x: 0, y: 300, width: screenW, height: 30)
         label.textAlignment = .center
@@ -48,7 +49,7 @@ class ConnectedMeteoController: UIViewController, BlackBoxDelegate, TabBarDelega
         view.isUserInteractionEnabled = true
         print("print")
 //        customNavigationBar.title = "\(nameDevice)"
-        deviceNameLabel.text = "\(nameDevice)"
+        deviceNameLabel.text = "\(nameDevice.uppercased())"
     }
     override func viewDidDisappear(_ animated: Bool) {
         
@@ -93,10 +94,12 @@ class ConnectedMeteoController: UIViewController, BlackBoxDelegate, TabBarDelega
         blackBoxVC.delegate = self
         tabBarVC.delegateConnectedMeteo = self
         tabarConfigVC.delegateTabBar = self
+        passwordVC.delegatePassword = self
 //        customNavigationBar.title = "\(nameDevice)"
         viewModel = ViewModelConnected()
         self.hero.isEnabled = true
         customNavigationBar.hero.id = "ConnectToMeteo2"
+        backView.hero.id = "backView"
         view.addSubview(customNavigationBar)
         backView.tintColor = .black
         view.addSubview(backView)
@@ -153,6 +156,10 @@ class ConnectedMeteoController: UIViewController, BlackBoxDelegate, TabBarDelega
         delegate?.buttonTap()
         print("config")
     }
+    func buttonTapPassword() {
+        delegate?.buttonTap()
+        print("Password")
+    }
 }
 
 extension ConnectedMeteoController: UITableViewDelegate {
@@ -161,12 +168,12 @@ extension ConnectedMeteoController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if mainPassword == "" {
-            setAlert()
-            animateIn()
-        } else {
+//        if mainPassword == "" {
+//            setAlert()
+//            animateIn()
+//        } else {
             if indexPath.row == 4 {
-                navigationController?.pushViewController(PasswordController(), animated: true)
+                navigationController?.pushViewController(passwordVC, animated: true)
             } else if indexPath.row == 2 {
                 navigationController?.pushViewController(tabarConfigVC, animated: true)
                 reload = 10
@@ -175,7 +182,7 @@ extension ConnectedMeteoController: UITableViewDelegate {
             } else if indexPath.row == 1 {
                 navigationController?.pushViewController(blackBoxVC, animated: true)
             }
-        }
+//        }
     }
 }
 
@@ -183,7 +190,7 @@ extension ConnectedMeteoController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
         UIView.animate(withDuration: 0.2) {
-            let cell  = tableView.cellForRow(at: indexPath) as? ConnectedMeteoCell
+            let cell = tableView.cellForRow(at: indexPath) as? ConnectedMeteoCell
             cell!.content!.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
             cell!.imageUI!.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
             cell!.imageUI2!.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
@@ -197,7 +204,7 @@ extension ConnectedMeteoController: UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
         UIView.animate(withDuration: 0.2) {
-            let cell  = tableView.cellForRow(at: indexPath) as? ConnectedMeteoCell
+            let cell = tableView.cellForRow(at: indexPath) as? ConnectedMeteoCell
             cell!.content!.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             cell!.imageUI!.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
             cell!.imageUI2!.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
@@ -232,6 +239,8 @@ extension ConnectedMeteoController: UITableViewDataSource {
             cell!.hero.id = "PasswordToMeteo"
         } else if indexPath.row == 0 {
             cell!.hero.id = "OnlineToMeteo"
+        } else if indexPath.row == 1 {
+            cell!.hero.id = "BlackBox"
         } else if indexPath.row == 2 {
             cell!.hero.id = "Configurator"
         }

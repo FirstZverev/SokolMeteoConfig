@@ -13,13 +13,16 @@ class ViewModelMoreDevices: TableViewViewModelType {
     private var selectedIndexPath: IndexPath?
     
     var menuMain = [
-            Menu(id: 1, name: "БМВД 1"),
-            Menu(id: 2, name: "БМВД 2"),
+        Menu(id: 1, name: "БМВД 1", image: "bmvd1", ubat: "-", rssi: "-"),
+        Menu(id: 2, name: "БМВД 2", image: "bmvd2", ubat: "-", rssi: "-"),
+        Menu(id: 3, name: "БМВД 3", image: "bmvd2", ubat: "-", rssi: "-"),
+        Menu(id: 4, name: "БМВД 4", image: "bmvd2", ubat: "-", rssi: "-"),
         ]
     
     func numberOfRows() -> Int {
         return menuMain.count
     }
+    
     
     func cellViewModel(forIndexPath indexPath: IndexPath) -> TableViewCellViewModelType? {
         let menu = menuMain[indexPath.row]

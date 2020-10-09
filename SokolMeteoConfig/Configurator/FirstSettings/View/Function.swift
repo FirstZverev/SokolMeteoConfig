@@ -162,7 +162,7 @@ extension ConfiguratorFirstController: UITextFieldDelegate {
                 scrollView.contentInset = contentInset
             
         } else {
-            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom + 30, right: 0)
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
         }
         scrollView.scrollIndicatorInsets = scrollView.contentInset
     }
