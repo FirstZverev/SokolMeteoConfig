@@ -35,13 +35,14 @@ class StateController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         reload = 1
         delegate?.buttonTapState()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-            self.tableView.reloadData()
-        })
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+//            self.tableView.reloadData()
+//        })
         timer =  Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { (timer) in
             if Access_Allowed == 1 {
+                reload = 1
                 self.delegate?.buttonTapState()
-                self.tableView.reloadData()
+//                self.tableView.reloadData()
             }
         }
     }
@@ -70,7 +71,6 @@ class StateController: UIViewController {
         self.view.sv(tableView)
         tableView.showsVerticalScrollIndicator = false
         tableView.height(screenH - (screenH / 12)).width(screenW)
-//        tableView.top(screenH / 12)
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 30)
         tableView.backgroundColor = UIColor(rgb: 0x7A6B86)
         self.tableView = tableView

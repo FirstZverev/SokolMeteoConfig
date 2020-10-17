@@ -17,7 +17,6 @@ class ViewModel: TableViewViewModelType {
         Menu(id: 2, name: "АРХИВ ДАННЫХ"),
         Menu(id: 3, name: "РЕГИСТРАЦИЯ НА СОКОЛ МЕТЕО"),
         Menu(id: 4, name: "ТЕХПОДДЕРЖКА"),
-        Menu(id: 5, name: "НАСТРОЙКИ ПРИЛОЖЕНИЯ")
     ]
     
     func numberOfRows() -> Int {

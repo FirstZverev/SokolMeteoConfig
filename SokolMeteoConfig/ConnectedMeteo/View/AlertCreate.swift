@@ -17,9 +17,14 @@ extension ConnectedMeteoController: AlertDelegate {
     
     func buttonTapped() {
         reload = 0
-        animationError(reloadInt : 2)
         mainPassword = alertView.CustomTextField.text ?? ""
         delegate?.buttonTap()
+        animationSuccess()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            reload = 2
+            self.buttonTapTabBar()
+            
+        }
 //        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute:{
 //            self.navigationController?.pushViewController(TabBarController(), animated: true)
 //        })
@@ -61,8 +66,8 @@ extension ConnectedMeteoController: AlertDelegate {
                         self.visualEffectView.alpha = 0
                         self.alertView.alpha = 0
                         self.alertView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
-        }) { (_) in
-            self.alertView.removeFromSuperview()
-        }
+                        self.alertView.removeFromSuperview()
+                        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        })
     }
 }

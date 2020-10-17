@@ -18,6 +18,7 @@ class ConnectedMeteoController: UIViewController, BlackBoxDelegate, TabBarDelega
 
     let starAnimationView = AnimationView(name: "success")
     let nextAnimationView = AnimationView(name: "success")
+    let errorAnimationView = AnimationView(name: "error")
     var heightEnter: Float =  0.0
     var tableView: UITableView!
     var viewModel: TableViewViewModelType?
@@ -172,7 +173,7 @@ extension ConnectedMeteoController: UITableViewDelegate {
 //            setAlert()
 //            animateIn()
 //        } else {
-            if indexPath.row == 4 {
+            if indexPath.row == 3 {
                 navigationController?.pushViewController(passwordVC, animated: true)
             } else if indexPath.row == 2 {
                 navigationController?.pushViewController(tabarConfigVC, animated: true)
@@ -235,7 +236,7 @@ extension ConnectedMeteoController: UITableViewDataSource {
             cell?.label2?.isHidden = true
             cell?.imageUI2?.isHidden = true
         }
-        if indexPath.row == 4 {
+        if indexPath.row == 3 {
             cell!.hero.id = "PasswordToMeteo"
         } else if indexPath.row == 0 {
             cell!.hero.id = "OnlineToMeteo"

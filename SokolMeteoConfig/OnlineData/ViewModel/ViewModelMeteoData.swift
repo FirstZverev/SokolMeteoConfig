@@ -13,17 +13,17 @@ class ViewModelMeteoData: TableViewViewModelType {
     private var selectedIndexPath: IndexPath?
     
     var menuMain = [
-        Menu(id: 2, name: "Температура", image: "temperature", rssi: arrayState[2]),
-            Menu(id: 3, name: "Направление ветра", image: "wind"),
-            Menu(id: 4, name: "Скорость ветра", image: "wind-1"),
-            Menu(id: 5, name: "Порыв ветра", image: "wind-2"),
-            Menu(id: 6, name: "Атмосферное давление", image: "press"),
-            Menu(id: 7, name: "Влажность", image: "moi"),
-            Menu(id: 8, name: "Интенсивность осадков", image: "intensiv"),
-            Menu(id: 9, name: "Уровень ультрафиолетового излучения", image: "uv"),
-            Menu(id: 10, name: "Накопленное значение ультрафиолетового излучения", image: "uv-1"),
-            Menu(id: 11, name: "Уровень освещенности", image: "sun"),
-            Menu(id: 12, name: "Накопленное значение видимого излучения", image: "gr"),
+        Menu(id: 1, name: "Температура", image: "temperature", rssi: arrayState[2]),
+            Menu(id: 2, name: "Направление ветра", image: "wind"),
+            Menu(id: 3, name: "Скорость ветра", image: "wind-1"),
+            Menu(id: 4, name: "Порыв ветра", image: "wind-2"),
+            Menu(id: 5, name: "Атмосферное давление", image: "press"),
+            Menu(id: 6, name: "Влажность", image: "moi"),
+            Menu(id: 7, name: "Интенсивность осадков", image: "intensiv"),
+            Menu(id: 8, name: "Уровень ультрафиолетового излучения", image: "uv"),
+            Menu(id: 9, name: "Накопленное значение ультрафиолетового излучения", image: "uv-1"),
+            Menu(id: 10, name: "Уровень освещенности", image: "sun"),
+            Menu(id: 11, name: "Накопленное значение видимого излучения", image: "gr"),
         ]
     
     func numberOfRows() -> Int {

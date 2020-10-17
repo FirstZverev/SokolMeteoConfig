@@ -16,7 +16,6 @@ class ViewModelConnected: TableViewViewModelType {
             Menu(id: 1, name: "ОНЛАЙН ДАННЫЕ"),
             Menu(id: 2, name: "ЭКСПОРТ ДАННЫХ (ЧЕРНЫЙ ЯЩИК)"),
             Menu(id: 3, name: "КОНФИГУРАТОР"),
-            Menu(id: 4, name: "ДИАГНОСТИКА ОБОРУДОВАНИЯ"),
             Menu(id: 5, name: "ПАРОЛЬ")
         ]
     

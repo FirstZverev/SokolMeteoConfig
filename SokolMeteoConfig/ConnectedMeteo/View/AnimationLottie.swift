@@ -40,9 +40,19 @@ extension ConnectedMeteoController {
         alertView.addSubview(starAnimationView)
         starAnimationView.loopMode = .repeat(10)
         starAnimationView.animationSpeed = 1
-        starAnimationView.play(fromFrame: 15, toFrame: 31) { (finished) in
+        errorAnimationView.play(fromFrame: 15, toFrame: 31) { (finished) in
             self.startLottie()
             
+        }
+    }
+    
+    func animationWait() {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.aminationBefore()
+        }) { (_) in
+            self.animationAfter()
+//            self.animateOut()
+//            reload = reloadInt
         }
     }
     
@@ -52,7 +62,13 @@ extension ConnectedMeteoController {
         }) { (_) in
             self.animationAfter()
             self.animateOut()
-            reload = reloadInt
+//            reload = reloadInt
         }
+    }
+    
+    func animationSuccess() {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.animateOut()
+        })
     }
 }

@@ -5,6 +5,7 @@ PODS:
     - Charts/Core (= 3.6.0)
   - Charts/Core (3.6.0)
   - ESTabBarController-swift (2.8.0)
+  - FittedSheets (2.2.0)
   - FSCalendar (2.8.1)
   - Hero (1.5.0)
   - HorizonCalendar (1.5.0)
@@ -27,6 +28,7 @@ DEPENDENCIES:
   - BottomPopup
   - Charts
   - ESTabBarController-swift
+  - FittedSheets
   - FSCalendar
   - Hero
   - HorizonCalendar
@@ -44,6 +46,7 @@ SPEC REPOS:
     - BottomPopup
     - Charts
     - ESTabBarController-swift
+    - FittedSheets
     - FSCalendar
     - Hero
     - HorizonCalendar
@@ -70,6 +73,7 @@ SPEC CHECKSUMS:
   BottomPopup: 1d5649a3b29396238f0e8f3c82075a7bfcf37ba7
   Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
   ESTabBarController-swift: 05593a6ad64700b03c0eb60ff625916370aa4136
+  FittedSheets: 51021a5caab6c2fbc35e1be8b5c57177edfa0326
   FSCalendar: 5245140456fcbcac5824c203b98bd8068bdfee1a
   Hero: b7385b75e7259da62f4f85462f59a5082d66b058
   HorizonCalendar: 7ee0dad09d9240d6ac1582afdd5a5b43ee09796d
@@ -82,6 +86,6 @@ SPEC CHECKSUMS:
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
   UIDrawer: 1bfbc152fee69f6809a41508000cf1b9bd4b1738
 
-PODFILE CHECKSUM: c643640c3b2bb34db6258ee2858c3ba9fbeff3ee
+PODFILE CHECKSUM: 743ab619fea12f1d810e2c933882d6a51d9bc31f
 
 COCOAPODS: 1.8.4

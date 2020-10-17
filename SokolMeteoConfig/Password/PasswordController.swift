@@ -12,14 +12,18 @@ import MXSegmentedControl
 class PasswordController: UIViewController, UITextFieldDelegate, UIScrollViewDelegate {
     
     var delegatePassword: PasswordDelegate?
-//    var segmentedControl2: MXSegmentedControl!
-
     fileprivate lazy var segmentedControl1: UISegmentedControl = {
         let segmentedControl1 = UISegmentedControl(items: ["Пользовательский","Сервисный"])
         segmentedControl1.selectedSegmentIndex = 0
-        segmentedControl1.backgroundColor = UIColor(rgb: 0xBE449E)
         segmentedControl1.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl1.addTarget(self, action: #selector(segmentedValueChanged(_:)), for: .valueChanged)
+        if #available(iOS 13.0, *) {
+            segmentedControl1.selectedSegmentTintColor = .white
+        } else {
+            segmentedControl1.backgroundColor = .white
+            segmentedControl1.tintColor = UIColor(rgb: 0xBE449E)
+            segmentedControl1.layer.cornerRadius = 10
+        }
         return segmentedControl1
     }()
     
@@ -33,7 +37,15 @@ class PasswordController: UIViewController, UITextFieldDelegate, UIScrollViewDel
     }()
     fileprivate lazy var passwordFirst: UILabel = {
         let passwordFirst = UILabel()
-        passwordFirst.text = "Сменить пароль на метеостанции"
+        passwordFirst.text = "Сменить ПОЛЬЗОВАТЕЛЬСКИЙ пароль на метеостанции"
+        passwordFirst.textColor = .black
+        passwordFirst.numberOfLines = 0
+        passwordFirst.font = UIFont(name:"FuturaPT-Medium", size: screenW / 20)
+        return passwordFirst
+    }()
+    fileprivate lazy var passwordFirstService: UILabel = {
+        let passwordFirst = UILabel()
+        passwordFirst.text = "Сменить СЕРВИСНЫЙ пароль на метеостанции"
         passwordFirst.textColor = .black
         passwordFirst.numberOfLines = 0
         passwordFirst.font = UIFont(name:"FuturaPT-Medium", size: screenW / 20)
@@ -42,8 +54,10 @@ class PasswordController: UIViewController, UITextFieldDelegate, UIScrollViewDel
     
     fileprivate func registerDelegateTextFields() {
         passwordFieldThreed.delegate = self
-        passwordFieldFirst.delegate = self
         passwordFieldSecond.delegate = self
+        passwordFieldThreedService.delegate = self
+        passwordFieldSecondService.delegate = self
+
     }
     
     fileprivate lazy var passwordSecond: UILabel = {
@@ -69,6 +83,28 @@ class PasswordController: UIViewController, UITextFieldDelegate, UIScrollViewDel
     }()
     
     fileprivate lazy var passwordFour: UILabel = {
+        let password = UILabel()
+        password.text = "Еще раз новый пароль"
+        password.sizeToFit()
+        password.numberOfLines = 0
+        password.translatesAutoresizingMaskIntoConstraints = false
+        password.textColor = .black
+        password.font = UIFont(name:"FuturaPT-Light", size: screenW / 22)
+        return password
+    }()
+    
+    fileprivate lazy var passwordThreedService: UILabel = {
+        let password = UILabel()
+        password.text = "Новый пароль"
+        password.sizeToFit()
+        password.numberOfLines = 0
+        password.translatesAutoresizingMaskIntoConstraints = false
+        password.textColor = .black
+        password.font = UIFont(name:"FuturaPT-Light", size: screenW / 22)
+        return password
+    }()
+    
+    fileprivate lazy var passwordFourService: UILabel = {
         let password = UILabel()
         password.text = "Еще раз новый пароль"
         password.sizeToFit()
@@ -113,8 +149,31 @@ class PasswordController: UIViewController, UITextFieldDelegate, UIScrollViewDel
         return input
     }()
     
+    fileprivate lazy var passwordFieldSecondService: UITextField = {
+        let input = TextFieldWithPadding(placeholder: "Введите значение...")
+        input.isSecureTextEntry = true
+        input.keyboardAppearance = .light
+        input.translatesAutoresizingMaskIntoConstraints = false
+        input.keyboardType = UIKeyboardType.numberPad
+        input.font = UIFont(name:"FuturaPT-Light", size: screenW / 22)
+        input.addTarget(self, action: #selector(self.textFieldDidMax(_:)),for: UIControl.Event.editingChanged)
+        return input
+    }()
+    
+    fileprivate lazy var passwordFieldThreedService: UITextField = {
+        let input = TextFieldWithPadding(placeholder: "Введите значение...")
+        input.isSecureTextEntry = true
+        input.keyboardAppearance = .light
+        input.translatesAutoresizingMaskIntoConstraints = false
+        input.keyboardType = UIKeyboardType.numberPad
+        input.font = UIFont(name:"FuturaPT-Light", size: screenW / 22)
+        input.addTarget(self, action: #selector(self.textFieldDidMax(_:)),for: UIControl.Event.editingChanged)
+        return input
+    }()
+    
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
+        scrollView.isPagingEnabled = true
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
@@ -167,7 +226,7 @@ class PasswordController: UIViewController, UITextFieldDelegate, UIScrollViewDel
         return view
     }()
     lazy var passwordViewService: UIView = {
-        let view = UIView(frame: CGRect(x: screenW, y: 10, width: screenW - 40, height: 212))
+        let view = UIView(frame: CGRect(x: screenW, y: 10, width: screenW - 40, height: 232))
         view.backgroundColor = .white
         view.layer.cornerRadius = 10
         view.layer.shadowColor = UIColor(rgb: 0xB64894).cgColor
@@ -212,18 +271,12 @@ class PasswordController: UIViewController, UITextFieldDelegate, UIScrollViewDel
         scrollView.contentSize = CGSize(width: Int(screenW * 2 - 20), height: Int(screenH) / 2)
         
         scrollView.sv(passwordView)
-        scrollView.isPagingEnabled = true
         passwordView.sv(passwordFirst, passwordThreed, passwordFour, passwordFieldSecond, passwordFieldThreed)
         
         passwordView.width(screenW - 40).left(10).topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10).isActive = true
         passwordView.bottomAnchor.constraint(equalTo: passwordFieldThreed.bottomAnchor, constant: 20).isActive = true
         
         passwordFirst.left(10).right(10).topAnchor.constraint(equalTo: passwordView.topAnchor, constant: 15).isActive = true
-
-//        passwordFieldFirst.height(50).right(10).topAnchor.constraint(equalTo: passwordFirst.bottomAnchor, constant: 30).isActive = true
-//        passwordFieldFirst.leadingAnchor.constraint(equalTo: passwordSecond.trailingAnchor, constant: 10).isActive = true
-
-//        passwordSecond.left(10).centerYAnchor.constraint(equalTo: passwordFieldFirst.centerYAnchor).isActive = true
 
         passwordFieldSecond.height(50).right(10).topAnchor.constraint(equalTo: passwordFirst.bottomAnchor, constant: 30).isActive = true
         passwordFieldSecond.leadingAnchor.constraint(equalTo: passwordThreed.trailingAnchor, constant: 10).isActive = true
@@ -237,7 +290,19 @@ class PasswordController: UIViewController, UITextFieldDelegate, UIScrollViewDel
 
 //        passwordFour.backgroundColor = .green
         scrollView.addSubview(passwordViewService)
-        
+        passwordViewService.sv(passwordFirstService, passwordThreedService, passwordFourService, passwordFieldSecondService, passwordFieldThreedService)
+
+        passwordFirstService.left(10).right(10).topAnchor.constraint(equalTo: passwordViewService.topAnchor, constant: 15).isActive = true
+
+        passwordFieldSecondService.height(50).right(10).topAnchor.constraint(equalTo: passwordFirstService.bottomAnchor, constant: 30).isActive = true
+        passwordFieldSecondService.leadingAnchor.constraint(equalTo: passwordThreedService.trailingAnchor, constant: 10).isActive = true
+
+        passwordThreedService.left(10).centerYAnchor.constraint(equalTo: passwordFieldSecondService.centerYAnchor).isActive = true
+
+        passwordFieldThreedService.height(50).right(10).topAnchor.constraint(equalTo: passwordFieldSecondService.bottomAnchor, constant: 20).isActive = true
+        passwordFieldThreedService.leadingAnchor.constraint(equalTo: passwordFourService.trailingAnchor, constant: 10).isActive = true
+
+        passwordFourService.left(10).centerYAnchor.constraint(equalTo: passwordFieldThreedService.centerYAnchor).isActive = true
 //        passwordViewService.width(screenW - 40).topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 10).isActive = true
 //        passwordViewService.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -20).isActive = true
 //        passwordViewService.bottomAnchor.constraint(equalTo: passwordSet.bottomAnchor, constant: 20).isActive = true
@@ -266,9 +331,8 @@ class PasswordController: UIViewController, UITextFieldDelegate, UIScrollViewDel
     }
     
     @objc func tapPasswordSet() {
-        
         reload = 25 + segmentedControl1.selectedSegmentIndex
-        newPassword = passwordFieldSecond.text ?? "123"
+        newPassword = ((segmentedControl1.selectedSegmentIndex == 0) ? passwordFieldSecond.text ?? "" : passwordFieldSecondService.text ?? "")
         delegatePassword?.buttonTapPassword()
     }
     override func viewWillAppear(_ animated: Bool) {

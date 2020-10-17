@@ -12,36 +12,36 @@ class TabBarController: UITabBarController, MeteoDelegate, StateDelegate, BMVDDe
     
     let kBarHeight = 50
     var delegateConnectedMeteo: TabBarDelegate?
-    
+    let mainVC = MeteoDataController()
+    let searchVC = StateController()
+    let profileVC = MoreDevicesController()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        let mainVC = MeteoDataController()
+        mainVC.delegate = self
         let item = UITabBarItem()
         item.title = "МЕТЕО ДАННЫЕ"
         item.selectedImage = UIImage(named: "weather 1 ON")
         item.image = UIImage(named: "weather 1 OFF")
-//        item.selectedImage.
         self.tabBar.tintColor = UIColor.black
         mainVC.tabBarItem = item
-        mainVC.delegate = self
         
-        let searchVC = StateController()
+        searchVC.delegate = self
         let item2 = UITabBarItem()
         item2.title = "СОСТОЯНИЕ"
         item2.selectedImage = UIImage(named: "line 1 ON")
         item2.image = UIImage(named: "line 1 OFF")
         searchVC.tabBarItem = item2
-        searchVC.delegate = self
 
-        let profileVC = MoreDevicesController()
+        profileVC.delegate = self
         let item3 = UITabBarItem()
         item3.title = "ДОП.УСТРОЙСТВА"
         item3.selectedImage = UIImage(named: "generic 1 ON")
         item3.image = UIImage(named: "generic 1 OFF")
         profileVC.tabBarItem = item3
-        profileVC.delegate = self
+        
         viewControllers = [mainVC, searchVC, profileVC]
         self.tabBar.isTranslucent = false
         tabBar.barTintColor = .white

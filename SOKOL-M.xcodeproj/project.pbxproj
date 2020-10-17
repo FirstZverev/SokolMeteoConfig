@@ -46,6 +46,8 @@
 		B56BEB0D2432206500C42F85 /* ListAvailDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56BEB0C2432206500C42F85 /* ListAvailDevices.swift */; };
 		B56FD9D7247BA79200DF0B41 /* StateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56FD9D6247BA79200DF0B41 /* StateController.swift */; };
 		B5778AA424E138F600DF163D /* DayRangeIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5778AA324E138F600DF163D /* DayRangeIndicatorView.swift */; };
+		B57AED8D2536F784005F3C91 /* CellDataPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AED8C2536F784005F3C91 /* CellDataPeripheral.swift */; };
+		B57AED932536FB6D005F3C91 /* ListAvailTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AED922536FB6D005F3C91 /* ListAvailTableView.swift */; };
 		B58210F9251A0D3E006B4A4B /* BoxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58210F8251A0D3E006B4A4B /* BoxModel.swift */; };
 		B58217B1247FA6AD00C669CA /* error.json in Resources */ = {isa = PBXBuildFile; fileRef = B58217B0247FA6AD00C669CA /* error.json */; };
 		B58217B3247FA6B500C669CA /* success.json in Resources */ = {isa = PBXBuildFile; fileRef = B58217B2247FA6B500C669CA /* success.json */; };
@@ -66,7 +68,7 @@
 		B589CFBF242C876B00B547DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B589CFBD242C876B00B547DC /* LaunchScreen.storyboard */; };
 		B589CFD5242CBCE500B547DC /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFD4242CBCE500B547DC /* Menu.swift */; };
 		B589CFD7242CBD8F00B547DC /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFD6242CBD8F00B547DC /* ViewModel.swift */; };
-		B589CFDD242CCC2800B547DC /* ListOfAvailableMeteoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFDC242CCC2800B547DC /* ListOfAvailableMeteoController.swift */; };
+		B589CFDD242CCC2800B547DC /* BluetoothService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFDC242CCC2800B547DC /* BluetoothService.swift */; };
 		B589CFDF242CCC8400B547DC /* Devices.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFDE242CCC8400B547DC /* Devices.swift */; };
 		B589CFE5242CCDBD00B547DC /* ConnectedMeteoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFE4242CCDBD00B547DC /* ConnectedMeteoController.swift */; };
 		B589CFE7242CCE0300B547DC /* ViewModelConnected.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFE6242CCE0300B547DC /* ViewModelConnected.swift */; };
@@ -186,6 +188,8 @@
 		B56BEB0C2432206500C42F85 /* ListAvailDevices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAvailDevices.swift; sourceTree = "<group>"; };
 		B56FD9D6247BA79200DF0B41 /* StateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateController.swift; sourceTree = "<group>"; };
 		B5778AA324E138F600DF163D /* DayRangeIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayRangeIndicatorView.swift; sourceTree = "<group>"; };
+		B57AED8C2536F784005F3C91 /* CellDataPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellDataPeripheral.swift; sourceTree = "<group>"; };
+		B57AED922536FB6D005F3C91 /* ListAvailTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAvailTableView.swift; sourceTree = "<group>"; };
 		B58210F8251A0D3E006B4A4B /* BoxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxModel.swift; sourceTree = "<group>"; };
 		B58217B0247FA6AD00C669CA /* error.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = error.json; sourceTree = "<group>"; };
 		B58217B2247FA6B500C669CA /* success.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = success.json; sourceTree = "<group>"; };
@@ -208,7 +212,7 @@
 		B589CFC0242C876B00B547DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B589CFD4242CBCE500B547DC /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		B589CFD6242CBD8F00B547DC /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
-		B589CFDC242CCC2800B547DC /* ListOfAvailableMeteoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListOfAvailableMeteoController.swift; sourceTree = "<group>"; };
+		B589CFDC242CCC2800B547DC /* BluetoothService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothService.swift; sourceTree = "<group>"; };
 		B589CFDE242CCC8400B547DC /* Devices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Devices.swift; sourceTree = "<group>"; };
 		B589CFE4242CCDBD00B547DC /* ConnectedMeteoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectedMeteoController.swift; sourceTree = "<group>"; };
 		B589CFE6242CCE0300B547DC /* ViewModelConnected.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelConnected.swift; sourceTree = "<group>"; };
@@ -642,6 +646,7 @@
 			isa = PBXGroup;
 			children = (
 				B589CFDE242CCC8400B547DC /* Devices.swift */,
+				B57AED8C2536F784005F3C91 /* CellDataPeripheral.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -649,8 +654,9 @@
 		B589CFDA242CCBF300B547DC /* View */ = {
 			isa = PBXGroup;
 			children = (
-				B589CFDC242CCC2800B547DC /* ListOfAvailableMeteoController.swift */,
+				B589CFDC242CCC2800B547DC /* BluetoothService.swift */,
 				B56BEB0C2432206500C42F85 /* ListAvailDevices.swift */,
+				B57AED922536FB6D005F3C91 /* ListAvailTableView.swift */,
 				B58217BA247FD7FC00C669CA /* AlertCreateWarning.swift */,
 				B5DB4CF8243478120016A4BD /* Cell */,
 			);
@@ -1081,7 +1087,7 @@
 			files = (
 				B589CFE7242CCE0300B547DC /* ViewModelConnected.swift in Sources */,
 				B5438D7A242CD9A200FAB0C5 /* TableViewViewModelType.swift in Sources */,
-				B589CFDD242CCC2800B547DC /* ListOfAvailableMeteoController.swift in Sources */,
+				B589CFDD242CCC2800B547DC /* BluetoothService.swift in Sources */,
 				B5438D82242DEB2500FAB0C5 /* DetailViewModelType.swift in Sources */,
 				B589CFB4242C876900B547DC /* StartViewController.swift in Sources */,
 				B55982C124E167D6005C9FA9 /* ThriedMeteoData.swift in Sources */,
@@ -1143,6 +1149,7 @@
 				B50E6D3C2525B04500874459 /* SwipingStartController.swift in Sources */,
 				B596B8DC252345270007DC08 /* ModelBox.swift in Sources */,
 				B558882D24EBE272009E27A2 /* SecondConfigCell.swift in Sources */,
+				B57AED932536FB6D005F3C91 /* ListAvailTableView.swift in Sources */,
 				B5DB4CFB2434788D0016A4BD /* SeacrhBar+TextColor.swift in Sources */,
 				B58492E5247BA99A00C902C7 /* MoreDevicesController.swift in Sources */,
 				B5DB4CFF243479230016A4BD /* DevicesListCellHeder.swift in Sources */,
@@ -1166,6 +1173,7 @@
 				B593A8A1247E3EC1006D049F /* AlertCreate.swift in Sources */,
 				B528D594247CE1D8004244CA /* MenuController.swift in Sources */,
 				B5A82A9A2498760B00F7A335 /* ConfiguratorFirstController.swift in Sources */,
+				B57AED8D2536F784005F3C91 /* CellDataPeripheral.swift in Sources */,
 				B59BA4F824E1810D00B9F15A /* WKWebView.swift in Sources */,
 				B5A6D974247BA0D900F9C1C8 /* TabBarController.swift in Sources */,
 				B5A82A98249875B300F7A335 /* TabBarConfiguratorController.swift in Sources */,

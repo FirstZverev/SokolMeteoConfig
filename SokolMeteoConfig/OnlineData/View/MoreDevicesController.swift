@@ -56,6 +56,7 @@ class MoreDevicesController : UIViewController {
         })
         timer =  Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { (timer) in
             if Access_Allowed == 1 {
+                reload = 2
                 self.delegate?.buttonTapBMVD()
                 self.tableView.reloadData()
             }

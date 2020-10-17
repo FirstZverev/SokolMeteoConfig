@@ -37,14 +37,14 @@ class MeteoDataController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         reload = 2
         delegate?.buttonTapMeteo()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-            self.tableView.reloadData()
-        })
-        timer =  Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { (timer) in
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+//            self.tableView.reloadData()
+//        })
+        timer =  Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { (timer) in
             if Access_Allowed == 1 {
-//                reload = 2
+                reload = 2
                 self.delegate?.buttonTapMeteo()
-                self.tableView.reloadData()
+//                self.tableView.reloadData()
             }
         }
     }

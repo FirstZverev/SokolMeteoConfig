@@ -18,7 +18,7 @@ class StartViewController: UIViewController {
     var viewModel: TableViewViewModelType?
     
     let generator = UIImpactFeedbackGenerator(style: .light)
-    let devicesListVC = DevicesDUController()
+    let devicesListVC = ListAvailDevices()
     let tabBarVC = TabBarController()
 
     override func viewWillAppear(_ animated: Bool) {
@@ -46,7 +46,6 @@ class StartViewController: UIViewController {
         view.backgroundColor = .white
         registerTableView()
         viewModel = ViewModel()
-        devicesListVC.delegate = self
         let customNavigationBar = createCustomNavigationBar(title: "МЕНЮ", fontSize: screenW / 22)
         view.sv(
             customNavigationBar
@@ -227,7 +226,7 @@ extension StartViewController {
     }
     fileprivate func transitionSearchMeteo() {
         self.generator.impactOccurred()
-        navigationController?.pushViewController(DevicesDUController(), animated: true)
+        navigationController?.pushViewController(ListAvailDevices(), animated: true)
     }
 }
 
@@ -235,21 +234,4 @@ extension StartViewController: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return DrawerPresentationController(presentedViewController: presented, presenting: presenting, blurEffectStyle: isNight ? .light : .dark, topGap: screenH / 4, modalWidth: 0, cornerRadius: 20)
     }
-}
-
-extension StartViewController: MainDelegate {
-    func buttonT() {
-        print("PRINT")
-        print("PRINT")
-        print("PRINT")
-        print("PRINT")
-        print("PRINT")
-        print("PRINT")
-        print("PRINT")
-        print("PRINT")
-        print("PRINT")
-
-    }
-    
-    
 }

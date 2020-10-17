@@ -147,14 +147,15 @@ extension BlackBoxMeteoDataController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //
-//        if indexPath.row == 4 {
-        let blackBoxGraffics = BlackBoxGraffics()
-        blackBoxGraffics.name = indexPath.row - 1
-        blackBoxGraffics.nameDeviceBox = nameDeviceBlackBox
+        if indexPath.row != 0 {
+            let blackBoxGraffics = BlackBoxGraffics()
+            blackBoxGraffics.name = indexPath.row - 1
+            blackBoxGraffics.nameDeviceBox = nameDeviceBlackBox
             navigationController?.pushViewController(blackBoxGraffics, animated: true)
-//        } else if indexPath.row == 0 {
-//            navigationController?.pushViewController(TabBarController(), animated: true)
-//        }
+            //        } else if indexPath.row == 0 {
+            //            navigationController?.pushViewController(TabBarController(), animated: true)
+            //        }
+        }
     }
 }
 
@@ -167,7 +168,7 @@ extension BlackBoxMeteoDataController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MeteoBlackBoxCell", for: indexPath) as? MeteoBlackBoxCell
         cell?.selectionStyle = .none
 //        cell?.imageUI?.image = UIImage(named: "imageMeteo\(indexPath.row - 1)")
-        cell?.labelTwo?.text = "\(arrayMeteo[indexPath.row])"
+        cell?.labelTwo?.text = "2029"
         guard let tableViewCell = cell, let viewModel = viewModel else { return UITableViewCell() }
         let cellViewModel = viewModel.cellViewModel(forIndexPath: indexPath)
         if indexPath.row == 0 {
@@ -178,7 +179,7 @@ extension BlackBoxMeteoDataController: UITableViewDataSource {
             cell?.saveButton?.isHidden = false
             cell?.save2Button?.isHidden = false
             cell?.save3Button?.isHidden = false
-
+            cell?.nextImage.isHidden = true
             cell?.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner] // Top right corner, Top left corner respectively
         } else {
             cell?.layer.cornerRadius = 0
@@ -186,7 +187,7 @@ extension BlackBoxMeteoDataController: UITableViewDataSource {
             cell?.saveButton?.isHidden = true
             cell?.save2Button?.isHidden = true
             cell?.save3Button?.isHidden = true
-
+            cell?.nextImage.isHidden = false
         }
         tableViewCell.viewModel = cellViewModel
 
@@ -194,20 +195,24 @@ extension BlackBoxMeteoDataController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-        UIView.animate(withDuration: 0.5) {
-            let cell  = tableView.cellForRow(at: indexPath) as? MeteoBlackBoxCell
-            cell!.nextImage!.tintColor = UIColor(rgb: 0xBE449E)
-            cell!.label!.textColor = UIColor(rgb: 0xBE449E)
-            cell?.contentView.backgroundColor = UIColor(rgb: 0xECECEC)
+        if indexPath.row != 0 {
+            UIView.animate(withDuration: 0.5) {
+                let cell  = tableView.cellForRow(at: indexPath) as? MeteoBlackBoxCell
+                //            cell!.nextImage!.tintColor = UIColor(rgb: 0xBE449E)
+                cell!.label!.textColor = UIColor(rgb: 0xBE449E)
+                cell?.contentView.backgroundColor = UIColor(rgb: 0xECECEC)
+            }
         }
     }
     
     func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
-        UIView.animate(withDuration: 0.2) {
-            let cell  = tableView.cellForRow(at: indexPath) as? MeteoBlackBoxCell
-            cell!.nextImage!.tintColor = UIColor(rgb: 0x998F99)
-            cell!.label!.textColor = .black
-            cell?.contentView.backgroundColor = .white
+        if indexPath.row != 0 {
+            UIView.animate(withDuration: 0.2) {
+                let cell  = tableView.cellForRow(at: indexPath) as? MeteoBlackBoxCell
+                //            cell!.nextImage!.tintColor = UIColor(rgb: 0x998F99)
+                cell!.label!.textColor = .black
+                cell?.contentView.backgroundColor = .white
+            }
         }
     }
 }

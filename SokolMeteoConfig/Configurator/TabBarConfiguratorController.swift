@@ -8,7 +8,7 @@
 
 import UIKit
 import UIDrawer
-import BottomPopup
+import FittedSheets
 
 class TabBarConfiguratorController: UITabBarController, FirstConfiguratorDelegate, ThriedConfiguratorDelegate {
     
@@ -38,7 +38,7 @@ class TabBarConfiguratorController: UITabBarController, FirstConfiguratorDelegat
         
         let thriedVC = ConfiguratorThriedController()
         let item3 = UITabBarItem()
-        item3.title = "Состояние подк."
+        item3.title = "СОСТОЯНИЕ ПОДК."
         item3.selectedImage = UIImage(named: "thriedConfigurator ON")
         item3.image = UIImage(named: "thriedConfigurator OFF")
         thriedVC.tabBarItem = item3
@@ -73,15 +73,50 @@ class TabBarConfiguratorController: UITabBarController, FirstConfiguratorDelegat
     }
     fileprivate func transitionSettingsApp() {
         generator.impactOccurred()
-        let viewController = ThriedMeteoData()
-        viewController.height = 350
-        viewController.topCornerRadius = 35
-        viewController.presentDuration = 0.5
-        viewController.dismissDuration = 0.2
-        viewController.modalPresentationStyle = .custom
-        viewController.delegate = self
-//        viewController.transitioningDelegate = self
-        self.present(viewController, animated: true)
+        let controller = ThriedMeteoData()
+//        viewController.height = screenW - 50
+//        viewController.topCornerRadius = 35
+//        viewController.presentDuration = 0.5
+//        viewController.dismissDuration = 0.2
+//        viewController.modalPresentationStyle = .custom
+        controller.delegate = self
+
+        let sheetController = SheetViewController(
+            controller: controller,
+            sizes: [.percent(0.4), .fixed(screenH * 0.4), .fullscreen])
+            
+            
+        // The size of the grip in the pull bar
+        sheetController.gripSize = CGSize(width: 50, height: 6)
+
+        // The color of the grip on the pull bar
+        sheetController.gripColor = UIColor(white: 0.868, alpha: 1)
+
+        // The corner radius of the sheet
+        sheetController.cornerRadius = 35
+            
+        // minimum distance above the pull bar, prevents bar from coming right up to the edge of the screen
+        sheetController.minimumSpaceAbovePullBar = 50
+
+        // Set the pullbar's background explicitly
+        sheetController.pullBarBackgroundColor = UIColor.white
+
+        // Determine if the rounding should happen on the pullbar or the presented controller only (should only be true when the pull bar's background color is .clear)
+        sheetController.treatPullBarAsClear = false
+
+        // Disable the dismiss on background tap functionality
+        sheetController.dismissOnOverlayTap = true
+
+        // Disable the ability to pull down to dismiss the modal
+        sheetController.dismissOnPull = true
+
+        /// Allow pulling past the maximum height and bounce back. Defaults to true.
+        sheetController.allowPullingPastMaxHeight = true
+
+        /// Automatically grow/move the sheet to accomidate the keyboard. Defaults to true.
+        sheetController.autoAdjustToKeyboard = true
+        
+        self.present(sheetController, animated: true)
     }
     fileprivate lazy var defaultTabBarHeight = { tabBar.frame.size.height }()
     
@@ -101,34 +136,34 @@ class TabBarConfiguratorController: UITabBarController, FirstConfiguratorDelegat
 //        tabBar.frame = newFrame
     }
 }
-extension TabBarConfiguratorController: UIViewControllerTransitioningDelegate {
-    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return DrawerPresentationController(presentedViewController: presented, presenting: presenting, blurEffectStyle: isNight ? .light : .dark, topGap: screenH / 3, modalWidth: 0, cornerRadius: 30)
-    }
-}
-extension TabBarConfiguratorController: BottomPopupDelegate {
-    
-    func bottomPopupViewLoaded() {
-        print("bottomPopupViewLoaded")
-    }
-    
-    func bottomPopupWillAppear() {
-        print("bottomPopupWillAppear")
-    }
-    
-    func bottomPopupDidAppear() {
-        print("bottomPopupDidAppear")
-    }
-    
-    func bottomPopupWillDismiss() {
-        print("bottomPopupWillDismiss")
-    }
-    
-    func bottomPopupDidDismiss() {
-        print("bottomPopupDidDismiss")
-    }
-    
-    func bottomPopupDismissInteractionPercentChanged(from oldValue: CGFloat, to newValue: CGFloat) {
-        print("bottomPopupDismissInteractionPercentChanged fromValue: \(oldValue) to: \(newValue)")
-    }
-}
+//extension TabBarConfiguratorController: UIViewControllerTransitioningDelegate {
+//    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+//        return DrawerPresentationController(presentedViewController: presented, presenting: presenting, blurEffectStyle: isNight ? .light : .dark, topGap: screenH / 3, modalWidth: 0, cornerRadius: 30)
+//    }
+//}
+//extension TabBarConfiguratorController: BottomPopupDelegate {
+//
+//    func bottomPopupViewLoaded() {
+//        print("bottomPopupViewLoaded")
+//    }
+//
+//    func bottomPopupWillAppear() {
+//        print("bottomPopupWillAppear")
+//    }
+//
+//    func bottomPopupDidAppear() {
+//        print("bottomPopupDidAppear")
+//    }
+//
+//    func bottomPopupWillDismiss() {
+//        print("bottomPopupWillDismiss")
+//    }
+//
+//    func bottomPopupDidDismiss() {
+//        print("bottomPopupDidDismiss")
+//    }
+//
+//    func bottomPopupDismissInteractionPercentChanged(from oldValue: CGFloat, to newValue: CGFloat) {
+//        print("bottomPopupDismissInteractionPercentChanged fromValue: \(oldValue) to: \(newValue)")
+//    }
+//}

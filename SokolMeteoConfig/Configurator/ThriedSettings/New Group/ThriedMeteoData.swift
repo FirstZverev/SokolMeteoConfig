@@ -6,30 +6,20 @@
 //  Copyright © 2020 zverev. All rights reserved.
 //
 import UIKit
-import BottomPopup
+import FittedSheets
 
-class ThriedMeteoData: BottomPopupViewController {
+class ThriedMeteoData: UIViewController {
     
     var tableView: UITableView!
     var viewModel: TableViewViewModelType?
     var delegate: ThriedConfiguratorDelegate?
-    var timer: Timer?
+    var timer = Timer()
     var height: CGFloat?
     var topCornerRadius: CGFloat?
     var presentDuration: Double?
     var dismissDuration: Double?
     var shouldDismissInteractivelty: Bool?
-    
-    override var popupHeight: CGFloat { return height ?? CGFloat(350) }
-    
-    override var popupTopCornerRadius: CGFloat { return topCornerRadius ?? CGFloat(35) }
-    
-    override var popupPresentDuration: Double { return presentDuration ?? 1.0 }
-    
-    override var popupDismissDuration: Double { return dismissDuration ?? 1.0 }
-    
-    override var popupShouldDismissInteractivelty: Bool { return shouldDismissInteractivelty ?? true }
-        
+
     override func loadView() {
         super.loadView()
 
@@ -40,8 +30,8 @@ class ThriedMeteoData: BottomPopupViewController {
         tableView.separatorStyle = .singleLine
         self.view.sv(tableView)
         tableView.showsVerticalScrollIndicator = false
-        tableView.height(320).width(screenW)
-        tableView.top(30)
+        tableView.height(screenH).width(screenW)
+        tableView.top(10)
         tableView.separatorInset = UIEdgeInsets(top: 0, left: 30, bottom: 0, right: 30)
         tableView.backgroundColor = .white
         tableView.separatorStyle = .none
@@ -51,21 +41,30 @@ class ThriedMeteoData: BottomPopupViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.sheetViewController?.handleScrollView(self.tableView)
         viewModel = ViewModelData()
         createTableView()
         registerTableView()
         viewShow()
         
     }
+    static func instantiate() -> ThriedMeteoData {
+        return UIStoryboard(name: "ScrollExample", bundle: nil).instantiateViewController(withIdentifier: "tableViewController") as! ThriedMeteoData
+    }
     override func viewDidAppear(_ animated: Bool) {
+        timer.invalidate()
         reload = 1
         delegate?.buttonTapThriedConfigurator()
         //        DispatchQueue.main.async { [self] in
-        timer =  Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [self] (timer) in
+        timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { [self] (timer) in
+            reload = 1
+            delegate?.buttonTapThriedConfigurator()
             self.tableView.reloadData()
         }
-//        }
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        timer.invalidate()
+        reload = -1
     }
 
     private func registerTableView() {
@@ -106,7 +105,6 @@ extension ThriedMeteoData: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DataCell", for: indexPath) as? DataCell
         cell?.selectionStyle = .none
-        cell?.imageUI?.image = UIImage(named: "ThriedConfigurator \(indexPath.row)")
         cell?.labelTwo?.text = "\(arrayStateConnect[indexPath.row])"
         guard let tableViewCell = cell, let viewModel = viewModel else { return UITableViewCell() }
 //        cell = accessoryType(cell: tableViewCell)

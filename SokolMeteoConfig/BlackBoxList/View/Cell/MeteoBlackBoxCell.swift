@@ -65,9 +65,7 @@ class MeteoBlackBoxCell: UITableViewCell {
         self.contentView.addSubview(imageUI)
         self.imageUI = imageUI
         
-        let nextImage = UIImageView(image: UIImage(named: "nextImage"))
-        nextImage.image = nextImage.image!.withRenderingMode(.alwaysTemplate)
-        nextImage.tintColor = UIColor(rgb: 0x998F99)
+        let nextImage = UIImageView(image: UIImage(named: "message"))
         nextImage.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(nextImage)
         self.nextImage = nextImage
@@ -122,8 +120,6 @@ class MeteoBlackBoxCell: UITableViewCell {
             
             self.nextImage!.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
             self.nextImage!.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            self.nextImage!.heightAnchor.constraint(equalToConstant: 25),
-            self.nextImage!.widthAnchor.constraint(equalToConstant: 25),
             
             self.separator!.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
             self.separator!.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),

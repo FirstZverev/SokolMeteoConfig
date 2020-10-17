@@ -18,6 +18,7 @@ class DataCell: UITableViewCell {
         willSet(viewModel) {
             guard let viewModel = viewModel else { return }
             label?.text = viewModel.name
+            imageUI?.image = UIImage(named: viewModel.image)
         }
     }
     
@@ -61,16 +62,22 @@ class DataCell: UITableViewCell {
         NSLayoutConstraint.activate([
             self.contentView.topAnchor.constraint(equalTo: self.label!.topAnchor, constant: -20),
             self.contentView.bottomAnchor.constraint(equalTo: self.label!.bottomAnchor, constant: 20),
-            self.contentView.leadingAnchor.constraint(equalTo: self.label!.leadingAnchor, constant: -75),
-            self.contentView.trailingAnchor.constraint(equalTo: self.label!.trailingAnchor, constant: 75),
-            
             self.contentView.topAnchor.constraint(equalTo: self.labelTwo!.topAnchor, constant: -20),
             self.contentView.bottomAnchor.constraint(equalTo: self.labelTwo!.bottomAnchor, constant: 20),
-            self.contentView.leadingAnchor.constraint(equalTo: self.labelTwo!.leadingAnchor, constant: -200),
-            self.contentView.trailingAnchor.constraint(equalTo: self.labelTwo!.trailingAnchor, constant: 30),
-            self.imageUI!.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
-            self.imageUI!.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 30)
 
+            self.label!.leadingAnchor.constraint(equalTo: self.imageUI!.trailingAnchor, constant: 7),
+            self.label!.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+//            self.label!.trailingAnchor.constraint(equalTo: self.labelTwo!.leadingAnchor, constant: -30),
+            self.label!.widthAnchor.constraint(equalToConstant: screenW / 2),
+
+            self.labelTwo!.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            self.labelTwo!.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
+            self.labelTwo!.leadingAnchor.constraint(equalTo: self.label!.trailingAnchor),
+
+            self.imageUI!.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
+            self.imageUI!.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 15),
+            self.imageUI!.heightAnchor.constraint(equalToConstant: 40),
+            self.imageUI!.widthAnchor.constraint(equalToConstant: 40),
         ])
     }
 }

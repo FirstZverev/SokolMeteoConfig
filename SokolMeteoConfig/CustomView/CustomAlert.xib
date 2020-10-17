@@ -66,7 +66,7 @@
                                 <constraint firstAttribute="height" constant="30" id="uHf-Cd-Maf"/>
                             </constraints>
                             <color key="tintColor" red="0.74509803921568629" green="0.26666666666666666" blue="0.61960784313725492" alpha="1" colorSpace="calibratedRGB"/>
-                            <state key="normal" title="Button"/>
+                            <state key="normal" title="Button" image="close"/>
                             <connections>
                                 <action selector="clouseButtonWithSender:" destination="tNV-ja-xKy" eventType="touchUpInside" id="mHV-Js-t1Z"/>
                             </connections>
@@ -111,6 +111,7 @@
         </view>
     </objects>
     <resources>
+        <image name="close" width="39" height="39"/>
         <image name="лого сокол 1" width="584" height="122"/>
         <systemColor name="darkTextColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

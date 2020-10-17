@@ -13,10 +13,10 @@ class ViewModelMoreDevices: TableViewViewModelType {
     private var selectedIndexPath: IndexPath?
     
     var menuMain = [
-        Menu(id: 1, name: "БМВД 1", image: "bmvd1", ubat: "-", rssi: "-"),
-        Menu(id: 2, name: "БМВД 2", image: "bmvd2", ubat: "-", rssi: "-"),
-        Menu(id: 3, name: "БМВД 3", image: "bmvd2", ubat: "-", rssi: "-"),
-        Menu(id: 4, name: "БМВД 4", image: "bmvd2", ubat: "-", rssi: "-"),
+        Menu(id: 1, name: "Беспроводной модуль 1", image: "bmvd1", ubat: "-", rssi: "-"),
+        Menu(id: 2, name: "Беспроводной модуль 2", image: "bmvd2", ubat: "-", rssi: "-"),
+        Menu(id: 3, name: "Беспроводной модуль 3", image: "bmvd2", ubat: "-", rssi: "-"),
+        Menu(id: 4, name: "Беспроводной модуль 4", image: "bmvd2", ubat: "-", rssi: "-"),
         ]
     
     func numberOfRows() -> Int {

@@ -19,6 +19,7 @@ target 'SOKOL-M' do
 	pod 'UIDrawer', :git => 'https://github.com/Que20/UIDrawer.git', :tag => '1.0'
 	pod 'AdvancedPageControl'
 	pod 'Charts'
+	pod 'FittedSheets'
 end
 
 post_install do |installer|

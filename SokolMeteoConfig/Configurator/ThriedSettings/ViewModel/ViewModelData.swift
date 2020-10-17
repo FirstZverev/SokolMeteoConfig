@@ -13,10 +13,12 @@ class ViewModelData: TableViewViewModelType {
     private var selectedIndexPath: IndexPath?
     
     var menuMain = [
-            Menu(id: 1, name: "Системное время"),
-            Menu(id: 2, name: "Состояние GSM"),
-            Menu(id: 3, name: "Количество переданных сообщений"),
-            Menu(id: 4, name: "Количество спутников"),
+            Menu(id: 1, name: "Системное время", image: "time"),
+            Menu(id: 2, name: "Состояние подключения по GSM", image: "setings"),
+            Menu(id: 3, name: "Количество переданных сообщений", image: "mail"),
+            Menu(id: 4, name: "Количество спутников", image: "satellite"),
+            Menu(id: 5, name: "Уровень сигнала GSM", image: "gsm"),
+            Menu(id: 6, name: "Напряжение аккумулятора", image: "voltage")
         ]
     
     func numberOfRows() -> Int {

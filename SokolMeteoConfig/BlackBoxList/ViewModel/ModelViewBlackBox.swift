@@ -12,7 +12,7 @@ class ModelViewBlackBox: TableViewViewModelType {
     private var selectedIndexPath: IndexPath?
     
     var menuMain = [
-        Menu(id: 1, name: " ", image: "arrow_drop_down_24px"),
+        Menu(id: 1, name: " ", image: "Frame 60"),
         Menu(id: 2, name: "Температура", image: "temperature"),
         Menu(id: 3, name: "Направление ветра", image: "wind"),
         Menu(id: 4, name: "Скорость ветра", image: "wind-1"),

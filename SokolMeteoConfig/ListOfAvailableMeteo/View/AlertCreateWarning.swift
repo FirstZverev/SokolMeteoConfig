@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension DevicesDUController: AlertWarningDelegate {
+extension ListAvailDevices: AlertWarningDelegate {
     func buttonClose() {
         animateOut()
     }
