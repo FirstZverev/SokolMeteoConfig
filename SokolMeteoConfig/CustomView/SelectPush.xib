@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="futura-pt-medium.ttf">
+            <string>FuturaPT-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iOw-hN-kPd" customClass="SelectPush" customModule="SOKOL_M" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="356" height="261"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sfL-1Y-bXr">
+                    <rect key="frame" x="28" y="45.5" width="300" height="170"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SCm-NM-q6A">
+                            <rect key="frame" x="170" y="120" width="120" height="40"/>
+                            <color key="backgroundColor" red="0.74509803919999995" green="0.2666666667" blue="0.61960784310000006" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="16w-KP-bXC"/>
+                                <constraint firstAttribute="width" constant="120" id="xBQ-jY-jrx"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="FuturaPT-Medium" family="Futura PT" pointSize="20"/>
+                            <state key="normal" title="Войти">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="ActionButton:" destination="iOw-hN-kPd" eventType="touchUpInside" id="4NZ-Ja-fma"/>
+                            </connections>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cпособ отправки" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w0s-dT-cg6">
+                            <rect key="frame" x="20" y="19" width="144" height="26"/>
+                            <fontDescription key="fontDescription" name="FuturaPT-Medium" family="Futura PT" pointSize="20"/>
+                            <color key="textColor" systemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wz0-R5-5Oc">
+                            <rect key="frame" x="97" y="123.5" width="58" height="33"/>
+                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="16"/>
+                            <state key="normal" title="Отмена">
+                                <color key="titleColor" red="0.74509803921568629" green="0.26666666666666666" blue="0.61960784313725492" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </state>
+                            <connections>
+                                <action selector="clouseButtonWithSender:" destination="iOw-hN-kPd" eventType="touchUpInside" id="7U0-ox-SKG"/>
+                            </connections>
+                        </button>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="zMf-YU-HdF">
+                            <rect key="frame" x="20" y="55" width="260" height="60"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="fxt-W6-LV6">
+                                    <rect key="frame" x="0.0" y="0.0" width="25" height="60"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cdF-SF-Suh" customClass="Checkbox" customModule="SimpleCheckbox">
+                                            <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="25" id="LsB-vT-Ywn"/>
+                                                <constraint firstAttribute="height" constant="25" id="OUi-Zs-4bS"/>
+                                            </constraints>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hto-oX-mCv" customClass="Checkbox" customModule="SimpleCheckbox">
+                                            <rect key="frame" x="0.0" y="35" width="25" height="25"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="25" id="IbV-ZD-g7C"/>
+                                                <constraint firstAttribute="width" constant="25" id="NH8-FX-a4p"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                </stackView>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9OI-Sg-NRd">
+                                    <rect key="frame" x="40" y="0.0" width="220" height="60"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="sokolmeteo.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3D3-B1-LQp">
+                                            <rect key="frame" x="0.0" y="0.0" width="220" height="22"/>
+                                            <fontDescription key="fontDescription" name="FuturaPT-Medium" family="Futura PT" pointSize="17"/>
+                                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text=".csv" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yZK-Og-JDm">
+                                            <rect key="frame" x="0.0" y="32" width="220" height="28"/>
+                                            <fontDescription key="fontDescription" name="FuturaPT-Medium" family="Futura PT" pointSize="17"/>
+                                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="zMf-YU-HdF" firstAttribute="top" secondItem="w0s-dT-cg6" secondAttribute="bottom" constant="10" id="5LE-X1-VyI"/>
+                        <constraint firstItem="SCm-NM-q6A" firstAttribute="leading" secondItem="Wz0-R5-5Oc" secondAttribute="trailing" constant="15" id="ARB-Zi-Vri"/>
+                        <constraint firstAttribute="trailing" secondItem="SCm-NM-q6A" secondAttribute="trailing" constant="10" id="Efz-9s-iLc"/>
+                        <constraint firstAttribute="width" constant="300" id="NDT-MD-ura"/>
+                        <constraint firstItem="Wz0-R5-5Oc" firstAttribute="centerY" secondItem="SCm-NM-q6A" secondAttribute="centerY" id="dgC-A4-Kjw"/>
+                        <constraint firstAttribute="bottom" secondItem="SCm-NM-q6A" secondAttribute="bottom" constant="10" id="h57-vx-eLx"/>
+                        <constraint firstAttribute="height" constant="170" id="o5n-J7-JPd"/>
+                        <constraint firstItem="zMf-YU-HdF" firstAttribute="centerY" secondItem="sfL-1Y-bXr" secondAttribute="centerY" id="pGW-U8-mxS"/>
+                        <constraint firstItem="zMf-YU-HdF" firstAttribute="centerX" secondItem="sfL-1Y-bXr" secondAttribute="centerX" id="qn2-Ks-xbZ"/>
+                        <constraint firstItem="zMf-YU-HdF" firstAttribute="leading" secondItem="sfL-1Y-bXr" secondAttribute="leading" constant="20" id="s1P-wE-BeS"/>
+                        <constraint firstItem="w0s-dT-cg6" firstAttribute="leading" secondItem="sfL-1Y-bXr" secondAttribute="leading" constant="20" id="z7K-lO-TWl"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="3rs-T3-gOA"/>
+            <constraints>
+                <constraint firstItem="sfL-1Y-bXr" firstAttribute="centerX" secondItem="iOw-hN-kPd" secondAttribute="centerX" id="De6-vC-Tfz"/>
+                <constraint firstItem="sfL-1Y-bXr" firstAttribute="centerY" secondItem="iOw-hN-kPd" secondAttribute="centerY" id="DiZ-Ed-CTe"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="CloseImage" destination="Wz0-R5-5Oc" id="aTz-Sq-QpV"/>
+                <outlet property="ContentView" destination="sfL-1Y-bXr" id="MaA-fF-wXY"/>
+                <outlet property="CustomEnter" destination="SCm-NM-q6A" id="Tgr-5j-R2y"/>
+                <outlet property="CustomMainLabel" destination="w0s-dT-cg6" id="laM-R4-RZD"/>
+                <outlet property="checkBoxOne" destination="cdF-SF-Suh" id="Yek-IK-Mrt"/>
+                <outlet property="checkBoxTwo" destination="hto-oX-mCv" id="bs3-0l-qTa"/>
+            </connections>
+            <point key="canvasLocation" x="95.652173913043484" y="146.98660714285714"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="darkTextColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

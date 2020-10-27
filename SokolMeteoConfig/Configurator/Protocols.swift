@@ -11,10 +11,22 @@ import Foundation
 protocol FirstConfiguratorDelegate: class {
     func buttonTapFirstConfigurator()
 }
+
+protocol SecondConfiguratorDelegate: class {
+    func buttonTapSecondConfigurator()
+}
+protocol SecondConfiguratorSettingsBMVDDelegate: class {
+    func buttonTapSecondConfigurator()
+}
+protocol SettingsBMVDDelegate: class {
+    func buttonTapSecondConfigurator()
+}
+
 protocol ThriedConfiguratorDelegate: class {
     func buttonTapThriedConfigurator()
 }
 
 protocol TabBarConfiguratorDelegate: class {
     func buttonTabBar()
+    func buttonTapSetAlert()
 }

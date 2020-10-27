@@ -7,13 +7,32 @@
 //
 
 import UIKit
+import NVActivityIndicatorView
 
-class ConfiguratorBMVDSecondController : UIViewController {
+class ConfiguratorBMVDSecondController : UIViewController, SettingsBMVDDelegate {
     
     var tableView: UITableView!
     var a: CGFloat = 0
     let generator = UIImpactFeedbackGenerator(style: .light)
+    var settingsBMVDvc = SettingsBMVDController()
+    var delegate: SecondConfiguratorSettingsBMVDDelegate?
 
+    lazy var viewAlpha: UIView = {
+        let viewAlpha = UIView(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH))
+        viewAlpha.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        return viewAlpha
+    }()
+    lazy var activityIndicator: NVActivityIndicatorView = {
+        let view = NVActivityIndicatorView(frame: .zero, type: .ballGridPulse, color: UIColor.purple)
+        view.frame.size = CGSize(width: 50, height: 50)
+        view.layer.shadowColor = UIColor.white.cgColor
+        view.layer.shadowRadius = 5.0
+        view.layer.shadowOpacity = 0.7
+        view.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+        view.center = viewAlpha.center
+        return view
+    }()
+    
     lazy var backView: UIImageView = {
         let backView = UIImageView()
         backView.frame = CGRect(x: 0, y: screenH / 12 - 50, width: 50, height: 50)
@@ -24,13 +43,6 @@ class ConfiguratorBMVDSecondController : UIViewController {
         return backView
     }()
     
-    lazy var circlePlus: UIImageView = {
-        let circlePlus = UIImageView(image: UIImage(named: "circle"))
-        circlePlus.sizeToFit()
-        circlePlus.translatesAutoresizingMaskIntoConstraints = false
-        return circlePlus
-    }()
-    
     fileprivate func createTableView() {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.separatorStyle = .none
@@ -39,9 +51,28 @@ class ConfiguratorBMVDSecondController : UIViewController {
         tableView.height(screenH - (screenH / 12)).width(screenW)
         tableView.top(screenH / 12)
         tableView.backgroundColor = .white
+        tableView.refreshControl = refreshControl
         self.tableView = tableView
     }
     
+    var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.tintColor = .purple
+        refreshControl.addTarget(self, action: #selector(refresh(sender:)), for: .valueChanged)
+        return refreshControl
+    }()
+    
+    @objc func update(mySwitch: UISwitch) {
+        let index = mySwitch.tag
+        selectBmvd = "\(index)"
+        viewAlpha.isHidden = false
+        reload = 8
+        buttonTapSecondConfigurator()
+    }
+    @objc func refresh(sender:AnyObject) {
+        reload = 10
+        buttonTapSecondConfigurator()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -49,14 +80,22 @@ class ConfiguratorBMVDSecondController : UIViewController {
         self.hero.isEnabled = true
         createTableView()
         registerCell()
-        view.sv(customNavigationBar, backView, circlePlus)
+        view.sv(customNavigationBar, backView)
         backView.addTapGesture { [self] in self.popVC() }
-        
-        circlePlus.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -25).isActive = true
-        circlePlus.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        circlePlus.addTapGesture {
-            print("circlePlus")
-        }
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        reload = 10
+        viewAlpha.isHidden = false
+        viewAlpha.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        view.addSubview(viewAlpha)
+        buttonTapSecondConfigurator()
+    }
+    func viewControllerPush(viewController:  UICollectionViewController) -> UIViewController {
+            return viewController
+    }
+    func buttonTapSecondConfigurator() {
+        delegate?.buttonTapSecondConfigurator()
     }
     
     func popVC() {
@@ -74,9 +113,20 @@ class ConfiguratorBMVDSecondController : UIViewController {
 extension ConfiguratorBMVDSecondController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SecondConfigBMVDCell", for: indexPath) as! SecondConfigBMVDCell
+        cell.selectionStyle = .none
         cell.label.text = configBMVD[indexPath.row].name
         cell.imageUI.image = UIImage(named: configBMVD[indexPath.row].image)
-        cell.labelMac.text = configBMVD[indexPath.row].mac
+        cell.labelMac.text = macLabel + arrayBmvdM[indexPath.row]
+        cell.uiSwitch.addTarget(self, action: #selector(update), for: .valueChanged)
+        cell.uiSwitch.tag = indexPath.row
+        if arrayBmvdE[indexPath.row] == "1" {
+            cell.uiSwitch.isOn = true
+            cell.uiSwitch!.isHidden = false
+            cell.nextImage!.isHidden = true
+        } else {
+            cell.uiSwitch!.isHidden = true
+            cell.nextImage!.isHidden = false
+        }
         return cell
     }
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -112,22 +162,17 @@ extension ConfiguratorBMVDSecondController: UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-}
-extension ConfiguratorBMVDSecondController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        var offset = scrollView.contentOffset.y
-        print(offset)
-        if (offset > a) {
-            if offset <= 0 {
-                offset = 0
-            }
-            circlePlus.transform = CGAffineTransform(translationX: 0, y: offset)
-        } else if (offset < a) {
-            if offset <= 0 {
-                offset = 0
-            }
-            circlePlus.transform = CGAffineTransform(translationX: 0, y: offset)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if arrayBmvdE[indexPath.row] == "0" {
+            selectBmvd = "\(indexPath.row)"
+            
+            let layout = UICollectionViewFlowLayout()
+            layout.scrollDirection = .horizontal
+            
+            settingsBMVDvc = viewControllerPush(viewController: SettingsBMVDController(collectionViewLayout: layout)) as! SettingsBMVDController
+            settingsBMVDvc.delegate = self
+            navigationController?.pushViewController(settingsBMVDvc, animated: true)
         }
-        a = offset
+
     }
 }

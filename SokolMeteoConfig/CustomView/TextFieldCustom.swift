@@ -24,7 +24,7 @@ class TextFieldWithPadding: UITextField {
         layer.borderColor = UIColor(rgb: 0xE7E7E7).cgColor
         layer.borderWidth = 1.0
         tintColor = .purple
-        
+        keyboardAppearance = .light
     }
     
     required init?(coder: NSCoder) {

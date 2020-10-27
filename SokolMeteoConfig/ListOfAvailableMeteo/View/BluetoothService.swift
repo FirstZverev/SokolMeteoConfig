@@ -92,22 +92,25 @@ extension ListAvailDevices : CBCentralManagerDelegate, CBPeripheralDelegate {
                 // Fallback on earlier versions
             }
             print("Bluetooth OFF.")
-            let alert = UIAlertController(title: "Bluetooth выключен", message: "Для дальнейшей работы необходимо включить Bluetooth", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Настройки", style: .default, handler: { action in
-                                            switch action.style{
-                                            case .default:
-                                                UIApplication.shared.open(URL(string: "App-prefs:Bluetooth")!)
-                                                print("default")
-                                                self.navigationController?.popViewController(animated: true)
-                                                self.view.subviews.forEach({ $0.removeFromSuperview() })
-                                            case .cancel:
-                                                print("cancel")
-                                            case .destructive:
-                                                print("destructive")
-                                            @unknown default:
-                                                fatalError()
-                                            }}))
-            self.present(alert, animated: true, completion: nil)
+//            let alert = UIAlertController(title: "Bluetooth выключен", message: "Для дальнейшей работы необходимо включить Bluetooth", preferredStyle: .alert)
+//            alert.addAction(UIAlertAction(title: "Настройки", style: .default, handler: { action in
+//                                            switch action.style{
+//                                            case .default:
+//                                                UIApplication.shared.open(URL(string: "App-prefs:Bluetooth")!)
+//                                                print("default")
+//                                                self.navigationController?.popViewController(animated: true)
+//                                                self.view.subviews.forEach({ $0.removeFromSuperview() })
+//                                            case .cancel:
+//                                                print("cancel")
+//                                            case .destructive:
+//                                                print("destructive")
+//                                            @unknown default:
+//                                                fatalError()
+//                                            }}))
+//            self.present(alert, animated: true, completion: nil)
+            setAlertBle()
+            animateIn()
+
         }
     }
     func centralManager(
@@ -117,6 +120,7 @@ extension ListAvailDevices : CBCentralManagerDelegate, CBPeripheralDelegate {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         if let navController = self.navigationController {
             Access_Allowed = 0
+            mainPassword = ""
             navController.pushViewController(self.connectedMeteoVC, animated: true)
         }
         self.viewAlpha.removeFromSuperview()

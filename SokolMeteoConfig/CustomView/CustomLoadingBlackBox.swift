@@ -47,6 +47,11 @@ class CustomLoadingBlackBox: UIView {
     }
     func customeizingContentView() {
         ContentView.layer.cornerRadius = 20
+        ContentView.layer.shadowColor = UIColor(rgb: 0xB64894).cgColor
+        ContentView.layer.shadowRadius = 20.0
+        ContentView.layer.shadowOpacity = 0.5
+        ContentView.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+
         progress.frame = .zero
         progress.type = .circleStrokeSpin
         progress.color = UIColor(rgb: 0xBE449E)

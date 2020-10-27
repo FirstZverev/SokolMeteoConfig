@@ -39,7 +39,7 @@ class StateController: UIViewController {
 //            self.tableView.reloadData()
 //        })
         timer =  Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { (timer) in
-            if Access_Allowed == 1 {
+            if Access_Allowed >= 1 {
                 reload = 1
                 self.delegate?.buttonTapState()
 //                self.tableView.reloadData()
@@ -118,7 +118,6 @@ extension StateController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "StateCell", for: indexPath) as? StateCell
         cell?.selectionStyle = .none
-        cell?.labelTwo?.text = "\(arrayState[indexPath.row])"
         if indexPath.row == 0 {
             cell?.clipsToBounds = true
             cell?.layer.cornerRadius = 40

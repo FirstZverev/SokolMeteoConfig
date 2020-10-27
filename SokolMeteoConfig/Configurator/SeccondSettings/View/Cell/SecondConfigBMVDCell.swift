@@ -15,6 +15,7 @@ class SecondConfigBMVDCell: UITableViewCell {
     var imageUI: UIImageView!
     var nextImage: UIImageView!
     var separator: UIView!
+    var uiSwitch: UISwitch!
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -72,6 +73,16 @@ class SecondConfigBMVDCell: UITableViewCell {
         nextImage.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(nextImage)
         self.nextImage = nextImage
+        
+        let uiSwitch = UISwitch()
+        uiSwitch.translatesAutoresizingMaskIntoConstraints = false
+        uiSwitch.isOn = true
+        uiSwitch.isHidden = true
+        uiSwitch.onTintColor = .purple
+        uiSwitch.addTarget(self, action: #selector(update), for: .editingChanged)
+        contentView.addSubview(uiSwitch)
+        self.uiSwitch = uiSwitch
+
 
         
         NSLayoutConstraint.activate([
@@ -101,6 +112,12 @@ class SecondConfigBMVDCell: UITableViewCell {
             self.nextImage!.heightAnchor.constraint(equalToConstant: 25),
             self.nextImage!.widthAnchor.constraint(equalToConstant: 25),
             
+            self.uiSwitch!.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
+            self.uiSwitch!.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+//            self.uiSwitch!.heightAnchor.constraint(equalToConstant: 25),
+//            self.uiSwitch!.widthAnchor.constraint(equalToConstant: 25),
+
+            
             self.separator!.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
             self.separator!.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
             self.separator!.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 30),
@@ -109,7 +126,9 @@ class SecondConfigBMVDCell: UITableViewCell {
 
         ])
     }
-    
+    @objc func update() {
+        
+    }
     override func layoutSubviews() {
         super.layoutSubviews()
         

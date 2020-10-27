@@ -11,6 +11,7 @@ import Hero
 import Stevia
 import UIDrawer
 import RealmSwift
+import FittedSheets
 
 class StartViewController: UIViewController {
 
@@ -107,11 +108,10 @@ class StartViewController: UIViewController {
        // tableView.separatorStyle = .none
         self.view.sv(tableView)
         tableView.showsVerticalScrollIndicator = false
-        tableView.height(screenH - (screenH / 12))
 //        tableView.top(screenH / 12)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: screenH / 12).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
         tableView.backgroundColor = .white
@@ -139,9 +139,10 @@ extension StartViewController: UITableViewDelegate {
             navigationController?.pushViewController(BlackBoxListController(), animated: true)
 
         } else if indexPath.row == 2 {
-            navigationController?.pushViewController(RegisterSokolMeteoController(), animated: true)
+            navigationController?.pushViewController(ProfileMeteoController(), animated: true)
         } else if indexPath.row == 3 {
 //            navigationController?.pushViewController(BlackBoxGraffics(), animated: true)
+            transitionSupport()
         } else {
             transitionSettingsApp()
         }
@@ -223,6 +224,51 @@ extension StartViewController {
         viewController.modalPresentationStyle = .custom
         viewController.transitioningDelegate = self
         self.present(viewController, animated: true)
+    }
+    func transitionSupport() {
+        let controller = SupportController()
+//        viewController.height = screenW - 50
+//        viewController.topCornerRadius = 35
+//        viewController.presentDuration = 0.5
+//        viewController.dismissDuration = 0.2
+//        viewController.modalPresentationStyle = .custom
+
+        let sheetController = SheetViewController(
+            controller: controller,
+            sizes: [.percent(0.2), .fixed(screenH * 0.2), .fullscreen])
+            
+        // The size of the grip in the pull bar
+        sheetController.gripSize = CGSize(width: 50, height: 6)
+
+        // The color of the grip on the pull bar
+        sheetController.gripColor = UIColor(white: 0.868, alpha: 1)
+
+        // The corner radius of the sheet
+        sheetController.cornerRadius = 35
+            
+        // minimum distance above the pull bar, prevents bar from coming right up to the edge of the screen
+        sheetController.minimumSpaceAbovePullBar = screenH * 0.8
+
+        // Set the pullbar's background explicitly
+        sheetController.pullBarBackgroundColor = UIColor.white
+
+        // Determine if the rounding should happen on the pullbar or the presented controller only (should only be true when the pull bar's background color is .clear)
+        sheetController.treatPullBarAsClear = false
+
+        // Disable the dismiss on background tap functionality
+        sheetController.dismissOnOverlayTap = true
+
+        // Disable the ability to pull down to dismiss the modal
+        sheetController.dismissOnPull = true
+
+        /// Allow pulling past the maximum height and bounce back. Defaults to true.
+        sheetController.allowPullingPastMaxHeight = true
+
+        /// Automatically grow/move the sheet to accomidate the keyboard. Defaults to true.
+        sheetController.autoAdjustToKeyboard = true
+        
+        self.present(sheetController, animated: true)
+
     }
     fileprivate func transitionSearchMeteo() {
         self.generator.impactOccurred()

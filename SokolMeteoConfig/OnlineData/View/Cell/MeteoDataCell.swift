@@ -20,6 +20,7 @@ class MeteoDataCell: UITableViewCell {
             guard let viewModel = viewModel else { return }
             label?.text = viewModel.name
             imageUI?.image = UIImage(named: viewModel.image)
+            labelTwo?.text = arrayMeteoMain["\(viewModel.nameParametr)"]
         }
     }
     

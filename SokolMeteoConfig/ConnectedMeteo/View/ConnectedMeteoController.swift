@@ -8,7 +8,6 @@
 import UIKit
 import Hero
 import Stevia
-import Lottie
 
 protocol ConnectedMeteoDelegate: class {
     func buttonTap()
@@ -16,9 +15,6 @@ protocol ConnectedMeteoDelegate: class {
 
 class ConnectedMeteoController: UIViewController, BlackBoxDelegate, TabBarDelegate, TabBarConfiguratorDelegate, PasswordDelegate, UITabBarControllerDelegate {
 
-    let starAnimationView = AnimationView(name: "success")
-    let nextAnimationView = AnimationView(name: "success")
-    let errorAnimationView = AnimationView(name: "error")
     var heightEnter: Float =  0.0
     var tableView: UITableView!
     var viewModel: TableViewViewModelType?
@@ -75,6 +71,7 @@ class ConnectedMeteoController: UIViewController, BlackBoxDelegate, TabBarDelega
         back.frame = CGRect(x: 10, y: 0 , width: 20, height: 20)
         back.center.y = backView.bounds.height / 3 * 2 - 1
         backView.addSubview(back)
+        backView.hero.id = "backView"
         return backView
     }()
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -89,6 +86,7 @@ class ConnectedMeteoController: UIViewController, BlackBoxDelegate, TabBarDelega
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        alertView.CustomTextField.delegate = self
         initialY = alertView.frame.origin.y
         offset = -50
         registerTableView()
@@ -100,7 +98,6 @@ class ConnectedMeteoController: UIViewController, BlackBoxDelegate, TabBarDelega
         viewModel = ViewModelConnected()
         self.hero.isEnabled = true
         customNavigationBar.hero.id = "ConnectToMeteo2"
-        backView.hero.id = "backView"
         view.addSubview(customNavigationBar)
         backView.tintColor = .black
         view.addSubview(backView)
@@ -127,7 +124,6 @@ class ConnectedMeteoController: UIViewController, BlackBoxDelegate, TabBarDelega
     
     fileprivate func createTableView() {
         let tableView = UITableView(frame: .zero, style: .plain)
-        tableView.separatorStyle = .singleLine
         self.view.sv(tableView)
         tableView.showsVerticalScrollIndicator = false
         tableView.height(screenH - (screenH / 12)).width(screenW)
@@ -160,6 +156,11 @@ class ConnectedMeteoController: UIViewController, BlackBoxDelegate, TabBarDelega
     func buttonTapPassword() {
         delegate?.buttonTap()
         print("Password")
+    }
+    func buttonTapSetAlert() {
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        setAlert()
+        animateIn()
     }
 }
 

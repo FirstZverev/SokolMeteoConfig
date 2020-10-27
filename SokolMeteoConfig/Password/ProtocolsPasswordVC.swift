@@ -10,4 +10,6 @@ import Foundation
 
 protocol PasswordDelegate: class {
     func buttonTapPassword()
+    func buttonTapSetAlert()
+
 }

@@ -8,9 +8,11 @@
 
 import UIKit
 
-class ConfiguratorSecondController : UIViewController {
+class ConfiguratorSecondController : UIViewController, SecondConfiguratorSettingsBMVDDelegate {
     
     let generator = UIImpactFeedbackGenerator(style: .light)
+    var delegate: SecondConfiguratorDelegate?
+    var configuratorBMVDSecondvc = ConfiguratorBMVDSecondController()
     
     lazy var backView: UIImageView = {
         let backView = UIImageView()
@@ -35,7 +37,7 @@ class ConfiguratorSecondController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        configuratorBMVDSecondvc.delegate = self
         let customNavigationBar = createCustomNavigationBar(title: "ДОП. ДАТЧИКИ",fontSize: screenW / 22)
         self.hero.isEnabled = true
         view.sv(customNavigationBar)
@@ -60,6 +62,9 @@ class ConfiguratorSecondController : UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(SecondConfigCell.self, forCellWithReuseIdentifier: "SecondConfigCell")
+    }
+    func buttonTapSecondConfigurator() {
+        delegate?.buttonTapSecondConfigurator()
     }
     
     
@@ -112,6 +117,6 @@ extension ConfiguratorSecondController: UICollectionViewDelegate, UICollectionVi
         }
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.navigationController?.pushViewController(ConfiguratorBMVDSecondController(), animated: true)
+        self.navigationController?.pushViewController(configuratorBMVDSecondvc, animated: true)
     }
 }

@@ -12,8 +12,10 @@ struct Menu {
     var id: Int
     var name: String
     var image: String? = "setings"
+    var imageUbat: String? = "setings"
     var ubat: String? = "0"
     var rssi: String? = "-99"
+    var nameParametr: String? = ""
 }
 
 struct ModelStartSwipe {

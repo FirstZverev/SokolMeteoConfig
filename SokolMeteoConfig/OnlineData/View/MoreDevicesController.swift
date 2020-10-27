@@ -15,6 +15,8 @@ class MoreDevicesController : UIViewController {
     let generator = UIImpactFeedbackGenerator(style: .light)
     var viewModel: TableViewViewModelType?
     var delegate: BMVDDelegate?
+    var MoreDevicesBmvdPortVC = MoreDevicesBmvdPortController()
+    let customNavigationBar = createCustomNavigationBar(title: "ДОП. УСТРОЙСТВА",fontSize: screenW / 22)
 
     lazy var backView: UIImageView = {
         let backView = UIImageView()
@@ -44,8 +46,8 @@ class MoreDevicesController : UIViewController {
         view.sv(tableView)
         tableView.showsVerticalScrollIndicator = false
         tableView.height(screenH - (screenH / 12)).width(screenW)
-        tableView.top(screenH / 12)
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = .clear
+        tableView.addSubview(emptyList)
         self.tableView = tableView
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -72,14 +74,13 @@ class MoreDevicesController : UIViewController {
         super.viewDidLoad()
         viewModel = ViewModelMoreDevices()
         view.backgroundColor = .white
-        let customNavigationBar = createCustomNavigationBar(title: "ДОП. УСТРОЙСТВА",fontSize: screenW / 22)
         self.hero.isEnabled = true
         createTableView()
         registerCell()
-        view.sv(customNavigationBar, backView, emptyList)
+        view.sv(customNavigationBar, backView)
         backView.addTapGesture { [self] in self.popVC() }
-        emptyList.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        emptyList.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        emptyList.centerXAnchor.constraint(equalTo: tableView.centerXAnchor).isActive = true
+        emptyList.centerYAnchor.constraint(equalTo: tableView.centerYAnchor).isActive = true
 
     }
     
@@ -91,8 +92,10 @@ class MoreDevicesController : UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(moreDevicesCell.self, forCellReuseIdentifier: "moreDevicesCell")
+        let headerView = StretchyTableHeaderView(frame: CGRect(x: 0, y: 100, width: self.view.bounds.width, height: 130))
+        headerView.imageView.image = UIImage(named: "headerbg3")
+        self.tableView.tableHeaderView = headerView
     }
-    
 }
 
 extension MoreDevicesController: UITableViewDelegate, UITableViewDataSource {
@@ -100,10 +103,16 @@ extension MoreDevicesController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "moreDevicesCell", for: indexPath) as? moreDevicesCell
         cell?.labelUbat.text = "Напряжение батареи: " + arrayBmvdU[indexPath.row] + " В"
         cell?.labelRssi.text = "Уровень радиосигнала: " + arrayBmvdR[indexPath.row] + " дБ"
+        if indexPath.row == 0 {
+            cell?.clipsToBounds = true
+            cell?.layer.cornerRadius = 40
+            cell?.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner] // Top right corner, Top left corner respectively
+        } else {
+            cell?.layer.cornerRadius = 0
+        }
         guard let tableViewCell = cell, let viewModel = viewModel else { return UITableViewCell() }
         let cellViewModel = viewModel.cellViewModel(forIndexPath: indexPath)
         tableViewCell.viewModel = cellViewModel
-
         return tableViewCell
     }
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -147,7 +156,31 @@ extension MoreDevicesController: UITableViewDelegate, UITableViewDataSource {
         return UITableView.automaticDimension
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let moreDevicesBmvdPortVC = MoreDevicesBmvdPortController()
+        if indexPath.row <= arrayCount.count - 1 {
+            moreDevicesBmvdPortVC.countBmvd = arrayCount[indexPath.row]
+            let transition = CATransition()
+            transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+            transition.type = CATransitionType.fade
+            self.navigationController?.view.layer.add(transition, forKey: nil)
+            self.navigationController?.pushViewController(moreDevicesBmvdPortVC, animated: false)
+
+        }
+    }
+}
+
+extension MoreDevicesController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let headerView = self.tableView.tableHeaderView as! StretchyTableHeaderView
+        headerView.scrollViewDidScroll(scrollView: scrollView)
         
-        navigationController?.pushViewController(StateController(), animated: true)
+        var offset = scrollView.contentOffset.y / 150
+        print(offset)
+        if offset > 1 {
+            offset = 1
+            customNavigationBar.alpha = offset
+        } else {
+            customNavigationBar.alpha = offset
+        }
     }
 }

@@ -184,7 +184,6 @@ class ConfiguratorFirstController : UIViewController {
     lazy var accessPointTextField: UITextField = {
         let textField = TextFieldWithPadding(placeholder: "m2m.beline.ru")
         return textField
-        
     }()
     lazy var userTextField: UITextField = {
         let textField = TextFieldWithPadding(placeholder: "m2m.beline.ru")

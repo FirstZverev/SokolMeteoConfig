@@ -80,7 +80,6 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
         view.layer.shadowRadius = 5.0
         view.layer.shadowOpacity = 0.7
         view.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
-        
         return view
     }()
     func buttonTap() {
@@ -118,10 +117,15 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
             let blackBox = "Get_BB,\(dateFirst)"
             let blackBoxBreak = "BREAK"
             let getIMEI = "Get_IMEI\r\n"
-            let configSet = "Set,KSPW:3:8002,KSRV:3:tcp.sokolmeteo.com,KPBM:1:30,KCNL:1:4,KBCH:1:0,"
-            let configSetNext = "KPWD:3:beeline,KPAK:1:30,KPOR:3:8002,KAPI:3:m2m.beeline.ru"
-            let configGet = "Get,B0E,B0M,B0G,B1E,B1M,B1G,B2E,B2M,B2G,"
-            let configGetNext = "B3E,B3M,B3G,B4E,B4M,B4G,B5E,B5M,B5G,B6E,B6M,B6G,B7E,B7M,B7G"
+//            let configSet = "Set,KSPW:3:8002,KSRV:3:tcp.sokolmeteo.com,KPBM:1:30,KCNL:1:4,KBCH:1:0,"
+            let configGet = "Get,KSPW,KSRV,KPBM,KCNL,KPAK"
+            let configGetNext = ",KAPI,KUSR,KPWD,KPIN,KPOR,KBCH"
+
+//            let configSetNext = "KPWD:3:beeline,KPAK:1:30,KPOR:3:8002,KAPI:3:m2m.beeline.ru"
+            let configGetBmvd = "Get,B0E,B0M,B1E,B1M,B2E,B2M,"
+            let configGetBmvdNext = "B3E,B3M,B4E,B4M,B5E,B5M,B6E,B6M,B7E,B7M"
+            let configSetBmvd = "Set,B\(selectBmvd)E:0:80,B\(selectBmvd)M:0:\(macAddress),QBKN:1:1"
+            let configSetBmvdRemove = "Set,B\(selectBmvd)E:0:0,B\(selectBmvd)M:0:FFFFFFFFFFFF"
             let blackBoxNumber = ",\(dateLast)"
             let valueNext = "\r\n"
             
@@ -147,12 +151,14 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
                     case 6:
                         self.dataValueChange(peripheralCBCharacteristic: [peripheral, characteristic], valuesString: [blackBoxBreak,valueNext])
                     case 7: break
-                    case 8: break
-                    case 9: break
+                    case 8:
+                        self.dataValueChange(peripheralCBCharacteristic: [peripheral, characteristic], valuesString: [configSetBmvdRemove,valueNext])
+                    case 9:
+                        self.dataValueChange(peripheralCBCharacteristic: [peripheral, characteristic], valuesString: [configSetBmvd,valueNext])
                     case 10:
-                        self.dataValueChange(peripheralCBCharacteristic: [peripheral, characteristic], valuesString: [configGet,configGetNext,valueNext])
+                        self.dataValueChange(peripheralCBCharacteristic: [peripheral, characteristic], valuesString: [configGetBmvd,configGetBmvdNext,valueNext])
                     case 11:
-                        self.dataValueChange(peripheralCBCharacteristic: [peripheral, characteristic], valuesString: [configSet,configSetNext,valueNext])
+                        self.dataValueChange(peripheralCBCharacteristic: [peripheral, characteristic], valuesString: [configGet,configGetNext,valueNext])
                     case 25:
                         //смена пароля пользовательского
                         self.dataValueChange(peripheralCBCharacteristic: [peripheral, characteristic], valuesString: [changePassword])
@@ -170,7 +176,6 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
                 }
             }
             reload = -1
-            
         }
     }
     func peripheral(_ peripheral: CBPeripheral, didUpdateNotificationStateFor characteristic: CBCharacteristic, error: Error?) {
@@ -208,7 +213,49 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
                         Access_Allowed = 0
                     }
                     if result.contains("Access_Allowed") {
-                        Access_Allowed = 1
+                        let indexOfPerson = result.firstIndex{$0 == "Access_Allowed"}
+                        if result.count > indexOfPerson! + 2 {
+                            Access_Allowed = Int(result[indexOfPerson! + 1])!
+                            if Access_Allowed != 2 {
+                                if let viewControllers = navigationController?.viewControllers {
+                                    for viewController in viewControllers {
+                                        if viewController.isKind(of: PasswordController.self) {
+                                            if connectedMeteoVC.passwordVC.segmentedControl1.selectedSegmentIndex == 1 {
+                                                navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+                                                connectedMeteoVC.setAlert()
+                                                connectedMeteoVC.animateIn()
+                                            }
+                                            connectedMeteoVC.passwordVC.updateViewAlpha()
+                                        }
+                                        if viewController.isKind(of: TabBarConfiguratorController.self) {
+                                            navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+                                                connectedMeteoVC.setAlert()
+                                                connectedMeteoVC.animateIn()
+                                        }
+                                    }
+                                }
+                            } else if Access_Allowed >= 1 {
+                                if let viewControllers = navigationController?.viewControllers {
+                                    for viewController in viewControllers {
+                                        if viewController.isKind(of: TabBarConfiguratorController.self) {
+                                            reload = 11
+                                            buttonTap()
+                                        }
+                                        if viewController.isKind(of: PasswordController.self) {
+                                            if connectedMeteoVC.passwordVC.segmentedControl1.selectedSegmentIndex == 2 {
+                                                if Access_Allowed == 2 {
+                                                    connectedMeteoVC.passwordVC.updateHash()
+                                                } else {
+                                                    connectedMeteoVC.passwordVC.updateDontHash()
+                                                }
+                                            } else {
+                                                connectedMeteoVC.passwordVC.updateViewAlpha()
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                     if result.contains("QTIM") {
                         let indexOfPerson = result.firstIndex{$0 == "QTIM"}
@@ -217,16 +264,18 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
                             let date = Date(timeIntervalSince1970: a)
                             let dateFormatter = DateFormatter()
                             dateFormatter.timeStyle = DateFormatter.Style.medium
-                            dateFormatter.dateStyle = DateFormatter.Style.medium
+                            dateFormatter.dateStyle = DateFormatter.Style.short
                             dateFormatter.timeZone = .current
                             let localDate = dateFormatter.string(from: date)
                             arrayState[0] = "\(localDate)"
                             arrayStateConnect[0] = "\(localDate)"
+                            arrayStateMain["QTIM"] = "\(localDate)"
                         }
                     }
                     if result.contains("QGSM") {
                         let indexOfPerson = result.firstIndex{$0 == "QGSM"}
                         if result.count > indexOfPerson! + 2 {
+                            arrayStateMain["QGSM"] = "\(result[indexOfPerson! + 2])"
                             arrayState[1] = "\(result[indexOfPerson! + 2])"
                             arrayStateConnect[1] = "\(result[indexOfPerson! + 2])"
                         }
@@ -234,6 +283,8 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
                     if result.contains("QGPS") {
                         let indexOfPerson = result.firstIndex{$0 == "QGPS"}
                         if result.count > indexOfPerson! + 2 {
+                            arrayStateMain["QGPS"] = "\(result[indexOfPerson! + 2])"
+
                             arrayState[2] = "\(result[indexOfPerson! + 2])"
                             arrayStateConnect[3] = "\(result[indexOfPerson! + 2])"
                         }
@@ -241,42 +292,56 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
                     if result.contains("QAZI") {
                         let indexOfPerson = result.firstIndex{$0 == "QAZI"}
                         if result.count > indexOfPerson! + 2 {
+                            arrayStateMain["QAZI"] = "\(result[indexOfPerson! + 2])"
+
                             arrayState[3] = "\(result[indexOfPerson! + 2])"
                         }
                     }
                     if result.contains("QPRO") {
                         let indexOfPerson = result.firstIndex{$0 == "QPRO"}
                         if result.count > indexOfPerson! + 2 {
+                            arrayStateMain["QPRO"] = "\(result[indexOfPerson! + 2])"
+
                             arrayState[4] = "\(result[indexOfPerson! + 2])"
                         }
                     }
                     if result.contains("QPOP") {
                         let indexOfPerson = result.firstIndex{$0 == "QPOP"}
                         if result.count > indexOfPerson! + 2 {
+                            arrayStateMain["QPOP"] = "\(result[indexOfPerson! + 2])"
+
                             arrayState[5] = "\(result[indexOfPerson! + 2])"
                         }
                     }
                     if result.contains("QBKN") {
                         let indexOfPerson = result.firstIndex{$0 == "QBKN"}
                         if result.count > indexOfPerson! + 2 {
+                            arrayStateMain["QBKN"] = "\(result[indexOfPerson! + 2])"
+
                             arrayState[6] = "\(result[indexOfPerson! + 2])"
                         }
                     }
                     if result.contains("QPAK") {
                         let indexOfPerson = result.firstIndex{$0 == "QPAK"}
                         if result.count > indexOfPerson! + 2 {
+                            arrayStateMain["QPAK"] = "\(result[indexOfPerson! + 2])"
+
                             arrayState[7] = "\(result[indexOfPerson! + 2])"
                         }
                     }
                     if result.contains("QBMT") {
                         let indexOfPerson = result.firstIndex{$0 == "QBMT"}
                         if result.count > indexOfPerson! + 2 {
+                            arrayStateMain["QBMT"] = "\(result[indexOfPerson! + 2])"
+
                             arrayState[8] = "\(result[indexOfPerson! + 2])"
                         }
                     }
                     if result.contains("UBAT") {
                         let indexOfPerson = result.firstIndex{$0 == "UBAT"}
                         if result.count > indexOfPerson! + 2 {
+                            arrayStateMain["UBAT"] = "\(result[indexOfPerson! + 2])"
+
                             arrayState[9] = "\(result[indexOfPerson! + 2])"
                             arrayStateConnect[5] = "\(result[indexOfPerson! + 2])"
                         }
@@ -285,18 +350,21 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
                         let indexOfPerson = result.firstIndex{$0 == "UEXT"}
                         if result.count > indexOfPerson! + 2 {
                             arrayState[10] = "\(result[indexOfPerson! + 2])"
+                            arrayStateMain["UEXT"] = "\(result[indexOfPerson! + 2])"
                         }
                     }
                     if result.contains("KS") {
                         let indexOfPerson = result.firstIndex{$0 == "KS"}
                         if result.count > indexOfPerson! + 2 {
                             arrayState[11] = "\(result[indexOfPerson! + 2])"
+                            arrayStateMain["KS"] = "\(result[indexOfPerson! + 2])"
                         }
                     }
                     if result.contains("RSSI") {
                         let indexOfPerson = result.firstIndex{$0 == "RSSI"}
                         if result.count > indexOfPerson! + 2 {
                             arrayState[12] = "\(result[indexOfPerson! + 2])"
+                            arrayStateMain["RSSI"] = "\(result[indexOfPerson! + 2])"
                             arrayStateConnect[4] = "\(result[indexOfPerson! + 2])"
                         }
                     }
@@ -304,6 +372,7 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
                         let indexOfPerson = result.firstIndex{$0 == "TRAF"}
                         if result.count > indexOfPerson! + 2 {
                             arrayState[13] = "\(result[indexOfPerson! + 2])"
+                            arrayStateMain["TRAF"] = "\(result[indexOfPerson! + 2])"
                             arrayStateConnect[2] = "\(result[indexOfPerson! + 2])"
                         }
                     }
@@ -311,7 +380,14 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
                         let indexOfPerson = result.firstIndex{$0 == "QEVS"}
                         if result.count > indexOfPerson! + 2 {
                             arrayState[14] = "\(result[indexOfPerson! + 2])"
-                            connectedMeteoVC.tabBarVC.searchVC.tableView.reloadData()
+                            arrayStateMain["QEVS"] = "\(result[indexOfPerson! + 2])"
+                            if let viewControllers = navigationController?.viewControllers {
+                                for viewController in viewControllers {
+                                    if viewController.isKind(of: TabBarController.self) {
+                                        connectedMeteoVC.tabBarVC.searchVC.tableView.reloadData()
+                                    }
+                                }
+                            }
                         }
                     }
                     
@@ -319,82 +395,178 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
                         let indexOfPerson = result.firstIndex{$0 == "t"}
                         if result.count > indexOfPerson! + 2 {
                             arrayMeteo[0] = "\(result[indexOfPerson! + 2]) °C"
+                            arrayMeteoMain["t"] = "\(result[indexOfPerson! + 2]) °C"
+
                         }
                     }
                     if result.contains("WD") {
                         let indexOfPerson = result.firstIndex{$0 == "WD"}
                         if result.count > indexOfPerson! + 2 {
                             arrayMeteo[1] = "\(result[indexOfPerson! + 2])"
+                            arrayMeteoMain["WD"] = "\(result[indexOfPerson! + 2])"
+
                         }
                     }
                     if result.contains("WV") {
                         let indexOfPerson = result.firstIndex{$0 == "WV"}
                         if result.count > indexOfPerson! + 2 {
                             arrayMeteo[2] = "\(result[indexOfPerson! + 2])"
+                            arrayMeteoMain["WV"] = "\(result[indexOfPerson! + 2])"
+
                         }
                     }
                     if result.contains("WM") {
                         let indexOfPerson = result.firstIndex{$0 == "WM"}
                         if result.count > indexOfPerson! + 2 {
                             arrayMeteo[3] = "\(result[indexOfPerson! + 2])"
+                            arrayMeteoMain["WM"] = "\(result[indexOfPerson! + 2])"
+
                         }
                     }
                     if result.contains("PR") {
                         let indexOfPerson = result.firstIndex{$0 == "PR"}
                         if result.count > indexOfPerson! + 2 {
                             arrayMeteo[4] = "\(result[indexOfPerson! + 2]) гПа"
+                            arrayMeteoMain["PR"] = "\(result[indexOfPerson! + 2]) гПа"
+
                         }
                     }
                     if result.contains("HM") {
                         let indexOfPerson = result.firstIndex{$0 == "HM"}
                         if result.count > indexOfPerson! + 2 {
                             arrayMeteo[5] = "\(result[indexOfPerson! + 2]) %"
+                            arrayMeteoMain["HM"] = "\(result[indexOfPerson! + 2]) %"
+
                         }
                     }
                     if result.contains("RN") {
                         let indexOfPerson = result.firstIndex{$0 == "RN"}
                         if result.count > indexOfPerson! + 2 {
                             arrayMeteo[6] = "\(result[indexOfPerson! + 2]) мм"
+                            arrayMeteoMain["RN"] = "\(result[indexOfPerson! + 2]) мм"
+
                         }
                     }
                     if result.contains("UV") {
                         let indexOfPerson = result.firstIndex{$0 == "UV"}
                         if result.count > indexOfPerson! + 2 {
                             arrayMeteo[7] = "\(result[indexOfPerson! + 2]) Вт/м2"
+                            arrayMeteoMain["UV"] = "\(result[indexOfPerson! + 2]) Вт/м2"
+
                         }
                     }
                     if result.contains("UVI") {
                         let indexOfPerson = result.firstIndex{$0 == "UVI"}
                         if result.count > indexOfPerson! + 2 {
                             arrayMeteo[8] = "\(result[indexOfPerson! + 2]) Дж"
+                            arrayMeteoMain["UVI"] = "\(result[indexOfPerson! + 2]) Дж"
                         }
                     }
                     if result.contains("L") {
                         let indexOfPerson = result.firstIndex{$0 == "L"}
                         if result.count > indexOfPerson! + 2 {
                             arrayMeteo[9] = "\(result[indexOfPerson! + 2]) lux"
+                            arrayMeteoMain["L"] = "\(result[indexOfPerson! + 2]) lux"
                         }
                     }
                     if result.contains("LI") {
                         let indexOfPerson = result.firstIndex{$0 == "LI"}
                         if result.count > indexOfPerson! + 2 {
+                            arrayMeteoMain["LI"] = "\(result[indexOfPerson! + 2]) Дж"
+                            print(arrayMeteoMain)
                             arrayMeteo[10] = "\(result[indexOfPerson! + 2]) Дж"
-                            connectedMeteoVC.tabBarVC.mainVC.tableView.reloadData()
+                            if let viewControllers = navigationController?.viewControllers {
+                                for viewController in viewControllers {
+                                    if viewController.isKind(of: TabBarController.self) {
+                                        connectedMeteoVC.tabBarVC.mainVC.tableView.reloadData()
+                                    }
+                                }
+                            }
                         }
                     }
+                    for i in 0...7 {
+                        if result.contains("B\(i)E") {
+                            let indexOfPerson = result.firstIndex{$0 == "B\(i)E"}
+                            if result.count > indexOfPerson! + 2 {
+                                if result[indexOfPerson! + 2] == "80" {
+                                    arrayBmvdE[i] = "1"
+                                } else {
+                                    arrayBmvdE[i] = "0"
+                                }
+                            }
+                        }
+                        if result.contains("B\(i)M") {
+                            let indexOfPerson = result.firstIndex{$0 == "B\(i)M"}
+                            if result.count > indexOfPerson! + 2 {
+                                arrayBmvdM[i] = "\(result[indexOfPerson! + 2])"
+                                if i == 7 {
+                                    connectedMeteoVC.tabarConfigVC.secondVC.configuratorBMVDSecondvc.tableView.reloadData()
+                                    connectedMeteoVC.tabarConfigVC.secondVC.configuratorBMVDSecondvc.refreshControl.endRefreshing()
+                                    connectedMeteoVC.tabarConfigVC.secondVC.configuratorBMVDSecondvc.viewAlpha.isHidden = true
+                                }
+                            }
+                        }
+                    }
+                    
+                    if result.contains("B\(selectBmvd)M") {
+                        let indexOfPerson = result.firstIndex{$0 == "B\(selectBmvd)M"}
+                        if result.count > indexOfPerson! + 2 {
+                            connectedMeteoVC.tabarConfigVC.secondVC.configuratorBMVDSecondvc.viewAlpha.isHidden = true
+                        }
+                    }
+                    countBMVD = 0
+                    arrayBmvdCount.removeAll()
+                    arrayCount.removeAll()
                     for i in 0...7 {
                         if result.contains("Ex\(i)U") {
                             let indexOfPerson = result.firstIndex{$0 == "Ex\(i)U"}
                             if result.count > indexOfPerson! + 2 {
-                                arrayBmvdU[i] = "\(result[indexOfPerson! + 2])"
-                                countBMVD = i + 1
+                                arrayBmvdU[countBMVD] = "\(result[indexOfPerson! + 2])"
                             }
+                            for j in 0...7 {
+                                if result.contains("Ex\(i)T\(j)") {
+                                    let indexOfPerson = result.firstIndex{$0 == "Ex\(i)T\(j)"}
+                                    if result.count > indexOfPerson! + 2 {
+                                        let a = (result[indexOfPerson! + 2] as NSString).integerValue
+                                        arrayBmvdCount["\(i)T\(j)"] = "\(a)"
+                                    }
+                                }
+                                if result.contains("Ex\(i)H\(j)") {
+                                    let indexOfPerson = result.firstIndex{$0 == "Ex\(i)H\(j)"}
+                                    if result.count > indexOfPerson! + 2 {
+                                        arrayBmvdCount["\(i)H\(j)"] = "\(result[indexOfPerson! + 2])"
+                                    }
+                                }
+                                if result.contains("Ex\(i)h\(j)") {
+                                    let indexOfPerson = result.firstIndex{$0 == "Ex\(i)h\(j)"}
+                                    if result.count > indexOfPerson! + 2 {
+                                        arrayBmvdCount["\(i)h\(j)"] = "\(result[indexOfPerson! + 2])"
+                                    }
+                                }
+                                if result.contains("Ex\(i)t\(j)") {
+                                    let indexOfPerson = result.firstIndex{$0 == "Ex\(i)t\(j)"}
+                                    if result.count > indexOfPerson! + 2 {
+                                        arrayBmvdCount["\(i)t\(j)"] = "\(result[indexOfPerson! + 2])"
+                                    }
+                                }
+                                if result.contains("Ex\(i)l\(j)") {
+                                    let indexOfPerson = result.firstIndex{$0 == "Ex\(i)l\(j)"}
+                                    if result.count > indexOfPerson! + 2 {
+                                        arrayBmvdCount["\(i)l\(j)"] = "\(result[indexOfPerson! + 2])"
+                                    }
+                                }
+                            }
+                            print(arrayBmvdCount)
+                            
                         }
                         if result.contains("Ex\(i)R") {
                             let indexOfPerson = result.firstIndex{$0 == "Ex\(i)R"}
                             if result.count > indexOfPerson! + 2 {
-                                arrayBmvdR[i] = "\(result[indexOfPerson! + 2])"
+                                arrayBmvdR[countBMVD] = "\(result[indexOfPerson! + 2])"
                             }
+                            countBMVD += 1
+                            arrayCount.append(i)
+                            
                         }
                     }
                     
@@ -462,6 +634,7 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
                         let indexOfPerson = result.firstIndex{$0 == "KBCH"}
                         if result.count > indexOfPerson! + 2 {
                             KBCH = "\(result[indexOfPerson! + 2])"
+                            connectedMeteoVC.tabarConfigVC.firstVC.updateInterface()
                         }
                     }
                     
@@ -536,6 +709,7 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
         back.frame = CGRect(x: 10, y: 0 , width: 20, height: 20)
         back.center.y = backView.bounds.height / 3 * 2 - 1
         backView.addSubview(back)
+        backView.hero.id = "backView"
         return backView
     }()
     

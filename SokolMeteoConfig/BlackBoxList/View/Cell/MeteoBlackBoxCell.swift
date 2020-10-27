@@ -16,7 +16,7 @@ class MeteoBlackBoxCell: UITableViewCell {
     var nextImage: UIImageView!
     var separator: UIView!
 
-    var saveButton: UIImageView?
+    var saveButton: UIButton?
     var save2Button: UIImageView?
     var save3Button: UIImageView?
 
@@ -76,8 +76,9 @@ class MeteoBlackBoxCell: UITableViewCell {
         contentView.addSubview(separator)
         self.separator = separator
         
-        let saveButton = UIImageView(image: UIImage(named: "imgPush"))
-        saveButton.layer.cornerRadius = 10
+        let saveButton = UIButton()
+        saveButton.setImage(UIImage(named: "imgPush"), for: .normal)
+//        saveButton.layer.cornerRadius = 10
         saveButton.isHidden = true
         saveButton.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(saveButton)

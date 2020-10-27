@@ -20,6 +20,7 @@ class StateCell: UITableViewCell {
             guard let viewModel = viewModel else { return }
             label?.text = viewModel.name
             imageUI?.image = UIImage(named: viewModel.image)
+            labelTwo?.text = arrayStateMain["\(viewModel.nameParametr)"]
         }
     }
     

@@ -97,13 +97,13 @@ extension ConfiguratorFirstController: UITextFieldDelegate {
         }
     }
     override func viewDidAppear(_ animated: Bool) {
-        reload = 10
+        reload = 11
         delegate?.buttonTapFirstConfigurator()
-        DispatchQueue.main.async { [self] in
+//        DispatchQueue.main.async { [self] in
 //            timer =  Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [self] (timer) in
-                self.updateInterface()
+//                self.updateInterface()
 //            }
-        }
+//        }
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -129,7 +129,12 @@ extension ConfiguratorFirstController: UITextFieldDelegate {
         
         periodEchangeTextField.text = KPBM
         numberTextField.text = KBCH
-
+        
+        if Channels(string: KCNL).channelsString() == 0 {
+            channelMode(gsmMode: false, deactivate: constraints2, activate: constraints)
+        } else {
+            channelMode(gsmMode: true, deactivate: constraints, activate: constraints2)
+        }
     }
     
     fileprivate func registerDelegateTextFields() {

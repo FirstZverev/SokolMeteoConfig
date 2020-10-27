@@ -9,7 +9,6 @@ target 'SOKOL-M' do
 	pod 'SteviaLayout'
 	pod "ESTabBarController-swift"
 	pod "RAMAnimatedTabBarController"
-	pod 'lottie-ios'
 	pod 'FSCalendar'
 	pod 'HorizonCalendar'
 	pod 'BottomPopup'
@@ -20,6 +19,7 @@ target 'SOKOL-M' do
 	pod 'AdvancedPageControl'
 	pod 'Charts'
 	pod 'FittedSheets'
+	pod 'SimpleCheckbox'
 end
 
 post_install do |installer|

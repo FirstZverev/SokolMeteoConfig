@@ -23,14 +23,14 @@
                     <rect key="frame" x="28" y="5.5" width="300" height="250"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="лого сокол 1" translatesAutoresizingMaskIntoConstraints="NO" id="mlQ-PV-lfp">
-                            <rect key="frame" x="50" y="26.5" width="200" height="50"/>
+                            <rect key="frame" x="50" y="11.5" width="200" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="200" id="fkU-Qo-Mrh"/>
                                 <constraint firstAttribute="height" constant="50" id="u4O-fn-7dh"/>
                             </constraints>
                         </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u4g-jx-Qzy">
-                            <rect key="frame" x="50" y="190" width="200" height="40"/>
+                            <rect key="frame" x="50" y="175" width="200" height="40"/>
                             <color key="backgroundColor" red="0.74509803921568629" green="0.26666666666666666" blue="0.61960784313725492" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="YF3-KQ-YKS"/>
@@ -44,14 +44,14 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Введите пароль" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EMD-d6-HAH">
-                            <rect key="frame" x="92" y="96.5" width="116.5" height="23.5"/>
+                            <rect key="frame" x="92" y="76.5" width="116.5" height="23.5"/>
                             <fontDescription key="fontDescription" name="FuturaPT-Medium" family="Futura PT" pointSize="18"/>
                             <color key="textColor" systemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uSl-pc-Vxe">
-                            <rect key="frame" x="15" y="135" width="270" height="40"/>
-                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <rect key="frame" x="15" y="115" width="270" height="40"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="bu9-pV-Ma6"/>
                             </constraints>
@@ -71,18 +71,31 @@
                                 <action selector="clouseButtonWithSender:" destination="tNV-ja-xKy" eventType="touchUpInside" id="mHV-Js-t1Z"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IQy-u0-Ibv">
+                            <rect key="frame" x="102" y="215" width="96" height="30"/>
+                            <fontDescription key="fontDescription" name="FuturaPT-Medium" family="Futura PT" pointSize="14"/>
+                            <state key="normal" title="Забыли пароль?">
+                                <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="titleShadowColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="actionForgotPassword:" destination="tNV-ja-xKy" eventType="touchUpInside" id="HDO-SI-aIG"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="uSl-pc-Vxe" firstAttribute="centerX" secondItem="w1e-Wo-WG5" secondAttribute="centerX" id="4Dq-iY-dG3"/>
+                        <constraint firstItem="u4g-jx-Qzy" firstAttribute="top" secondItem="uSl-pc-Vxe" secondAttribute="bottom" constant="20" id="8D0-VM-OdC"/>
                         <constraint firstItem="WpU-Zn-ZQe" firstAttribute="top" secondItem="w1e-Wo-WG5" secondAttribute="top" constant="10" id="B4f-Y5-FYH"/>
-                        <constraint firstItem="uSl-pc-Vxe" firstAttribute="centerY" secondItem="w1e-Wo-WG5" secondAttribute="centerY" constant="30" id="NNA-Uy-5wa"/>
+                        <constraint firstItem="uSl-pc-Vxe" firstAttribute="centerY" secondItem="w1e-Wo-WG5" secondAttribute="centerY" constant="10" id="NNA-Uy-5wa"/>
                         <constraint firstItem="uSl-pc-Vxe" firstAttribute="leading" secondItem="w1e-Wo-WG5" secondAttribute="leading" constant="15" id="Pf7-ud-rbk"/>
                         <constraint firstAttribute="trailing" secondItem="WpU-Zn-ZQe" secondAttribute="trailing" constant="10" id="Vq6-eR-zMG"/>
+                        <constraint firstItem="IQy-u0-Ibv" firstAttribute="centerX" secondItem="w1e-Wo-WG5" secondAttribute="centerX" id="Yzl-RS-7Gx"/>
+                        <constraint firstItem="IQy-u0-Ibv" firstAttribute="top" secondItem="u4g-jx-Qzy" secondAttribute="bottom" id="ZbY-qc-1Fz"/>
                         <constraint firstItem="EMD-d6-HAH" firstAttribute="centerX" secondItem="w1e-Wo-WG5" secondAttribute="centerX" id="cbr-xf-HX7"/>
                         <constraint firstItem="u4g-jx-Qzy" firstAttribute="leading" secondItem="w1e-Wo-WG5" secondAttribute="leading" constant="50" id="cdc-w7-kTf"/>
-                        <constraint firstItem="u4g-jx-Qzy" firstAttribute="top" secondItem="uSl-pc-Vxe" secondAttribute="bottom" constant="15" id="gyr-KD-VSz"/>
-                        <constraint firstItem="EMD-d6-HAH" firstAttribute="top" secondItem="mlQ-PV-lfp" secondAttribute="bottom" constant="20" id="iVF-dI-a8c"/>
+                        <constraint firstItem="EMD-d6-HAH" firstAttribute="top" secondItem="mlQ-PV-lfp" secondAttribute="bottom" constant="15" id="iVF-dI-a8c"/>
                         <constraint firstAttribute="trailing" secondItem="uSl-pc-Vxe" secondAttribute="trailing" constant="15" id="kJ7-nR-u7Z"/>
                         <constraint firstItem="u4g-jx-Qzy" firstAttribute="centerX" secondItem="w1e-Wo-WG5" secondAttribute="centerX" id="lKg-uK-orn"/>
                         <constraint firstAttribute="width" constant="300" id="orL-DW-FSZ"/>
@@ -106,6 +119,7 @@
                 <outlet property="CustomImage" destination="mlQ-PV-lfp" id="bnq-7r-DtI"/>
                 <outlet property="CustomMainLabel" destination="EMD-d6-HAH" id="UZ5-6C-gHn"/>
                 <outlet property="CustomTextField" destination="uSl-pc-Vxe" id="mcX-9z-eUY"/>
+                <outlet property="forgotPaswordLabel" destination="IQy-u0-Ibv" id="iKn-xP-896"/>
             </connections>
             <point key="canvasLocation" x="95.652173913043484" y="146.98660714285714"/>
         </view>

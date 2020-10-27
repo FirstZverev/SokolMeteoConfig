@@ -32,6 +32,13 @@ class TableViewCellViewModel: TableViewCellViewModelType {
         return menu.image!
     }
     
+    var imageUbat: String {
+        return menu.imageUbat!
+    }
+    var nameParametr: String {
+        return menu.nameParametr!
+    }
+    
     init(menu: Menu) {
         self.menu = menu
     }

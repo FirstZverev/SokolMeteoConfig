@@ -10,33 +10,35 @@ import UIKit
 import UIDrawer
 import FittedSheets
 
-class TabBarConfiguratorController: UITabBarController, FirstConfiguratorDelegate, ThriedConfiguratorDelegate {
+class TabBarConfiguratorController: UITabBarController, FirstConfiguratorDelegate, SecondConfiguratorDelegate, ThriedConfiguratorDelegate {
     
     let kBarHeight = 50
     var delegateTabBar: TabBarConfiguratorDelegate?
     let generator = UIImpactFeedbackGenerator(style: .light)
+    let secondVC = ConfiguratorSecondController()
+    let firstVC = ConfiguratorFirstController()
+    let thriedVC = ConfiguratorThriedController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-
-        let firstVC = ConfiguratorFirstController()
+        
+        firstVC.delegate = self
         let item = UITabBarItem()
         item.title = "ПЕРЕДАЧА ДАННЫХ"
         item.selectedImage = UIImage(named: "firstConfigurator ON")
         item.image = UIImage(named: "firstConfigurator OFF")
         self.tabBar.tintColor = UIColor.black
         firstVC.tabBarItem = item
-        firstVC.delegate = self
 
-        let secondVC = ConfiguratorSecondController()
+        secondVC.delegate = self
         let item2 = UITabBarItem()
         item2.title = "ДОП. ДАТЧИКИ"
         item2.selectedImage = UIImage(named: "secondConfigurator ON")
         item2.image = UIImage(named: "secondConfigurator OFF")
         secondVC.tabBarItem = item2
-        
-        let thriedVC = ConfiguratorThriedController()
+
+        thriedVC.delegate = self
         let item3 = UITabBarItem()
         item3.title = "СОСТОЯНИЕ ПОДК."
         item3.selectedImage = UIImage(named: "thriedConfigurator ON")
@@ -63,12 +65,22 @@ class TabBarConfiguratorController: UITabBarController, FirstConfiguratorDelegat
               item.image = item.image?.withRenderingMode(.alwaysOriginal)
           }
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        if Access_Allowed != 2 {
+            delegateTabBar?.buttonTapSetAlert()
+        } else {
+            reload = 11
+            delegateTabBar?.buttonTabBar()
+        }
+    }
     
     func buttonTapFirstConfigurator() {
         delegateTabBar?.buttonTabBar()
     }
     func buttonTapThriedConfigurator() {
+        delegateTabBar?.buttonTabBar()
+    }
+    func buttonTapSecondConfigurator() {
         delegateTabBar?.buttonTabBar()
     }
     fileprivate func transitionSettingsApp() {

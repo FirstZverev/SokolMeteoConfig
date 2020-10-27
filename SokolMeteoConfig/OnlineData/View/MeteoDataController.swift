@@ -40,8 +40,8 @@ class MeteoDataController: UIViewController {
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
 //            self.tableView.reloadData()
 //        })
-        timer =  Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { (timer) in
-            if Access_Allowed == 1 {
+        timer =  Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { (timer) in
+            if Access_Allowed >= 1 {
                 reload = 2
                 self.delegate?.buttonTapMeteo()
 //                self.tableView.reloadData()
@@ -124,7 +124,6 @@ extension MeteoDataController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MeteoDataCell", for: indexPath) as? MeteoDataCell
         cell?.selectionStyle = .none
 //        cell?.imageUI?.image = UIImage(named: "imageMeteo\(indexPath.row - 1)")
-        cell?.labelTwo?.text = "\(arrayMeteo[indexPath.row])"
         guard let tableViewCell = cell, let viewModel = viewModel else { return UITableViewCell() }
         let cellViewModel = viewModel.cellViewModel(forIndexPath: indexPath)
         if indexPath.row == 0 {

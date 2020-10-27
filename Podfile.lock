@@ -9,7 +9,6 @@ PODS:
   - FSCalendar (2.8.1)
   - Hero (1.5.0)
   - HorizonCalendar (1.5.0)
-  - lottie-ios (3.1.8)
   - MXSegmentedControl (1.1.0)
   - NVActivityIndicatorView (5.0.1):
     - NVActivityIndicatorView/Base (= 5.0.1)
@@ -20,6 +19,7 @@ PODS:
   - Realm/Headers (5.4.3)
   - RealmSwift (5.4.3):
     - Realm (= 5.4.3)
+  - SimpleCheckbox (2.1.0)
   - SteviaLayout (4.7.3)
   - UIDrawer (1.0)
 
@@ -32,11 +32,11 @@ DEPENDENCIES:
   - FSCalendar
   - Hero
   - HorizonCalendar
-  - lottie-ios
   - MXSegmentedControl
   - NVActivityIndicatorView
   - RAMAnimatedTabBarController
   - RealmSwift
+  - SimpleCheckbox
   - SteviaLayout
   - UIDrawer (from `https://github.com/Que20/UIDrawer.git`, tag `1.0`)
 
@@ -50,12 +50,12 @@ SPEC REPOS:
     - FSCalendar
     - Hero
     - HorizonCalendar
-    - lottie-ios
     - MXSegmentedControl
     - NVActivityIndicatorView
     - RAMAnimatedTabBarController
     - Realm
     - RealmSwift
+    - SimpleCheckbox
     - SteviaLayout
 
 EXTERNAL SOURCES:
@@ -77,15 +77,15 @@ SPEC CHECKSUMS:
   FSCalendar: 5245140456fcbcac5824c203b98bd8068bdfee1a
   Hero: b7385b75e7259da62f4f85462f59a5082d66b058
   HorizonCalendar: 7ee0dad09d9240d6ac1582afdd5a5b43ee09796d
-  lottie-ios: 48fac6be217c76937e36e340e2d09cf7b10b7f5f
   MXSegmentedControl: f39e46199a52cbc03b1c845e150215119f2542f5
   NVActivityIndicatorView: 738e843cb8924e9e4fc3e559d0728031624bf860
   RAMAnimatedTabBarController: 6863a386e7ae2ab227cd60aa73ab8ff56cdacfdd
   Realm: e3d5fcc50fd79ddf87a2d86301f6edbf57531f84
   RealmSwift: db608068eccc54bce47928e8118bde13c120c307
+  SimpleCheckbox: ddcd433ab8c3a8f57300bebda13151a8f302c7f9
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
   UIDrawer: 1bfbc152fee69f6809a41508000cf1b9bd4b1738
 
-PODFILE CHECKSUM: 743ab619fea12f1d810e2c933882d6a51d9bc31f
+PODFILE CHECKSUM: 5319e03e847c7fbca5b2c2b943410a8ef445367d
 
 COCOAPODS: 1.8.4

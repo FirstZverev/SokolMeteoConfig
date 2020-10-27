@@ -8,22 +8,33 @@
 
 import UIKit
 
-extension ConnectedMeteoController: AlertDelegate {
+extension ConnectedMeteoController: AlertDelegate, UITextFieldDelegate {
     func buttonClose() {
         animateOut()
         let  vc =  self.navigationController?.viewControllers.filter({$0 is ConnectedMeteoController}).first
         self.navigationController?.popToViewController(vc!, animated: true)
     }
+    func forgotTapped() {
+        animateOut()
+        let  vc =  self.navigationController?.viewControllers.filter({$0 is ConnectedMeteoController}).first
+        self.navigationController?.popToViewController(vc!, animated: true)
+        self.navigationController?.pushViewController(passwordVC, animated: true)
+        passwordVC.segmentedControl1.selectedSegmentIndex = 2
+        passwordVC.scrollView.setContentOffset(CGPoint(x: screenW * 2 - 20, y: 0), animated: false)
+    }
     
     func buttonTapped() {
         reload = 0
         mainPassword = alertView.CustomTextField.text ?? ""
+        alertView.CustomTextField.text = ""
         delegate?.buttonTap()
         animationSuccess()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            reload = 2
-            self.buttonTapTabBar()
-            
+        if let viewControllers = navigationController?.viewControllers {
+            for viewController in viewControllers {
+                if viewController.isKind(of: PasswordController.self) {
+                    
+                }
+            }
         }
 //        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute:{
 //            self.navigationController?.pushViewController(TabBarController(), animated: true)
@@ -46,7 +57,7 @@ extension ConnectedMeteoController: AlertDelegate {
         setupVisualEffectView()
         navigationController?.view.addSubview(alertView)
         alertView.center = view.center
-        alertView.set(title: "Введите пароль для просмотра", body: "", buttonTitle: "Ввести")
+        alertView.set(title: "Необходимо ввести пароль", body: "", buttonTitle: "Отправить")
         //alertView.leftButton.addTarget(self, action: #selector(leftButtonPressed), for: .touchUpInside)
     }
     
@@ -69,5 +80,17 @@ extension ConnectedMeteoController: AlertDelegate {
                         self.alertView.removeFromSuperview()
                         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         })
+    }
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.layer.borderColor = UIColor(rgb: 0xF06BCD).cgColor
+        textField.layer.shadowColor = UIColor(rgb: 0xB64894).cgColor
+        textField.layer.shadowRadius = 3.0
+        textField.layer.shadowOpacity = 0.5
+        textField.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.layer.borderColor = UIColor(rgb: 0xE7E7E7).cgColor
+        textField.layer.shadowOpacity = 0.0
     }
 }

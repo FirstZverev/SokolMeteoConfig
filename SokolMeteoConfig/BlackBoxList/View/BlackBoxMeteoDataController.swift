@@ -18,6 +18,22 @@ class BlackBoxMeteoDataController: UIViewController {
     let customNavigationBar = createCustomNavigationBar(title: "",fontSize: screenW / 22)
     var indexPathCounst: IndexPath?
     
+    lazy var alertView: SelectPush = {
+        let alertView: SelectPush = SelectPush.loadFromNib()
+        alertView.delegate = self
+        return alertView
+    }()
+    lazy var alertViewAccount: AccountAlert = {
+        let alertView: AccountAlert = AccountAlert.loadFromNib()
+        alertView.delegate = self
+        return alertView
+    }()
+    let visualEffectView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .dark)
+       let view = UIVisualEffectView(effect: blurEffect)
+//        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     fileprivate lazy var backView: UIImageView = {
         let backView = UIImageView()
         backView.frame = CGRect(x: 0, y: screenH / 12 - 50, width: 50, height: 50)
@@ -28,10 +44,12 @@ class BlackBoxMeteoDataController: UIViewController {
         backView.addSubview(back)
         return backView
     }()
-    fileprivate lazy var saveButton: UIImageView = {
-        let saveButton = UIImageView(image: UIImage(named: "imgPushBar"))
+    fileprivate lazy var saveButton: UIButton = {
+        let saveButton = UIButton()
+        saveButton.setImage(UIImage(named: "imgPushBar"), for: .normal)
         saveButton.layer.cornerRadius = 10
         saveButton.translatesAutoresizingMaskIntoConstraints = false
+        saveButton.addTarget(self, action: #selector(createAlert), for: .touchUpInside)
         return saveButton
     }()
     
@@ -138,6 +156,16 @@ class BlackBoxMeteoDataController: UIViewController {
         save3Button.leadingAnchor.constraint(equalTo: save2Button.trailingAnchor, constant: 10).isActive = true
 
     }
+    @objc func createAlert() {
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        setAlert()
+        animateIn()
+    }
+    func createAlertAccount() {
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        setAlertAccount()
+        animateInAccount()
+    }
 }
 
 extension BlackBoxMeteoDataController: UITableViewDelegate {
@@ -160,6 +188,7 @@ extension BlackBoxMeteoDataController: UITableViewDelegate {
 }
 
 extension BlackBoxMeteoDataController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel?.numberOfRows() ?? 0
     }
@@ -177,6 +206,7 @@ extension BlackBoxMeteoDataController: UITableViewDataSource {
             cell?.layer.cornerRadius = 40
             cell?.labelTwo?.textColor = .white
             cell?.saveButton?.isHidden = false
+            cell?.saveButton?.addTarget(self, action: #selector(createAlert), for: .touchUpInside)
             cell?.save2Button?.isHidden = false
             cell?.save3Button?.isHidden = false
             cell?.nextImage.isHidden = true

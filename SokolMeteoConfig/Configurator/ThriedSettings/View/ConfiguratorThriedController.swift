@@ -10,6 +10,7 @@ import UIKit
 
 class ConfiguratorThriedController : UIViewController {
     
+    var delegate: ThriedConfiguratorDelegate?
     fileprivate lazy var backView: UIImageView = {
         let backView = UIImageView()
         backView.frame = CGRect(x: 0, y: 35, width: 50, height: 50)

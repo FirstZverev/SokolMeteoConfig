@@ -13,11 +13,22 @@ var code = "ru"
 
 var arrayState: [String] = ["...", "...", "...", "...", "...", "...", "...", "...", "...", "...", "...", "...", "...", "...", "...", "...", "..."]
 var arrayMeteo: [String] = ["...", "...", "...", "...", "...", "...", "...", "...", "...", "...", "...", "...", "...", "...", "...", "...", "...", "...", "...", "..."]
+
+var arrayMeteoMain: [String : String] = ["t" : "", "WD" : "", "WV" : "", "WM" : "", "PR" : "", "HM" : "", "RN" : "", "UV" : "", "UVI" : "", "L" : "", "LI" : "",]
+var arrayStateMain: [String : String] = ["QTIM" : "", "QGSM" : "", "QGPS" : "", "QAZI" : "", "QPRO" : "", "QPOP" : "", "QBKN" : "", "QPAK" : "", "QBMT" : "", "UBAT" : "", "UEXT" : "", "KS" : "", "RSSI" : "", "TRAF" : "", "QEVS" : "",]
+
 var arrayStateConnect: [String] = ["...", "...", "...", "...", "...", "...", "...", "..."]
 
 var arrayBmvdU: [String] = ["...", "...", "...", "...", "...", "...", "...", "..."]
 var arrayBmvdR: [String] = ["...", "...", "...", "...", "...", "...", "...", "..."]
 var countBMVD = 0
+
+var arrayBmvdE: [String] = ["0", "0", "0", "0", "0", "0", "0", "0"]
+var arrayBmvdM: [String] = ["FFFFFFFFFFFF", "FFFFFFFFFFFF", "FFFFFFFFFFFF", "FFFFFFFFFFFF", "FFFFFFFFFFFF", "FFFFFFFFFFFF", "FFFFFFFFFFFF", "FFFFFFFFFFFF"]
+var arrayBmvdCount: [String: String] = [:]
+var arrayCount: [Int] = []
+
+
 
 var Access_Allowed = 0
 var dataBoxAll: String = ""
@@ -91,3 +102,4 @@ var indexCount = -1
 
 var dateLast: Int = 0
 var dateFirst: Int = 0
+var setPasswordCheak = -1

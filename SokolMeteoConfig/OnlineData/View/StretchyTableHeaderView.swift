@@ -39,7 +39,7 @@ class StretchyTableHeaderView: UIView {
         // ImageView for background
         imageView = UIImageView()
         imageView.clipsToBounds = true
-        imageView.backgroundColor = .yellow
+        imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFill
         containerView.addSubview(imageView)
     }
@@ -49,7 +49,7 @@ class StretchyTableHeaderView: UIView {
         NSLayoutConstraint.activate([
             self.widthAnchor.constraint(equalTo: containerView.widthAnchor),
             self.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            self.heightAnchor.constraint(equalTo: containerView.heightAnchor)
+            self.heightAnchor.constraint(equalTo: containerView.heightAnchor, constant: 300)
         ])
         
         // Container View Constraints
