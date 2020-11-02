@@ -7,17 +7,38 @@
 //
 
 import UIKit
+import Alamofire
+import RealmSwift
+import NVActivityIndicatorView
 
 class AccountEnterController: UIViewController {
     
     let customNavigationBar = createCustomNavigationBar(title: "ВХОД В УЧЕТНУЮ ЗАПИСЬ",fontSize: screenW / 22)
-    
+    let realm: Realm = {
+        return try! Realm()
+    }()
     lazy var stackTextField: UIStackView = {
         let stackTextField = UIStackView()
         stackTextField.translatesAutoresizingMaskIntoConstraints = false
         stackTextField.axis = .vertical
         stackTextField.spacing = 30
         return stackTextField
+    }()
+    
+    lazy var viewAlpha: UIView = {
+        let viewAlpha = UIView(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH))
+        viewAlpha.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        return viewAlpha
+    }()
+    lazy var activityIndicator: NVActivityIndicatorView = {
+        let view = NVActivityIndicatorView(frame: .zero, type: .ballGridPulse, color: UIColor.purple)
+        view.frame.size = CGSize(width: 50, height: 50)
+        view.layer.shadowColor = UIColor.white.cgColor
+        view.layer.shadowRadius = 5.0
+        view.layer.shadowOpacity = 0.7
+        view.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+        view.center = viewAlpha.center
+        return view
     }()
     
     fileprivate lazy var backView: UIImageView = {
@@ -32,19 +53,20 @@ class AccountEnterController: UIViewController {
         return backView
     }()
     lazy var IMEITextField: UITextField = {
-        let textField = TextFieldWithPadding(placeholder: "Введите IMEI")
+        let textField = TextFieldWithPadding(placeholder: "Введите e-mail")
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.addTarget(self, action: #selector(self.textFieldDidMax(_:)),for: UIControl.Event.editingChanged)
         textField.layer.shadowRadius = 3.0
         textField.layer.shadowOpacity = 0.1
+        textField.autocapitalizationType = .none
         textField.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
-        textField.keyboardType = .numberPad
         return textField
     }()
     lazy var passwordTextField: UITextField = {
-        let textField = TextFieldWithPadding(placeholder: "Установите пароль")
+        let textField = TextFieldWithPadding(placeholder: "Введите пароль")
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.addTarget(self, action: #selector(self.textFieldDidMax(_:)),for: UIControl.Event.editingChanged)
+        textField.addTarget(self, action: #selector(self.textFieldPasswordDidMax(_:)),for: UIControl.Event.editingChanged)
+        textField.isSecureTextEntry = true
         textField.layer.shadowRadius = 3.0
         textField.layer.shadowOpacity = 0.1
         textField.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
@@ -80,10 +102,82 @@ class AccountEnterController: UIViewController {
     }
     
     @objc func actionSave() {
-        print("tap")
-        navigationController?.pushViewController(DownloadDaraController(), animated: true)
+        if Reachability.isConnectedToNetwork(){
+            viewAlpha.isHidden = false
+            fetchInAccount()
+        } else {
+            showToast(message: "Проверьте соединение", seconds: 1.0)
+        }
+    }
+    fileprivate func realmSave() {
+        do {
+            let config = Realm.Configuration(
+                schemaVersion: 0,
+                
+                migrationBlock: { migration, oldSchemaVersion in
+                    if (oldSchemaVersion < 1) {
+                    }
+                })
+            Realm.Configuration.defaultConfiguration = config
+            print(Realm.Configuration.defaultConfiguration.fileURL!)
+
+            let account = AccountModel()
+            account.user = IMEITextField.text
+            account.password = passwordTextField.text
+            
+            let realmCheck = realm.objects(AccountModel.self)
+            if realmCheck.count != 0 {
+                try! realm.write {
+                    realmCheck.setValue(account.user, forKey: "user")
+                    realmCheck.setValue(account.password, forKey: "password")
+                }
+            } else {
+                try realm.write {
+                    realm.add(account)
+                }
+            }
+            //            let workouts = realm.objects(BoxModel.self).filter("time != '0'")
+            //            try! realm.write {
+            //                workouts.setValue("0", forKey: "time")
+            //            }
+            
+        } catch {
+            print("error getting xml string: \(error)")
+        }
     }
     
+    func fetchInAccount() {
+        let urlMain = "http://185.27.193.112:8004"
+        let urlString = urlMain + "/login?credentials=\(base64Encoded(email: IMEITextField.text ?? "", password: passwordTextField.text ?? ""))"
+        print(urlString)
+        let request = AF.request(urlString)
+            .validate()
+            .responseDecodable(of: Network.self) { (response) in
+//                guard let network = response.value else {return}
+//                print(network.timestamp!)
+            }
+        // 2
+        request.responseDecodable(of: Network.self) { (response) in
+          guard let network = response.value else { return }
+            print(network)
+            if network.state == "OK" {
+                self.realmSave()
+                self.viewAlpha.isHidden = true
+                self.navigationController?.pushViewController(DownloadDaraController(), animated: true)
+            } else {
+                self.viewAlpha.isHidden = true
+                self.showToast(message: network.errors?.first ?? "Ошибка", seconds: 1.0)
+            }
+        }
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        let realmCheck = realm.objects(AccountModel.self)
+        if realmCheck.count != 0 {
+            IMEITextField.text = realmCheck[0].user
+            passwordTextField.text = realmCheck[0].password
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -92,6 +186,10 @@ class AccountEnterController: UIViewController {
         )
         showView()
         delegateTextFieldDelegate()
+        viewAlpha.isHidden = true
+        viewAlpha.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        view.addSubview(viewAlpha)
     }
     
     func showView() {
@@ -147,6 +245,17 @@ extension AccountEnterController: UITextFieldDelegate {
     }
     @objc func textFieldDidMax(_ textField: UITextField) {
         print(textField.text!)
+        textField.text = textField.text?.lowercased()
+        if textField.text?.last == " " {
+            textField.text?.removeLast()
+        }
+        checkMaxLength(textField: textField, maxLength: 55)
+    }
+    @objc func textFieldPasswordDidMax(_ textField: UITextField) {
+        print(textField.text!)
+        if textField.text?.last == " " {
+            textField.text?.removeLast()
+        }
         checkMaxLength(textField: textField, maxLength: 15)
     }
     func checkMaxLength(textField: UITextField!, maxLength: Int) {

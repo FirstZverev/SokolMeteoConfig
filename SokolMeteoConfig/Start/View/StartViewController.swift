@@ -12,6 +12,7 @@ import Stevia
 import UIDrawer
 import RealmSwift
 import FittedSheets
+import Alamofire
 
 class StartViewController: UIViewController {
 
@@ -40,7 +41,6 @@ class StartViewController: UIViewController {
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,47 +51,46 @@ class StartViewController: UIViewController {
         view.sv(
             customNavigationBar
         )
-        
-        do {
-            let config = Realm.Configuration(
-                schemaVersion: 2,
-             
-                migrationBlock: { migration, oldSchemaVersion in
-                    if (oldSchemaVersion < 1) {
-
-                    }
-                })
-            Realm.Configuration.defaultConfiguration = config
-            let realm:Realm = {
-                return try! Realm()
-            }()
-            print(Realm.Configuration.defaultConfiguration.fileURL!)
-            let device = DeviceNameModel()
-            device.nameDevice = "Sokol_350"
-
-            let box = BoxModel()
-            box.nameDevice = device.nameDevice
-            box.time = "2"
-            box.allSting = "210920;072242;5546.1860;N;04913.8926;E;0;0;0;0;0;0;0;0.0,0.0;NA;t:2:0.00,WD:1:0,WV:2:0.00,WM:2:0.00,PR:2:0.00,HM:1:0,RN:2:0.00,UV:1:0,UVI:1:0,L:1:0,LI:1:0,Upow:2:3.46,Uext:2:0.0,KS:1:0,RSSI:1:20,TR:1:1825,EVS:1:4"
-
-            try realm.write {
-                realm.add(box)
-            }
-            
-            let result = realm.objects(BoxModel.self).sorted(byKeyPath: "time")
-            print(result)
-            try! realm.write {
-                print("device: \(result.last!.nameDevice!), time: \(result.last!.time!)")
-            }
-            
-//            let workouts = realm.objects(BoxModel.self).filter("time != '0'")
-//            try! realm.write {
-//                workouts.setValue("0", forKey: "time")
+//        do {
+//            let config = Realm.Configuration(
+//                schemaVersion: 0,
+//             
+//                migrationBlock: { migration, oldSchemaVersion in
+//                    if (oldSchemaVersion < 1) {
+//
+//                    }
+//                })
+//            Realm.Configuration.defaultConfiguration = config
+//            let realm:Realm = {
+//                return try! Realm()
+//            }()
+////            print(Realm.Configuration.defaultConfiguration.fileURL!)
+//            let device = DeviceNameModel()
+//            device.nameDevice = "Sokol_350"
+//
+//            let box = BoxModel()
+//            box.nameDevice = device.nameDevice
+//            box.time = "2"
+//            box.allSting = "210920;072242;5546.1860;N;04913.8926;E;0;0;0;0;0;0;0;0.0,0.0;NA;t:2:0.00,WD:1:0,WV:2:0.00,WM:2:0.00,PR:2:0.00,HM:1:0,RN:2:0.00,UV:1:0,UVI:1:0,L:1:0,LI:1:0,Upow:2:3.46,Uext:2:0.0,KS:1:0,RSSI:1:20,TR:1:1825,EVS:1:4"
+//
+//            try realm.write {
+//                realm.add(box)
 //            }
-
-        } catch {
-            print("error getting xml string: \(error)")
-        }
+//            
+//            let result = realm.objects(BoxModel.self).sorted(byKeyPath: "time")
+////            print(result)
+//            try! realm.write {
+//                print("device: \(result.last!.nameDevice!), time: \(result.last!.time!)")
+//            }
+//            
+////            let workouts = realm.objects(BoxModel.self).filter("time != '0'")
+////            try! realm.write {
+////                workouts.setValue("0", forKey: "time")
+////            }
+//
+//        } catch {
+//            print("error getting xml string: \(error)")
+//        }
         
 //        greenView.height(50).width(50).centerInContainer()
         
@@ -139,7 +138,7 @@ extension StartViewController: UITableViewDelegate {
             navigationController?.pushViewController(BlackBoxListController(), animated: true)
 
         } else if indexPath.row == 2 {
-            navigationController?.pushViewController(ProfileMeteoController(), animated: true)
+            navigationController?.pushViewController(AccountEnterController(), animated: true)
         } else if indexPath.row == 3 {
 //            navigationController?.pushViewController(BlackBoxGraffics(), animated: true)
             transitionSupport()

@@ -17,7 +17,6 @@ class BlackBoxTableViewCell: UITableViewCell {
     weak var viewModel: TableViewCellViewModelType? {
         willSet(viewModel) {
             guard let viewModel = viewModel else { return }
-            label?.text = viewModel.name
             imageUI?.image = UIImage(named: "timeBlackBox")
         }
     }
@@ -67,7 +66,7 @@ class BlackBoxTableViewCell: UITableViewCell {
             self.contentView.topAnchor.constraint(equalTo: self.labelTwo!.topAnchor, constant: -20),
             self.contentView.bottomAnchor.constraint(equalTo: self.labelTwo!.bottomAnchor, constant: 20),
             self.contentView.leadingAnchor.constraint(equalTo: self.labelTwo!.leadingAnchor, constant: -200),
-            self.contentView.trailingAnchor.constraint(equalTo: self.labelTwo!.trailingAnchor, constant: 15),
+            self.contentView.trailingAnchor.constraint(equalTo: self.labelTwo!.trailingAnchor, constant: 30),
             self.imageUI!.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
             self.imageUI!.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 15),
 

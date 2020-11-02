@@ -23,6 +23,7 @@ class CustomLoadingBlackBox: UIView {
     @IBOutlet weak var ContentView: UIView!
     @IBOutlet weak var CustomInfo: UILabel!
     @IBOutlet weak var progress: NVActivityIndicatorView!
+    @IBOutlet weak var labelCountSave: UILabel!
     weak var delegate: CustomLoadingBlackBoxDelegate?
 
     override func awakeFromNib() {

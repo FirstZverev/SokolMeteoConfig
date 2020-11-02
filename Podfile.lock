@@ -1,5 +1,6 @@
 PODS:
   - AdvancedPageControl (0.1.4)
+  - Alamofire (5.2.2)
   - BottomPopup (0.6.0)
   - Charts (3.6.0):
     - Charts/Core (= 3.6.0)
@@ -25,6 +26,7 @@ PODS:
 
 DEPENDENCIES:
   - AdvancedPageControl
+  - Alamofire
   - BottomPopup
   - Charts
   - ESTabBarController-swift
@@ -43,6 +45,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - AdvancedPageControl
+    - Alamofire
     - BottomPopup
     - Charts
     - ESTabBarController-swift
@@ -70,6 +73,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   AdvancedPageControl: 2bb63992260869ef665e47da39001a432fb48c49
+  Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
   BottomPopup: 1d5649a3b29396238f0e8f3c82075a7bfcf37ba7
   Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
   ESTabBarController-swift: 05593a6ad64700b03c0eb60ff625916370aa4136
@@ -86,6 +90,6 @@ SPEC CHECKSUMS:
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
   UIDrawer: 1bfbc152fee69f6809a41508000cf1b9bd4b1738
 
-PODFILE CHECKSUM: 5319e03e847c7fbca5b2c2b943410a8ef445367d
+PODFILE CHECKSUM: cd9c3ee21a23d71af79f755f590c70239c8cd32e
 
 COCOAPODS: 1.8.4

@@ -15,3 +15,12 @@ protocol TableViewViewModelType {
     func viewModelForSelectedRow() -> DetailViewModelType?
     func selectRow(atIndexPath indexPath: IndexPath)
 }
+
+protocol TableViewViewModelTypeBlackBox {
+    func funcMenuMain() -> [Menu]
+    func numberOfRows() -> Int
+    func cellViewModel(forIndexPath indexPath: IndexPath) -> TableViewCellViewModelType?
+    
+    func viewModelForSelectedRow() -> DetailViewModelType?
+    func selectRow(atIndexPath indexPath: IndexPath)
+}

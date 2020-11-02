@@ -19,7 +19,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="ejD-I1-icH" customClass="CustomLoadingBlackBox" customModule="SokolMeteoConfig" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="ejD-I1-icH" customClass="CustomLoadingBlackBox" customModule="SOKOL_M" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="356" height="261"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -63,12 +63,19 @@
                             <rect key="frame" x="20" y="74" width="260" height="102"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n91-1y-Wzp">
+                            <rect key="frame" x="144.5" y="113.5" width="11" height="23"/>
+                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="250" id="0fa-nc-vCh"/>
                         <constraint firstItem="L6m-6V-vO6" firstAttribute="top" secondItem="eia-im-mqb" secondAttribute="top" constant="14" id="2p3-bF-R4L"/>
                         <constraint firstAttribute="width" constant="300" id="4jC-Fk-9xi"/>
+                        <constraint firstItem="n91-1y-Wzp" firstAttribute="centerY" secondItem="eia-im-mqb" secondAttribute="centerY" id="6m2-df-kjz"/>
                         <constraint firstItem="Erx-lN-2Wq" firstAttribute="leading" secondItem="eia-im-mqb" secondAttribute="leading" constant="10" id="BEH-hP-AvF"/>
                         <constraint firstItem="GmQ-RM-5mc" firstAttribute="leading" secondItem="eia-im-mqb" secondAttribute="leading" constant="20" id="DTU-dt-3S7"/>
                         <constraint firstItem="Erx-lN-2Wq" firstAttribute="centerX" secondItem="eia-im-mqb" secondAttribute="centerX" id="E9L-2Q-pYZ"/>
@@ -83,6 +90,7 @@
                         <constraint firstItem="x86-ST-FRw" firstAttribute="centerY" secondItem="eia-im-mqb" secondAttribute="centerY" constant="-30" id="n8I-hc-Mxr"/>
                         <constraint firstItem="L6m-6V-vO6" firstAttribute="centerX" secondItem="eia-im-mqb" secondAttribute="centerX" id="nAC-Ej-NgQ"/>
                         <constraint firstItem="GmQ-RM-5mc" firstAttribute="top" secondItem="L6m-6V-vO6" secondAttribute="bottom" constant="10" id="pNt-lr-5Gx"/>
+                        <constraint firstItem="n91-1y-Wzp" firstAttribute="centerX" secondItem="eia-im-mqb" secondAttribute="centerX" id="pjl-UX-k0m"/>
                         <constraint firstItem="Erx-lN-2Wq" firstAttribute="centerY" secondItem="eia-im-mqb" secondAttribute="centerY" constant="20" id="rbc-ee-lD1"/>
                         <constraint firstItem="Kv1-fR-U5f" firstAttribute="top" secondItem="GmQ-RM-5mc" secondAttribute="bottom" constant="20" id="uCj-Bb-mD0"/>
                         <constraint firstItem="Kv1-fR-U5f" firstAttribute="centerX" secondItem="eia-im-mqb" secondAttribute="centerX" id="uYS-eM-Zig"/>
@@ -103,6 +111,7 @@
                 <outlet property="CustomImage" destination="L6m-6V-vO6" id="W5p-EG-01k"/>
                 <outlet property="CustomInfo" destination="Erx-lN-2Wq" id="tvY-NA-wFn"/>
                 <outlet property="CustomMainLabel" destination="x86-ST-FRw" id="Iah-kd-x7E"/>
+                <outlet property="labelCountSave" destination="n91-1y-Wzp" id="Gm9-Qa-xbZ"/>
                 <outlet property="progress" destination="GmQ-RM-5mc" id="POm-jY-Y7m"/>
             </connections>
             <point key="canvasLocation" x="95.652173913043484" y="146.98660714285714"/>

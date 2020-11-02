@@ -20,6 +20,7 @@ target 'SOKOL-M' do
 	pod 'Charts'
 	pod 'FittedSheets'
 	pod 'SimpleCheckbox'
+	pod 'Alamofire'
 end
 
 post_install do |installer|

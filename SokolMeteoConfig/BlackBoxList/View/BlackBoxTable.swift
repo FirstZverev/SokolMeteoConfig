@@ -7,14 +7,21 @@
 //
 
 import UIKit
+import RealmSwift
+import NVActivityIndicatorView
 
 class BlackBoxTable: UIViewController {
     
     var name: Int!
     var nameDeviceBox: String!
-
+    var parametrValues:  Results<BoxModel>?
+    var timeHour: [String] = []
+    var valueParametrs: [String] = []
     var viewModel: TableViewViewModelType?
-
+    
+    var dateNext = ""
+    var dateCurrent = 0
+    
     lazy var backView: UIImageView = {
         let backView = UIImageView()
         backView.image = UIImage(named: "back")!
@@ -45,10 +52,26 @@ class BlackBoxTable: UIViewController {
         return label
     }()
     
+    lazy var viewAlpha: UIView = {
+        let viewAlpha = UIView(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH))
+        viewAlpha.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        return viewAlpha
+    }()
+    lazy var activityIndicator: NVActivityIndicatorView = {
+        let view = NVActivityIndicatorView(frame: .zero, type: .ballGridPulse, color: UIColor.purple)
+        view.frame.size = CGSize(width: 50, height: 50)
+        view.layer.shadowColor = UIColor.white.cgColor
+        view.layer.shadowRadius = 5.0
+        view.layer.shadowOpacity = 0.7
+        view.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+        view.center = viewAlpha.center
+        return view
+    }()
+    
     lazy var labelNameParametr: UILabel = {
        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = ViewModelMeteoData().menuMain[name].name
+        label.text = ModelViewBlackBox().menuMain[name].name
         label.numberOfLines = 0
         label.font = UIFont(name:"FuturaPT-Light", size: 16.0)
         label.textColor = .black
@@ -57,7 +80,7 @@ class BlackBoxTable: UIViewController {
     
     lazy var dayButton: UIButton = {
        let button = UIButton()
-        button.setTitle("08.09.2020", for: .normal)
+        button.setTitle("\(unixTimeStringtoStringOnlyDate(unixTime: (parametrValues?.last!.time)!))", for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleColor(.black, for: .normal)
         return button
@@ -77,7 +100,7 @@ class BlackBoxTable: UIViewController {
     
     lazy var imageParametr: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: ViewModelMeteoData().menuMain[name].image!)
+        image.image = UIImage(named: ModelViewBlackBox().menuMain[name].image!)
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -89,6 +112,158 @@ class BlackBoxTable: UIViewController {
         image.addTarget(self, action: #selector(switchImageSegmented), for: .touchUpInside)
         return image
     }()
+    
+    lazy var backGrafficsOrTable: UIButton = {
+        let image = UIButton()
+        image.setImage(UIImage(named: "backTable"), for: .normal)
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.addTarget(self, action: #selector(backImageSegmented), for: .touchUpInside)
+        return image
+    }()
+    
+    lazy var nextGrafficsOrTable: UIButton = {
+        let image = UIButton()
+        image.setImage(UIImage(named: "nextTable"), for: .normal)
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.addTarget(self, action: #selector(nextImageSegmented), for: .touchUpInside)
+        return image
+    }()
+    @objc func nextImageSegmented() {
+        viewAlpha.isHidden = false
+        let a = dateNext
+        let b = stringTounixTimeOnlyData(dateString: a)
+        let c = b + 86400
+        let d = unixTimeInttoStringOnlyDate(unixTime: c)
+        dateNext = d
+        dateCurrent = stringTounixTimeOnlyData(dateString: d)
+        dayButton.setTitle("\(d)", for: .normal)
+        timeHour.removeAll()
+        valueParametrs.removeAll()
+        let timeCurrentString = dateNext
+        let timeCurrent = stringTounixTimeOnlyData(dateString: timeCurrentString)
+        let timeCurrentNextDay = timeCurrent + 86400
+        for i in 0...parametrValues!.count - 1 {
+            let timeString = unixTimeStringtoStringOnlyDate(unixTime: (parametrValues?[i].time)!)
+            print("timeCurrentNextDay: \(timeCurrentNextDay)")
+            print("timeCurrent: \(timeCurrent)")
+            let time = stringTounixTimeOnlyData(dateString: timeString)
+            print("time: \(time)")
+            if time == timeCurrent && time < timeCurrentNextDay {
+                let timeStringNew = unixTimeStringtoStringOnlyHour(unixTime: (parametrValues?[i].time)!)
+                timeHour.append(timeStringNew)
+                var nameParametr = 0
+                switch name {
+                case 1:
+                    nameParametr = Int(((parametrValues?[i].parametrt)! as NSString).doubleValue)
+                case 2:
+                    nameParametr = Int(((parametrValues?[i].parametrWD)! as NSString).doubleValue)
+                case 3:
+                    nameParametr = Int(((parametrValues?[i].parametrWV)! as NSString).doubleValue)
+                case 4:
+                    nameParametr = Int(((parametrValues?[i].parametrWM)! as NSString).doubleValue)
+                case 5:
+                    nameParametr = Int(((parametrValues?[i].parametrPR)! as NSString).doubleValue)
+                case 6:
+                    nameParametr = Int(((parametrValues?[i].parametrHM)! as NSString).doubleValue)
+                case 7:
+                    nameParametr = Int(((parametrValues?[i].parametrRN)! as NSString).doubleValue)
+                case 8:
+                    nameParametr = Int(((parametrValues?[i].parametrUV)! as NSString).doubleValue)
+                case 9:
+                    nameParametr = Int(((parametrValues?[i].parametrUVI)! as NSString).doubleValue)
+                case 10:
+                    nameParametr = Int(((parametrValues?[i].parametrL)! as NSString).doubleValue)
+                case 11:
+                    nameParametr = Int(((parametrValues?[i].parametrLI)! as NSString).doubleValue)
+                case 12:
+                    nameParametr = Int(((parametrValues?[i].parametrUpow)! as NSString).doubleValue)
+                case 13:
+                    nameParametr = Int(((parametrValues?[i].parametrUext)! as NSString).doubleValue)
+                case 14:
+                    nameParametr = Int(((parametrValues?[i].parametrKS)! as NSString).doubleValue)
+                case 15:
+                    nameParametr = Int(((parametrValues?[i].parametrRSSI)! as NSString).doubleValue)
+                case 16:
+                    nameParametr = Int(((parametrValues?[i].parametrTR)! as NSString).doubleValue)
+                case 17:
+                    nameParametr = Int(((parametrValues?[i].parametrEVS)! as NSString).intValue)
+                default:
+                    print("")
+                }
+                valueParametrs.append("\(nameParametr)")
+            }
+        }
+        tableView.reloadData()
+    }
+    
+    @objc func backImageSegmented() {
+        viewAlpha.isHidden = false
+        let a = dateNext
+        let b = stringTounixTimeOnlyData(dateString: a)
+        let c = b - 86400
+        let d = unixTimeInttoStringOnlyDate(unixTime: c)
+        dateNext = d
+        dateCurrent = stringTounixTimeOnlyData(dateString: d)
+        dayButton.setTitle("\(d)", for: .normal)
+        timeHour.removeAll()
+        valueParametrs.removeAll()
+        let timeCurrentString = dateNext
+        let timeCurrent = stringTounixTimeOnlyData(dateString: timeCurrentString)
+        let timeCurrentNextDay = timeCurrent + 86400
+        for i in 0...parametrValues!.count - 1 {
+            let timeString = unixTimeStringtoStringOnlyDate(unixTime: (parametrValues?[i].time)!)
+            print("timeCurrentNextDay: \(timeCurrentNextDay)")
+            print("timeCurrent: \(timeCurrent)")
+            let time = stringTounixTimeOnlyData(dateString: timeString)
+            print("time: \(time)")
+            if time == timeCurrent && time < timeCurrentNextDay {
+                let timeStringNew = unixTimeStringtoStringOnlyHour(unixTime: (parametrValues?[i].time)!)
+                timeHour.append(timeStringNew)
+                var nameParametr = 0
+                switch name {
+                case 1:
+                    nameParametr = Int(((parametrValues?[i].parametrt)! as NSString).doubleValue)
+                case 2:
+                    nameParametr = Int(((parametrValues?[i].parametrWD)! as NSString).doubleValue)
+                case 3:
+                    nameParametr = Int(((parametrValues?[i].parametrWV)! as NSString).doubleValue)
+                case 4:
+                    nameParametr = Int(((parametrValues?[i].parametrWM)! as NSString).doubleValue)
+                case 5:
+                    nameParametr = Int(((parametrValues?[i].parametrPR)! as NSString).doubleValue)
+                case 6:
+                    nameParametr = Int(((parametrValues?[i].parametrHM)! as NSString).doubleValue)
+                case 7:
+                    nameParametr = Int(((parametrValues?[i].parametrRN)! as NSString).doubleValue)
+                case 8:
+                    nameParametr = Int(((parametrValues?[i].parametrUV)! as NSString).doubleValue)
+                case 9:
+                    nameParametr = Int(((parametrValues?[i].parametrUVI)! as NSString).doubleValue)
+                case 10:
+                    nameParametr = Int(((parametrValues?[i].parametrL)! as NSString).doubleValue)
+                case 11:
+                    nameParametr = Int(((parametrValues?[i].parametrLI)! as NSString).doubleValue)
+                case 12:
+                    nameParametr = Int(((parametrValues?[i].parametrUpow)! as NSString).doubleValue)
+                case 13:
+                    nameParametr = Int(((parametrValues?[i].parametrUext)! as NSString).doubleValue)
+                case 14:
+                    nameParametr = Int(((parametrValues?[i].parametrKS)! as NSString).doubleValue)
+                case 15:
+                    nameParametr = Int(((parametrValues?[i].parametrRSSI)! as NSString).doubleValue)
+                case 16:
+                    nameParametr = Int(((parametrValues?[i].parametrTR)! as NSString).doubleValue)
+                case 17:
+                    nameParametr = Int(((parametrValues?[i].parametrEVS)! as NSString).intValue)
+                default:
+                    print("")
+                }
+                valueParametrs.append("\(nameParametr)")
+            }
+        }
+        tableView.reloadData()
+        viewAlpha.isHidden = true
+    }
     @objc func switchImageSegmented() {
         let transition = CATransition()
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
@@ -97,6 +272,7 @@ class BlackBoxTable: UIViewController {
         let blackBoxGraffics = BlackBoxGraffics()
         blackBoxGraffics.name = name
         blackBoxGraffics.nameDeviceBox = nameDeviceBox
+        blackBoxGraffics.parametrValues = parametrValues
         self.navigationController?.pushViewController(blackBoxGraffics, animated: false)
     }
     
@@ -111,9 +287,70 @@ class BlackBoxTable: UIViewController {
               let index = viewControllers.firstIndex(of: self) else { return }
         navigationController?.viewControllers.remove(at: index)
     }
+    func stratTableView() {
+        timeHour.removeAll()
+        valueParametrs.removeAll()
+        let timeCurrentString = dateNext
+        let timeCurrent = stringTounixTimeOnlyData(dateString: timeCurrentString)
+        let timeCurrentNextDay = timeCurrent + 86400
+        for i in 0...parametrValues!.count - 1 {
+            let timeString = unixTimeStringtoStringOnlyDate(unixTime: (parametrValues?[i].time)!)
+            print("timeCurrentNextDay: \(timeCurrentNextDay)")
+            print("timeCurrent: \(timeCurrent)")
+            let time = stringTounixTimeOnlyData(dateString: timeString)
+            print("time: \(time)")
+            if time == timeCurrent && time < timeCurrentNextDay {
+                let timeStringNew = unixTimeStringtoStringOnlyHour(unixTime: (parametrValues?[i].time)!)
+                timeHour.append(timeStringNew)
+                var nameParametr = 0
+                switch name {
+                case 1:
+                    nameParametr = Int(((parametrValues?[i].parametrt)! as NSString).doubleValue)
+                case 2:
+                    nameParametr = Int(((parametrValues?[i].parametrWD)! as NSString).doubleValue)
+                case 3:
+                    nameParametr = Int(((parametrValues?[i].parametrWV)! as NSString).doubleValue)
+                case 4:
+                    nameParametr = Int(((parametrValues?[i].parametrWM)! as NSString).doubleValue)
+                case 5:
+                    nameParametr = Int(((parametrValues?[i].parametrPR)! as NSString).doubleValue)
+                case 6:
+                    nameParametr = Int(((parametrValues?[i].parametrHM)! as NSString).doubleValue)
+                case 7:
+                    nameParametr = Int(((parametrValues?[i].parametrRN)! as NSString).doubleValue)
+                case 8:
+                    nameParametr = Int(((parametrValues?[i].parametrUV)! as NSString).doubleValue)
+                case 9:
+                    nameParametr = Int(((parametrValues?[i].parametrUVI)! as NSString).doubleValue)
+                case 10:
+                    nameParametr = Int(((parametrValues?[i].parametrL)! as NSString).doubleValue)
+                case 11:
+                    nameParametr = Int(((parametrValues?[i].parametrLI)! as NSString).doubleValue)
+                case 12:
+                    nameParametr = Int(((parametrValues?[i].parametrUpow)! as NSString).doubleValue)
+                case 13:
+                    nameParametr = Int(((parametrValues?[i].parametrUext)! as NSString).doubleValue)
+                case 14:
+                    nameParametr = Int(((parametrValues?[i].parametrKS)! as NSString).doubleValue)
+                case 15:
+                    nameParametr = Int(((parametrValues?[i].parametrRSSI)! as NSString).doubleValue)
+                case 16:
+                    nameParametr = Int(((parametrValues?[i].parametrTR)! as NSString).doubleValue)
+                case 17:
+                    nameParametr = Int(((parametrValues?[i].parametrEVS)! as NSString).intValue)
+                default:
+                    print("")
+                }
+                valueParametrs.append("\(nameParametr)")
+            }
+        }
+        tableView.reloadData()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        dateNext = unixTimeStringtoStringOnlyDate(unixTime: (parametrValues?.last!.time)!)
+        stratTableView()
         view.backgroundColor = .white
         registerTableView()
         viewModel = ViewModelBlackBoxTable()
@@ -134,6 +371,10 @@ class BlackBoxTable: UIViewController {
 
 
         cosntrains()
+        viewAlpha.isHidden = true
+        viewAlpha.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        view.addSubview(viewAlpha)
     }
 
     func popVC() {
@@ -143,7 +384,7 @@ class BlackBoxTable: UIViewController {
     func cosntrains() {
         
         view.sv(labelName, labelNameParametr, imageParametr, containerButtons)
-        containerButtons.sv(dayButton)
+        containerButtons.sv(dayButton, backGrafficsOrTable, nextGrafficsOrTable)
         
         labelName.topAnchor.constraint(equalTo: backView.bottomAnchor, constant: 20).isActive = true
         labelName.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
@@ -160,6 +401,12 @@ class BlackBoxTable: UIViewController {
         dayButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         dayButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         dayButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1/3).isActive = true
+        
+        backGrafficsOrTable.centerYAnchor.constraint(equalTo: dayButton.centerYAnchor).isActive = true
+        backGrafficsOrTable.trailingAnchor.constraint(equalTo: dayButton.leadingAnchor, constant: -10).isActive = true
+
+        nextGrafficsOrTable.centerYAnchor.constraint(equalTo: dayButton.centerYAnchor).isActive = true
+        nextGrafficsOrTable.leadingAnchor.constraint(equalTo: dayButton.trailingAnchor, constant: 10).isActive = true
 
         containerButtons.topAnchor.constraint(equalTo: dayButton.topAnchor).isActive = true
         containerButtons.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true

@@ -14,7 +14,7 @@ struct ListBox {
 }
 
 var configListBox: [ListBox] = [
-    ListBox(name: "Sokol_349", image: "logoSokol"),
-    ListBox(name: "Sokol_348", image: "logoSokol"),
+    ListBox(name: "Sokol-M_349", image: "logoSokol"),
+    ListBox(name: "Sokol-M_348", image: "logoSokol"),
 
 ]

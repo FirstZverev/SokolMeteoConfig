@@ -127,6 +127,8 @@
                 <outlet property="CustomMainLabel" destination="w0s-dT-cg6" id="laM-R4-RZD"/>
                 <outlet property="checkBoxOne" destination="cdF-SF-Suh" id="Yek-IK-Mrt"/>
                 <outlet property="checkBoxTwo" destination="hto-oX-mCv" id="bs3-0l-qTa"/>
+                <outlet property="labelCom" destination="3D3-B1-LQp" id="THd-4e-wxg"/>
+                <outlet property="labelCsv" destination="yZK-Og-JDm" id="p2H-2d-q89"/>
             </connections>
             <point key="canvasLocation" x="95.652173913043484" y="146.98660714285714"/>
         </view>
