@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import NVActivityIndicatorView
 
 class ConfiguratorFirstController : UIViewController {
     
@@ -14,7 +15,22 @@ class ConfiguratorFirstController : UIViewController {
     var constraints2: [NSLayoutConstraint] = []
     var delegate: FirstConfiguratorDelegate?
     var timer = Timer()
-
+    
+    lazy var viewAlpha: UIView = {
+        let viewAlpha = UIView(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH))
+        viewAlpha.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        return viewAlpha
+    }()
+    lazy var activityIndicator: NVActivityIndicatorView = {
+        let view = NVActivityIndicatorView(frame: .zero, type: .ballGridPulse, color: UIColor.purple)
+        view.frame.size = CGSize(width: 50, height: 50)
+        view.layer.shadowColor = UIColor.white.cgColor
+        view.layer.shadowRadius = 5.0
+        view.layer.shadowOpacity = 0.7
+        view.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+        view.center = viewAlpha.center
+        return view
+    }()
     lazy var pickerChanel: UIPickerView = {
         let picker = UIPickerView()
         picker.translatesAutoresizingMaskIntoConstraints = false
@@ -38,6 +54,14 @@ class ConfiguratorFirstController : UIViewController {
         chanelTextField.inputAccessoryView = toolBar
 
         return picker
+    }()
+    
+    lazy var saveButton: UIButton = {
+        let label = UIButton()
+        label.setImage(UIImage(named: "circle"), for: .normal)
+        label.addTarget(self, action: #selector(saveUpdate), for: .touchUpInside)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     lazy var backView: UIImageView = {

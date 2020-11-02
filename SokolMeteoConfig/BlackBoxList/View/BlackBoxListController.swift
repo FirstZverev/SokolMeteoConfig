@@ -7,13 +7,30 @@
 //
 
 import UIKit
+import RealmSwift
 
 class BlackBoxListController : UIViewController {
-    
+    let realm: Realm  = {
+        return try! Realm()
+    }()
+    var realmCheck: [String]?
     var tableView: UITableView!
     var a: CGFloat = 0
     let generator = UIImpactFeedbackGenerator(style: .light)
 
+    var emptyList: UILabel = {
+        let emptyList = UILabel()
+        emptyList.text = "СПИСОК ПУСТ, ЗАГРУЗИТЕ ДАННЫЕ С МЕТЕОСТАНЦИИ"
+        emptyList.numberOfLines = 0
+        emptyList.textAlignment = .center
+//        emptyList.center.x = screenW / 2
+//        emptyList.center.y = screenH / 2
+        emptyList.font = UIFont(name: "FuturaPT-Light", size: screenW / 16)
+        emptyList.textColor = .gray
+        emptyList.translatesAutoresizingMaskIntoConstraints = false
+//        emptyList.isHidden = false
+        return emptyList
+    }()
     lazy var backView: UIImageView = {
         let backView = UIImageView()
         backView.frame = CGRect(x: 0, y: screenH / 12 - 50, width: 50, height: 50)
@@ -32,16 +49,22 @@ class BlackBoxListController : UIViewController {
         tableView.height(screenH - (screenH / 12)).width(screenW)
         tableView.top(screenH / 12)
         tableView.backgroundColor = .white
+        tableView.addSubview(emptyList)
         self.tableView = tableView
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        let setArray = Set(realm.objects(BoxModel.self).value(forKey: "nameDevice") as! [String])
+        realmCheck = Array(setArray)
+        tableView.reloadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+//        var realmDevice = realm.objects(DeviceNameModel.self)
+//        let a = map(realmDevice) {$0.name}
         let customNavigationBar = createCustomNavigationBar(title: "АРХИВ ДАННЫХ",fontSize: screenW / 22)
         self.hero.isEnabled = true
         createTableView()
@@ -49,6 +72,11 @@ class BlackBoxListController : UIViewController {
         view.sv(customNavigationBar, backView)
         customNavigationBar.hero.id = "Arcive"
         backView.addTapGesture { [self] in self.popVC() }
+        emptyList.centerXAnchor.constraint(equalTo: tableView.centerXAnchor).isActive = true
+        emptyList.centerYAnchor.constraint(equalTo: tableView.centerYAnchor).isActive = true
+        emptyList.leadingAnchor.constraint(equalTo: tableView.leadingAnchor, constant: 30).isActive = true
+        emptyList.trailingAnchor.constraint(equalTo: tableView.trailingAnchor, constant: -30).isActive = true
+
     }
     
     func popVC() {
@@ -66,7 +94,7 @@ class BlackBoxListController : UIViewController {
 extension BlackBoxListController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BlackBoxListCell", for: indexPath) as! BlackBoxListCell
-        cell.label.text = configListBox[indexPath.row].name
+        cell.label.text = realmCheck![indexPath.row]
         cell.imageUI.image = UIImage(named: configListBox[indexPath.row].image)
         return cell
     }
@@ -75,7 +103,12 @@ extension BlackBoxListController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        configListBox.count
+        if realmCheck?.count == 0 {
+            emptyList.isHidden = false
+        } else {
+            emptyList.isHidden = true
+        }
+        return realmCheck?.count ?? 0
     }
     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
         generator.impactOccurred()
@@ -100,7 +133,7 @@ extension BlackBoxListController: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let blackBoxMeteoDataController = BlackBoxMeteoDataController()
-        blackBoxMeteoDataController.nameDeviceBlackBox = configListBox[indexPath.row].name
+        blackBoxMeteoDataController.nameDeviceBlackBox = realmCheck![indexPath.row]
         navigationController?.pushViewController(blackBoxMeteoDataController, animated: true)
     }
 }

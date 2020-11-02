@@ -7,15 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-<<<<<<< HEAD:SOKOL.xcodeproj/project.pbxproj
 		A922FFB2E96332284A63D8E8 /* Pods_SOKOL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 792858603315CEB9AFAAAB3D /* Pods_SOKOL.framework */; };
 		B503B1D625494EB600EBAB31 /* URLRequestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B503B1D525494EB600EBAB31 /* URLRequestBuilder.swift */; };
 		B503B1EE2549553C00EBAB31 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = B503B1ED2549553C00EBAB31 /* Network.swift */; };
 		B503B1F22549575C00EBAB31 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B503B1F12549575C00EBAB31 /* NetworkManager.swift */; };
 		B503B1F6254BEF6700EBAB31 /* AccountEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B503B1F5254BEF6600EBAB31 /* AccountEditController.swift */; };
-=======
-		2CCFE993D8031141B06739AF /* Pods_SOKOL_M.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86B31583AA27EE2302E677D7 /* Pods_SOKOL_M.framework */; };
->>>>>>> parent of 298b6c8... FINAL:SOKOL-M.xcodeproj/project.pbxproj
 		B50AF269254823A800F66786 /* BlackBoxMeteoData+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50AF268254823A800F66786 /* BlackBoxMeteoData+Alert.swift */; };
 		B50AF26D254833C400F66786 /* AccountAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = B50AF26C254833C400F66786 /* AccountAlert.xib */; };
 		B50AF271254833CD00F66786 /* AccountAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50AF270254833CD00F66786 /* AccountAlert.swift */; };
@@ -130,6 +126,9 @@
 		B5C0514B247AA89C00F63357 /* futura-pt-medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B5C0514A247AA89C00F63357 /* futura-pt-medium.ttf */; };
 		B5C0514E247AABA600F63357 /* PasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C0514D247AABA600F63357 /* PasswordController.swift */; };
 		B5C05151247B98C000F63357 /* MeteoDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C05150247B98C000F63357 /* MeteoDataController.swift */; };
+		B5C33F96254F328B008E700F /* ConfirmationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C33F95254F328B008E700F /* ConfirmationAlert.swift */; };
+		B5C33F9A254F3297008E700F /* ConfirmationAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C33F99254F3297008E700F /* ConfirmationAlert.xib */; };
+		B5CAE99825494D8400C18FD3 /* ModelNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CAE99725494D8400C18FD3 /* ModelNetwork.swift */; };
 		B5DB4CF72434778F0016A4BD /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DB4CF62434778F0016A4BD /* Color+Hex.swift */; };
 		B5DB4CFB2434788D0016A4BD /* SeacrhBar+TextColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DB4CFA2434788D0016A4BD /* SeacrhBar+TextColor.swift */; };
 		B5DB4CFD243479190016A4BD /* DevicesListCellMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DB4CFC243479190016A4BD /* DevicesListCellMain.swift */; };
@@ -158,6 +157,10 @@
 		792858603315CEB9AFAAAB3D /* Pods_SOKOL.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SOKOL.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E57F4B2AC45D2EA7CF4DCC7 /* Pods-SOKOL.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SOKOL.debug.xcconfig"; path = "Target Support Files/Pods-SOKOL/Pods-SOKOL.debug.xcconfig"; sourceTree = "<group>"; };
 		8CC4EE35F922265E56FFAAAB /* Pods-SokolMeteoConfig.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SokolMeteoConfig.debug.xcconfig"; path = "Target Support Files/Pods-SokolMeteoConfig/Pods-SokolMeteoConfig.debug.xcconfig"; sourceTree = "<group>"; };
+		B503B1D525494EB600EBAB31 /* URLRequestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestBuilder.swift; sourceTree = "<group>"; };
+		B503B1ED2549553C00EBAB31 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		B503B1F12549575C00EBAB31 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		B503B1F5254BEF6600EBAB31 /* AccountEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountEditController.swift; sourceTree = "<group>"; };
 		B50AF268254823A800F66786 /* BlackBoxMeteoData+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BlackBoxMeteoData+Alert.swift"; sourceTree = "<group>"; };
 		B50AF26C254833C400F66786 /* AccountAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountAlert.xib; sourceTree = "<group>"; };
 		B50AF270254833CD00F66786 /* AccountAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountAlert.swift; sourceTree = "<group>"; };
@@ -279,6 +282,9 @@
 		B5C0514A247AA89C00F63357 /* futura-pt-medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "futura-pt-medium.ttf"; sourceTree = "<group>"; };
 		B5C0514D247AABA600F63357 /* PasswordController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordController.swift; sourceTree = "<group>"; };
 		B5C05150247B98C000F63357 /* MeteoDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoDataController.swift; sourceTree = "<group>"; };
+		B5C33F95254F328B008E700F /* ConfirmationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationAlert.swift; sourceTree = "<group>"; };
+		B5C33F99254F3297008E700F /* ConfirmationAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConfirmationAlert.xib; sourceTree = "<group>"; };
+		B5CAE99725494D8400C18FD3 /* ModelNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelNetwork.swift; sourceTree = "<group>"; };
 		B5DB4CF62434778F0016A4BD /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
 		B5DB4CFA2434788D0016A4BD /* SeacrhBar+TextColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SeacrhBar+TextColor.swift"; sourceTree = "<group>"; };
 		B5DB4CFC243479190016A4BD /* DevicesListCellMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesListCellMain.swift; sourceTree = "<group>"; };
@@ -497,6 +503,8 @@
 				B57167C025481B37003C8B1D /* SelectPush.swift */,
 				B50AF26C254833C400F66786 /* AccountAlert.xib */,
 				B50AF270254833CD00F66786 /* AccountAlert.swift */,
+				B5C33F95254F328B008E700F /* ConfirmationAlert.swift */,
+				B5C33F99254F3297008E700F /* ConfirmationAlert.xib */,
 				B566FEC324D9858700F41A33 /* TextFieldCustom.swift */,
 			);
 			path = CustomView;
@@ -514,6 +522,7 @@
 			isa = PBXGroup;
 			children = (
 				B57167932547DDA4003C8B1D /* AccountEnterController.swift */,
+				B503B1F5254BEF6600EBAB31 /* AccountEditController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -635,6 +644,7 @@
 				B528D58E247BE2C9004244CA /* Common */,
 				B58217AE247FA67A00C669CA /* Resourses */,
 				B589CFCB242C899700B547DC /* Supporting files */,
+				B5CAE99625494D6300C18FD3 /* Network */,
 			);
 			path = SokolMeteoConfig;
 			sourceTree = "<group>";
@@ -993,6 +1003,17 @@
 			path = OnlineData;
 			sourceTree = "<group>";
 		};
+		B5CAE99625494D6300C18FD3 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				B5CAE99725494D8400C18FD3 /* ModelNetwork.swift */,
+				B503B1ED2549553C00EBAB31 /* Network.swift */,
+				B503B1F12549575C00EBAB31 /* NetworkManager.swift */,
+				B503B1D525494EB600EBAB31 /* URLRequestBuilder.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 		B5DB4CF52434777B0016A4BD /* Extensional */ = {
 			isa = PBXGroup;
 			children = (
@@ -1105,19 +1126,7 @@
 				B593A89D247E3C5C006D049F /* CustomAlert.xib in Resources */,
 				B589CFBC242C876B00B547DC /* Assets.xcassets in Resources */,
 				B50AF26D254833C400F66786 /* AccountAlert.xib in Resources */,
-<<<<<<< HEAD:SOKOL.xcodeproj/project.pbxproj
 				B5C33F9A254F3297008E700F /* ConfirmationAlert.xib in Resources */,
-=======
-				B589CFB7242C876900B547DC /* StartView.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B5B06E1C25307927007E5B98 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B5B06E2625307929007E5B98 /* Assets.xcassets in Resources */,
->>>>>>> parent of 298b6c8... FINAL:SOKOL-M.xcodeproj/project.pbxproj
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1174,6 +1183,7 @@
 				B589CFE7242CCE0300B547DC /* ViewModelConnected.swift in Sources */,
 				B5438D7A242CD9A200FAB0C5 /* TableViewViewModelType.swift in Sources */,
 				B589CFDD242CCC2800B547DC /* BluetoothService.swift in Sources */,
+				B5CAE99825494D8400C18FD3 /* ModelNetwork.swift in Sources */,
 				B5438D82242DEB2500FAB0C5 /* DetailViewModelType.swift in Sources */,
 				B589CFB4242C876900B547DC /* StartViewController.swift in Sources */,
 				B55982C124E167D6005C9FA9 /* ThriedMeteoData.swift in Sources */,
@@ -1248,8 +1258,11 @@
 				B5DB4CFB2434788D0016A4BD /* SeacrhBar+TextColor.swift in Sources */,
 				B58492E5247BA99A00C902C7 /* MoreDevicesController.swift in Sources */,
 				B5DB4CFF243479230016A4BD /* DevicesListCellHeder.swift in Sources */,
+				B503B1F6254BEF6700EBAB31 /* AccountEditController.swift in Sources */,
 				B58D81EB25457307002FE1B7 /* ViewModelMoreDeviceBmvdPortHide.swift in Sources */,
 				B56BEB0D2432206500C42F85 /* ListAvailDevices.swift in Sources */,
+				B503B1F22549575C00EBAB31 /* NetworkManager.swift in Sources */,
+				B503B1D625494EB600EBAB31 /* URLRequestBuilder.swift in Sources */,
 				B58210F9251A0D3E006B4A4B /* BoxModel.swift in Sources */,
 				B50E6D402525B38C00874459 /* SwipeStartCell.swift in Sources */,
 				B57167AC2547E61B003C8B1D /* ViewModelDownloadDaraController.swift in Sources */,
@@ -1258,6 +1271,7 @@
 				B589CFD5242CBCE500B547DC /* Menu.swift in Sources */,
 				B528D590247BE2DA004244CA /* Common.swift in Sources */,
 				B520149924DC35B200478D08 /* Protocols.swift in Sources */,
+				B503B1EE2549553C00EBAB31 /* Network.swift in Sources */,
 				B5A0307C24DBE33E0092F12B /* PickersView.swift in Sources */,
 				B56BEB062431D0C100C42F85 /* ScreenSizeType.swift in Sources */,
 				B59C4EC024A4622500192D82 /* Potocols.swift in Sources */,
@@ -1272,6 +1286,7 @@
 				B531C9F1253EBD820008A092 /* SettingsBMVDController.swift in Sources */,
 				B593A8A1247E3EC1006D049F /* AlertCreate.swift in Sources */,
 				B528D594247CE1D8004244CA /* MenuController.swift in Sources */,
+				B5C33F96254F328B008E700F /* ConfirmationAlert.swift in Sources */,
 				B5A82A9A2498760B00F7A335 /* ConfiguratorFirstController.swift in Sources */,
 				B57AED8D2536F784005F3C91 /* CellDataPeripheral.swift in Sources */,
 				B593F0C9253EBF6B00DCE951 /* SettingsBmvdModel.swift in Sources */,

@@ -23,6 +23,7 @@ class PasswordController: UIViewController, UITextFieldDelegate, UIScrollViewDel
             segmentedControl1.backgroundColor = UIColor(rgb: 0xBE449E)
             let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
             segmentedControl1.setTitleTextAttributes(titleTextAttributes, for: .normal)
+            segmentedControl1.selectedSegmentTintColor = UIColor.white.withAlphaComponent(0.5)
         } else {
             let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
             segmentedControl1.setTitleTextAttributes(titleTextAttributes, for: .normal)

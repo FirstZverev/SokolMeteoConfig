@@ -10,6 +10,7 @@ import UIKit
 import NVActivityIndicatorView
 import RealmSwift
 import CoreBluetooth
+import RealmSwift
 
 class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
     
@@ -24,7 +25,7 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
     var manager: CBCentralManager? = nil
     var timer = Timer()
     var stringAll: String = ""
-    var stringAllCountBlackBox = 0
+    var stringAllCountBlackBox = [""]
     var iter = false
     var parsedData:[String : AnyObject] = [:]
     var bluetoothPeripheralManager: CBPeripheralManager?
@@ -117,11 +118,12 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
             let blackBox = "Get_BB,\(dateFirst)"
             let blackBoxBreak = "BREAK"
             let getIMEI = "Get_IMEI\r\n"
-//            let configSet = "Set,KSPW:3:8002,KSRV:3:tcp.sokolmeteo.com,KPBM:1:30,KCNL:1:4,KBCH:1:0,"
             let configGet = "Get,KSPW,KSRV,KPBM,KCNL,KPAK"
             let configGetNext = ",KAPI,KUSR,KPWD,KPIN,KPOR,KBCH"
-
-//            let configSetNext = "KPWD:3:beeline,KPAK:1:30,KPOR:3:8002,KAPI:3:m2m.beeline.ru"
+            
+            let configSet = "Set,KSPW:3:\(KSPW),KSRV:3:\(KSRV),KPBM:1:\(KPBM),KCNL:1:\(KCNL),KBCH:1:\(KBCH),KUSR:3:\(KUSR),"
+            let configSetNext = "KPWD:3:\(KPWD),KPAK:1:\(KPAK),KPOR:3:\(KPOR),KAPI:3:\(KAPI),KPIN:3:\(KPIN)"
+            
             let configGetBmvd = "Get,B0E,B0M,B1E,B1M,B2E,B2M,"
             let configGetBmvdNext = "B3E,B3M,B4E,B4M,B5E,B5M,B6E,B6M,B7E,B7M"
             let configSetBmvd = "Set,B\(selectBmvd)E:0:80,B\(selectBmvd)M:0:\(macAddress),QBKN:1:1"
@@ -145,12 +147,14 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
                     case 2:
                         self.dataValueChange(peripheralCBCharacteristic: [peripheral, characteristic], valuesString: [valueOnline,valueNext])
                     case 3:
+                        countStringBlackBox = 0
                         self.dataValueChange(peripheralCBCharacteristic: [peripheral, characteristic], valuesString: [blackBox,blackBoxNumber,valueNext])
                     case 4: break
                     case 5: break
                     case 6:
                         self.dataValueChange(peripheralCBCharacteristic: [peripheral, characteristic], valuesString: [blackBoxBreak,valueNext])
-                    case 7: break
+                    case 7:
+                        self.dataValueChange(peripheralCBCharacteristic: [peripheral, characteristic], valuesString: [configSet,configSetNext,valueNext])
                     case 8:
                         self.dataValueChange(peripheralCBCharacteristic: [peripheral, characteristic], valuesString: [configSetBmvdRemove,valueNext])
                     case 9:
@@ -194,14 +198,173 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
                 let string = String(data: Data(rxByteArray), encoding: .utf8)
                 stringAll = stringAll + string!
                 print(string!)
-                let result = stringAll.components(separatedBy: [":",";",",","\r","\n"])
+                let result = stringAll.components(separatedBy: [":",";","=",",","\r","\n"])
                 if result.contains("Begin Transmit") == true {
-                    if result.contains("End Transmit") == true {
+                    if string!.contains("\r\n") {
+                        countStringBlackBox += 1
+                        connectedMeteoVC.blackBoxVC.alertView.labelCountSave.text = "\(countStringBlackBox)"
+                    }
+                    if result.contains("End Transmit") == true && result.contains("Unknown command") != true && result.contains("No DATA") != true {
+                        connectedMeteoVC.blackBoxVC.alertView.CustomEnter.text("Обработка")
+                        connectedMeteoVC.blackBoxVC.alertView.CustomEnter.isEnabled = false
                         dataBoxAll = "\(result)"
-                        stringAll.removeAll()
-                        stringAllCountBlackBox = stringAll.components(separatedBy: "\r\n").count
-                        print("stringAllCountBlackBox: \(stringAllCountBlackBox)")
-                        print(result)
+                        stringAllCountBlackBox.removeAll()
+                        stringAllCountBlackBox = stringAll.components(separatedBy: "\r\n")
+                        for i in 1...stringAllCountBlackBox.count - 3 {
+                            var ab = stringAllCountBlackBox[i].components(separatedBy: [":",";","=",","])
+                            if ab[0] != "End Transmit" && ab[0].count == 6 && ab[1].count == 6 {
+                                ab[0].insert(".", at: ab[0].index(ab[0].startIndex, offsetBy: 2))
+                                ab[0].insert(".", at: ab[0].index(ab[0].startIndex, offsetBy: 5))
+                                
+                                ab[1].insert(":", at: ab[1].index(ab[1].startIndex, offsetBy: 2))
+                                ab[1].insert(":", at: ab[1].index(ab[1].startIndex, offsetBy: 5))
+                                let a = "\(ab[0]) \(ab[1])"
+                                let account = BoxModel()
+                                account.id = i
+                                account.nameDevice = nameDevice
+                                account.time = "\(stringTounixTime(dateString: a))"
+                                account.allString = stringAllCountBlackBox[i]
+                                if ab.contains("t") {
+                                    let indexOfPerson = ab.firstIndex{$0 == "t"}
+                                    if ab.count > indexOfPerson! + 2 {                            print("t\(i): \(ab[indexOfPerson! + 2])")
+                                        account.parametrt = "\(ab[indexOfPerson! + 2])"
+                                    }
+                                }
+                                if ab.contains("WD") {
+                                    let indexOfPerson = ab.firstIndex{$0 == "WD"}
+                                    if ab.count > indexOfPerson! + 2 {                            print("WD\(i): \(ab[indexOfPerson! + 2])")
+                                        account.parametrWD = "\(ab[indexOfPerson! + 2])"
+                                    }
+                                }
+                                if ab.contains("WV") {
+                                    let indexOfPerson = ab.firstIndex{$0 == "WV"}
+                                    if ab.count > indexOfPerson! + 2 {                            print("WV\(i): \(ab[indexOfPerson! + 2])")
+                                        account.parametrWV = "\(ab[indexOfPerson! + 2])"
+                                    }
+                                }
+                                if ab.contains("WM") {
+                                    let indexOfPerson = ab.firstIndex{$0 == "WM"}
+                                    if ab.count > indexOfPerson! + 2 {                            print("WM\(i): \(ab[indexOfPerson! + 2])")
+                                        account.parametrWM = "\(ab[indexOfPerson! + 2])"
+                                    }
+                                }
+                                if ab.contains("PR") {
+                                    let indexOfPerson = ab.firstIndex{$0 == "PR"}
+                                    if ab.count > indexOfPerson! + 2 {                            print("PR\(i): \(ab[indexOfPerson! + 2])")
+                                        account.parametrPR = "\(ab[indexOfPerson! + 2])"
+                                    }
+                                }
+                                if ab.contains("HM") {
+                                    let indexOfPerson = ab.firstIndex{$0 == "HM"}
+                                    if ab.count > indexOfPerson! + 2 {                            print("HM\(i): \(ab[indexOfPerson! + 2])")
+                                        account.parametrHM = "\(ab[indexOfPerson! + 2])"
+                                    }
+                                }
+                                if ab.contains("RN") {
+                                    let indexOfPerson = ab.firstIndex{$0 == "RN"}
+                                    if ab.count > indexOfPerson! + 2 {                            print("RN\(i): \(ab[indexOfPerson! + 2])")
+                                        account.parametrRN = "\(ab[indexOfPerson! + 2])"
+                                    }
+                                }
+                                if ab.contains("UV") {
+                                    let indexOfPerson = ab.firstIndex{$0 == "UV"}
+                                    if ab.count > indexOfPerson! + 2 {                            print("UV\(i): \(ab[indexOfPerson! + 2])")
+                                        account.parametrUV = "\(ab[indexOfPerson! + 2])"
+                                    }
+                                }
+                                if ab.contains("UVI") {
+                                    let indexOfPerson = ab.firstIndex{$0 == "UVI"}
+                                    if ab.count > indexOfPerson! + 2 {                            print("UVI\(i): \(ab[indexOfPerson! + 2])")
+                                        account.parametrUVI = "\(ab[indexOfPerson! + 2])"
+                                    }
+                                }
+                                if ab.contains("L") {
+                                    let indexOfPerson = ab.firstIndex{$0 == "L"}
+                                    if ab.count > indexOfPerson! + 2 {                            print("L\(i): \(ab[indexOfPerson! + 2])")
+                                        account.parametrL = "\(ab[indexOfPerson! + 2])"
+                                    }
+                                }
+                                if ab.contains("LI") {
+                                    let indexOfPerson = ab.firstIndex{$0 == "LI"}
+                                    if ab.count > indexOfPerson! + 2 {                            print("LI\(i): \(ab[indexOfPerson! + 2])")
+                                        account.parametrLI = "\(ab[indexOfPerson! + 2])"
+                                    }
+                                }
+                                if ab.contains("Upow") {
+                                    let indexOfPerson = ab.firstIndex{$0 == "Upow"}
+                                    if ab.count > indexOfPerson! + 2 {                            print("Upow\(i): \(ab[indexOfPerson! + 2])")
+                                        account.parametrUpow = "\(ab[indexOfPerson! + 2])"
+                                    }
+                                }
+                                if ab.contains("Uext") {
+                                    let indexOfPerson = ab.firstIndex{$0 == "Uext"}
+                                    if ab.count > indexOfPerson! + 2 {                            print("Uext\(i): \(ab[indexOfPerson! + 2])")
+                                        account.parametrUext = "\(ab[indexOfPerson! + 2])"
+                                    }
+                                }
+                                if ab.contains("KS") {
+                                    let indexOfPerson = ab.firstIndex{$0 == "KS"}
+                                    if ab.count > indexOfPerson! + 2 {                            print("KS\(i): \(ab[indexOfPerson! + 2])")
+                                        account.parametrKS = "\(ab[indexOfPerson! + 2])"
+                                    }
+                                }
+                                if ab.contains("RSSI") {
+                                    let indexOfPerson = ab.firstIndex{$0 == "RSSI"}
+                                    if ab.count > indexOfPerson! + 2 {                            print("RSSI\(i): \(ab[indexOfPerson! + 2])")
+                                        account.parametrRSSI = "\(ab[indexOfPerson! + 2])"
+                                    }
+                                }
+                                if ab.contains("TR") {
+                                    let indexOfPerson = ab.firstIndex{$0 == "TR"}
+                                    if ab.count > indexOfPerson! + 2 {                            print("TR\(i): \(ab[indexOfPerson! + 2])")
+                                        account.parametrTR = "\(ab[indexOfPerson! + 2])"
+                                    }
+                                }
+                                if ab.contains("EVS") {
+                                    let indexOfPerson = ab.firstIndex{$0 == "EVS"}
+                                    if ab.count > indexOfPerson! + 2 {                            print("EVS\(i): \(ab[indexOfPerson! + 2])")
+                                        account.parametrEVS = "\(ab[indexOfPerson! + 2])"
+                                    }
+                                }
+                                let realm: Realm  = {
+                                   return try! Realm()
+                                }()
+                                do {
+                                    let config = Realm.Configuration(
+                                        schemaVersion: 0,
+                                        
+                                        migrationBlock: { migration, oldSchemaVersion in
+                                            if (oldSchemaVersion < 1) {
+                                            }
+                                        })
+                                    Realm.Configuration.defaultConfiguration = config
+                                    print(Realm.Configuration.defaultConfiguration.fileURL!)
+                                        try realm.write {
+                                            realm.add(account)
+                                        }
+                                } catch {
+                                    print("error getting xml string: \(error)")
+                                }
+                            }
+                        }
+                        if result.contains("Unknown command") != true {
+                            if let viewControllers = navigationController?.viewControllers {
+                                for viewController in viewControllers {
+                                    if viewController.isKind(of: BlackBoxController.self) {
+                                        connectedMeteoVC.blackBoxVC.alertView.CustomEnter.isEnabled = true
+                                        connectedMeteoVC.blackBoxVC.animateOut()
+                                        let blackBoxMeteoDataController = BlackBoxMeteoDataController()
+                                        blackBoxMeteoDataController.nameDeviceBlackBox = nameDevice
+                                        navigationController?.pushViewController(blackBoxMeteoDataController, animated: true)
+                                    }
+                                }
+                            }
+                        }
+//                        let indexOfPerson = result.firstIndex{$0 == ""}
+                    } else if result.contains("No DATA") == true {
+                        showToast(message: "Данных за этот период нет", seconds: 1.0)
+                        connectedMeteoVC.blackBoxVC.alertView.CustomEnter.isEnabled = true
+                        connectedMeteoVC.blackBoxVC.animateOut()
                     }
                 } else {
                     countBMVD = 0
@@ -229,8 +392,8 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
                                         }
                                         if viewController.isKind(of: TabBarConfiguratorController.self) {
                                             navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-                                                connectedMeteoVC.setAlert()
-                                                connectedMeteoVC.animateIn()
+                                            connectedMeteoVC.setAlert()
+                                            connectedMeteoVC.animateIn()
                                         }
                                     }
                                 }
@@ -635,6 +798,7 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
                         if result.count > indexOfPerson! + 2 {
                             KBCH = "\(result[indexOfPerson! + 2])"
                             connectedMeteoVC.tabarConfigVC.firstVC.updateInterface()
+                            connectedMeteoVC.tabarConfigVC.firstVC.viewAlpha.isHidden = true
                         }
                     }
                     
@@ -659,8 +823,48 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
                     if result.contains("AWO") {
                         checkMode = true
                     }
+                    if result.contains("IMEI") {
+                        let indexOfPerson = result.firstIndex{$0 == "IMEI"}
+                        if result.count > indexOfPerson! + 1 {
+                            realmSave(nameDevice: nameDevice, imei: result[indexOfPerson! + 1])
+                        }
+                    }
                 }
             }
+        }
+    }
+    fileprivate func realmSave(nameDevice: String, imei: String) {
+        let realm: Realm  = {
+           return try! Realm()
+        }()
+        do {
+            let config = Realm.Configuration(
+                schemaVersion: 0,
+                
+                migrationBlock: { migration, oldSchemaVersion in
+                    if (oldSchemaVersion < 1) {
+                    }
+                })
+            Realm.Configuration.defaultConfiguration = config
+            print(Realm.Configuration.defaultConfiguration.fileURL!)
+
+            let account = DeviceNameModel()
+            account.nameDevice = nameDevice
+            account.IMEIDevice = imei
+            
+            let realmCheck = realm.objects(DeviceNameModel.self).filter("nameDevice = %@", account.nameDevice!)
+            if realmCheck.count == 0 {
+                try realm.write {
+                    realm.add(account)
+                }
+            } else {
+                try! realm.write {
+                    realmCheck.setValue(account.IMEIDevice, forKey: "IMEIDevice")
+                }
+            }
+            print(realmCheck)
+        } catch {
+            print("error getting xml string: \(error)")
         }
     }
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {

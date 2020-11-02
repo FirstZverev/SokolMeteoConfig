@@ -1,19 +1,19 @@
 //
-//  CustomLoadingBlackBox.swift
-//  SokolMeteoConfig
+//  ConfirmationAlert.swift
+//  SOKOL-M
 //
-//  Created by Володя Зверев on 29.09.2020.
+//  Created by Володя Зверев on 01.11.2020.
 //  Copyright © 2020 zverev. All rights reserved.
 //
 
 import UIKit
-import NVActivityIndicatorView
 
-protocol CustomLoadingBlackBoxDelegate: class {
-    func buttonTapped()
+protocol ConfirmationAlertDelegate: class {
+    func buttonTappedConfirmation()
+    func closeAlertConfirmation()
 }
 
-class CustomLoadingBlackBox: UIView {
+class ConfirmationAlert: UIView {
     
     @IBOutlet weak var CustomEnter: UIButton!
     @IBOutlet weak var CustomTextField: UITextField!
@@ -22,9 +22,8 @@ class CustomLoadingBlackBox: UIView {
     
     @IBOutlet weak var ContentView: UIView!
     @IBOutlet weak var CustomInfo: UILabel!
-    @IBOutlet weak var progress: NVActivityIndicatorView!
-    @IBOutlet weak var labelCountSave: UILabel!
-    weak var delegate: CustomLoadingBlackBoxDelegate?
+    
+    weak var delegate: ConfirmationAlertDelegate?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -38,8 +37,11 @@ class CustomLoadingBlackBox: UIView {
         CustomEnter.setTitle(buttonTitle, for: .normal)
     }
     
+    @IBAction func closeAlertAction(_ sender: Any) {
+        delegate?.closeAlertConfirmation()
+    }
     @IBAction func ActionButton(_ sender: Any) {
-        delegate?.buttonTapped()
+        delegate?.buttonTappedConfirmation()
     }
     
     
@@ -52,10 +54,5 @@ class CustomLoadingBlackBox: UIView {
         ContentView.layer.shadowRadius = 20.0
         ContentView.layer.shadowOpacity = 0.5
         ContentView.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
-
-        progress.frame = .zero
-        progress.type = .circleStrokeSpin
-        progress.color = UIColor(rgb: 0xBE449E)
-        progress.startAnimating()
     }
 }

@@ -1,8 +1,8 @@
 //
-//  AccountEnter.swift
+//  AccountEditController.swift
 //  SOKOL-M
 //
-//  Created by Володя Зверев on 27.10.2020.
+//  Created by Володя Зверев on 30.10.2020.
 //  Copyright © 2020 zverev. All rights reserved.
 //
 
@@ -11,9 +11,9 @@ import Alamofire
 import RealmSwift
 import NVActivityIndicatorView
 
-class AccountEnterController: UIViewController {
+class AccountEditController: UIViewController {
     
-    let customNavigationBar = createCustomNavigationBar(title: "ВХОД В УЧЕТНУЮ ЗАПИСЬ",fontSize: screenW / 22)
+    let customNavigationBar = createCustomNavigationBar(title: "ИЗМЕНИТЬ УЧЕТНУЮ ЗАПИСЬ",fontSize: screenW / 22)
     let realm: Realm = {
         return try! Realm()
     }()
@@ -65,8 +65,8 @@ class AccountEnterController: UIViewController {
     lazy var passwordTextField: UITextField = {
         let textField = TextFieldWithPadding(placeholder: "Введите пароль")
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.addTarget(self, action: #selector(self.textFieldPasswordDidMax(_:)),for: UIControl.Event.editingChanged)
         textField.isSecureTextEntry = true
+        textField.addTarget(self, action: #selector(self.textFieldPasswordDidMax(_:)),for: UIControl.Event.editingChanged)
         textField.layer.shadowRadius = 3.0
         textField.layer.shadowOpacity = 0.1
         textField.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
@@ -85,7 +85,7 @@ class AccountEnterController: UIViewController {
     
     var saveButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Войти", for: .normal)
+        button.setTitle("Сохранить", for: .normal)
         button.backgroundColor = UIColor(rgb: 0xBE449E)
         button.layer.cornerRadius = 20
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -163,7 +163,7 @@ class AccountEnterController: UIViewController {
             if network.state == "OK" {
                 self.realmSave()
                 self.viewAlpha.isHidden = true
-                self.navigationController?.pushViewController(DownloadDaraController(), animated: true)
+                self.navigationController?.popViewController(animated: true)
             } else {
                 self.viewAlpha.isHidden = true
                 self.showToast(message: network.errors?.first ?? "Ошибка", seconds: 1.0)
@@ -184,7 +184,6 @@ class AccountEnterController: UIViewController {
         view.sv(
             customNavigationBar
         )
-        customNavigationBar.hero.id = "PlatformaSokol"
         showView()
         delegateTextFieldDelegate()
         viewAlpha.isHidden = true
@@ -226,7 +225,7 @@ class AccountEnterController: UIViewController {
     }
 }
 
-extension AccountEnterController: UITextFieldDelegate {
+extension AccountEditController: UITextFieldDelegate {
     func delegateTextFieldDelegate() {
         passwordTextField.delegate = self
         IMEITextField.delegate = self

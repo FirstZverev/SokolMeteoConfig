@@ -22,7 +22,7 @@ extension ConfiguratorFirstController: UITextFieldDelegate {
         self.hero.isEnabled = true
         customNavigationBar.hero.id = "Configurator"
         
-        view.sv(customNavigationBar,scrollView, backView)
+        view.sv(customNavigationBar,scrollView, backView, saveButton)
         scrollView.sv(chanelView, gsmView, serverView, dopView)
         chanelView.sv(channelLabel, chanelTextField)
         gsmView.sv(settingsLabel,accessPointLabel, userLabel, passwordLabel, pinLabel, accessPointTextField, userTextField, passwordTextField, pinTextField)
@@ -74,22 +74,13 @@ extension ConfiguratorFirstController: UITextFieldDelegate {
                 self.blurEffect.isHidden = true
             }
         }
-        let str = "user:password"
-        print("Original: \(str)")
-
-        let utf8str = str.data(using: .utf8)
-
-        if let base64Encoded = utf8str?.base64EncodedString(options: Data.Base64EncodingOptions(rawValue: 0)) {
-            print("Encoded: \(base64Encoded)")
-
-            if let base64Decoded = Data(base64Encoded: base64Encoded, options: Data.Base64DecodingOptions(rawValue: 0))
-            .map({ String(data: $0, encoding: .utf8) }) {
-                // Convert back to a string
-                print("Decoded: \(base64Decoded ?? "")")
-            }
-        }
+        viewAlpha.isHidden = false
+        viewAlpha.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        view.addSubview(viewAlpha)
     }
     override func viewWillAppear(_ animated: Bool) {
+        viewAlpha.isHidden = false
         if KCNL == "GSM" {
             channelMode(gsmMode: false, deactivate: constraints2, activate: constraints)
         } else {
@@ -155,6 +146,25 @@ extension ConfiguratorFirstController: UITextFieldDelegate {
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+    @objc func saveUpdate() {
+        viewAlpha.isHidden = false
+        KCNL = "\(Channels(string: chanelTextField.text).channelsString())"
+        KAPI = accessPointTextField.text ?? ""
+        KUSR = userTextField.text ?? ""
+        KPWD = passwordTextField.text ?? ""
+        KPIN = pinTextField.text ?? ""
+        
+        KSRV = addressTextField.text ?? ""
+        KPOR = portTextField.text ?? ""
+        KSPW = passwordDevicesTextField.text ?? ""
+        KPAK = periodTextField.text ?? ""
+        
+        KPBM = periodEchangeTextField.text ?? ""
+        KBCH = numberTextField.text ?? ""
+        
+        reload = 7
+        delegate?.buttonTapFirstConfigurator()
     }
     
     @objc func adjustForKeyboard(notification: Notification) {
@@ -274,5 +284,9 @@ extension ConfiguratorFirstController: UITextFieldDelegate {
 
         numberTextField.height(30).trailingAnchor.constraint(equalTo: dopView.trailingAnchor, constant: -15).isActive = true
         numberTextField.topAnchor.constraint(equalTo: numberLabel.topAnchor, constant: -5).isActive = true
+        
+        saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
+        saveButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
+
     }
 }

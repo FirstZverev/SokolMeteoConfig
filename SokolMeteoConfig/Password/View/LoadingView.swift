@@ -14,11 +14,10 @@ extension BlackBoxController: CustomLoadingBlackBoxDelegate {
     }
     
     func buttonTapped() {
-        animateOut()
+        alertView.CustomEnter.text("Обработка")
+        alertView.CustomEnter.isEnabled = false
         reload = 6
         self.delegate?.buttonTapBlackBox()
-        navigationController?.pushViewController(BlackBoxListController(), animated: true)
-
 //        let  vc =  self.navigationController?.viewControllers.filter({$0 is StartViewController}).first
 //        self.navigationController?.popToViewController(vc!, animated: true)
     }
@@ -50,7 +49,7 @@ extension BlackBoxController: CustomLoadingBlackBoxDelegate {
             self.alertView.transform = CGAffineTransform.identity
         }
     }
-    fileprivate func animateOut() {
+    func animateOut() {
         UIView.animate(withDuration: 0.4,
                        animations: {
                         self.visualEffectView.alpha = 0
