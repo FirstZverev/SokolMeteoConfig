@@ -22,26 +22,14 @@ class StartViewController: UIViewController {
     let generator = UIImpactFeedbackGenerator(style: .light)
     let devicesListVC = ListAvailDevices()
     let tabBarVC = TabBarController()
-    
-    var versionLabel: UILabel = {
-        let versionLabel = UILabel()
-        versionLabel.frame = CGRect(x: 0, y: screenH - 40, width: screenW - 20, height: 20)
-        versionLabel.font = UIFont(name:"FuturaPT-Medium", size: screenW / 22)
-        versionLabel.textColor = .black
-        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-        if let version = appVersion {
-            versionLabel.text = "v. \(version)"
-        }
-        versionLabel.textAlignment = .left
-        versionLabel.center.x = screenW/2
-        return versionLabel
-    }()
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.view.isUserInteractionEnabled = true
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
          appDelegate.myOrientation = .portrait
     }
+    
     
     override func viewDidAppear(_ animated: Bool) {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
@@ -60,9 +48,53 @@ class StartViewController: UIViewController {
         registerTableView()
         viewModel = ViewModel()
         let customNavigationBar = createCustomNavigationBar(title: "МЕНЮ", fontSize: screenW / 22)
-        view.sv(customNavigationBar)
-        view.addSubview(versionLabel)
-    }
+        view.sv(
+            customNavigationBar
+        )
+//        do {
+//            let config = Realm.Configuration(
+//                schemaVersion: 0,
+//             
+//                migrationBlock: { migration, oldSchemaVersion in
+//                    if (oldSchemaVersion < 1) {
+//
+//                    }
+//                })
+//            Realm.Configuration.defaultConfiguration = config
+//            let realm:Realm = {
+//                return try! Realm()
+//            }()
+////            print(Realm.Configuration.defaultConfiguration.fileURL!)
+//            let device = DeviceNameModel()
+//            device.nameDevice = "Sokol_350"
+//
+//            let box = BoxModel()
+//            box.nameDevice = device.nameDevice
+//            box.time = "2"
+//            box.allSting = "210920;072242;5546.1860;N;04913.8926;E;0;0;0;0;0;0;0;0.0,0.0;NA;t:2:0.00,WD:1:0,WV:2:0.00,WM:2:0.00,PR:2:0.00,HM:1:0,RN:2:0.00,UV:1:0,UVI:1:0,L:1:0,LI:1:0,Upow:2:3.46,Uext:2:0.0,KS:1:0,RSSI:1:20,TR:1:1825,EVS:1:4"
+//
+//            try realm.write {
+//                realm.add(box)
+//            }
+//            
+//            let result = realm.objects(BoxModel.self).sorted(byKeyPath: "time")
+////            print(result)
+//            try! realm.write {
+//                print("device: \(result.last!.nameDevice!), time: \(result.last!.time!)")
+//            }
+//            
+////            let workouts = realm.objects(BoxModel.self).filter("time != '0'")
+////            try! realm.write {
+////                workouts.setValue("0", forKey: "time")
+////            }
+//
+//        } catch {
+//            print("error getting xml string: \(error)")
+//        }
+        
+//        greenView.height(50).width(50).centerInContainer()
+        
+        }
 
     private func registerTableView() {
         self.tableView.dataSource = self
@@ -158,9 +190,7 @@ extension StartViewController: UITableViewDataSource {
         if indexPath.row == 0 {
             cell!.hero.id = "ConnectToMeteo"
         } else if indexPath.row == 1 {
-            cell!.hero.id = "Arcive"
-        } else if indexPath.row == 2 {
-            cell!.hero.id = "PlatformaSokol"
+            
         }
         if indexPath.row % 2 == 1 {
             cell?.imageUI?.isHidden = true

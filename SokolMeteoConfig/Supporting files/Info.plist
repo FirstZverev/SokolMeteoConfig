@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>SOKOL</string>
+	<string>SOKOL-M</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>SOKOL</string>
+	<string>SOKOL-M</string>
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
@@ -30,20 +30,24 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
+	<key>UIFileSharingEnabled</key>
+	<true/>
+	<key>UISupportsDocumentBrowser</key>
+	<false/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 		<key>NSAllowsArbitraryLoadsUsageDescription</key>
-		<string>Это позволит приложению "$(PRODUCT_NAME)" находить аксессуары и подключаться к ним по Bluetooth.</string>
+		<string>Это позволит приложению &quot;$(PRODUCT_NAME)&quot; находить аксессуары и подключаться к ним по Bluetooth.</string>
 	</dict>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Это позволит приложению "$(PRODUCT_NAME)" находить аксессуары и подключаться к ним по Bluetooth. Это приложение также сможет использовать Bluetooth, чтобы знать Вы поблизости</string>
+	<string>Это позволит приложению &quot;$(PRODUCT_NAME)&quot; находить аксессуары и подключаться к ним по Bluetooth. Это приложение также сможет использовать Bluetooth, чтобы знать Вы поблизости</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>$(PRODUCT_NAME) bluetooth use.</string>
 	<key>UIAppFonts</key>
@@ -76,8 +80,6 @@
 		<string>bluetooth-peripheral</string>
 		<string>fetch</string>
 	</array>
-	<key>UIFileSharingEnabled</key>
-	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -99,8 +101,6 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>UISupportsDocumentBrowser</key>
-	<false/>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>

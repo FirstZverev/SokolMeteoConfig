@@ -70,7 +70,6 @@ class BlackBoxListController : UIViewController {
         createTableView()
         registerCell()
         view.sv(customNavigationBar, backView)
-        customNavigationBar.hero.id = "Arcive"
         backView.addTapGesture { [self] in self.popVC() }
         emptyList.centerXAnchor.constraint(equalTo: tableView.centerXAnchor).isActive = true
         emptyList.centerYAnchor.constraint(equalTo: tableView.centerYAnchor).isActive = true

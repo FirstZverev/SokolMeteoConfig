@@ -15,13 +15,13 @@ extension ListAvailDevices: AlertWarningDelegate {
     
     func buttonTapped() {
         animateOut()
-//
+        
         let  vc =  self.navigationController?.viewControllers.filter({$0 is StartViewController}).first
         self.navigationController?.popToViewController(vc!, animated: true)
-//        UIApplication.shared.open(URL(string: "App-prefs:Bluetooth")!)
-//        print("default")
-//        self.navigationController?.popViewController(animated: true)
-//        self.view.subviews.forEach({ $0.removeFromSuperview() })
+        UIApplication.shared.open(URL(string: "App-prefs:Bluetooth")!)
+        print("default")
+        self.navigationController?.popViewController(animated: true)
+        self.view.subviews.forEach({ $0.removeFromSuperview() })
     }
     
     func setupVisualEffectView() {
