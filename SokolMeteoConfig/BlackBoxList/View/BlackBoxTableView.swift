@@ -21,22 +21,18 @@ extension BlackBoxTable: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewAlpha.isHidden = true
-        return timeHour.count
+        return viewModel?.numberOfRows() ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BlackBoxTableViewCell", for: indexPath) as? BlackBoxTableViewCell
         cell?.selectionStyle = .none
-        cell?.label?.text = timeHour[indexPath.row]
-        cell?.imageUI?.image = UIImage(named: "timeBlackBox")
-        
-        cell?.labelTwo?.text = valueParametrs[indexPath.row]
-//        guard let tableViewCell = cell, let viewModel = viewModel else { return UITableViewCell() }
-//        let cellViewModel = viewModel.cellViewModel(forIndexPath: indexPath)
-//        tableViewCell.viewModel = cellViewModel
+        cell?.labelTwo?.text = "\(indexPath.row) м/c"
+        guard let tableViewCell = cell, let viewModel = viewModel else { return UITableViewCell() }
+        let cellViewModel = viewModel.cellViewModel(forIndexPath: indexPath)
+        tableViewCell.viewModel = cellViewModel
 
-        return cell!
+        return tableViewCell
     }
     
     

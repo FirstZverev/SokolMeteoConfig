@@ -26,7 +26,7 @@
                     <rect key="frame" x="28" y="0.0" width="300" height="400"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="k7I-Ix-3Wj">
-                            <rect key="frame" x="20.5" y="11" width="259" height="378.5"/>
+                            <rect key="frame" x="20.5" y="16" width="259" height="368.5"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ZdU-OC-fEd">
                                     <rect key="frame" x="0.0" y="0.0" width="259" height="106.5"/>
@@ -53,9 +53,6 @@
                                             <state key="normal" title="Изменить">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </state>
-                                            <connections>
-                                                <action selector="ActionButtonChangeFirst:" destination="Rr4-5e-ebH" eventType="touchUpInside" id="IXX-CD-xSE"/>
-                                            </connections>
                                         </button>
                                     </subviews>
                                     <constraints>
@@ -70,22 +67,18 @@
                                     </constraints>
                                 </view>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="2dy-lX-lRW">
-                                    <rect key="frame" x="0.0" y="138.5" width="259" height="168"/>
+                                    <rect key="frame" x="0.0" y="138.5" width="259" height="158"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Профиль метеостанции " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sTb-Sv-vvC">
-                                            <rect key="frame" x="0.0" y="0.0" width="259" height="22"/>
-                                            <fontDescription key="fontDescription" name="FuturaPT-Medium" family="Futura PT" pointSize="17"/>
-                                            <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sokol-M_348" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="INf-05-mgf">
-                                            <rect key="frame" x="0.0" y="32" width="259" height="22"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sTb-Sv-vvC">
+                                            <rect key="frame" x="0.0" y="0.0" width="259" height="44"/>
+                                            <string key="text">Профиль метеостанции 
+Sokol-M_348</string>
                                             <fontDescription key="fontDescription" name="FuturaPT-Medium" family="Futura PT" pointSize="17"/>
                                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F5A-YH-xQO">
-                                            <rect key="frame" x="0.0" y="64" width="259" height="22"/>
+                                            <rect key="frame" x="0.0" y="54" width="259" height="22"/>
                                             <string key="text">IMEI: 867157048456594
 </string>
                                             <fontDescription key="fontDescription" name="FuturaPT-Light" family="Futura PT" pointSize="17"/>
@@ -93,13 +86,13 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Пароль: 111" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vmJ-fw-Qrq">
-                                            <rect key="frame" x="0.0" y="96" width="259" height="22"/>
+                                            <rect key="frame" x="0.0" y="86" width="259" height="22"/>
                                             <fontDescription key="fontDescription" name="FuturaPT-Light" family="Futura PT" pointSize="17"/>
                                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2rX-NH-geN">
-                                            <rect key="frame" x="0.0" y="128" width="259" height="40"/>
+                                            <rect key="frame" x="0.0" y="118" width="259" height="40"/>
                                             <color key="backgroundColor" red="0.74509803919999995" green="0.2666666667" blue="0.61960784310000006" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40" id="92i-54-Og3"/>
@@ -108,9 +101,6 @@
                                             <state key="normal" title="Изменить">
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </state>
-                                            <connections>
-                                                <action selector="ActionButtonChangeSecond:" destination="Rr4-5e-ebH" eventType="touchUpInside" id="FOJ-cl-LmT"/>
-                                            </connections>
                                         </button>
                                     </subviews>
                                     <constraints>
@@ -119,14 +109,14 @@
                                     </constraints>
                                 </stackView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sW1-Qs-S39">
-                                    <rect key="frame" x="0.0" y="321.5" width="259" height="2"/>
+                                    <rect key="frame" x="0.0" y="311.5" width="259" height="2"/>
                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="2" id="ZU5-CL-vlA"/>
                                     </constraints>
                                 </view>
                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uHU-qY-bMa">
-                                    <rect key="frame" x="0.0" y="338.5" width="259" height="40"/>
+                                    <rect key="frame" x="0.0" y="328.5" width="259" height="40"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="im0-ce-epn">
                                             <rect key="frame" x="0.0" y="0.0" width="139" height="40"/>
@@ -180,10 +170,6 @@
                 <outlet property="CustomMainLabel" destination="LwZ-VY-WL0" id="Sej-pd-m34"/>
                 <outlet property="changeButton" destination="YsI-RQ-Ioo" id="BIF-sN-apf"/>
                 <outlet property="changeButtonTwo" destination="2rX-NH-geN" id="Eyi-vy-P2I"/>
-                <outlet property="labelEmail" destination="ou8-sk-SYl" id="dPz-78-0jZ"/>
-                <outlet property="labelImei" destination="F5A-YH-xQO" id="zER-hC-kiY"/>
-                <outlet property="labelPassword" destination="vmJ-fw-Qrq" id="ftI-pb-e9s"/>
-                <outlet property="nameDevice" destination="INf-05-mgf" id="NPD-sw-1Cx"/>
             </connections>
             <point key="canvasLocation" x="95.652173913043484" y="146.98660714285714"/>
         </view>

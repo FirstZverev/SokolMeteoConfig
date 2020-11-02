@@ -105,45 +105,7 @@ extension ThriedMeteoData: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DataCell", for: indexPath) as? DataCell
         cell?.selectionStyle = .none
-        if indexPath.row == 1 {
-            let intStateGsm = Int(arrayStateConnect[indexPath.row])
-            switch intStateGsm! {
-            case 0...5:
-                cell?.labelTwo?.text = "Включение модема"
-            case 6:
-                cell?.labelTwo?.text = "Запрос марки модема"
-            case 7:
-                cell?.labelTwo?.text = "Запрос imei"
-            case 8:
-                cell?.labelTwo?.text = "Запрос imsi"
-            case 9...10:
-                cell?.labelTwo?.text = "Регистрация в сети"
-            case 11:
-                cell?.labelTwo?.text = "Измерение уровня GSM"
-            case 12:
-                cell?.labelTwo?.text = "Подключение к точке доступа"
-            case 13:
-                cell?.labelTwo?.text = "Запуск GPRS"
-            case 14:
-                cell?.labelTwo?.text = "Проверка подключения к GPRS"
-            case 15:
-                cell?.labelTwo?.text = "Подключение к серверу"
-            case 16:
-                cell?.labelTwo?.text = "Отправка логина"
-            case 17:
-                cell?.labelTwo?.text = "Ожидание подтверждения логина"
-            case 18:
-                cell?.labelTwo?.text = "Финишные операции подключения"
-            case 19:
-                cell?.labelTwo?.text = "Готов"
-            case 20...25:
-                cell?.labelTwo?.text = "Запрос ntp"
-            default:
-                cell?.labelTwo?.text = ""
-            }
-        } else {
-            cell?.labelTwo?.text = "\(arrayStateConnect[indexPath.row])"
-        }
+        cell?.labelTwo?.text = "\(arrayStateConnect[indexPath.row])"
         guard let tableViewCell = cell, let viewModel = viewModel else { return UITableViewCell() }
 //        cell = accessoryType(cell: tableViewCell)
         let cellViewModel = viewModel.cellViewModel(forIndexPath: indexPath)

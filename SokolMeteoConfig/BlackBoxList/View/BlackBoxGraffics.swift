@@ -8,26 +8,19 @@
 
 import UIKit
 import Charts
-import RealmSwift
 
 class BlackBoxGraffics: UIViewController {
     
     var name: Int!
     var nameDeviceBox: String!
-    var parametrValues:  Results<BoxModel>?
-    let realm: Realm = {
-        return try! Realm()
-    }()
-    var maxValue = 0
-    var viewModel: TableViewViewModelTypeBlackBox = ModelViewBlackBox()
+
     var lineChartData = LineChartData()
     var constraints: [NSLayoutConstraint] = []
     var constraintsTwo: [NSLayoutConstraint] = []
     var constraintsThree: [NSLayoutConstraint] = []
-    var lvlBlackBoxInt: [Int] = [0]
 
     lazy var lineChartDataSet: LineChartDataSet = {
-        let lineChartDataSet = LineChartDataSet(entries: yValues, label: "")
+        let lineChartDataSet = LineChartDataSet(entries: yValues, label: "Graffics")
         lineChartDataSet.mode = .linear
         lineChartDataSet.drawCirclesEnabled = false
         lineChartDataSet.lineWidth = 3
@@ -45,38 +38,16 @@ class BlackBoxGraffics: UIViewController {
         chart.backgroundColor = .clear
         chart.translatesAutoresizingMaskIntoConstraints = false
         chart.rightAxis.enabled = false
-        chart.setVisibleXRangeMaximum(1)
+        chart.setVisibleXRangeMaximum(10)
         let xAxis = chart.xAxis
-        xAxis.labelFont = UIFont(name: "FuturaPT-Light", size: 11)!
+        xAxis.labelFont = .systemFont(ofSize: 11)
         xAxis.labelTextColor = .black
         xAxis.labelPosition = .bottom
         xAxis.labelCount = 3
         xAxis.axisMinimum = 0
-        xAxis.granularity = 0
-        
-//        let xAxisUpper = chart.xAxis
-//        xAxisUpper.labelFont = UIFont(name: "FuturaPT-Light", size: 11)!
-//        xAxisUpper.labelTextColor = .black
-//        xAxisUpper.labelPosition = .bottom
-//        xAxisUpper.labelCount = 3
-//        xAxisUpper.axisMinimum = 0
-//        xAxisUpper.granularity = 0
-        
-        
-//        let xValuesFormatter = DateFormatter()
-        //            xValuesFormatter.dateFormat = "dd-MM-yy HH:mm"
+        xAxis.granularity = 1
         let xValuesFormatter = DateFormatter()
-        xValuesFormatter.dateFormat = "dd.MM.yy HH:mm"
-        let timeStart = ((parametrValues?.first?.time)! as NSString).intValue
-        let xValuesNumberFormatter = ChartXAxisFormatter(referenceTimeInterval: TimeInterval(timeStart), dateFormatter: xValuesFormatter)
-        xValuesNumberFormatter.dateFormatter = xValuesFormatter
-        xAxis.valueFormatter = xValuesNumberFormatter
-        
-//        let xValuesFormatter2 = DateFormatter()
-//        xValuesFormatter2.dateFormat = "HH:mm"
-//        let xValuesNumberFormatter2 = ChartXAxisFormatter(referenceTimeInterval: TimeInterval(timeStart), dateFormatter: xValuesFormatter2)
-//        xValuesNumberFormatter2.dateFormatter = xValuesFormatter2
-//        xAxisUpper.valueFormatter = xValuesNumberFormatter2
+            xValuesFormatter.dateFormat = "dd-MM-yy HH:mm"
         
         
         let leftAxis = chart.leftAxis
@@ -87,7 +58,7 @@ class BlackBoxGraffics: UIViewController {
         leftAxis.drawGridLinesEnabled = true
         leftAxis.granularityEnabled = true
         
-//        chart.animate(xAxisDuration: 1)
+        chart.animate(xAxisDuration: 1)
         return chart
     }()
     
@@ -103,7 +74,7 @@ class BlackBoxGraffics: UIViewController {
     lazy var labelNameParametr: UILabel = {
        let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = ModelViewBlackBox().menuMain[name].name
+        label.text = ViewModelMeteoData().menuMain[name].name
         label.numberOfLines = 0
         label.font = UIFont(name:"FuturaPT-Light", size: 16.0)
         label.textColor = .black
@@ -167,7 +138,7 @@ class BlackBoxGraffics: UIViewController {
     
     lazy var imageParametr: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: ModelViewBlackBox().menuMain[name].image!)
+        image.image = UIImage(named: ViewModelMeteoData().menuMain[name].image!)
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -188,7 +159,6 @@ class BlackBoxGraffics: UIViewController {
         let blackBoxTable = BlackBoxTable()
         blackBoxTable.name = name
         blackBoxTable.nameDeviceBox = nameDeviceBox
-        blackBoxTable.parametrValues = parametrValues
         self.navigationController?.pushViewController(blackBoxTable, animated: false)
 
     }
@@ -199,16 +169,16 @@ class BlackBoxGraffics: UIViewController {
         lineChartData = LineChartData(dataSet: lineChartDataSet)
         lineChartData.setDrawValues(false)
         lineChartView.data = lineChartData
-        lineChartView.leftAxis.axisMaximum = Double(lvlBlackBoxInt.max()! + 10)
-        lineChartView.setVisibleXRangeMaximum(Double(int))
-        lineChartView.setVisibleXRangeMinimum(Double(int))
-//        lineChartView.animate(xAxisDuration: 1)
+        lineChartView.leftAxis.axisMaximum = Double(200)
+        lineChartView.setVisibleXRangeMaximum(Double(20*int))
+        lineChartView.setVisibleXRangeMinimum(Double(20*int))
+        lineChartView.animate(xAxisDuration: 1)
         lineChartData = LineChartData(dataSet: lineChartDataSet)
         lineChartData.setDrawValues(false)
         lineChartView.data = lineChartData
-        lineChartView.leftAxis.axisMaximum = Double(lvlBlackBoxInt.max()! + 10)
-        lineChartView.setVisibleXRangeMinimum(0)
-//        lineChartView.animate(xAxisDuration: 1)
+        lineChartView.leftAxis.axisMaximum = Double(200)
+        lineChartView.setVisibleXRangeMinimum(1)
+        lineChartView.animate(xAxisDuration: 1)
     }
     @objc func selectRangeDay() {
         NSLayoutConstraint.deactivate(constraintsTwo)
@@ -220,13 +190,13 @@ class BlackBoxGraffics: UIViewController {
         NSLayoutConstraint.deactivate(constraints)
         NSLayoutConstraint.deactivate(constraintsThree)
         NSLayoutConstraint.activate(constraintsTwo)
-        selectRange(int: 7)
+        selectRange(int: 2)
     }
     @objc func selectRangeMouth() {
         NSLayoutConstraint.deactivate(constraintsTwo)
         NSLayoutConstraint.deactivate(constraints)
         NSLayoutConstraint.activate(constraintsThree)
-        selectRange(int: 30)
+        selectRange(int: 3)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -243,56 +213,8 @@ class BlackBoxGraffics: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        lvlBlackBoxInt = [0]
-        for i in 0...parametrValues!.count - 1 {
-            var nameParametr = 0.0
-            switch name {
-            case 1:
-                nameParametr = ((parametrValues?[i].parametrt)! as NSString).doubleValue
-            case 2:
-                nameParametr = ((parametrValues?[i].parametrWD)! as NSString).doubleValue
-            case 3:
-                nameParametr = ((parametrValues?[i].parametrWV)! as NSString).doubleValue
-            case 4:
-                nameParametr = ((parametrValues?[i].parametrWM)! as NSString).doubleValue
-            case 5:
-                nameParametr = ((parametrValues?[i].parametrPR)! as NSString).doubleValue
-            case 6:
-                nameParametr = ((parametrValues?[i].parametrHM)! as NSString).doubleValue
-            case 7:
-                nameParametr = ((parametrValues?[i].parametrRN)! as NSString).doubleValue
-            case 8:
-                nameParametr = ((parametrValues?[i].parametrUV)! as NSString).doubleValue
-            case 9:
-                nameParametr = ((parametrValues?[i].parametrUVI)! as NSString).doubleValue
-            case 10:
-                nameParametr = ((parametrValues?[i].parametrL)! as NSString).doubleValue
-            case 11:
-                nameParametr = ((parametrValues?[i].parametrLI)! as NSString).doubleValue
-            case 12:
-                nameParametr = ((parametrValues?[i].parametrUpow)! as NSString).doubleValue
-            case 13:
-                nameParametr = ((parametrValues?[i].parametrUext)! as NSString).doubleValue
-            case 14:
-                nameParametr = ((parametrValues?[i].parametrKS)! as NSString).doubleValue
-            case 15:
-                nameParametr = ((parametrValues?[i].parametrRSSI)! as NSString).doubleValue
-                if nameParametr < 0 {
-                    nameParametr = nameParametr * (-1)
-                }
-            case 16:
-                nameParametr = ((parametrValues?[i].parametrTR)! as NSString).doubleValue
-            case 17:
-                nameParametr = ((parametrValues?[i].parametrEVS)! as NSString).doubleValue
-            default:
-                print("")
-            }
-            let referenceTimeInterval = ((parametrValues?.first!.time)! as NSString).doubleValue
-            let timeParametr = ((parametrValues?[i].time)! as NSString).doubleValue
-            let xValue = (timeParametr - referenceTimeInterval) / (3600 * 24)
-            print(xValue)
-            yValues.append(ChartDataEntry(x: Double(xValue), y: Double(nameParametr)))
-            lvlBlackBoxInt.append(Int(nameParametr))
+        for i in 0...100 {
+            yValues.append(ChartDataEntry(x: Double(i), y: Double(2 * i) * 0.8))
         }
         view.backgroundColor = .white
         let customNavigationBar = createCustomNavigationBar(title: "",fontSize: screenW / 22)
@@ -316,9 +238,9 @@ class BlackBoxGraffics: UIViewController {
         lineChartData = LineChartData(dataSet: lineChartDataSet)
         lineChartData.setDrawValues(false)
         lineChartView.data = lineChartData
-        lineChartView.leftAxis.axisMaximum = Double(lvlBlackBoxInt.max()! + 10)
-        lineChartView.setVisibleXRangeMaximum(1)
-//        lineChartView.animate(xAxisDuration: 1)
+        lineChartView.leftAxis.axisMaximum = Double(200)
+        lineChartView.setVisibleXRangeMaximum(20)
+        lineChartView.animate(xAxisDuration: 1)
         
         cosntrains()
     }
@@ -381,31 +303,4 @@ class BlackBoxGraffics: UIViewController {
         ]
         NSLayoutConstraint.activate(constraints)
     }
-}
-
-class ChartXAxisFormatter: NSObject {
-    fileprivate var dateFormatter: DateFormatter?
-    fileprivate var referenceTimeInterval: TimeInterval?
-
-    convenience init(referenceTimeInterval: TimeInterval, dateFormatter: DateFormatter) {
-        self.init()
-        self.referenceTimeInterval = referenceTimeInterval
-        self.dateFormatter = dateFormatter
-    }
-}
-
-
-extension ChartXAxisFormatter: IAxisValueFormatter {
-
-    func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        guard let dateFormatter = dateFormatter,
-        let referenceTimeInterval = referenceTimeInterval
-        else {
-            return ""
-        }
-
-        let date = Date(timeIntervalSince1970: value * 3600 * 24 + referenceTimeInterval)
-        return dateFormatter.string(from: date)
-    }
-
 }

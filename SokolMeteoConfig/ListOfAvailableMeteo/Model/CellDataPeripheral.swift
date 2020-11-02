@@ -19,9 +19,9 @@ var CBPeripheralForDisconnect : CBPeripheral!
 var CBServiceForDisconnect : CBService!
 
 struct ListComandBluetooth {
-//    init(mainPassword: String) {
-//        let valueAll = "PWD_USER,\(mainPassword)\r\n"
-//    }
+    init(mainPassword: String) {
+        let valueAll = "PWD_USER,\(mainPassword)\r\n"
+    }
     let valueAll = "PWD_USER,\(mainPassword)\r\n"
     let changePassword = "PWD_CHANGE_USER,\(newPassword)\r\n"
     let changePasswordService = "PWD_CHANGE_SERVICE,\(newPassword)\r\n"

@@ -15,7 +15,7 @@ class ViewModel: TableViewViewModelType {
     var menuMain = [
         Menu(id: 1, name: "ПОДКЛЮЧЕНИЕ К МЕТЕОСТАНЦИИ"),
         Menu(id: 2, name: "АРХИВ ДАННЫХ"),
-        Menu(id: 3, name: "ПЛАТФОРМА СОКОЛ МЕТЕО"),
+        Menu(id: 3, name: "РЕГИСТРАЦИЯ НА СОКОЛ МЕТЕО"),
         Menu(id: 4, name: "ТЕХПОДДЕРЖКА"),
     ]
     

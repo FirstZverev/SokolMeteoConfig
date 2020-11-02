@@ -10,12 +10,9 @@ import Foundation
 import RealmSwift
 
 class BoxModel: Object {
-    
-    @objc dynamic var id: Int = 0
-
     @objc dynamic var nameDevice: String?
     @objc dynamic var time: String?
-
+    
     @objc dynamic var parametrt: String?
     @objc dynamic var parametrWD: String?
     @objc dynamic var parametrWV: String?
@@ -34,6 +31,6 @@ class BoxModel: Object {
     @objc dynamic var parametrTR: String?
     @objc dynamic var parametrEVS: String?
 
-    @objc dynamic var allString: String?
+    @objc dynamic var allSting: String?
 
 }

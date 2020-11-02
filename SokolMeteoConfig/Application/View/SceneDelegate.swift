@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
 
-        let vc = firstOpenApp(viewController: StartViewController(), viewControllerSecond: SwipingStartController(collectionViewLayout: layout))
+        let vc = firstOpenApp(viewController: StartViewController(), viewControllerSecond: SettingsBMVDController(collectionViewLayout: layout))
         let navigationController = UINavigationController(rootViewController: vc)
         navigationController.hero.isEnabled = true
         navigationController.navigationBar.isHidden = true

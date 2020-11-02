@@ -13,12 +13,8 @@ class StretchyTableHeaderView: UIView {
     var imageViewHeight = NSLayoutConstraint()
     var imageViewBottom = NSLayoutConstraint()
     
-    var labelViewHeight = NSLayoutConstraint()
-    var labelViewBottom = NSLayoutConstraint()
-
     var containerView: UIView!
     var imageView: UIImageView!
-    var labelDate: UILabel!
     
     var containerViewHeight = NSLayoutConstraint()
     
@@ -46,12 +42,15 @@ class StretchyTableHeaderView: UIView {
         imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFill
         containerView.addSubview(imageView)
+<<<<<<< HEAD
         
         labelDate = UILabel()
         labelDate.textColor = .white
         labelDate.font = UIFont(name: "FuturaPT-Medium", size: screenW / 18)
         labelDate.text = ""
         containerView.addSubview(labelDate)
+=======
+>>>>>>> parent of 298b6c8... FINAL
     }
     
     func setViewConstraints() {
@@ -75,14 +74,6 @@ class StretchyTableHeaderView: UIView {
         imageViewBottom.isActive = true
         imageViewHeight = imageView.heightAnchor.constraint(equalTo: containerView.heightAnchor)
         imageViewHeight.isActive = true
-        
-        labelDate.translatesAutoresizingMaskIntoConstraints = false
-        labelViewBottom = labelDate.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
-        labelViewBottom.isActive = true
-        
-        labelViewHeight = labelDate.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
-        labelViewHeight.isActive = true
-
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {

@@ -7,11 +7,8 @@
 //
 
 import UIKit
-import RealmSwift
 
 class ProfileMeteoController: UIViewController {
-    
-    var deviveNaming = ""
     
     let customNavigationBar = createCustomNavigationBar(title: "ПРОФИЛЬ МЕТЕОСТАНЦИИ",fontSize: screenW / 22)
     
@@ -45,8 +42,7 @@ class ProfileMeteoController: UIViewController {
         return textField
     }()
     lazy var passwordTextField: UITextField = {
-        let textField = TextFieldWithPadding(placeholder: "Введите пароль")
-        textField.isSecureTextEntry = true
+        let textField = TextFieldWithPadding(placeholder: "Установите пароль")
         textField.layer.shadowRadius = 3.0
         textField.layer.shadowOpacity = 0.1
         textField.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
@@ -61,7 +57,7 @@ class ProfileMeteoController: UIViewController {
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
-        label.text = deviveNaming
+        label.text = "Sokol-M_348"
         return label
     }()
     
@@ -75,18 +71,8 @@ class ProfileMeteoController: UIViewController {
         return button
     }()
     
-    override func viewWillAppear(_ animated: Bool) {
-        let realm: Realm  = {
-           return try! Realm()
-        }()
-        print("deviveNaming: \(deviveNaming)")
-        let realmCheck = realm.objects(DeviceNameModel.self).filter("nameDevice = %@", deviveNaming)
-        print(realmCheck)
-        if realmCheck.count != 0 {
-            nameDevice.text = realmCheck.first?.nameDevice
-            IMEITextField.text = realmCheck.first?.IMEIDevice
-            passwordTextField.text = realmCheck.first?.passwordDevice
-        }
+    override func viewDidAppear(_ animated: Bool) {
+
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -94,12 +80,8 @@ class ProfileMeteoController: UIViewController {
     }
     
     @objc func actionSave() {
-        if IMEITextField.text != "" && passwordTextField.text != "" {
-            realmSave()
-            navigationController?.popViewController(animated: true)
-        } else {
-            showToast(message: "Поля должны быть заполнены", seconds: 1.0)
-        }
+        print("tap")
+        navigationController?.pushViewController(AccountEnterController(), animated: true)
     }
     
     override func viewDidLoad() {
@@ -110,43 +92,6 @@ class ProfileMeteoController: UIViewController {
         )
         showView()
         delegateTextFieldDelegate()
-    }
-    fileprivate func realmSave() {
-        let realm: Realm  = {
-           return try! Realm()
-        }()
-        do {
-            let config = Realm.Configuration(
-                schemaVersion: 0,
-                
-                migrationBlock: { migration, oldSchemaVersion in
-                    if (oldSchemaVersion < 1) {
-                    }
-                })
-            Realm.Configuration.defaultConfiguration = config
-            print(Realm.Configuration.defaultConfiguration.fileURL!)
-
-            let account = DeviceNameModel()
-            account.nameDevice = deviveNaming
-            account.IMEIDevice = IMEITextField.text
-            account.passwordDevice = passwordTextField.text
-            
-            let realmCheck = realm.objects(DeviceNameModel.self).filter("nameDevice = %@", account.nameDevice!)
-            print(realmCheck)
-            if realmCheck.count != 0 {
-                try! realm.write {
-                    realmCheck.setValue(account.nameDevice, forKey: "nameDevice")
-                    realmCheck.setValue(account.IMEIDevice, forKey: "IMEIDevice")
-                    realmCheck.setValue(account.passwordDevice, forKey: "passwordDevice")
-                }
-            } else {
-                try realm.write {
-                    realm.add(account)
-                }
-            }
-        } catch {
-            print("error getting xml string: \(error)")
-        }
     }
     
     func showView() {

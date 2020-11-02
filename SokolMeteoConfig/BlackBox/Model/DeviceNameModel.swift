@@ -13,7 +13,3 @@ class DeviceNameModel: Object {
     @objc dynamic var IMEIDevice: String?
     @objc dynamic var passwordDevice: String?
 }
-class AccountModel: Object {
-    @objc dynamic var user: String?
-    @objc dynamic var password: String?
-}

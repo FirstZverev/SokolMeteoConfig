@@ -10,7 +10,7 @@ import UIKit
 import SimpleCheckbox
 
 class SelectPush: UIView {
-    let generator = UIImpactFeedbackGenerator(style: .light)
+    
     @IBOutlet weak var CustomEnter: UIButton!
     @IBOutlet weak var CustomMainLabel: UILabel!
     
@@ -21,9 +21,6 @@ class SelectPush: UIView {
     @IBOutlet var checkBoxTwo: Checkbox!
     weak var delegate: AlertDelegate?
 
-    @IBOutlet weak var labelCom: UILabel!
-    @IBOutlet weak var labelCsv: UILabel!
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         customeizingButton()
@@ -60,17 +57,7 @@ class SelectPush: UIView {
         checkBoxTwo.checkmarkStyle = .circle
         checkBoxTwo.useHapticFeedback = true
         checkBoxTwo.addTarget(self, action: #selector(checkboxValueChanged(sender:)), for: .valueChanged)
-        
-        labelCom.addTapGesture { [self] in
-            generator.impactOccurred()
-            checkBoxOne.isChecked = true
-            checkBoxTwo.isChecked = false
-        }
-        labelCsv.addTapGesture { [self] in
-            generator.impactOccurred()
-            checkBoxTwo.isChecked = true
-            checkBoxOne.isChecked = false
-        }
+
     }
     @objc func checkboxValueChanged(sender: Checkbox!) {
         if sender == checkBoxOne {

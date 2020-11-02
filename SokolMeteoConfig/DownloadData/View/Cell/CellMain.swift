@@ -65,6 +65,9 @@ class CellMain: UITableViewCell {
         
         let imageUI = UIImageView()
         imageUI.layer.shadowColor = UIColor(rgb: 0xB64894).cgColor
+        imageUI.layer.shadowRadius = 6.0
+        imageUI.layer.shadowOpacity = 0.5
+        imageUI.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
         imageUI.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(imageUI)
         self.imageUI = imageUI

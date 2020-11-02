@@ -8,7 +8,6 @@
 
 import UIKit
 import FSCalendar
-import RealmSwift
 
 
 protocol BlackBoxDelegate: class {
@@ -149,46 +148,20 @@ class BlackBoxController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
             self.navigationController?.popViewController(animated: true)
         }
         
-        getDataButton.addTapGesture { [self] in
-            if firstDate != nil {
-                reload = 3
-                let dateRangeFirst = self.datesRange?.first
-                let dateRangeLast = self.datesRange?.last
-                dateFirst = Int(dateRangeFirst?.timeIntervalSince1970 ?? 0)
-                dateLast = Int(dateRangeLast?.timeIntervalSince1970 ?? 0) + 86400
-                print(dateFirst)
-                print(dateLast)
-                self.delegate?.buttonTapBlackBox()
-                do {
-                    let realm: Realm  = {
-                        return try! Realm()
-                    }()
-                    let config = Realm.Configuration(
-                        schemaVersion: 0,
-                        
-                        migrationBlock: { migration, oldSchemaVersion in
-                            if (oldSchemaVersion < 1) {
-                            }
-                        })
-                    Realm.Configuration.defaultConfiguration = config
-                    print(Realm.Configuration.defaultConfiguration.fileURL!)
-                    
-                    let realmCheck = realm.objects(BoxModel.self).filter("nameDevice = %@", nameDevice)
-                    try realm.write {
-                        realm.delete(realmCheck)
-                    }
-                } catch {
-                    print("error getting xml string: \(error)")
-                }
-                if Access_Allowed != 0 {
-                    self.setAlert()
-                    self.animateIn()
-                }
-            } else {
-                showToast(message: "Необходимо выбрать дату", seconds: 1.0)
+        getDataButton.addTapGesture {
+            reload = 3
+            let dateRangeFirst = self.datesRange?.first
+            let dateRangeLast = self.datesRange?.last
+            dateFirst = Int(dateRangeFirst?.timeIntervalSince1970 ?? 0)
+            dateLast = Int(dateRangeLast?.timeIntervalSince1970 ?? 0) + 86400
+            print(dateFirst)
+            print(dateLast)
+            self.delegate?.buttonTapBlackBox()
+            if Access_Allowed != 0 {
+                self.setAlert()
+                self.animateIn()
             }
         }
-            
         confirationCalendar()
         constraints()
     }
@@ -196,22 +169,20 @@ class BlackBoxController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
     func maximumDate(for calendar: FSCalendar) -> Date {
         return Date()
     }
-    
     func minimumDate(for calendar: FSCalendar) -> Date {
         return endOfMonth()
     }
-    
     func endOfMonth() -> Date {
         return Calendar.current.date(byAdding: DateComponents(day: -93), to: Date())!
     }
     
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        reload = 27
-        delegate?.buttonTapBlackBox()
+        // nothing selected:
         if firstDate == nil {
             firstDate = date
             datesRange = [firstDate!]
             print("datesRange contains: \(datesRange!)")
+
             return
         }
 

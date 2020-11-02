@@ -11,8 +11,6 @@ import UIKit
 protocol AlertAccountDelegate: class {
     func buttonAccountTapped()
     func buttonAccountClose()
-    func buttonAccountFirst()
-    func buttonAccountSecond()
 }
 
 class AccountAlert: UIView {
@@ -25,12 +23,7 @@ class AccountAlert: UIView {
     @IBOutlet weak var changeButton: UIButton!
     @IBOutlet weak var changeButtonTwo: UIButton!
     
-    @IBOutlet weak var nameDevice: UILabel!
-    @IBOutlet weak var labelImei: UILabel!
-    @IBOutlet weak var labelPassword: UILabel!
-    
-    @IBOutlet weak var labelEmail: UILabel!
-    
+
     weak var delegate: AlertAccountDelegate?
 
     override func awakeFromNib() {
@@ -39,13 +32,9 @@ class AccountAlert: UIView {
         customeizingContentView()
     }
     
-    func set(title: String, nameDevice: String, labelImei: String, labelPassword: String, buttonTitle: String, labelEmail: String) {
+    func set(title: String, body: String, buttonTitle: String) {
         CustomMainLabel.text = title
         CustomEnter.setTitle(buttonTitle, for: .normal)
-        self.nameDevice.text = nameDevice
-        self.labelImei.text = "IMEI: " + labelImei
-        self.labelPassword.text = "Пароль: " + labelPassword
-        self.labelEmail.text = "e-mail: "  + labelEmail
     }
     
     @IBAction func ActionButton(_ sender: Any) {
@@ -55,12 +44,6 @@ class AccountAlert: UIView {
         delegate?.buttonAccountClose()
     }
     
-    @IBAction func ActionButtonChangeFirst(_ sender: Any) {
-        delegate?.buttonAccountFirst()
-    }
-    @IBAction func ActionButtonChangeSecond(_ sender: Any) {
-        delegate?.buttonAccountSecond()
-    }
     func customeizingButton() {
         CustomEnter.layer.cornerRadius = 10
         changeButton.layer.cornerRadius = 10

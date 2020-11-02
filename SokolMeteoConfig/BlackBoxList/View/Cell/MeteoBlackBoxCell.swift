@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RealmSwift
 
 class MeteoBlackBoxCell: UITableViewCell {
     
@@ -18,12 +17,8 @@ class MeteoBlackBoxCell: UITableViewCell {
     var separator: UIView!
 
     var saveButton: UIButton?
-    var save2Button: UIButton?
-    var save3Button: UIButton?
-
-    let realm: Realm = {
-        return try! Realm()
-    }()
+    var save2Button: UIImageView?
+    var save3Button: UIImageView?
 
 
     weak var viewModel: TableViewCellViewModelType? {
@@ -89,16 +84,14 @@ class MeteoBlackBoxCell: UITableViewCell {
         self.contentView.addSubview(saveButton)
         self.saveButton = saveButton
 
-        let save2Button = UIButton()
-        save2Button.setImage(UIImage(named: "imgSave"), for: .normal)
+        let save2Button = UIImageView(image: UIImage(named: "imgSave"))
         save2Button.layer.cornerRadius = 10
         save2Button.isHidden = true
         save2Button.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(save2Button)
         self.save2Button = save2Button
 
-        let save3Button = UIButton()
-        save3Button.setImage(UIImage(named: "imgDelete"), for: .normal)
+        let save3Button = UIImageView(image: UIImage(named: "imgDelete"))
         save3Button.layer.cornerRadius = 10
         save3Button.isHidden = true
         save3Button.translatesAutoresizingMaskIntoConstraints = false
@@ -135,7 +128,7 @@ class MeteoBlackBoxCell: UITableViewCell {
             self.separator!.heightAnchor.constraint(equalToConstant: 2),
 
             self.saveButton!.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5),
-            self.saveButton!.trailingAnchor.constraint(equalTo: self.save2Button!.leadingAnchor, constant: -10),
+            self.saveButton!.trailingAnchor.constraint(equalTo: save2Button.leadingAnchor, constant: -10),
             
             self.save2Button!.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5),
             self.save2Button!.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
