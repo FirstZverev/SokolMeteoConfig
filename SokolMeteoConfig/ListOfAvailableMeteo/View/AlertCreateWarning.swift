@@ -18,10 +18,10 @@ extension ListAvailDevices: AlertWarningDelegate {
         
         let  vc =  self.navigationController?.viewControllers.filter({$0 is StartViewController}).first
         self.navigationController?.popToViewController(vc!, animated: true)
-        UIApplication.shared.open(URL(string: "App-prefs:Bluetooth")!)
-        print("default")
-        self.navigationController?.popViewController(animated: true)
-        self.view.subviews.forEach({ $0.removeFromSuperview() })
+//        UIApplication.shared.open(URL(string: "App-prefs:Bluetooth")!)
+//        print("default")
+//        self.navigationController?.popViewController(animated: true)
+//        self.view.subviews.forEach({ $0.removeFromSuperview() })
     }
     
     func setupVisualEffectView() {
@@ -40,14 +40,7 @@ extension ListAvailDevices: AlertWarningDelegate {
         alertView.set(title: "Связь потеряна", body: "Соединение с метеостанцией \(nameDevice) прервано", buttonTitle: "Вернуться назад")
         //alertView.leftButton.addTarget(self, action: #selector(leftButtonPressed), for: .touchUpInside)
     }
-    func setAlertBle() {
-        setupVisualEffectView()
-        UIApplication.shared.keyWindow?.rootViewController?.view.addSubview(alertView)
-        alertView.center = view.center
-        alertView.set(title: "Bluetooth выключен", body: "Для дальнейшей работы необходимо включить или перезагрузить Bluetooth", buttonTitle: "Настройки")
-        //alertView.leftButton.addTarget(self, action: #selector(leftButtonPressed), for: .touchUpInside)
-    }
-    
+
     func animateIn() {
         alertView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
         alertView.alpha = 0

@@ -181,6 +181,7 @@ class BlackBoxController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
                     print("error getting xml string: \(error)")
                 }
                 if Access_Allowed != 0 {
+                    self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
                     self.setAlert()
                     self.animateIn()
                 }

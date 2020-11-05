@@ -50,7 +50,7 @@ class StretchyTableHeaderView: UIView {
         labelDate = UILabel()
         labelDate.textColor = .white
         labelDate.font = UIFont(name: "FuturaPT-Medium", size: screenW / 18)
-        labelDate.text = "12.12.12 - 12.12.13"
+        labelDate.text = ""
         containerView.addSubview(labelDate)
     }
     

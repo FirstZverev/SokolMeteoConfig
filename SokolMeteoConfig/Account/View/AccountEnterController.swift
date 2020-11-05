@@ -184,6 +184,7 @@ class AccountEnterController: UIViewController {
         view.sv(
             customNavigationBar
         )
+        customNavigationBar.hero.id = "PlatformaSokol"
         showView()
         delegateTextFieldDelegate()
         viewAlpha.isHidden = true

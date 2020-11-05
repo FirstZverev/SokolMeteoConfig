@@ -92,25 +92,22 @@ extension ListAvailDevices : CBCentralManagerDelegate, CBPeripheralDelegate {
                 // Fallback on earlier versions
             }
             print("Bluetooth OFF.")
-//            let alert = UIAlertController(title: "Bluetooth выключен", message: "Для дальнейшей работы необходимо включить Bluetooth", preferredStyle: .alert)
-//            alert.addAction(UIAlertAction(title: "Настройки", style: .default, handler: { action in
-//                                            switch action.style{
-//                                            case .default:
-//                                                UIApplication.shared.open(URL(string: "App-prefs:Bluetooth")!)
-//                                                print("default")
-//                                                self.navigationController?.popViewController(animated: true)
-//                                                self.view.subviews.forEach({ $0.removeFromSuperview() })
-//                                            case .cancel:
-//                                                print("cancel")
-//                                            case .destructive:
-//                                                print("destructive")
-//                                            @unknown default:
-//                                                fatalError()
-//                                            }}))
-//            self.present(alert, animated: true, completion: nil)
-            setAlertBle()
-            animateIn()
-
+            let alert = UIAlertController(title: "Bluetooth выключен", message: "Для дальнейшей работы необходимо включить Bluetooth", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Настройки", style: .default, handler: { action in
+                                            switch action.style{
+                                            case .default:
+                                                UIApplication.shared.open(URL(string: "App-prefs:Bluetooth")!)
+                                                print("default")
+                                                self.navigationController?.popViewController(animated: true)
+                                                self.view.subviews.forEach({ $0.removeFromSuperview() })
+                                            case .cancel:
+                                                print("cancel")
+                                            case .destructive:
+                                                print("destructive")
+                                            @unknown default:
+                                                fatalError()
+                                            }}))
+            self.present(alert, animated: true, completion: nil)
         }
     }
     func centralManager(
@@ -129,30 +126,10 @@ extension ListAvailDevices : CBCentralManagerDelegate, CBPeripheralDelegate {
         peripheral.delegate = self
         peripheral.discoverServices(nil)
         timer =  Timer.scheduledTimer(withTimeInterval: 4.0, repeats: true) { (timer) in
-            //            peripheral.discoverServices(nil)
-            if peripheral.state == CBPeripheralState.connected {
-                print("connectedP")
-                checkQR = true
-            }
             if peripheral.state == CBPeripheralState.disconnected {
-                print("disconnectedP")
-                if warning == true{
-                    timer.invalidate()
-                    self.dismiss(animated: true, completion: nil)
-                    self.dismiss(animated: true, completion: nil)
-                } else {
-                    timer.invalidate()
-                    self.setAlert()
-                    self.animateIn()
-                    //                    self.present(alert, animated: true, completion: nil)
-                }
-                warning = false
-            }
-            if peripheral.state == CBPeripheralState.connecting {
-                print("connectingP")
-            }
-            if peripheral.state == CBPeripheralState.disconnecting {
-                print("disconnectingP")
+                timer.invalidate()
+                self.setAlert()
+                self.animateIn()
             }
         }
     }
