@@ -10,9 +10,6 @@ import UIKit
 import RealmSwift
 
 class BlackBoxListController : UIViewController {
-    let realm: Realm  = {
-        return try! Realm()
-    }()
     var realmCheck: [String]?
     var tableView: UITableView!
     var a: CGFloat = 0
@@ -55,6 +52,21 @@ class BlackBoxListController : UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        
+        var config = Realm.Configuration(
+            schemaVersion: 1,
+            
+            migrationBlock: { migration, oldSchemaVersion in
+                if (oldSchemaVersion < 1) {
+                }
+            })
+        config.deleteRealmIfMigrationNeeded = true
+
+        Realm.Configuration.defaultConfiguration = config
+        let realm: Realm  = {
+            return try! Realm()
+        }()
+        
         let setArray = Set(realm.objects(BoxModel.self).value(forKey: "nameDevice") as! [String])
         realmCheck = Array(setArray)
         tableView.reloadData()
@@ -95,7 +107,7 @@ extension BlackBoxListController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BlackBoxListCell", for: indexPath) as! BlackBoxListCell
         cell.label.text = realmCheck![indexPath.row]
-        cell.imageUI.image = UIImage(named: configListBox[indexPath.row].image)
+        cell.imageUI.image = UIImage(named: configListBox[0].image)
         return cell
     }
     func numberOfSections(in tableView: UITableView) -> Int {

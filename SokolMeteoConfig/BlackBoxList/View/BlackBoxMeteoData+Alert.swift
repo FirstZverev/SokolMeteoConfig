@@ -11,14 +11,14 @@ import RealmSwift
 
 extension BlackBoxMeteoDataController: AlertDelegate {
     
-    func buttonClose() {
+    func buttonClose2() {
         animateOut()
     }
-    func forgotTapped() {
+    func forgotTapped2() {
         animateOut()
     }
     
-    func buttonTapped() {
+    func buttonTapped2() {
         animateOut()
         if alertView.checkBoxOne.isChecked == true {
             let realm: Realm  = {
@@ -250,7 +250,7 @@ extension BlackBoxMeteoDataController: ConfirmationAlertDelegate {
     func buttonTappedConfirmation() {
         do {
             let config = Realm.Configuration(
-                schemaVersion: 0,
+                schemaVersion: 1,
                 
                 migrationBlock: { migration, oldSchemaVersion in
                     if (oldSchemaVersion < 1) {
@@ -300,5 +300,54 @@ extension BlackBoxMeteoDataController: ConfirmationAlertDelegate {
                         self.alertViewDelete.removeFromSuperview()
                         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         })
+    }
+}
+
+extension BlackBoxMeteoDataController: AlertWarningDelegate {
+    func buttonClose() {
+        animateOutWarning()
+    }
+    
+    func buttonTapped() {
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        animateOutWarning()
+    }
+    
+    func setupVisualEffectViewWarning() {
+        UIApplication.shared.keyWindow?.rootViewController?.view.addSubview(visualEffectView)
+        visualEffectView.leadingAnchor.constraint(equalTo: (UIApplication.shared.keyWindow?.rootViewController?.view.leadingAnchor)!).isActive = true
+        visualEffectView.trailingAnchor.constraint(equalTo: (UIApplication.shared.keyWindow?.rootViewController?.view.trailingAnchor)!).isActive = true
+        visualEffectView.topAnchor.constraint(equalTo: (UIApplication.shared.keyWindow?.rootViewController?.view.topAnchor)!).isActive = true
+        visualEffectView.bottomAnchor.constraint(equalTo: (UIApplication.shared.keyWindow?.rootViewController?.view.bottomAnchor)!).isActive = true
+        visualEffectView.alpha = 0
+    }
+    
+    func setAlertWarning(string: String) {
+        setupVisualEffectView()
+        UIApplication.shared.keyWindow?.rootViewController?.view.addSubview(alertViewWarningDelete)
+        alertViewWarningDelete.center = view.center
+        alertViewWarningDelete.set(title: "Обратите внимание", body: "За выгруженный период частично отсутсвуют данные по параметру \"\(string)\"", buttonTitle: "ОК")
+        //alertView.leftButton.addTarget(self, action: #selector(leftButtonPressed), for: .touchUpInside)
+    }
+
+    func animateInWarning() {
+        alertViewWarningDelete.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
+        alertViewWarningDelete.alpha = 0
+        
+        UIView.animate(withDuration: 0.4) {
+            self.visualEffectView.alpha = 1
+            self.alertViewWarningDelete.alpha = 1
+            self.alertViewWarningDelete.transform = CGAffineTransform.identity
+        }
+    }
+    fileprivate func animateOutWarning() {
+        UIView.animate(withDuration: 0.4,
+                       animations: {
+                        self.visualEffectView.alpha = 0
+                        self.alertViewWarningDelete.alpha = 0
+                        self.alertViewWarningDelete.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
+        }) { (_) in
+            self.alertViewWarningDelete.removeFromSuperview()
+        }
     }
 }

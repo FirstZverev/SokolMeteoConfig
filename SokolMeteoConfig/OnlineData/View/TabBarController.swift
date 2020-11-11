@@ -62,6 +62,7 @@ class TabBarController: UITabBarController, MeteoDelegate, StateDelegate, BMVDDe
         delegateConnectedMeteo?.buttonTapTabBar()
     }
     func buttonTapBMVD() {
+        print("buttonTapBMVD")
         delegateConnectedMeteo?.buttonTapTabBar()
     }
   

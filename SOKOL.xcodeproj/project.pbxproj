@@ -18,7 +18,6 @@
 		B50E6D402525B38C00874459 /* SwipeStartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50E6D3F2525B38C00874459 /* SwipeStartCell.swift */; };
 		B50E6D432525F46000874459 /* UiImage+Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50E6D422525F46000874459 /* UiImage+Rotation.swift */; };
 		B51684EC252AE0B400415D43 /* BlackBoxGraffics.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51684EB252AE0B400415D43 /* BlackBoxGraffics.swift */; };
-		B5168500252AE67600415D43 /* BackViewPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51684FF252AE67600415D43 /* BackViewPush.swift */; };
 		B5168507252C4D4D00415D43 /* BlackBoxTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5168506252C4D4D00415D43 /* BlackBoxTable.swift */; };
 		B516850A252C636A00415D43 /* BlackBoxTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5168509252C636A00415D43 /* BlackBoxTableView.swift */; };
 		B516850D252C744400415D43 /* BlackBoxTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B516850C252C744400415D43 /* BlackBoxTableViewCell.swift */; };
@@ -55,8 +54,6 @@
 		B56BEB0B2431F8ED00C42F85 /* CustomNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56BEB0A2431F8ED00C42F85 /* CustomNavigationView.swift */; };
 		B56BEB0D2432206500C42F85 /* ListAvailDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56BEB0C2432206500C42F85 /* ListAvailDevices.swift */; };
 		B56FD9D7247BA79200DF0B41 /* StateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56FD9D6247BA79200DF0B41 /* StateController.swift */; };
-		B570799B25500F9400BBB56F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B570799D25500F9400BBB56F /* LaunchScreen.storyboard */; };
-		B57079A2255021FE00BBB56F /* StartView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B57079A1255021FD00BBB56F /* StartView.storyboard */; };
 		B57167942547DDA4003C8B1D /* AccountEnterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57167932547DDA4003C8B1D /* AccountEnterController.swift */; };
 		B571679E2547E4C5003C8B1D /* DownloadDaraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B571679D2547E4C5003C8B1D /* DownloadDaraController.swift */; };
 		B57167A52547E60F003C8B1D /* CellMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57167A42547E60F003C8B1D /* CellMain.swift */; };
@@ -64,6 +61,10 @@
 		B57167BD25481B1C003C8B1D /* SelectPush.xib in Resources */ = {isa = PBXBuildFile; fileRef = B57167BC25481B1C003C8B1D /* SelectPush.xib */; };
 		B57167C125481B37003C8B1D /* SelectPush.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57167C025481B37003C8B1D /* SelectPush.swift */; };
 		B5778AA424E138F600DF163D /* DayRangeIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5778AA324E138F600DF163D /* DayRangeIndicatorView.swift */; };
+		B579148E255ABE6F005102D4 /* StartView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5791490255ABE6F005102D4 /* StartView.storyboard */; };
+		B5791499255AC1B1005102D4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B579149B255AC1B1005102D4 /* LaunchScreen.storyboard */; };
+		B57914A2255BC10F005102D4 /* ModelNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57914A1255BC10F005102D4 /* ModelNumber.swift */; };
+		B57914A5255BCD95005102D4 /* ModelExchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57914A4255BCD95005102D4 /* ModelExchange.swift */; };
 		B57AED8D2536F784005F3C91 /* CellDataPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AED8C2536F784005F3C91 /* CellDataPeripheral.swift */; };
 		B57AED932536FB6D005F3C91 /* ListAvailTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AED922536FB6D005F3C91 /* ListAvailTableView.swift */; };
 		B58210F9251A0D3E006B4A4B /* BoxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58210F8251A0D3E006B4A4B /* BoxModel.swift */; };
@@ -78,10 +79,8 @@
 		B589CFB0242C876900B547DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFAF242C876900B547DC /* AppDelegate.swift */; };
 		B589CFB2242C876900B547DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFB1242C876900B547DC /* SceneDelegate.swift */; };
 		B589CFB4242C876900B547DC /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFB3242C876900B547DC /* StartViewController.swift */; };
-		B589CFB7242C876900B547DC /* StartView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B589CFB5242C876900B547DC /* StartView.storyboard */; };
 		B589CFBA242C876900B547DC /* SokolMeteoConfig.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B589CFB8242C876900B547DC /* SokolMeteoConfig.xcdatamodeld */; };
 		B589CFBC242C876B00B547DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B589CFBB242C876B00B547DC /* Assets.xcassets */; };
-		B589CFBF242C876B00B547DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B589CFBD242C876B00B547DC /* LaunchScreen.storyboard */; };
 		B589CFD5242CBCE500B547DC /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFD4242CBCE500B547DC /* Menu.swift */; };
 		B589CFD7242CBD8F00B547DC /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFD6242CBD8F00B547DC /* ViewModel.swift */; };
 		B589CFDD242CCC2800B547DC /* BluetoothService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFDC242CCC2800B547DC /* BluetoothService.swift */; };
@@ -172,7 +171,6 @@
 		B50E6D3F2525B38C00874459 /* SwipeStartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeStartCell.swift; sourceTree = "<group>"; };
 		B50E6D422525F46000874459 /* UiImage+Rotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UiImage+Rotation.swift"; sourceTree = "<group>"; };
 		B51684EB252AE0B400415D43 /* BlackBoxGraffics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBoxGraffics.swift; sourceTree = "<group>"; };
-		B51684FF252AE67600415D43 /* BackViewPush.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackViewPush.swift; sourceTree = "<group>"; };
 		B5168506252C4D4D00415D43 /* BlackBoxTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBoxTable.swift; sourceTree = "<group>"; };
 		B5168509252C636A00415D43 /* BlackBoxTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBoxTableView.swift; sourceTree = "<group>"; };
 		B516850C252C744400415D43 /* BlackBoxTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBoxTableViewCell.swift; sourceTree = "<group>"; };
@@ -209,12 +207,6 @@
 		B56BEB0A2431F8ED00C42F85 /* CustomNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationView.swift; sourceTree = "<group>"; };
 		B56BEB0C2432206500C42F85 /* ListAvailDevices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAvailDevices.swift; sourceTree = "<group>"; };
 		B56FD9D6247BA79200DF0B41 /* StateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateController.swift; sourceTree = "<group>"; };
-		B570799225500D6100BBB56F /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ru; path = ru.lproj/StartView.storyboard; sourceTree = "<group>"; };
-		B570799325500D6300BBB56F /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ru; path = ru.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		B570799525500DB900BBB56F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		B570799625500DC300BBB56F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/StartView.strings; sourceTree = "<group>"; };
-		B570799F2550118200BBB56F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		B57079A1255021FD00BBB56F /* StartView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = StartView.storyboard; sourceTree = "<group>"; };
 		B57167932547DDA4003C8B1D /* AccountEnterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountEnterController.swift; sourceTree = "<group>"; };
 		B571679D2547E4C5003C8B1D /* DownloadDaraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadDaraController.swift; sourceTree = "<group>"; };
 		B57167A42547E60F003C8B1D /* CellMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellMain.swift; sourceTree = "<group>"; };
@@ -222,6 +214,12 @@
 		B57167BC25481B1C003C8B1D /* SelectPush.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectPush.xib; sourceTree = "<group>"; };
 		B57167C025481B37003C8B1D /* SelectPush.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPush.swift; sourceTree = "<group>"; };
 		B5778AA324E138F600DF163D /* DayRangeIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayRangeIndicatorView.swift; sourceTree = "<group>"; };
+		B579148F255ABE6F005102D4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/StartView.storyboard; sourceTree = "<group>"; };
+		B579149A255AC1B1005102D4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B579149D255AC1BE005102D4 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ru; path = ru.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B579149F255AC1D0005102D4 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ru; path = ru.lproj/StartView.storyboard; sourceTree = "<group>"; };
+		B57914A1255BC10F005102D4 /* ModelNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelNumber.swift; sourceTree = "<group>"; };
+		B57914A4255BCD95005102D4 /* ModelExchange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelExchange.swift; sourceTree = "<group>"; };
 		B57AED8C2536F784005F3C91 /* CellDataPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellDataPeripheral.swift; sourceTree = "<group>"; };
 		B57AED922536FB6D005F3C91 /* ListAvailTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAvailTableView.swift; sourceTree = "<group>"; };
 		B58210F8251A0D3E006B4A4B /* BoxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxModel.swift; sourceTree = "<group>"; };
@@ -662,11 +660,9 @@
 		B589CFC6242C893F00B547DC /* View */ = {
 			isa = PBXGroup;
 			children = (
-				B589CFBD242C876B00B547DC /* LaunchScreen.storyboard */,
-				B570799D25500F9400BBB56F /* LaunchScreen.storyboard */,
+				B579149B255AC1B1005102D4 /* LaunchScreen.storyboard */,
 				B589CFAF242C876900B547DC /* AppDelegate.swift */,
 				B589CFB1242C876900B547DC /* SceneDelegate.swift */,
-				B51684FF252AE67600415D43 /* BackViewPush.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -721,9 +717,8 @@
 		B589CFCC242C89C500B547DC /* View */ = {
 			isa = PBXGroup;
 			children = (
-				B589CFB5242C876900B547DC /* StartView.storyboard */,
-				B57079A1255021FD00BBB56F /* StartView.storyboard */,
 				B589CFB3242C876900B547DC /* StartViewController.swift */,
+				B5791490255ABE6F005102D4 /* StartView.storyboard */,
 				B528D593247CE1D8004244CA /* MenuController.swift */,
 				B58E0EBE24C078600052D165 /* ButtonView.swift */,
 				B50E6D3B2525B04500874459 /* SwipingStartController.swift */,
@@ -921,6 +916,8 @@
 			isa = PBXGroup;
 			children = (
 				B5A0307D24DBF78B0092F12B /* Model.swift */,
+				B57914A1255BC10F005102D4 /* ModelNumber.swift */,
+				B57914A4255BCD95005102D4 /* ModelExchange.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1116,7 +1113,6 @@
 			knownRegions = (
 				en,
 				ru,
-				Base,
 			);
 			mainGroup = B589CFA3242C876900B547DC;
 			productRefGroup = B589CFAD242C876900B547DC /* Products */;
@@ -1134,18 +1130,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				B58217B7247FD5CE00C669CA /* CustomAlertWarning.xib in Resources */,
+				B579148E255ABE6F005102D4 /* StartView.storyboard in Resources */,
 				B5C05149247AA89300F63357 /* futura-pt-light.ttf in Resources */,
 				B596B8CD252300DF0007DC08 /* CustomLoadingBlackBox.xib in Resources */,
-				B589CFBF242C876B00B547DC /* LaunchScreen.storyboard in Resources */,
 				B5C0514B247AA89C00F63357 /* futura-pt-medium.ttf in Resources */,
-				B57079A2255021FE00BBB56F /* StartView.storyboard in Resources */,
 				B57167BD25481B1C003C8B1D /* SelectPush.xib in Resources */,
 				B593A89D247E3C5C006D049F /* CustomAlert.xib in Resources */,
 				B589CFBC242C876B00B547DC /* Assets.xcassets in Resources */,
 				B50AF26D254833C400F66786 /* AccountAlert.xib in Resources */,
-				B570799B25500F9400BBB56F /* LaunchScreen.storyboard in Resources */,
+				B5791499255AC1B1005102D4 /* LaunchScreen.storyboard in Resources */,
 				B5C33F9A254F3297008E700F /* ConfirmationAlert.xib in Resources */,
-				B589CFB7242C876900B547DC /* StartView.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1204,6 +1198,7 @@
 				B589CFDD242CCC2800B547DC /* BluetoothService.swift in Sources */,
 				B5CAE99825494D8400C18FD3 /* ModelNetwork.swift in Sources */,
 				B5438D82242DEB2500FAB0C5 /* DetailViewModelType.swift in Sources */,
+				B57914A2255BC10F005102D4 /* ModelNumber.swift in Sources */,
 				B589CFB4242C876900B547DC /* StartViewController.swift in Sources */,
 				B55982C124E167D6005C9FA9 /* ThriedMeteoData.swift in Sources */,
 				B51E271F251A103B00F86019 /* DeviceNameModel.swift in Sources */,
@@ -1223,6 +1218,7 @@
 				B57167C125481B37003C8B1D /* SelectPush.swift in Sources */,
 				B50E6D432525F46000874459 /* UiImage+Rotation.swift in Sources */,
 				B5304137248FAA3800032C7F /* BlackBoxController.swift in Sources */,
+				B57914A5255BCD95005102D4 /* ModelExchange.swift in Sources */,
 				B5A82A9E2498762700F7A335 /* ConfiguratorThriedController.swift in Sources */,
 				B5A0307E24DBF78B0092F12B /* Model.swift in Sources */,
 				B56BEB0B2431F8ED00C42F85 /* CustomNavigationView.swift in Sources */,
@@ -1230,7 +1226,6 @@
 				B57167942547DDA4003C8B1D /* AccountEnterController.swift in Sources */,
 				B593A8A5247E3F1C006D049F /* Localize.swift in Sources */,
 				B58E0EBF24C078600052D165 /* ButtonView.swift in Sources */,
-				B5168500252AE67600415D43 /* BackViewPush.swift in Sources */,
 				B596B8D7252343630007DC08 /* BlackBoxListCell.swift in Sources */,
 				B5168507252C4D4D00415D43 /* BlackBoxTable.swift in Sources */,
 				B596B8E725244E7C0007DC08 /* moreDevicesCell.swift in Sources */,
@@ -1323,28 +1318,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		B570799D25500F9400BBB56F /* LaunchScreen.storyboard */ = {
+		B5791490255ABE6F005102D4 /* StartView.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B570799F2550118200BBB56F /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		B589CFB5242C876900B547DC /* StartView.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				B570799225500D6100BBB56F /* ru */,
-				B570799625500DC300BBB56F /* en */,
+				B579148F255ABE6F005102D4 /* en */,
+				B579149F255AC1D0005102D4 /* ru */,
 			);
 			name = StartView.storyboard;
 			sourceTree = "<group>";
 		};
-		B589CFBD242C876B00B547DC /* LaunchScreen.storyboard */ = {
+		B579149B255AC1B1005102D4 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B570799325500D6300BBB56F /* ru */,
-				B570799525500DB900BBB56F /* en */,
+				B579149A255AC1B1005102D4 /* en */,
+				B579149D255AC1BE005102D4 /* ru */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -1477,7 +1464,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 49436C2U7G;
 				INFOPLIST_FILE = "SokolMeteoConfig/Supporting files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1485,7 +1472,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.SokolMeteo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1500,7 +1487,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 49436C2U7G;
 				INFOPLIST_FILE = "SokolMeteoConfig/Supporting files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -1508,7 +1495,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.SokolMeteo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

@@ -54,6 +54,11 @@ class BlackBoxMeteoDataController: UIViewController {
         alertView.delegate = self
         return alertView
     }()
+    lazy var alertViewWarningDelete: CustomAlertWarning = {
+        let alertView: CustomAlertWarning = CustomAlertWarning.loadFromNib()
+        alertView.delegate = self
+        return alertView
+    }()
     let visualEffectView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .dark)
        let view = UIVisualEffectView(effect: blurEffect)
@@ -102,6 +107,7 @@ class BlackBoxMeteoDataController: UIViewController {
         createTableView()
     }
     override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
          appDelegate.myOrientation = .portrait
         realmBox = realm.objects(BoxModel.self).filter("nameDevice = %@", nameDeviceBlackBox!)
@@ -301,8 +307,16 @@ extension BlackBoxMeteoDataController: UITableViewDataSource {
             cell?.labelTwo?.text = "\(a!.count)"
             if realmBox?.count != a!.count {
                 cell?.nextImage.image = UIImage(named: "warning")
+                cell?.nextImage.addTapGesture { [self] in
+                    self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+                    setAlertWarning(string: "\((cell?.label?.text)!)")
+                    animateInWarning()
+                }
             } else {
                 cell?.nextImage.image = UIImage(named: "message")
+                cell?.nextImage.addTapGesture {
+                    print("print2")
+                }
             }
 
         }

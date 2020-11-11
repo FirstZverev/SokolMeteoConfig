@@ -117,7 +117,7 @@ class ProfileMeteoController: UIViewController {
         }()
         do {
             let config = Realm.Configuration(
-                schemaVersion: 0,
+                schemaVersion: 1,
                 
                 migrationBlock: { migration, oldSchemaVersion in
                     if (oldSchemaVersion < 1) {

@@ -120,7 +120,7 @@ extension ListAvailDevices : CBCentralManagerDelegate, CBPeripheralDelegate {
             mainPassword = ""
             navController.pushViewController(self.connectedMeteoVC, animated: true)
         }
-        self.viewAlpha.removeFromSuperview()
+        self.viewAlpha.isHidden = true
         self.cancelLabel.isHidden = true
         
         peripheral.delegate = self

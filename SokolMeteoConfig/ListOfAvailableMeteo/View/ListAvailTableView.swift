@@ -76,11 +76,16 @@ extension ListAvailDevices: UITableViewDataSource {
                         mainPassword = ""
                         RSSIMain = ""
                         self.activityIndicator.startAnimating()
-                        self.view.addSubview(self.viewAlpha)
+                        self.viewAlpha.isHidden = false
                         self.cancelLabel.isHidden = false
                         self.cancelLabel.superview?.bringSubviewToFront(self.cancelLabel)
                         if !self.searching {
                             self.stringAll = ""
+                            UIView.animate(withDuration: 0.3) {
+                                NSLayoutConstraint.deactivate(self.constrainOpen)
+                                NSLayoutConstraint.activate(self.constrainClose)
+                                self.view.layoutIfNeeded()
+                            }
                             if indexPath.section > rrsiPink {
                                 self.manager?.connect(self.peripherals[indexPath.section-2], options: nil)
                                 print(self.peripherals[indexPath.section-2])
@@ -111,7 +116,7 @@ extension ListAvailDevices: UITableViewDataSource {
                     nameDevice = ""
                     mainPassword = ""
                     self.activityIndicator.startAnimating()
-                    self.view.addSubview(self.viewAlpha)
+                    self.viewAlpha.isHidden = false
                     self.cancelLabel.superview?.bringSubviewToFront(self.cancelLabel)
                     self.cancelLabel.isHidden = false
                     print(self.searchList)
@@ -131,7 +136,7 @@ extension ListAvailDevices: UITableViewDataSource {
                     self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
                     DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(5), execute: {
                         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-                        self.viewAlpha.removeFromSuperview()
+                        self.viewAlpha.isHidden = true
                         self.cancelLabel.isHidden = true
                         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
                         self.navigationController?.interactivePopGestureRecognizer?.delegate = nil

@@ -9,9 +9,9 @@
 import UIKit
 
 protocol AlertDelegate: class {
-    func buttonTapped()
-    func forgotTapped()
-    func buttonClose()
+    func buttonTapped2()
+    func forgotTapped2()
+    func buttonClose2()
 }
 
 class CustomAlert: UIView {
@@ -39,13 +39,13 @@ class CustomAlert: UIView {
     }
     
     @IBAction func actionForgotPassword(_ sender: Any) {
-        delegate?.forgotTapped()
+        delegate?.forgotTapped2()
     }
     @IBAction func ActionButton(_ sender: Any) {
-        delegate?.buttonTapped()
+        delegate?.buttonTapped2()
     }
     @IBAction func clouseButton(sender: Any) {
-        delegate?.buttonClose()
+        delegate?.buttonClose2()
     }
     @objc func textFieldDidMax(_ textField: UITextField) {
         print(textField.text!)

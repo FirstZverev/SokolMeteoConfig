@@ -134,8 +134,6 @@ class DownloadDaraController: UIViewController {
         showView()
         emptyList.centerXAnchor.constraint(equalTo: tableView.centerXAnchor).isActive = true
         emptyList.centerYAnchor.constraint(equalTo: tableView.centerYAnchor).isActive = true
-
-//        pushFileServer()
     }
     
     func showView() {
@@ -184,84 +182,6 @@ class DownloadDaraController: UIViewController {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
     }
-    
-    func pushFileServer() {
-        let str =
-            "#L#867157048456594;111\n#B#\n020820;000000;5547.0117;N;05641.4668;E;0;0;235;6;55;12;0;1497.00,9956.00;NA;Upow:2:4.02,t:2:14.97,WD:1:88,WV:2:1.13,WV2:2:3.79,PR:1:995,HM:1:55,RN:2:0.0,UF:2:0.00,TP:1:30,TR:1:293,V:1:109|\n030820;000000;5547.0117;N;05641.4668;E;0;0;235;6;55;12;0;1497.00,9956.00;NA;Upow:2:4.02,t:2:14.97,WD:1:88,WV:2:1.13,WV2:2:3.79,PR:1:995,HM:1:55,RN:2:0.0,UF:2:0.00,TP:1:30,TR:1:293,V:1:109|\n"
-        let fileURL = getDocumentsDirectory().appendingPathComponent("output.txt")
-
-        do {
-            try str.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8)
-        } catch {
-            // failed to write file – bad permissions, bad filename, missing permissions, or more likely it can't be converted to the encoding
-        }
-        
-        // generate boundary string using a unique string
-        let boundary = UUID().uuidString
-                 
-        // Set the URLRequest to POST and to the specified URL
-        let urlMain = "http://185.27.193.112:8004"
-        let urlString = urlMain + "/data?credentials=c2VyZWdhMzE5NzVAZ21haWwuY29tOjEyMzQ1Njc4&station=Sokol-M_348&start=1596326400000&end=1596412800000"
-        let url = URL(string: urlString)
-        var request = URLRequest(url: url!)
-        request.httpMethod = "POST"
-//        request.addValue("Bearer \(yourAuthorizationToken)", forHTTPHeaderField: "Authorization")
-                 
-        // Content-Type is multipart/form-data, this is the same as submitting form data with file upload
-        // in a web browser
-        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-                 
-        let fileName = fileURL.lastPathComponent
-        let mimetype = "text/plain"
-        let paramName = "file"
-        let fileData = try? Data(contentsOf: fileURL)
-        var data = Data()
-        // Add the file data to the raw http request data
-        data.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-        data.append("Content-Disposition: form-data; name=\"\(paramName)\"; filename=\"\(fileName)\"\r\n".data(using: .utf8)!)
-        data.append("Content-Type: \(mimetype)\r\n\r\n".data(using: .utf8)!)
-        data.append(fileData!)
-        data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
-        // do not forget to set the content-length!
-        print("data: \(data)")
-        print("data: \(request)")
-        request.httpBody = data
-        request.setValue(String(data.count), forHTTPHeaderField: "Content-Length")
-        let session = URLSession.shared
-        let uploadTask = session.uploadTask(with: request as URLRequest, from: data,
-                                            completionHandler: { (responseData, response, error) in
-                                                
-                                                // Check on some response headers (if it's HTTP)
-                                                if let httpResponse = response as? HTTPURLResponse {
-                                                    switch httpResponse.statusCode {
-                                                    case 200..<300:
-                                                        print("Success")
-                                                    case 400..<500:
-                                                        print("Request error")
-                                                    case 500..<600:
-                                                        print("Server error")
-                                                    case let otherCode:
-                                                        print("Other code: \(otherCode)")
-                                                    }
-                                                }
-                                                
-                                                // Do something with the response data
-                                                if let
-                                                    responseData = responseData,
-                                                   let responseString = String(data: responseData, encoding: String.Encoding.utf8) {
-                                                    print("Server Response:")
-                                                    print(responseString)
-                                                }
-                                                
-                                                // Do something with the error
-                                                if let error = error {
-                                                    print(error.localizedDescription)
-                                                }
-                                            })
-        
-        uploadTask.resume()
-    }
-    
 }
 
 extension DownloadDaraController: UITableViewDelegate, UITableViewDataSource {

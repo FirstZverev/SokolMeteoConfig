@@ -226,3 +226,5 @@ func unixTimeInttoStringOnlyDate(unixTime: Int) -> String {
     let localDate = dateFormatter.string(from: date)
     return localDate
 }
+
+var blackBoxStart = false

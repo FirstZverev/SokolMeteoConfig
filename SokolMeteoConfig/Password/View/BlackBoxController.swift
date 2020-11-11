@@ -9,7 +9,7 @@
 import UIKit
 import FSCalendar
 import RealmSwift
-
+import NVActivityIndicatorView
 
 protocol BlackBoxDelegate: class {
     func buttonTapBlackBox()
@@ -26,6 +26,22 @@ class BlackBoxController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
     private var datesRange: [Date]?
 
     weak var delegate: BlackBoxDelegate?
+    
+    lazy var viewAlpha: UIView = {
+        let viewAlpha = UIView(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH))
+        viewAlpha.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        return viewAlpha
+    }()
+    lazy var activityIndicator: NVActivityIndicatorView = {
+        let view = NVActivityIndicatorView(frame: .zero, type: .ballGridPulse, color: UIColor.purple)
+        view.frame.size = CGSize(width: 50, height: 50)
+        view.layer.shadowColor = UIColor.white.cgColor
+        view.layer.shadowRadius = 5.0
+        view.layer.shadowOpacity = 0.7
+        view.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+        view.center = viewAlpha.center
+        return view
+    }()
     
     lazy var alertView: CustomLoadingBlackBox = {
         let alertView: CustomLoadingBlackBox = CustomLoadingBlackBox.loadFromNib()
@@ -89,6 +105,7 @@ class BlackBoxController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
     fileprivate func confirationCalendar() {
         let calendar = FSCalendar()
         calendar.backgroundColor = .white
+        calendar.firstWeekday = 2
         calendar.appearance.todayColor = .black
         calendar.appearance.headerTitleColor = UIColor(rgb: 0xBE449E)
         calendar.appearance.headerDateFormat = "LLLL yyyy"
@@ -119,6 +136,7 @@ class BlackBoxController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         reload = 27
         self.delegate?.buttonTapBlackBox()
     }
@@ -151,6 +169,7 @@ class BlackBoxController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
         
         getDataButton.addTapGesture { [self] in
             if firstDate != nil {
+                viewAlpha.isHidden = false
                 reload = 3
                 let dateRangeFirst = self.datesRange?.first
                 let dateRangeLast = self.datesRange?.last
@@ -164,7 +183,7 @@ class BlackBoxController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
                         return try! Realm()
                     }()
                     let config = Realm.Configuration(
-                        schemaVersion: 0,
+                        schemaVersion: 1,
                         
                         migrationBlock: { migration, oldSchemaVersion in
                             if (oldSchemaVersion < 1) {
@@ -182,6 +201,8 @@ class BlackBoxController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
                 }
                 if Access_Allowed != 0 {
                     self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+                    blackBoxStart = true
+                    viewAlpha.isHidden = true
                     self.setAlert()
                     self.animateIn()
                 }
@@ -192,6 +213,10 @@ class BlackBoxController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
             
         confirationCalendar()
         constraints()
+        viewAlpha.isHidden = true
+        viewAlpha.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        view.addSubview(viewAlpha)
     }
     
     func maximumDate(for calendar: FSCalendar) -> Date {

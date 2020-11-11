@@ -36,10 +36,10 @@ class SelectPush: UIView {
     }
     
     @IBAction func ActionButton(_ sender: Any) {
-        delegate?.buttonTapped()
+        delegate?.buttonTapped2()
     }
     @IBAction func clouseButton(sender: Any) {
-        delegate?.buttonClose()
+        delegate?.buttonClose2()
     }
     
     func customeizingButton() {

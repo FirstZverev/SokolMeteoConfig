@@ -10,19 +10,50 @@ import UIKit
 import Alamofire
 import RealmSwift
 import NVActivityIndicatorView
+import SimpleCheckbox
 
 class AccountEnterController: UIViewController {
     
     let customNavigationBar = createCustomNavigationBar(title: "ВХОД В УЧЕТНУЮ ЗАПИСЬ",fontSize: screenW / 22)
-    let realm: Realm = {
-        return try! Realm()
-    }()
     lazy var stackTextField: UIStackView = {
         let stackTextField = UIStackView()
         stackTextField.translatesAutoresizingMaskIntoConstraints = false
         stackTextField.axis = .vertical
         stackTextField.spacing = 30
         return stackTextField
+    }()
+    
+    lazy var saveTextField: UIStackView = {
+        let stackTextField = UIStackView()
+        stackTextField.translatesAutoresizingMaskIntoConstraints = false
+        stackTextField.axis = .horizontal
+        stackTextField.spacing = 15
+        return stackTextField
+    }()
+    
+    lazy var checkBox: Checkbox = {
+        let checkBox = Checkbox()
+        checkBox.checkedBorderColor = UIColor(rgb: 0xBE449E)
+        checkBox.uncheckedBorderColor = UIColor(rgb: 0x998F99)
+        checkBox.checkmarkColor = .white
+        checkBox.borderStyle = .square
+        checkBox.borderLineWidth = 1
+        checkBox.checkboxFillColor = UIColor(rgb: 0xBE449E)
+        checkBox.checkmarkStyle = .tick
+        checkBox.useHapticFeedback = true
+        checkBox.isChecked = true
+        checkBox.translatesAutoresizingMaskIntoConstraints = false
+        checkBox.addTarget(self, action: #selector(checkboxValueChanged(sender:)), for: .valueChanged)
+        return checkBox
+    }()
+    lazy var saveLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name:"FuturaPT-Light", size: screenW / 20)
+        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        label.text = "Запомнить"
+        return label
     }()
     
     lazy var viewAlpha: UIView = {
@@ -70,7 +101,6 @@ class AccountEnterController: UIViewController {
         textField.layer.shadowRadius = 3.0
         textField.layer.shadowOpacity = 0.1
         textField.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
-        textField.keyboardType = .numberPad
         return textField
     }()
     lazy var nameDevice: UILabel = {
@@ -101,6 +131,20 @@ class AccountEnterController: UIViewController {
 
     }
     
+    fileprivate func checkBoxSender() {
+        if checkBox.isChecked == false {
+            checkBox.checkmarkColor = UIColor(rgb: 0xBE449E)
+            checkBox.checkboxFillColor = .clear
+        } else {
+            checkBox.checkmarkColor = .white
+            checkBox.checkboxFillColor = UIColor(rgb: 0xBE449E)
+        }
+    }
+    
+    @objc func checkboxValueChanged(sender: Checkbox!) {
+        checkBoxSender()
+    }
+    
     @objc func actionSave() {
         if Reachability.isConnectedToNetwork(){
             viewAlpha.isHidden = false
@@ -111,25 +155,36 @@ class AccountEnterController: UIViewController {
     }
     fileprivate func realmSave() {
         do {
-            let config = Realm.Configuration(
-                schemaVersion: 0,
+            var config = Realm.Configuration(
+                schemaVersion: 1,
                 
                 migrationBlock: { migration, oldSchemaVersion in
                     if (oldSchemaVersion < 1) {
                     }
                 })
+            config.deleteRealmIfMigrationNeeded = true
+
             Realm.Configuration.defaultConfiguration = config
             print(Realm.Configuration.defaultConfiguration.fileURL!)
 
             let account = AccountModel()
             account.user = IMEITextField.text
             account.password = passwordTextField.text
+            if checkBox.isChecked == true {
+                account.save = true
+            } else {
+                account.save = false
+            }
+            let realm: Realm = {
+                return try! Realm()
+            }()
             
             let realmCheck = realm.objects(AccountModel.self)
             if realmCheck.count != 0 {
                 try! realm.write {
                     realmCheck.setValue(account.user, forKey: "user")
                     realmCheck.setValue(account.password, forKey: "password")
+                    realmCheck.setValue(account.save, forKey: "save")
                 }
             } else {
                 try realm.write {
@@ -172,10 +227,30 @@ class AccountEnterController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        var config = Realm.Configuration(
+            schemaVersion: 1,
+            
+            migrationBlock: { migration, oldSchemaVersion in
+                if (oldSchemaVersion < 1) {
+                }
+            })
+        config.deleteRealmIfMigrationNeeded = true
+
+        Realm.Configuration.defaultConfiguration = config
+        
+        let realm: Realm = {
+            return try! Realm()
+        }()
+        
         let realmCheck = realm.objects(AccountModel.self)
         if realmCheck.count != 0 {
             IMEITextField.text = realmCheck[0].user
             passwordTextField.text = realmCheck[0].password
+            checkBox.isChecked = realmCheck[0].save
+            checkBoxSender()
+        } else {
+            checkBox.isChecked = false
+            checkBoxSender()
         }
     }
     override func viewDidLoad() {
@@ -196,17 +271,24 @@ class AccountEnterController: UIViewController {
     func showView() {
         backView.tintColor = .black
         view.addSubview(backView)
-        backView.addTapGesture{
+        backView.addTapGesture {
             self.navigationController?.popViewController(animated: true)
         }
         stackTextField.addArrangedSubview(IMEITextField)
         stackTextField.addArrangedSubview(passwordTextField)
+        stackTextField.addArrangedSubview(saveTextField)
+
+        saveTextField.addArrangedSubview(checkBox)
+        saveTextField.addArrangedSubview(saveLabel)
 
         view.sv(stackTextField, nameDevice, saveButton)
         
         passwordTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
         IMEITextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
+        checkBox.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        checkBox.widthAnchor.constraint(equalToConstant: 20).isActive = true
+
         stackTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         stackTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         stackTextField.widthAnchor.constraint(equalToConstant: screenW - 40).isActive = true

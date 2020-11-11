@@ -33,12 +33,12 @@ class DevicesListCellMain: UITableViewCell {
     
     func initialize() {
         
-        let separetor = UIView(frame: CGRect(x: 20, y: 71, width: screenW - 40, height: 2))
+        let separetor = UIView(frame: CGRect(x: 20, y: 71, width: screenW - 40, height: 1))
         separetor.backgroundColor = UIColor(rgb: 0x959595)
         self.contentView.addSubview(separetor)
         self.separetor = separetor
         
-        let separetor2 = UIView(frame: CGRect(x: 20, y: -2, width: screenW - 40, height: 2))
+        let separetor2 = UIView(frame: CGRect(x: 20, y: -2, width: screenW - 40, height: 1))
         separetor2.backgroundColor = UIColor(rgb: 0x959595)
         self.contentView.addSubview(separetor2)
         self.separetor2 = separetor2

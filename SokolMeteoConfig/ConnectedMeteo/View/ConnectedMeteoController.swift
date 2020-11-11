@@ -8,6 +8,7 @@
 import UIKit
 import Hero
 import Stevia
+import NVActivityIndicatorView
 
 protocol ConnectedMeteoDelegate: class {
     func buttonTap()
@@ -44,13 +45,38 @@ class ConnectedMeteoController: UIViewController, BlackBoxDelegate, TabBarDelega
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
         view.isUserInteractionEnabled = true
-        print("print")
-//        customNavigationBar.title = "\(nameDevice)"
         deviceNameLabel.text = "\(nameDevice.uppercased())"
     }
-    override func viewDidDisappear(_ animated: Bool) {
-        
+    override func viewDidAppear(_ animated: Bool) {
+        if nameDevice == "Sokol-M_DEMO" {
+            viewAlpha.isHidden = true
+        } else {
+            viewAlpha.isHidden = false
+        }
+        reload = 28
+        delegate?.buttonTap()
     }
+    override func viewWillDisappear(_ animated: Bool) {
+
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+
+    }
+    lazy var viewAlpha: UIView = {
+        let viewAlpha = UIView(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH))
+        viewAlpha.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        return viewAlpha
+    }()
+    lazy var activityIndicator: NVActivityIndicatorView = {
+        let view = NVActivityIndicatorView(frame: .zero, type: .ballGridPulse, color: UIColor.purple)
+        view.frame.size = CGSize(width: 50, height: 50)
+        view.layer.shadowColor = UIColor.white.cgColor
+        view.layer.shadowRadius = 5.0
+        view.layer.shadowOpacity = 0.7
+        view.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+        view.center = viewAlpha.center
+        return view
+    }()
     lazy var alertView: CustomAlert = {
         let alertView: CustomAlert = CustomAlert.loadFromNib()
         alertView.delegate = self
@@ -114,6 +140,9 @@ class ConnectedMeteoController: UIViewController, BlackBoxDelegate, TabBarDelega
         visualEffectView.addTapGesture {
             self.navigationController?.view.endEditing(true)
         }
+        viewAlpha.addSubview(activityIndicator)
+        activityIndicator.startAnimating()
+        view.addSubview(viewAlpha)
     }
     
     private func registerTableView() {

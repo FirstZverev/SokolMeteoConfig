@@ -37,7 +37,7 @@ extension ListAvailDevices: AlertWarningDelegate {
         setupVisualEffectView()
         UIApplication.shared.keyWindow?.rootViewController?.view.addSubview(alertView)
         alertView.center = view.center
-        alertView.set(title: "Связь потеряна", body: "Соединение с метеостанцией \(nameDevice) прервано", buttonTitle: "Вернуться назад")
+        alertView.set(title: "Связь потеряна", body: "Соединение с метеостанцией \(nameDevice) прервано. Вернитесь назад и переподключитесь при необходимости", buttonTitle: "Вернуться назад")
         //alertView.leftButton.addTarget(self, action: #selector(leftButtonPressed), for: .touchUpInside)
     }
 

@@ -151,42 +151,42 @@ class BlackBoxTable: UIViewController {
             if time == timeCurrent && time < timeCurrentNextDay {
                 let timeStringNew = unixTimeStringtoStringOnlyHour(unixTime: (parametrValues?[i].time)!)
                 timeHour.append(timeStringNew)
-                var nameParametr = 0
+                var nameParametr = 0.0
                 switch name {
                 case 1:
-                    nameParametr = Int(((parametrValues?[i].parametrt)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrt)! as NSString).doubleValue
                 case 2:
-                    nameParametr = Int(((parametrValues?[i].parametrWD)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrWD)! as NSString).doubleValue
                 case 3:
-                    nameParametr = Int(((parametrValues?[i].parametrWV)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrWV)! as NSString).doubleValue
                 case 4:
-                    nameParametr = Int(((parametrValues?[i].parametrWM)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrWM)! as NSString).doubleValue
                 case 5:
-                    nameParametr = Int(((parametrValues?[i].parametrPR)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrPR)! as NSString).doubleValue
                 case 6:
-                    nameParametr = Int(((parametrValues?[i].parametrHM)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrHM)! as NSString).doubleValue
                 case 7:
-                    nameParametr = Int(((parametrValues?[i].parametrRN)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrRN)! as NSString).doubleValue
                 case 8:
-                    nameParametr = Int(((parametrValues?[i].parametrUV)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrUV)! as NSString).doubleValue
                 case 9:
-                    nameParametr = Int(((parametrValues?[i].parametrUVI)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrUVI)! as NSString).doubleValue
                 case 10:
-                    nameParametr = Int(((parametrValues?[i].parametrL)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrL)! as NSString).doubleValue
                 case 11:
-                    nameParametr = Int(((parametrValues?[i].parametrLI)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrLI)! as NSString).doubleValue
                 case 12:
-                    nameParametr = Int(((parametrValues?[i].parametrUpow)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrUpow)! as NSString).doubleValue
                 case 13:
-                    nameParametr = Int(((parametrValues?[i].parametrUext)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrUext)! as NSString).doubleValue
                 case 14:
-                    nameParametr = Int(((parametrValues?[i].parametrKS)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrKS)! as NSString).doubleValue
                 case 15:
-                    nameParametr = Int(((parametrValues?[i].parametrRSSI)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrRSSI)! as NSString).doubleValue
                 case 16:
-                    nameParametr = Int(((parametrValues?[i].parametrTR)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrTR)! as NSString).doubleValue
                 case 17:
-                    nameParametr = Int(((parametrValues?[i].parametrEVS)! as NSString).intValue)
+                    nameParametr = ((parametrValues?[i].parametrEVS)! as NSString).doubleValue
                 default:
                     print("")
                 }
@@ -219,42 +219,42 @@ class BlackBoxTable: UIViewController {
             if time == timeCurrent && time < timeCurrentNextDay {
                 let timeStringNew = unixTimeStringtoStringOnlyHour(unixTime: (parametrValues?[i].time)!)
                 timeHour.append(timeStringNew)
-                var nameParametr = 0
+                var nameParametr = 0.0
                 switch name {
                 case 1:
-                    nameParametr = Int(((parametrValues?[i].parametrt)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrt)! as NSString).doubleValue
                 case 2:
-                    nameParametr = Int(((parametrValues?[i].parametrWD)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrWD)! as NSString).doubleValue
                 case 3:
-                    nameParametr = Int(((parametrValues?[i].parametrWV)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrWV)! as NSString).doubleValue
                 case 4:
-                    nameParametr = Int(((parametrValues?[i].parametrWM)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrWM)! as NSString).doubleValue
                 case 5:
-                    nameParametr = Int(((parametrValues?[i].parametrPR)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrPR)! as NSString).doubleValue
                 case 6:
-                    nameParametr = Int(((parametrValues?[i].parametrHM)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrHM)! as NSString).doubleValue
                 case 7:
-                    nameParametr = Int(((parametrValues?[i].parametrRN)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrRN)! as NSString).doubleValue
                 case 8:
-                    nameParametr = Int(((parametrValues?[i].parametrUV)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrUV)! as NSString).doubleValue
                 case 9:
-                    nameParametr = Int(((parametrValues?[i].parametrUVI)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrUVI)! as NSString).doubleValue
                 case 10:
-                    nameParametr = Int(((parametrValues?[i].parametrL)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrL)! as NSString).doubleValue
                 case 11:
-                    nameParametr = Int(((parametrValues?[i].parametrLI)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrLI)! as NSString).doubleValue
                 case 12:
-                    nameParametr = Int(((parametrValues?[i].parametrUpow)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrUpow)! as NSString).doubleValue
                 case 13:
-                    nameParametr = Int(((parametrValues?[i].parametrUext)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrUext)! as NSString).doubleValue
                 case 14:
-                    nameParametr = Int(((parametrValues?[i].parametrKS)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrKS)! as NSString).doubleValue
                 case 15:
-                    nameParametr = Int(((parametrValues?[i].parametrRSSI)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrRSSI)! as NSString).doubleValue
                 case 16:
-                    nameParametr = Int(((parametrValues?[i].parametrTR)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrTR)! as NSString).doubleValue
                 case 17:
-                    nameParametr = Int(((parametrValues?[i].parametrEVS)! as NSString).intValue)
+                    nameParametr = ((parametrValues?[i].parametrEVS)! as NSString).doubleValue
                 default:
                     print("")
                 }
@@ -302,42 +302,42 @@ class BlackBoxTable: UIViewController {
             if time == timeCurrent && time < timeCurrentNextDay {
                 let timeStringNew = unixTimeStringtoStringOnlyHour(unixTime: (parametrValues?[i].time)!)
                 timeHour.append(timeStringNew)
-                var nameParametr = 0
+                var nameParametr = 0.0
                 switch name {
                 case 1:
-                    nameParametr = Int(((parametrValues?[i].parametrt)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrt)! as NSString).doubleValue
                 case 2:
-                    nameParametr = Int(((parametrValues?[i].parametrWD)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrWD)! as NSString).doubleValue
                 case 3:
-                    nameParametr = Int(((parametrValues?[i].parametrWV)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrWV)! as NSString).doubleValue
                 case 4:
-                    nameParametr = Int(((parametrValues?[i].parametrWM)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrWM)! as NSString).doubleValue
                 case 5:
-                    nameParametr = Int(((parametrValues?[i].parametrPR)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrPR)! as NSString).doubleValue
                 case 6:
-                    nameParametr = Int(((parametrValues?[i].parametrHM)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrHM)! as NSString).doubleValue
                 case 7:
-                    nameParametr = Int(((parametrValues?[i].parametrRN)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrRN)! as NSString).doubleValue
                 case 8:
-                    nameParametr = Int(((parametrValues?[i].parametrUV)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrUV)! as NSString).doubleValue
                 case 9:
-                    nameParametr = Int(((parametrValues?[i].parametrUVI)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrUVI)! as NSString).doubleValue
                 case 10:
-                    nameParametr = Int(((parametrValues?[i].parametrL)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrL)! as NSString).doubleValue
                 case 11:
-                    nameParametr = Int(((parametrValues?[i].parametrLI)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrLI)! as NSString).doubleValue
                 case 12:
-                    nameParametr = Int(((parametrValues?[i].parametrUpow)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrUpow)! as NSString).doubleValue
                 case 13:
-                    nameParametr = Int(((parametrValues?[i].parametrUext)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrUext)! as NSString).doubleValue
                 case 14:
-                    nameParametr = Int(((parametrValues?[i].parametrKS)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrKS)! as NSString).doubleValue
                 case 15:
-                    nameParametr = Int(((parametrValues?[i].parametrRSSI)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrRSSI)! as NSString).doubleValue
                 case 16:
-                    nameParametr = Int(((parametrValues?[i].parametrTR)! as NSString).doubleValue)
+                    nameParametr = ((parametrValues?[i].parametrTR)! as NSString).doubleValue
                 case 17:
-                    nameParametr = Int(((parametrValues?[i].parametrEVS)! as NSString).intValue)
+                    nameParametr = ((parametrValues?[i].parametrEVS)! as NSString).doubleValue
                 default:
                     print("")
                 }

@@ -57,16 +57,15 @@ class MoreDevicesController : UIViewController {
             self.tableView.reloadData()
         })
         timer =  Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { (timer) in
-            if Access_Allowed == 1 {
+            if Access_Allowed >= 1 {
                 reload = 2
                 self.delegate?.buttonTapBMVD()
                 self.tableView.reloadData()
             }
-
         }
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         timer.invalidate()
         reload = -1
     }

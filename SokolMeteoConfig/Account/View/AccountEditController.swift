@@ -10,12 +10,27 @@ import UIKit
 import Alamofire
 import RealmSwift
 import NVActivityIndicatorView
+import SimpleCheckbox
 
 class AccountEditController: UIViewController {
     
     let customNavigationBar = createCustomNavigationBar(title: "ИЗМЕНИТЬ УЧЕТНУЮ ЗАПИСЬ",fontSize: screenW / 22)
     let realm: Realm = {
         return try! Realm()
+    }()
+    
+    lazy var checkBox: Checkbox = {
+        let checkBox = Checkbox()
+        checkBox.checkedBorderColor = UIColor(rgb: 0xBE449E)
+        checkBox.uncheckedBorderColor = UIColor(rgb: 0xBE449E)
+        checkBox.checkmarkColor = UIColor(rgb: 0xBE449E)
+        checkBox.borderStyle = .square
+        checkBox.checkmarkStyle = .square
+        checkBox.useHapticFeedback = true
+        checkBox.isChecked = true
+        checkBox.translatesAutoresizingMaskIntoConstraints = false
+        checkBox.addTarget(self, action: #selector(checkboxValueChanged(sender:)), for: .valueChanged)
+        return checkBox
     }()
     lazy var stackTextField: UIStackView = {
         let stackTextField = UIStackView()
@@ -70,7 +85,6 @@ class AccountEditController: UIViewController {
         textField.layer.shadowRadius = 3.0
         textField.layer.shadowOpacity = 0.1
         textField.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
-        textField.keyboardType = .numberPad
         return textField
     }()
     lazy var nameDevice: UILabel = {
@@ -101,6 +115,10 @@ class AccountEditController: UIViewController {
 
     }
     
+    @objc func checkboxValueChanged(sender: Checkbox!) {
+        
+    }
+    
     @objc func actionSave() {
         if Reachability.isConnectedToNetwork(){
             viewAlpha.isHidden = false
@@ -112,7 +130,7 @@ class AccountEditController: UIViewController {
     fileprivate func realmSave() {
         do {
             let config = Realm.Configuration(
-                schemaVersion: 0,
+                schemaVersion: 1,
                 
                 migrationBlock: { migration, oldSchemaVersion in
                     if (oldSchemaVersion < 1) {
@@ -200,12 +218,16 @@ class AccountEditController: UIViewController {
         }
         stackTextField.addArrangedSubview(IMEITextField)
         stackTextField.addArrangedSubview(passwordTextField)
+//        stackTextField.addArrangedSubview(checkBox)
 
         view.sv(stackTextField, nameDevice, saveButton)
         
         passwordTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
         IMEITextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
+        checkBox.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        checkBox.widthAnchor.constraint(equalToConstant: 25).isActive = true
+
         stackTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         stackTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         stackTextField.widthAnchor.constraint(equalToConstant: screenW - 40).isActive = true

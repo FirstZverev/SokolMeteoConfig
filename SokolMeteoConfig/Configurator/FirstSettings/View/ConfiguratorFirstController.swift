@@ -56,6 +56,56 @@ class ConfiguratorFirstController : UIViewController {
         return picker
     }()
     
+    lazy var pickerNumberChanels: UIPickerView = {
+        let picker = UIPickerView()
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        picker.backgroundColor = .white
+        picker.clipsToBounds = true
+        picker.layer.cornerRadius = 20
+        picker.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        picker.isHidden = true
+        picker.showsSelectionIndicator = true
+        picker.delegate = self
+        picker.dataSource = self
+        let toolBar = UIToolbar()
+        toolBar.barStyle = UIBarStyle.default
+        toolBar.isTranslucent = true
+        toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
+        toolBar.sizeToFit()
+
+        toolBar.isUserInteractionEnabled = true
+        
+        numberTextField.inputView = picker
+        numberTextField.inputAccessoryView = toolBar
+
+        return picker
+    }()
+    
+    lazy var pickerPeriodExchange: UIPickerView = {
+        let picker = UIPickerView()
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        picker.backgroundColor = .white
+        picker.clipsToBounds = true
+        picker.layer.cornerRadius = 20
+        picker.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
+        picker.isHidden = true
+        picker.showsSelectionIndicator = true
+        picker.delegate = self
+        picker.dataSource = self
+        let toolBar = UIToolbar()
+        toolBar.barStyle = UIBarStyle.default
+        toolBar.isTranslucent = true
+        toolBar.tintColor = UIColor(red: 76/255, green: 217/255, blue: 100/255, alpha: 1)
+        toolBar.sizeToFit()
+
+        toolBar.isUserInteractionEnabled = true
+        
+        periodEchangeTextField.inputView = picker
+        periodEchangeTextField.inputAccessoryView = toolBar
+
+        return picker
+    }()
+    
     lazy var saveButton: UIButton = {
         let label = UIButton()
         label.setImage(UIImage(named: "circle"), for: .normal)
@@ -210,7 +260,7 @@ class ConfiguratorFirstController : UIViewController {
         return textField
     }()
     lazy var userTextField: UITextField = {
-        let textField = TextFieldWithPadding(placeholder: "m2m.beline.ru")
+        let textField = TextFieldWithPadding(placeholder: "beline")
         return textField
     }()
     
@@ -226,17 +276,20 @@ class ConfiguratorFirstController : UIViewController {
     }()
     
     lazy var addressTextField: UITextField = {
-        let textField = TextFieldWithPadding(placeholder: "m2m.beline.ru")
+        let textField = TextFieldWithPadding(placeholder: "tcp.sokolmeteo.com")
+        textField.keyboardType = .emailAddress
         return textField
         
     }()
     lazy var portTextField: UITextField = {
-        let textField = TextFieldWithPadding(placeholder: "m2m.beline.ru")
+        let textField = TextFieldWithPadding(placeholder: "8001")
+        textField.keyboardType = .numberPad
         return textField
     }()
     
     lazy var passwordDevicesTextField: UITextField = {
-        let textField = TextFieldWithPadding(placeholder: "m2m.beline.ru")
+        let textField = TextFieldWithPadding(placeholder: "1234")
+        textField.keyboardType = .numberPad
         return textField
     }()
     
@@ -248,11 +301,13 @@ class ConfiguratorFirstController : UIViewController {
     
     lazy var periodEchangeTextField: UITextField = {
         let textField = TextFieldWithPadding(placeholder: "5 минут")
+        textField.keyboardType = .numberPad
         return textField
     }()
     
     lazy var numberTextField: UITextField = {
         let textField = TextFieldWithPadding(placeholder: "0 канал")
+        textField.keyboardType = .numberPad
         return textField
     }()
     

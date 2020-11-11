@@ -9,12 +9,12 @@
 import UIKit
 
 extension ConnectedMeteoController: AlertDelegate, UITextFieldDelegate {
-    func buttonClose() {
+    func buttonClose2() {
         animateOut()
         let  vc =  self.navigationController?.viewControllers.filter({$0 is ConnectedMeteoController}).first
         self.navigationController?.popToViewController(vc!, animated: true)
     }
-    func forgotTapped() {
+    func forgotTapped2() {
         animateOut()
         let  vc =  self.navigationController?.viewControllers.filter({$0 is ConnectedMeteoController}).first
         self.navigationController?.popToViewController(vc!, animated: true)
@@ -23,7 +23,7 @@ extension ConnectedMeteoController: AlertDelegate, UITextFieldDelegate {
         passwordVC.scrollView.setContentOffset(CGPoint(x: screenW * 2 - 20, y: 0), animated: false)
     }
     
-    func buttonTapped() {
+    func buttonTapped2() {
         reload = 0
         mainPassword = alertView.CustomTextField.text ?? ""
         alertView.CustomTextField.text = ""

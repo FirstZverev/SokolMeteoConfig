@@ -48,20 +48,15 @@ class MoreDevicesBmvdPortController : UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         reload = 2
         delegate?.buttonTapBMVD()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-            self.tableView.reloadData()
-        })
         timer =  Timer.scheduledTimer(withTimeInterval: 3.0, repeats: true) { (timer) in
-            if Access_Allowed == 1 {
+            if Access_Allowed >= 1 {
                 reload = 2
                 self.delegate?.buttonTapBMVD()
-                self.tableView.reloadData()
             }
-
         }
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         timer.invalidate()
         reload = -1
     }
@@ -122,12 +117,12 @@ extension MoreDevicesBmvdPortController: UITableViewDelegate, UITableViewDataSou
                 if let a = arrayBmvdCount["\(countBmvd)H0"] {
                     cell?.label.text = "Цифровой датчик влажности почвы"
                     cell?.imageUI.image = UIImage(named: "intensiv2")
-                    cell?.labelRssi.text = a + " %"
+                    cell?.labelRssi.text = "\(Int(a)! * 2)" + " %"
                 }
                 if let a = arrayBmvdCount["\(countBmvd)h0"] {
                     cell?.label.text = "Аналоговый датчик влажности почвы"
                     cell?.imageUI.image = UIImage(named: "intensiv2")
-                    cell?.labelRssi.text = a + " %"
+                    cell?.labelRssi.text = "\(Int(a)! * 2)" + " %"
                 }
                 if let a = arrayBmvdCount["\(countBmvd)t0"] {
                     cell?.label.text = "Аналоговый датчик температуры почвы"
@@ -137,7 +132,7 @@ extension MoreDevicesBmvdPortController: UITableViewDelegate, UITableViewDataSou
                 if let a = arrayBmvdCount["\(countBmvd)l0"] {
                     cell?.label.text = "Аналоговый датчик влажности листа"
                     cell?.imageUI.image = UIImage(named: "intensiv2")
-                    cell?.labelRssi.text = a + " %"
+                    cell?.labelRssi.text = "\(Int(a)! * 20)" + " %"
                 }
                 
                 if let a = arrayBmvdCount["\(countBmvd)T1"] {
@@ -148,12 +143,12 @@ extension MoreDevicesBmvdPortController: UITableViewDelegate, UITableViewDataSou
                 if let a = arrayBmvdCount["\(countBmvd)H1"] {
                     cell?.labelUbat.text = "Цифровой датчик влажности почвы"
                     cell?.imageUITwo.image = UIImage(named: "intensiv2")
-                    cell?.labelRssiTwo.text = a + " %"
+                    cell?.labelRssiTwo.text = "\(Int(a)! * 2)" + " %"
                 }
                 if let a = arrayBmvdCount["\(countBmvd)h1"] {
                     cell?.labelUbat.text = "Аналоговый датчик влажности почвы"
                     cell?.imageUITwo.image = UIImage(named: "intensiv2")
-                    cell?.labelRssiTwo.text = a + " %"
+                    cell?.labelRssiTwo.text = "\(Int(a)! * 2)" + " %"
                 }
                 if let a = arrayBmvdCount["\(countBmvd)t1"] {
                     cell?.labelUbat.text = "Аналоговый датчик температуры почвы"
@@ -163,7 +158,7 @@ extension MoreDevicesBmvdPortController: UITableViewDelegate, UITableViewDataSou
                 if let a = arrayBmvdCount["\(countBmvd)l1"] {
                     cell?.labelUbat.text = "Аналоговый датчик влажности листа"
                     cell?.imageUITwo.image = UIImage(named: "intensiv2")
-                    cell?.labelRssiTwo.text = a + " %"
+                    cell?.labelRssiTwo.text = "\(Int(a)! * 20)" + " %"
                 }
             } else if indexPath.section == 1 {
                 cell?.label.text = ""
@@ -180,12 +175,12 @@ extension MoreDevicesBmvdPortController: UITableViewDelegate, UITableViewDataSou
                 if let a = arrayBmvdCount["\(countBmvd)H2"] {
                     cell?.label.text = "Цифровой датчик влажности почвы"
                     cell?.imageUI.image = UIImage(named: "intensiv2")
-                    cell?.labelRssi.text = a + " %"
+                    cell?.labelRssi.text = "\(Int(a)! * 2)" + " %"
                 }
                 if let a = arrayBmvdCount["\(countBmvd)h2"] {
                     cell?.label.text = "Аналоговый датчик влажности почвы"
                     cell?.imageUI.image = UIImage(named: "intensiv2")
-                    cell?.labelRssi.text = a + " %"
+                    cell?.labelRssi.text = "\(Int(a)! * 2)" + " %"
                 }
                 if let a = arrayBmvdCount["\(countBmvd)t2"] {
                     cell?.label.text = "Аналоговый датчик температуры почвы"
@@ -195,7 +190,7 @@ extension MoreDevicesBmvdPortController: UITableViewDelegate, UITableViewDataSou
                 if let a = arrayBmvdCount["\(countBmvd)l2"] {
                     cell?.label.text = "Аналоговый датчик влажности листа"
                     cell?.imageUI.image = UIImage(named: "intensiv2")
-                    cell?.labelRssi.text = a + " %"
+                    cell?.labelRssi.text = "\(Int(a)! * 20)" + " %"
                 }
                 
                 if let a = arrayBmvdCount["\(countBmvd)T3"] {
@@ -206,12 +201,12 @@ extension MoreDevicesBmvdPortController: UITableViewDelegate, UITableViewDataSou
                 if let a = arrayBmvdCount["\(countBmvd)H3"] {
                     cell?.labelUbat.text = "Цифровой датчик влажности почвы"
                     cell?.imageUITwo.image = UIImage(named: "intensiv2")
-                    cell?.labelRssiTwo.text = a + " %"
+                    cell?.labelRssiTwo.text = "\(Int(a)! * 2)" + " %"
                 }
                 if let a = arrayBmvdCount["\(countBmvd)h3"] {
                     cell?.labelUbat.text = "Аналоговый датчик влажности почвы"
                     cell?.imageUITwo.image = UIImage(named: "intensiv2")
-                    cell?.labelRssiTwo.text = a + " %"
+                    cell?.labelRssiTwo.text = "\(Int(a)! * 2)" + " %"
                 }
                 if let a = arrayBmvdCount["\(countBmvd)t3"] {
                     cell?.labelUbat.text = "Аналоговый датчик температуры почвы"
@@ -221,7 +216,7 @@ extension MoreDevicesBmvdPortController: UITableViewDelegate, UITableViewDataSou
                 if let a = arrayBmvdCount["\(countBmvd)l3"] {
                     cell?.labelUbat.text = "Аналоговый датчик влажности листа"
                     cell?.imageUITwo.image = UIImage(named: "intensiv2")
-                    cell?.labelRssiTwo.text = a + " %"
+                    cell?.labelRssiTwo.text = "\(Int(a)! * 20)" + " %"
                 }
             } else if indexPath.section == 2 {
                 cell?.label.text = ""
@@ -238,12 +233,12 @@ extension MoreDevicesBmvdPortController: UITableViewDelegate, UITableViewDataSou
                 if let a = arrayBmvdCount["\(countBmvd)H4"] {
                     cell?.label.text = "Цифровой датчик влажности почвы"
                     cell?.imageUI.image = UIImage(named: "intensiv2")
-                    cell?.labelRssi.text = a + " %"
+                    cell?.labelRssi.text = "\(Int(a)! * 2)" + " %"
                 }
                 if let a = arrayBmvdCount["\(countBmvd)h4"] {
                     cell?.label.text = "Аналоговый датчик влажности почвы"
                     cell?.imageUI.image = UIImage(named: "intensiv2")
-                    cell?.labelRssi.text = a + " %"
+                    cell?.labelRssi.text = "\(Int(a)! * 2)" + " %"
                 }
                 if let a = arrayBmvdCount["\(countBmvd)t4"]{
                     cell?.label.text = "Аналоговый датчик температуры почвы"
@@ -253,7 +248,7 @@ extension MoreDevicesBmvdPortController: UITableViewDelegate, UITableViewDataSou
                 if let a = arrayBmvdCount["\(countBmvd)l4"] {
                     cell?.label.text = "Аналоговый датчик влажности листа"
                     cell?.imageUI.image = UIImage(named: "intensiv2")
-                    cell?.labelRssi.text = a + " %"
+                    cell?.labelRssi.text = "\(Int(a)! * 20)" + " %"
                 }
                 
                 if let a = arrayBmvdCount["\(countBmvd)T5"] {
@@ -264,12 +259,12 @@ extension MoreDevicesBmvdPortController: UITableViewDelegate, UITableViewDataSou
                 if let a = arrayBmvdCount["\(countBmvd)H5"] {
                     cell?.labelUbat.text = "Цифровой датчик влажности почвы"
                     cell?.imageUITwo.image = UIImage(named: "intensiv2")
-                    cell?.labelRssiTwo.text = a + " %"
+                    cell?.labelRssiTwo.text = "\(Int(a)! * 2)" + " %"
                 }
                 if let a = arrayBmvdCount["\(countBmvd)h5"]{
                     cell?.labelUbat.text = "Аналоговый датчик влажности почвы"
                     cell?.imageUITwo.image = UIImage(named: "intensiv2")
-                    cell?.labelRssiTwo.text = a + " %"
+                    cell?.labelRssiTwo.text = "\(Int(a)! * 2)" + " %"
                 }
                 if let a = arrayBmvdCount["\(countBmvd)t5"]{
                     cell?.labelUbat.text = "Аналоговый датчик температуры почвы"
@@ -279,7 +274,7 @@ extension MoreDevicesBmvdPortController: UITableViewDelegate, UITableViewDataSou
                 if let a = arrayBmvdCount["\(countBmvd)l5"] {
                     cell?.labelUbat.text = "Аналоговый датчик влажности листа"
                     cell?.imageUITwo.image = UIImage(named: "intensiv2")
-                    cell?.labelRssiTwo.text = a + " %"
+                    cell?.labelRssiTwo.text = "\(Int(a)! * 20)" + " %"
                 }
             } else if indexPath.section == 3 {
                 cell?.label.text = ""
@@ -296,12 +291,12 @@ extension MoreDevicesBmvdPortController: UITableViewDelegate, UITableViewDataSou
                 if let a = arrayBmvdCount["\(countBmvd)H6"] {
                     cell?.label.text = "Цифровой датчик влажности почвы"
                     cell?.imageUI.image = UIImage(named: "intensiv2")
-                    cell?.labelRssi.text = a + " %"
+                    cell?.labelRssi.text = "\(Int(a)! * 2)" + " %"
                 }
                 if let a = arrayBmvdCount["\(countBmvd)h6"] {
                     cell?.label.text = "Аналоговый датчик влажности почвы"
                     cell?.imageUI.image = UIImage(named: "intensiv2")
-                    cell?.labelRssi.text = a + " %"
+                    cell?.labelRssi.text = "\(Int(a)! * 2)" + " %"
                 }
                 if let a = arrayBmvdCount["\(countBmvd)t6"] {
                     cell?.label.text = "Аналоговый датчик температуры почвы"
@@ -311,7 +306,7 @@ extension MoreDevicesBmvdPortController: UITableViewDelegate, UITableViewDataSou
                 if let a = arrayBmvdCount["\(countBmvd)l6"] {
                     cell?.label.text = "Аналоговый датчик влажности листа "
                     cell?.imageUI.image = UIImage(named: "intensiv2")
-                    cell?.labelRssi.text = a + " %"
+                    cell?.labelRssi.text = "\(Int(a)! * 20)" + " %"
                 }
             }
             guard let tableViewCell = cell, let viewModel = viewModelHide else { return UITableViewCell() }

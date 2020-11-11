@@ -13,6 +13,8 @@ extension ConfiguratorFirstController: UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         pickerChanel.delegate = self
+        pickerNumberChanels.delegate = self
+        pickerPeriodExchange.delegate = self
         registerKeyboardNotification()
         backView.addTapGesture { [self] in self.popVC() }
         registerDelegateTextFields()
@@ -32,15 +34,40 @@ extension ConfiguratorFirstController: UITextFieldDelegate {
         scrollViewSettings()
         view.addSubview(blurEffect)
         view.addSubview(pickerChanel)
+        view.addSubview(pickerNumberChanels)
+        view.addSubview(pickerPeriodExchange)
+        
         pickerChanel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
         pickerChanel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        
+        pickerNumberChanels.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        pickerNumberChanels.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+        
+        pickerPeriodExchange.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+        pickerPeriodExchange.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
+
         let constrainClose = [
             pickerChanel.topAnchor.constraint(equalTo: view.bottomAnchor)
         ]
         let constrainOpen = [
             pickerChanel.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ]
+        let constrainCloseNumber = [
+            pickerNumberChanels.topAnchor.constraint(equalTo: view.bottomAnchor)
+        ]
+        let constrainOpenNumber = [
+            pickerNumberChanels.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ]
+        let constrainCloseExchange = [
+            pickerPeriodExchange.topAnchor.constraint(equalTo: view.bottomAnchor)
+        ]
+        let constrainOpenNumberExchange = [
+            pickerPeriodExchange.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ]
         NSLayoutConstraint.activate(constrainClose)
+        NSLayoutConstraint.activate(constrainCloseNumber)
+        NSLayoutConstraint.activate(constrainCloseExchange)
+
         scrollView.addTapGesture {
             self.scrollView.endEditing(true)
         }
@@ -60,6 +87,38 @@ extension ConfiguratorFirstController: UITextFieldDelegate {
                 }
             }
         }
+        numberTextField.addTapGesture { [self] in
+            print("chanelTextField")
+            self.scrollView.endEditing(true)
+            self.pickerNumberChanels.isHidden = false
+            self.blurEffect.isHidden = false
+            self.pickerNumberChanels.selectRow(Numbers(string: KBCH).channelsString(), inComponent: 0, animated: true)
+            UIView.animate(withDuration: 0.3, animations: {
+                self.blurEffect.alpha = 1.0
+            }) { _ in
+                UIView.animate(withDuration: 0.5) {
+                    NSLayoutConstraint.deactivate(constrainCloseNumber)
+                    NSLayoutConstraint.activate(constrainOpenNumber)
+                    self.view.layoutIfNeeded()
+                }
+            }
+        }
+        periodEchangeTextField.addTapGesture { [self] in
+            print("chanelTextField")
+            self.scrollView.endEditing(true)
+            self.pickerPeriodExchange.isHidden = false
+            self.blurEffect.isHidden = false
+            self.pickerPeriodExchange.selectRow(Exchanges(string: KPBM).channelsString(), inComponent: 0, animated: true)
+            UIView.animate(withDuration: 0.3, animations: {
+                self.blurEffect.alpha = 1.0
+            }) { _ in
+                UIView.animate(withDuration: 0.5) {
+                    NSLayoutConstraint.deactivate(constrainCloseExchange)
+                    NSLayoutConstraint.activate(constrainOpenNumberExchange)
+                    self.view.layoutIfNeeded()
+                }
+            }
+        }
         blurEffect.addTapGesture { [self] in
             print("blurEffect")
             NSLayoutConstraint.deactivate(constrainClose)
@@ -67,7 +126,11 @@ extension ConfiguratorFirstController: UITextFieldDelegate {
             
             UIView.animate(withDuration: 0.3, animations: {
                 NSLayoutConstraint.deactivate(constrainOpen)
+                NSLayoutConstraint.deactivate(constrainOpenNumber)
+                NSLayoutConstraint.deactivate(constrainOpenNumberExchange)
                 NSLayoutConstraint.activate(constrainClose)
+                NSLayoutConstraint.activate(constrainCloseNumber)
+                NSLayoutConstraint.activate(constrainCloseExchange)
                 self.blurEffect.alpha = 0.0
                 self.view.layoutIfNeeded()
             }) { _ in
@@ -175,9 +238,12 @@ extension ConfiguratorFirstController: UITextFieldDelegate {
         if notification.name == UIResponder.keyboardWillHideNotification {
             let contentInset:UIEdgeInsets = UIEdgeInsets.zero
                 scrollView.contentInset = contentInset
+                saveButton.contentEdgeInsets = contentInset
             
         } else {
             scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
+            saveButton.contentEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom - 80, right: 0)
+
         }
         scrollView.scrollIndicatorInsets = scrollView.contentInset
     }
@@ -288,5 +354,119 @@ extension ConfiguratorFirstController: UITextFieldDelegate {
         saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20).isActive = true
         saveButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20).isActive = true
 
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == numberTextField {
+            do {
+                let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+                let regex = try NSRegularExpression(pattern: "^([0-9]{0,1})$", options: [])
+                if regex.firstMatch(in: text, options: [], range: NSMakeRange(0, text.count))
+                    != nil {
+                    return true
+                }
+            }
+            catch {
+                print("ERROR")
+            }
+        } else if textField == pinTextField {
+            do {
+                let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+                let regex = try NSRegularExpression(pattern: "^([0-9]{0,4})$", options: [])
+                if regex.firstMatch(in: text, options: [], range: NSMakeRange(0, text.count))
+                    != nil {
+                    return true
+                }
+            }
+            catch {
+                print("ERROR")
+            }
+        } else if textField == addressTextField {
+            do {
+                let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+                let regex = try NSRegularExpression(pattern: "^([a-zA-Z0-9.]{0,25})$", options: [])
+                if regex.firstMatch(in: text, options: [], range: NSMakeRange(0, text.count))
+                    != nil {
+                    return true
+                }
+            }
+            catch {
+                print("ERROR")
+            }
+        } else if textField == portTextField {
+            do {
+                let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+                let regex = try NSRegularExpression(pattern: "^([0-9]{0,5})$", options: [])
+                if regex.firstMatch(in: text, options: [], range: NSMakeRange(0, text.count))
+                    != nil {
+                    return true
+                }
+            }
+            catch {
+                print("ERROR")
+            }
+        } else if textField == passwordDevicesTextField {
+            do {
+                let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+                let regex = try NSRegularExpression(pattern: "^([0-9]{0,5})$", options: [])
+                if regex.firstMatch(in: text, options: [], range: NSMakeRange(0, text.count))
+                    != nil {
+                    return true
+                }
+            }
+            catch {
+                print("ERROR")
+            }
+        } else if textField == passwordTextField {
+            do {
+                let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+                let regex = try NSRegularExpression(pattern: "^([a-zA-Z0-9]{0,20})$", options: [])
+                if regex.firstMatch(in: text, options: [], range: NSMakeRange(0, text.count))
+                    != nil {
+                    return true
+                }
+            }
+            catch {
+                print("ERROR")
+            }
+        } else if textField == userTextField {
+            do {
+                let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+                let regex = try NSRegularExpression(pattern: "^([a-zA-Z0-9]{0,20})$", options: [])
+                if regex.firstMatch(in: text, options: [], range: NSMakeRange(0, text.count))
+                    != nil {
+                    return true
+                }
+            }
+            catch {
+                print("ERROR")
+            }
+        } else if textField == accessPointTextField {
+            do {
+                let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+                let regex = try NSRegularExpression(pattern: "^([a-zA-Z0-9.]{0,30})$", options: [])
+                if regex.firstMatch(in: text, options: [], range: NSMakeRange(0, text.count))
+                    != nil {
+                    return true
+                }
+            }
+            catch {
+                print("ERROR")
+            }
+        } else if textField == periodTextField {
+            do {
+                let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+                let regex = try NSRegularExpression(pattern: "^([0-9]{0,2})$", options: [])
+                if regex.firstMatch(in: text, options: [], range: NSMakeRange(0, text.count))
+                    != nil {
+                    let intvalue = Int(text)
+                    return (intvalue ?? 10 >= 0 && intvalue ?? 10 <= 59)
+                }
+            }
+            catch {
+                print("ERROR")
+            }
+        }
+        return false
     }
 }

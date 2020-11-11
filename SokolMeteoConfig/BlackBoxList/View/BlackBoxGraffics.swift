@@ -49,7 +49,7 @@ class BlackBoxGraffics: UIViewController {
         let xAxis = chart.xAxis
         xAxis.labelFont = UIFont(name: "FuturaPT-Light", size: 11)!
         xAxis.labelTextColor = .black
-        xAxis.labelPosition = .bottom
+        xAxis.labelPosition = .bothSided
         xAxis.labelCount = 3
         xAxis.axisMinimum = 0
         xAxis.granularity = 0
