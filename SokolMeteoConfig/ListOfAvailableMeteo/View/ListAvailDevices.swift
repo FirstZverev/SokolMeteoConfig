@@ -31,9 +31,42 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
     var bluetoothPeripheralManager: CBPeripheralManager?
     var searchList = [String]()
     let generator = UIImpactFeedbackGenerator(style: .light)
-    var constrainClose: [NSLayoutConstraint] = []
-    var constrainOpen: [NSLayoutConstraint] = []
 
+    var viewAlphaStart : UIView = {
+       let viewAlphaStart = UIView()
+        viewAlphaStart.frame = CGRect(x: 0, y: screenH / 12 + 110, width: screenW, height: screenH - (screenH / 12 + 110))
+        viewAlphaStart.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+        return viewAlphaStart
+    }()
+    lazy var demoConnect: UIButton = {
+        let btnConnet = UIButton()
+        btnConnet.backgroundColor = .purple
+        btnConnet.translatesAutoresizingMaskIntoConstraints = false
+        btnConnet.backgroundColor = UIColor(rgb: 0xBE449E)
+        btnConnet.layer.cornerRadius = 22
+        btnConnet.setTitle("Подключиться", for: .normal)
+        btnConnet.titleLabel?.font = UIFont(name:"FuturaPT-Medium", size: 18.0)
+        btnConnet.setTitleColor(.white, for: .normal)
+        btnConnet.showsTouchWhenHighlighted = true
+        btnConnet.setTitleColor(UIColor(rgb: 0xB64894), for: .highlighted)
+        btnConnet.layer.shadowColor = UIColor(rgb: 0xB64894).cgColor
+        btnConnet.layer.shadowRadius = 6.0
+        btnConnet.layer.shadowOpacity = 0.5
+        btnConnet.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+        btnConnet.addTarget(self, action: #selector(actionDemo), for: .touchUpInside)
+        return btnConnet
+    }()
+    lazy var demoLabel: UILabel = {
+        let demoLabel = UILabel()
+        //    let titleLabel = UILabel(frame: CGRect(x: 20, y: 0, width: screenW / 2, height: 60))
+        demoLabel.textAlignment = .left
+        demoLabel.text = "Sokol-M_Demo"
+        demoLabel.textColor = .black
+        demoLabel.translatesAutoresizingMaskIntoConstraints = false
+        demoLabel.font = UIFont(name:"FuturaPT-Light", size: 24.0)
+        return demoLabel
+    }()
+    
     lazy var alertView: CustomAlertWarning = {
         let alertView: CustomAlertWarning = CustomAlertWarning.loadFromNib()
         alertView.delegate = self
@@ -62,29 +95,6 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
         return cancelLabel
     }()
     
-    let demolLabel: UILabel = {
-        let cancelLabel = UILabel()
-        cancelLabel.text = "Демонстрационное подключение"
-        cancelLabel.textAlignment = .center
-        cancelLabel.translatesAutoresizingMaskIntoConstraints = false
-        cancelLabel.textColor = .purple
-        cancelLabel.font = UIFont(name:"FuturaPT-Medium", size: screenW / 20)
-        return cancelLabel
-    }()
-    
-    let demoView: UIButton = {
-        let imageUI = UIButton()
-        imageUI.backgroundColor = .white
-        imageUI.layer.shadowColor = UIColor(rgb: 0xB64894).cgColor
-        imageUI.layer.cornerRadius = 20
-        imageUI.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        imageUI.layer.shadowRadius = 6.0
-        imageUI.layer.shadowOpacity = 0.5
-        imageUI.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
-        imageUI.translatesAutoresizingMaskIntoConstraints = false
-        imageUI.addTarget(self, action: #selector(actionDemo), for: .touchUpInside)
-        return imageUI
-    }()
     @objc func actionDemo() {
         Access_Allowed = 0
         mainPassword = ""
@@ -110,6 +120,15 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
     }()
     
     lazy var activityIndicator: NVActivityIndicatorView = {
+        let view = NVActivityIndicatorView(frame: .zero, type: .ballGridPulse, color: UIColor.purple)
+        view.frame.size = CGSize(width: 50, height: 50)
+        view.layer.shadowColor = UIColor.white.cgColor
+        view.layer.shadowRadius = 5.0
+        view.layer.shadowOpacity = 0.7
+        view.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+        return view
+    }()
+    lazy var activityIndicatorStart: NVActivityIndicatorView = {
         let view = NVActivityIndicatorView(frame: .zero, type: .ballGridPulse, color: UIColor.purple)
         view.frame.size = CGSize(width: 50, height: 50)
         view.layer.shadowColor = UIColor.white.cgColor
@@ -155,7 +174,7 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
             let configGet = "Get,KSPW,KSRV,KPBM,KCNL,KPAK"
             let configGetNext = ",KAPI,KUSR,KPWD,KPIN,KPOR,KBCH"
             let getVersion = "Ver\r\n"
-
+            let rebootBT = "REBOOT_BT\r\n"
             let configSet = "Set,KSPW:3:\(KSPW),KSRV:3:\(KSRV),KPBM:1:\(KPBM),KCNL:1:\(KCNL),KBCH:1:\(KBCH),KUSR:3:\(KUSR),"
             let configSetNext = "KPWD:3:\(KPWD),KPAK:1:\(KPAK),KPOR:3:\(KPOR),KAPI:3:\(KAPI),KPIN:3:\(KPIN)"
             
@@ -212,6 +231,9 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
                     case 28:
                         //version
                         self.dataValueChange(peripheralCBCharacteristic: [peripheral, characteristic], valuesString: [getVersion])
+                    case 29:
+                        //version
+                        self.dataValueChange(peripheralCBCharacteristic: [peripheral, characteristic], valuesString: [rebootBT])
                     default:
                         print("Ожидание")
                     }
@@ -1154,10 +1176,23 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
         
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(demoConnect)
+        self.view.addSubview(demoLabel)
+        NSLayoutConstraint.activate([
+            demoConnect.topAnchor.constraint(equalTo: view.topAnchor, constant: screenH / 12 + searchBar.bounds.height + 20),
+            demoConnect.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            demoConnect.heightAnchor.constraint(equalToConstant: 44),
+            demoConnect.widthAnchor.constraint(equalToConstant: 140),
+            
+            demoLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: screenH / 12 + searchBar.bounds.height + 20),
+            demoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            demoLabel.heightAnchor.constraint(equalToConstant: 44),
+            demoLabel.widthAnchor.constraint(equalToConstant: screenW / 2)
+        ])
         self.view.addSubview(tableView)
         NSLayoutConstraint.activate([
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -70),
-            tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: screenH / 12 + searchBar.bounds.height + 5),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: screenH / 12 + searchBar.bounds.height + 80),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -1),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 1),
         ])
@@ -1256,41 +1291,20 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
         activityIndicator.center = viewAlpha.center
         view.addSubview(viewAlpha)
         
-        view.addSubview(demoView)
-        view.addSubview(demolLabel)
-        
-        constrainClose = [
-            demoView.topAnchor.constraint(equalTo: view.bottomAnchor),
-            demolLabel.topAnchor.constraint(equalTo: view.bottomAnchor),
-            demoView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            demoView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            
-            demolLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            demolLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
-        ]
-        constrainOpen = [
-            demoView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            demolLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5),
-            demoView.topAnchor.constraint(equalTo: demolLabel.topAnchor,constant: -10),
-            demoView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            demoView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            
-            demolLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            demolLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
-
-        ]
-        NSLayoutConstraint.activate(self.constrainClose)
-        
+        viewAlphaStart.isHidden = true
+        viewAlphaStart.addSubview(activityIndicatorStart)
+        activityIndicatorStart.center = CGPoint(x: screenW / 2, y: screenH / 2 -  (screenH / 12 + 110))
+        view.addSubview(viewAlphaStart)
     }
     
     func popVC() {
         self.navigationController?.popViewController(animated: true)
     }
     func startActivityIndicator() {
-        self.viewAlpha.isHidden = false
+        self.viewAlphaStart.isHidden = false
         self.cancelLabel.isHidden = false
         cancelLabel.superview?.bringSubviewToFront(cancelLabel)
-        activityIndicator.startAnimating()
+        activityIndicatorStart.startAnimating()
         UIView.animate(withDuration: 0.5, animations: { [self] in
             self.tableView.alpha = 0.0
         }) { [self] (_) in
@@ -1298,24 +1312,15 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
         }
     }
     override func viewWillDisappear(_ animated: Bool) {
-        UIView.animate(withDuration: 0.3) {
-            NSLayoutConstraint.deactivate(self.constrainOpen)
-            NSLayoutConstraint.activate(self.constrainClose)
-            self.view.layoutIfNeeded()
-        }
+
     }
     override func viewWillAppear(_ animated: Bool) {
-        UIView.animate(withDuration: 0.3) {
-            NSLayoutConstraint.deactivate(self.constrainClose)
-            NSLayoutConstraint.activate(self.constrainOpen)
-            self.view.layoutIfNeeded()
-        }
         startActivityIndicator()
     }
     
     func stopActivityIndicator() {
         activityIndicator.stopAnimating()
-        self.viewAlpha.isHidden = true
+        self.viewAlphaStart.isHidden = true
         self.cancelLabel.isHidden = true
         tableView.isHidden = false
         UIView.animate(withDuration: 0.5, animations: { [self] in

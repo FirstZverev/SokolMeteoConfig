@@ -8,6 +8,12 @@
 
 import Foundation
 
+var idSession = ""
+
+var devicesList: [DataDevices] = []
+var devicesParametrsList: [DeviceListResult] = []
+var selectItem: Int?
+
 var isNight = false
 var code = "ru"
 

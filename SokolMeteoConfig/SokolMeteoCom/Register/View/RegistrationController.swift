@@ -1,20 +1,26 @@
 //
-//  AccountEnter.swift
-//  SOKOL-M
+//  RegistrationController.swift
+//  SOKOL
 //
-//  Created by Володя Зверев on 27.10.2020.
+//  Created by Володя Зверев on 13.11.2020.
 //  Copyright © 2020 zverev. All rights reserved.
 //
 
 import UIKit
-import Alamofire
 import RealmSwift
 import NVActivityIndicatorView
 import SimpleCheckbox
 
-class AccountEnterController: UIViewController {
-    let tabBarSokolMeteoVC = TabBarSokolMeteoController()
-    let customNavigationBar = createCustomNavigationBar(title: "ВХОД В УЧЕТНУЮ ЗАПИСЬ",fontSize: screenW / 22)
+class RegistrationController: UIViewController {
+    
+    let customNavigationBar = createCustomNavigationBar(title: "РЕГИСТРАЦИЯ",fontSize: screenW / 22)
+    
+    lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+    
     lazy var stackTextField: UIStackView = {
         let stackTextField = UIStackView()
         stackTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -83,7 +89,37 @@ class AccountEnterController: UIViewController {
         backView.hero.id = "backView"
         return backView
     }()
-    lazy var IMEITextField: UITextField = {
+    lazy var firstNameTextField: UITextField = {
+        let textField = TextFieldWithPadding(placeholder: "Введите имя")
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addTarget(self, action: #selector(self.textFieldDidMax(_:)),for: UIControl.Event.editingChanged)
+        textField.layer.shadowRadius = 3.0
+        textField.layer.shadowOpacity = 0.1
+        textField.autocapitalizationType = .none
+        textField.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
+        return textField
+    }()
+    lazy var secondNameTextField: UITextField = {
+        let textField = TextFieldWithPadding(placeholder: "Введите фамилию")
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addTarget(self, action: #selector(self.textFieldDidMax(_:)),for: UIControl.Event.editingChanged)
+        textField.layer.shadowRadius = 3.0
+        textField.layer.shadowOpacity = 0.1
+        textField.autocapitalizationType = .none
+        textField.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
+        return textField
+    }()
+    lazy var thriedNameTextField: UITextField = {
+        let textField = TextFieldWithPadding(placeholder: "Введите отчество")
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addTarget(self, action: #selector(self.textFieldDidMax(_:)),for: UIControl.Event.editingChanged)
+        textField.layer.shadowRadius = 3.0
+        textField.layer.shadowOpacity = 0.1
+        textField.autocapitalizationType = .none
+        textField.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
+        return textField
+    }()
+    lazy var emailTextField: UITextField = {
         let textField = TextFieldWithPadding(placeholder: "Введите e-mail")
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.addTarget(self, action: #selector(self.textFieldDidMax(_:)),for: UIControl.Event.editingChanged)
@@ -95,6 +131,17 @@ class AccountEnterController: UIViewController {
     }()
     lazy var passwordTextField: UITextField = {
         let textField = TextFieldWithPadding(placeholder: "Введите пароль")
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.addTarget(self, action: #selector(self.textFieldPasswordDidMax(_:)),for: UIControl.Event.editingChanged)
+        textField.isSecureTextEntry = true
+        textField.layer.shadowRadius = 3.0
+        textField.layer.shadowOpacity = 0.1
+        textField.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
+        return textField
+    }()
+    
+    lazy var passwordRepeatTextField: UITextField = {
+        let textField = TextFieldWithPadding(placeholder: "Повторите пароль")
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.addTarget(self, action: #selector(self.textFieldPasswordDidMax(_:)),for: UIControl.Event.editingChanged)
         textField.isSecureTextEntry = true
@@ -115,20 +162,11 @@ class AccountEnterController: UIViewController {
     
     var saveButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Войти", for: .normal)
+        button.setTitle("Зарегистрироваться", for: .normal)
         button.backgroundColor = UIColor(rgb: 0xBE449E)
         button.layer.cornerRadius = 20
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(actionSave), for: .touchUpInside)
-        return button
-    }()
-    var registrationButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Зарегистрировать аккаунт", for: .normal)
-        button.setTitleColor(UIColor(rgb: 0x998F99), for: .normal)
-        button.layer.cornerRadius = 20
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(actionRegister), for: .touchUpInside)
         return button
     }()
     
@@ -153,15 +191,15 @@ class AccountEnterController: UIViewController {
     @objc func checkboxValueChanged(sender: Checkbox!) {
         checkBoxSender()
     }
-    @objc func actionRegister() {
-        self.navigationController?.pushViewController(RegistrationController(), animated: true)
-    }
+    
     @objc func actionSave() {
         if Reachability.isConnectedToNetwork(){
             viewAlpha.isHidden = false
 //            fetchInAccount()
-            let userData = ["login": "\(IMEITextField.text ?? "")", "password": "\(passwordTextField.text ?? "")"]
-            networkingPostRequest(urlString: "http://185.27.193.112:8004/auth/login", userDataJSON: userData)
+//            let fields = ["name": "\(firstNameTextField.text ?? "")", "surname": "\(secondNameTextField.text ?? "")"]
+//            let userData = ["email": "\(emailTextField.text ?? "")", "password": "\(passwordTextField.text ?? "")"]
+            let userData: [String: Any] = ["email": "\(emailTextField.text ?? "")", "password": "\(passwordTextField.text ?? "")", "fields": ["name": "\(firstNameTextField.text ?? "")", "surname": "\(secondNameTextField.text ?? "")"]]
+            networkingPostRequest(urlString: "https://sokolmeteo.com/platform/api/user/register", userDataJSON: userData)
         } else {
             showToast(message: "Проверьте соединение", seconds: 1.0)
         }
@@ -181,7 +219,7 @@ class AccountEnterController: UIViewController {
             print(Realm.Configuration.defaultConfiguration.fileURL!)
 
             let account = AccountModel()
-            account.user = IMEITextField.text
+            account.user = emailTextField.text
             account.password = passwordTextField.text
             if checkBox.isChecked == true {
                 account.save = true
@@ -213,31 +251,7 @@ class AccountEnterController: UIViewController {
             print("error getting xml string: \(error)")
         }
     }
-    
-    func fetchInAccount() {
-        let urlMain = "http://185.27.193.112:8004"
-        let urlString = urlMain + "/login?credentials=\(base64Encoded(email: IMEITextField.text ?? "", password: passwordTextField.text ?? ""))"
-        print(urlString)
-        let request = AF.request(urlString)
-            .validate()
-            .responseDecodable(of: Network.self) { (response) in
-//                guard let network = response.value else {return}
-//                print(network.timestamp!)
-            }
-        // 2
-        request.responseDecodable(of: Network.self) { (response) in
-          guard let network = response.value else { return }
-            print(network)
-            if network.state == "OK" {
-                self.realmSave()
-                self.viewAlpha.isHidden = true
-//                self.navigationController?.pushViewController(DownloadDaraController(), animated: true)
-            } else {
-                self.viewAlpha.isHidden = true
-                self.showToast(message: network.errors?.first ?? "Ошибка", seconds: 1.0)
-            }
-        }
-    }
+
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         var config = Realm.Configuration(
@@ -257,7 +271,7 @@ class AccountEnterController: UIViewController {
         
         let realmCheck = realm.objects(AccountModel.self)
         if realmCheck.count != 0 {
-            IMEITextField.text = realmCheck[0].user
+            emailTextField.text = realmCheck[0].user
             passwordTextField.text = realmCheck[0].password
             checkBox.isChecked = realmCheck[0].save
             checkBoxSender()
@@ -269,9 +283,7 @@ class AccountEnterController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        view.sv(
-            customNavigationBar
-        )
+        view.sv(scrollView, customNavigationBar)
         customNavigationBar.hero.id = "PlatformaSokol"
         showView()
         delegateTextFieldDelegate()
@@ -279,9 +291,10 @@ class AccountEnterController: UIViewController {
         viewAlpha.addSubview(activityIndicator)
         activityIndicator.startAnimating()
         view.addSubview(viewAlpha)
+        registerKeyboardNotification()
     }
     
-    func networkingPostRequest(urlString: String, userDataJSON: [String: String]) {
+    func networkingPostRequest(urlString: String, userDataJSON: [String: Any]) {
         guard let url = URL(string: urlString) else {return}
         
         var request = URLRequest(url: url)
@@ -308,12 +321,14 @@ class AccountEnterController: UIViewController {
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: [])
                 print(json)
-                let jsonSecond = try JSONDecoder().decode(MessageError.self, from: data)
-                print(jsonSecond)
-                guard let JSESSIONID = jsonSecond.result else {return}
-                idSession = JSESSIONID
+                if let httpResponse = response as? HTTPURLResponse {
+                    if httpResponse.statusCode != 200 {
+                        let jsonSecond = try JSONDecoder().decode(MessageError.self, from: data)
+                        print(jsonSecond)
+                    }
+                }
                 DispatchQueue.main.async {
-                    self.navigationController?.pushViewController(self.tabBarSokolMeteoVC, animated: true )
+                    self.navigationController?.popViewController(animated: true)
                 }
             } catch {
                 print(error)
@@ -327,39 +342,51 @@ class AccountEnterController: UIViewController {
         backView.addTapGesture {
             self.navigationController?.popViewController(animated: true)
         }
-        stackTextField.addArrangedSubview(IMEITextField)
+        stackTextField.addArrangedSubview(firstNameTextField)
+        stackTextField.addArrangedSubview(secondNameTextField)
+        stackTextField.addArrangedSubview(thriedNameTextField)
+        stackTextField.addArrangedSubview(emailTextField)
         stackTextField.addArrangedSubview(passwordTextField)
+        stackTextField.addArrangedSubview(passwordRepeatTextField)
         stackTextField.addArrangedSubview(saveTextField)
 
         saveTextField.addArrangedSubview(checkBox)
         saveTextField.addArrangedSubview(saveLabel)
+        
+        scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: screenW / 12).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        scrollView.contentSize = CGSize(width: Int(screenW), height: Int(screenH))
 
-        view.sv(stackTextField, nameDevice, saveButton, registrationButton)
+        scrollView.sv(stackTextField, nameDevice, saveButton)
         
+        firstNameTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        secondNameTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        thriedNameTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+
         passwordTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        IMEITextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        emailTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
+        passwordRepeatTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+
         checkBox.heightAnchor.constraint(equalToConstant: 20).isActive = true
         checkBox.widthAnchor.constraint(equalToConstant: 20).isActive = true
 
-        stackTextField.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        stackTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        stackTextField.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor).isActive = true
+        stackTextField.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         stackTextField.widthAnchor.constraint(equalToConstant: screenW - 40).isActive = true
         
         nameDevice.bottomAnchor.constraint(equalTo: stackTextField.topAnchor, constant: -50).isActive = true
-        nameDevice.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        nameDevice.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
         
-        saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40).isActive = true
+        saveButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
+        saveButton.topAnchor.constraint(equalTo: stackTextField.bottomAnchor, constant: 20).isActive = true
         saveButton.heightAnchor.constraint(equalToConstant: 45).isActive = true
-        saveButton.widthAnchor.constraint(equalToConstant: screenW / 2.5).isActive = true
-        
-        registrationButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        registrationButton.topAnchor.constraint(equalTo: saveButton.bottomAnchor, constant: 10).isActive = true
-        registrationButton.heightAnchor.constraint(equalToConstant: 45).isActive = true
-        registrationButton.widthAnchor.constraint(equalToConstant: screenW / 1.5).isActive = true
-
-
+        saveButton.widthAnchor.constraint(equalToConstant: screenW / 1.5).isActive = true
+        scrollView.addTapGesture {
+            self.scrollView.endEditing(true)
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -367,10 +394,15 @@ class AccountEnterController: UIViewController {
     }
 }
 
-extension AccountEnterController: UITextFieldDelegate {
+extension RegistrationController: UITextFieldDelegate {
     func delegateTextFieldDelegate() {
+        firstNameTextField.delegate = self
+        secondNameTextField.delegate = self
+        thriedNameTextField.delegate = self
+
+        passwordRepeatTextField.delegate = self
         passwordTextField.delegate = self
-        IMEITextField.delegate = self
+        emailTextField.delegate = self
     }
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.layer.borderColor = UIColor(rgb: 0xF06BCD).cgColor
@@ -386,15 +418,12 @@ extension AccountEnterController: UITextFieldDelegate {
         textField.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
     }
     @objc func textFieldDidMax(_ textField: UITextField) {
-        print(textField.text!)
-        textField.text = textField.text?.lowercased()
         if textField.text?.last == " " {
             textField.text?.removeLast()
         }
         checkMaxLength(textField: textField, maxLength: 55)
     }
     @objc func textFieldPasswordDidMax(_ textField: UITextField) {
-        print(textField.text!)
         if textField.text?.last == " " {
             textField.text?.removeLast()
         }
@@ -404,5 +433,25 @@ extension AccountEnterController: UITextFieldDelegate {
         if textField.text!.count > maxLength {
             textField.deleteBackward()
         }
+    }
+    
+    fileprivate func registerKeyboardNotification() {
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+    @objc func adjustForKeyboard(notification: Notification) {
+        guard let keyboardValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
+
+        let keyboardScreenEndFrame = keyboardValue.cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        if notification.name == UIResponder.keyboardWillHideNotification {
+            let contentInset:UIEdgeInsets = UIEdgeInsets.zero
+                scrollView.contentInset = contentInset
+        } else {
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height - view.safeAreaInsets.bottom, right: 0)
+
+        }
+        scrollView.scrollIndicatorInsets = scrollView.contentInset
     }
 }

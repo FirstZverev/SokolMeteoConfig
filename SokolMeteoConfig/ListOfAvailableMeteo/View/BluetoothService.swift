@@ -12,7 +12,7 @@ extension ListAvailDevices : CBCentralManagerDelegate, CBPeripheralDelegate {
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         if advertisementData["kCBAdvDataLocalName"] as? String != nil {
             let nameDevicesOps = (advertisementData["kCBAdvDataLocalName"] as? String)?.components(separatedBy: ["_"])
-            if nameDevicesOps?[0] == "Sokol-M" && nameDevicesOps?[1] != "UPDATE" {
+            if nameDevicesOps?[0] == "Sokol-M" || nameDevicesOps?[0] == "SOKOL" {
                 if(!peripherals.contains(peripheral)) {
                     print(RSSI)
                     if RSSI != 127{
@@ -44,7 +44,6 @@ extension ListAvailDevices : CBCentralManagerDelegate, CBPeripheralDelegate {
                             RSSIMainArray[i] = "\(RSSI)"
                         }
                         tableView.reloadData()
-                        
                     }
                 }
                 tableView.reloadData()

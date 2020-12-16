@@ -81,11 +81,6 @@ extension ListAvailDevices: UITableViewDataSource {
                         self.cancelLabel.superview?.bringSubviewToFront(self.cancelLabel)
                         if !self.searching {
                             self.stringAll = ""
-                            UIView.animate(withDuration: 0.3) {
-                                NSLayoutConstraint.deactivate(self.constrainOpen)
-                                NSLayoutConstraint.activate(self.constrainClose)
-                                self.view.layoutIfNeeded()
-                            }
                             if indexPath.section > rrsiPink {
                                 self.manager?.connect(self.peripherals[indexPath.section-2], options: nil)
                                 print(self.peripherals[indexPath.section-2])

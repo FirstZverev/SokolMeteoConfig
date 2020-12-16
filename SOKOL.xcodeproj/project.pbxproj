@@ -67,6 +67,8 @@
 		B57914A5255BCD95005102D4 /* ModelExchange.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57914A4255BCD95005102D4 /* ModelExchange.swift */; };
 		B57AED8D2536F784005F3C91 /* CellDataPeripheral.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AED8C2536F784005F3C91 /* CellDataPeripheral.swift */; };
 		B57AED932536FB6D005F3C91 /* ListAvailTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57AED922536FB6D005F3C91 /* ListAvailTableView.swift */; };
+		B57C1C1525835D1E00074772 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57C1C1425835D1E00074772 /* MapViewController.swift */; };
+		B57C1C1825838E1D00074772 /* ListDeviceParametrs.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57C1C1725838E1D00074772 /* ListDeviceParametrs.swift */; };
 		B58210F9251A0D3E006B4A4B /* BoxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58210F8251A0D3E006B4A4B /* BoxModel.swift */; };
 		B58217B5247FCC1800C669CA /* AnimationLottie.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58217B4247FCC1800C669CA /* AnimationLottie.swift */; };
 		B58217B7247FD5CE00C669CA /* CustomAlertWarning.xib in Resources */ = {isa = PBXBuildFile; fileRef = B58217B6247FD5CE00C669CA /* CustomAlertWarning.xib */; };
@@ -120,6 +122,14 @@
 		B5A82A9C2498761500F7A335 /* ConfiguratorSecondController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A82A9B2498761500F7A335 /* ConfiguratorSecondController.swift */; };
 		B5A82A9E2498762700F7A335 /* ConfiguratorThriedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A82A9D2498762700F7A335 /* ConfiguratorThriedController.swift */; };
 		B5B06E2925307929007E5B98 /* WIdgetSokol.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = B5B06E2425307927007E5B98 /* WIdgetSokol.intentdefinition */; };
+		B5B40843255E6063002EECD1 /* ListDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B40842255E6063002EECD1 /* ListDevices.swift */; };
+		B5B40849255E6394002EECD1 /* TabBarSokolMeteoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B40848255E6394002EECD1 /* TabBarSokolMeteoController.swift */; };
+		B5B4084D255E6435002EECD1 /* DevicesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B4084C255E6435002EECD1 /* DevicesController.swift */; };
+		B5B40850255E6456002EECD1 /* ReportsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B4084F255E6456002EECD1 /* ReportsController.swift */; };
+		B5B40856255E65B6002EECD1 /* NetworkingDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B40855255E65B6002EECD1 /* NetworkingDevices.swift */; };
+		B5B4085B255E9D59002EECD1 /* MessageError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B4085A255E9D59002EECD1 /* MessageError.swift */; };
+		B5B4085E255EB2BA002EECD1 /* RegistrationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B4085D255EB2BA002EECD1 /* RegistrationController.swift */; };
+		B5B40864255ED9C9002EECD1 /* RegisterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B40863255ED9C9002EECD1 /* RegisterModel.swift */; };
 		B5B54C5324E3D3F400788359 /* ViewModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B54C5224E3D3F400788359 /* ViewModelData.swift */; };
 		B5BA77CC24ED0CBA0046A2DD /* SecondConfigBMVDCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BA77CB24ED0CBA0046A2DD /* SecondConfigBMVDCell.swift */; };
 		B5BA77CE24EE3AD50046A2DD /* BlackBoxMeteoDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BA77CD24EE3AD50046A2DD /* BlackBoxMeteoDataController.swift */; };
@@ -137,6 +147,14 @@
 		B5DB4CFF243479230016A4BD /* DevicesListCellHeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DB4CFE243479230016A4BD /* DevicesListCellHeder.swift */; };
 		B5DB4D01243479320016A4BD /* DevicesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DB4D00243479320016A4BD /* DevicesListCell.swift */; };
 		B5DB4D0324347B3D0016A4BD /* UIView+tap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DB4D0224347B3D0016A4BD /* UIView+tap.swift */; };
+		B5E1EB0525822F4400C43E15 /* OnlineDataMapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1EB0425822F4400C43E15 /* OnlineDataMapCell.swift */; };
+		B5EF70652562614D00CB0FBA /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EF70642562614D00CB0FBA /* DeviceCell.swift */; };
+		B5EF70692563D61C00CB0FBA /* GroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EF70682563D61C00CB0FBA /* GroupController.swift */; };
+		B5EF706C2563DCFA00CB0FBA /* ObjectViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EF706B2563DCFA00CB0FBA /* ObjectViewCell.swift */; };
+		B5EF709425666C9400CB0FBA /* DeviceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EF709325666C9400CB0FBA /* DeviceController.swift */; };
+		B5EF709725666E9900CB0FBA /* OnlineDataDeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EF709625666E9900CB0FBA /* OnlineDataDeviceCell.swift */; };
+		B5EF709A25666F4700CB0FBA /* OnlineDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EF709925666F4700CB0FBA /* OnlineDataCell.swift */; };
+		B5EF709E2566717600CB0FBA /* ProtocolsDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EF709D2566717600CB0FBA /* ProtocolsDevices.swift */; };
 		B5FE2DCF24E3D6BA009387AB /* DataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5FE2DCE24E3D6BA009387AB /* DataCell.swift */; };
 		DDE95C0F85DE55FA2C214808 /* Pods_SOKOL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B450DB6E069CAEAC28A75D /* Pods_SOKOL.framework */; };
 /* End PBXBuildFile section */
@@ -222,6 +240,8 @@
 		B57914A4255BCD95005102D4 /* ModelExchange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelExchange.swift; sourceTree = "<group>"; };
 		B57AED8C2536F784005F3C91 /* CellDataPeripheral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellDataPeripheral.swift; sourceTree = "<group>"; };
 		B57AED922536FB6D005F3C91 /* ListAvailTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAvailTableView.swift; sourceTree = "<group>"; };
+		B57C1C1425835D1E00074772 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		B57C1C1725838E1D00074772 /* ListDeviceParametrs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDeviceParametrs.swift; sourceTree = "<group>"; };
 		B58210F8251A0D3E006B4A4B /* BoxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxModel.swift; sourceTree = "<group>"; };
 		B58217B4247FCC1800C669CA /* AnimationLottie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationLottie.swift; sourceTree = "<group>"; };
 		B58217B6247FD5CE00C669CA /* CustomAlertWarning.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomAlertWarning.xib; sourceTree = "<group>"; };
@@ -283,6 +303,14 @@
 		B5B06E2525307929007E5B98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B5B06E2725307929007E5B98 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5B2D3DCE5B2D2922FC3777B /* Pods-SOKOL.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SOKOL.release.xcconfig"; path = "Target Support Files/Pods-SOKOL/Pods-SOKOL.release.xcconfig"; sourceTree = "<group>"; };
+		B5B40842255E6063002EECD1 /* ListDevices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDevices.swift; sourceTree = "<group>"; };
+		B5B40848255E6394002EECD1 /* TabBarSokolMeteoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarSokolMeteoController.swift; sourceTree = "<group>"; };
+		B5B4084C255E6435002EECD1 /* DevicesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesController.swift; sourceTree = "<group>"; };
+		B5B4084F255E6456002EECD1 /* ReportsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsController.swift; sourceTree = "<group>"; };
+		B5B40855255E65B6002EECD1 /* NetworkingDevices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingDevices.swift; sourceTree = "<group>"; };
+		B5B4085A255E9D59002EECD1 /* MessageError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageError.swift; sourceTree = "<group>"; };
+		B5B4085D255EB2BA002EECD1 /* RegistrationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationController.swift; sourceTree = "<group>"; };
+		B5B40863255ED9C9002EECD1 /* RegisterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterModel.swift; sourceTree = "<group>"; };
 		B5B54C5224E3D3F400788359 /* ViewModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelData.swift; sourceTree = "<group>"; };
 		B5BA77CB24ED0CBA0046A2DD /* SecondConfigBMVDCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondConfigBMVDCell.swift; sourceTree = "<group>"; };
 		B5BA77CD24EE3AD50046A2DD /* BlackBoxMeteoDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackBoxMeteoDataController.swift; sourceTree = "<group>"; };
@@ -300,6 +328,14 @@
 		B5DB4CFE243479230016A4BD /* DevicesListCellHeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesListCellHeder.swift; sourceTree = "<group>"; };
 		B5DB4D00243479320016A4BD /* DevicesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesListCell.swift; sourceTree = "<group>"; };
 		B5DB4D0224347B3D0016A4BD /* UIView+tap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+tap.swift"; sourceTree = "<group>"; };
+		B5E1EB0425822F4400C43E15 /* OnlineDataMapCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineDataMapCell.swift; sourceTree = "<group>"; };
+		B5EF70642562614D00CB0FBA /* DeviceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCell.swift; sourceTree = "<group>"; };
+		B5EF70682563D61C00CB0FBA /* GroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupController.swift; sourceTree = "<group>"; };
+		B5EF706B2563DCFA00CB0FBA /* ObjectViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectViewCell.swift; sourceTree = "<group>"; };
+		B5EF709325666C9400CB0FBA /* DeviceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceController.swift; sourceTree = "<group>"; };
+		B5EF709625666E9900CB0FBA /* OnlineDataDeviceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineDataDeviceCell.swift; sourceTree = "<group>"; };
+		B5EF709925666F4700CB0FBA /* OnlineDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineDataCell.swift; sourceTree = "<group>"; };
+		B5EF709D2566717600CB0FBA /* ProtocolsDevices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolsDevices.swift; sourceTree = "<group>"; };
 		B5FE2DCE24E3D6BA009387AB /* DataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCell.swift; sourceTree = "<group>"; };
 		FA5765D33B5AFC2A82EF76EB /* Pods-SOKOL-M.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SOKOL-M.debug.xcconfig"; path = "Target Support Files/Pods-SOKOL-M/Pods-SOKOL-M.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -521,6 +557,7 @@
 		B571678F2547DB4F003C8B1D /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				B5B40841255E6053002EECD1 /* Model */,
 				B57167922547DD75003C8B1D /* View */,
 			);
 			path = Account;
@@ -648,6 +685,7 @@
 				B56B0E992547CFFC00E7002B /* ProfileMeteo */,
 				B571678F2547DB4F003C8B1D /* Account */,
 				B571679B2547E49B003C8B1D /* DownloadData */,
+				B5B40846255E6314002EECD1 /* SokolMeteoCom */,
 				B56BEB092431F8CC00C42F85 /* CustomView */,
 				B528D58E247BE2C9004244CA /* Common */,
 				B58217AE247FA67A00C669CA /* Resourses */,
@@ -952,6 +990,98 @@
 			path = WIdgetSokol;
 			sourceTree = "<group>";
 		};
+		B5B40841255E6053002EECD1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B5B4085A255E9D59002EECD1 /* MessageError.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B5B40846255E6314002EECD1 /* SokolMeteoCom */ = {
+			isa = PBXGroup;
+			children = (
+				B5B40847255E6335002EECD1 /* TabBarSokolMeteo */,
+				B5B40852255E657F002EECD1 /* Devices */,
+				B5B4084F255E6456002EECD1 /* ReportsController.swift */,
+				B5B40860255ED98D002EECD1 /* Register */,
+			);
+			path = SokolMeteoCom;
+			sourceTree = "<group>";
+		};
+		B5B40847255E6335002EECD1 /* TabBarSokolMeteo */ = {
+			isa = PBXGroup;
+			children = (
+				B5B40848255E6394002EECD1 /* TabBarSokolMeteoController.swift */,
+			);
+			path = TabBarSokolMeteo;
+			sourceTree = "<group>";
+		};
+		B5B40852255E657F002EECD1 /* Devices */ = {
+			isa = PBXGroup;
+			children = (
+				B5B40858255E6625002EECD1 /* Model */,
+				B5B40854255E6595002EECD1 /* Networking */,
+				B5B40853255E658C002EECD1 /* View */,
+				B5EF709C2566713F00CB0FBA /* Protocols */,
+			);
+			path = Devices;
+			sourceTree = "<group>";
+		};
+		B5B40853255E658C002EECD1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B5B4084C255E6435002EECD1 /* DevicesController.swift */,
+				B5EF709325666C9400CB0FBA /* DeviceController.swift */,
+				B5EF70682563D61C00CB0FBA /* GroupController.swift */,
+				B57C1C1425835D1E00074772 /* MapViewController.swift */,
+				B5EF70632562613C00CB0FBA /* Cell */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		B5B40854255E6595002EECD1 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				B5B40855255E65B6002EECD1 /* NetworkingDevices.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		B5B40858255E6625002EECD1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B5B40842255E6063002EECD1 /* ListDevices.swift */,
+				B57C1C1725838E1D00074772 /* ListDeviceParametrs.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B5B40860255ED98D002EECD1 /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				B5B40862255ED9B5002EECD1 /* View */,
+				B5B40861255ED9A0002EECD1 /* Model */,
+			);
+			path = Register;
+			sourceTree = "<group>";
+		};
+		B5B40861255ED9A0002EECD1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B5B40863255ED9C9002EECD1 /* RegisterModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B5B40862255ED9B5002EECD1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B5B4085D255EB2BA002EECD1 /* RegistrationController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		B5B54C5124E3D3D900788359 /* ThriedSettings */ = {
 			isa = PBXGroup;
 			children = (
@@ -1050,6 +1180,26 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		B5EF70632562613C00CB0FBA /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B5EF70642562614D00CB0FBA /* DeviceCell.swift */,
+				B5EF709925666F4700CB0FBA /* OnlineDataCell.swift */,
+				B5E1EB0425822F4400C43E15 /* OnlineDataMapCell.swift */,
+				B5EF706B2563DCFA00CB0FBA /* ObjectViewCell.swift */,
+				B5EF709625666E9900CB0FBA /* OnlineDataDeviceCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		B5EF709C2566713F00CB0FBA /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				B5EF709D2566717600CB0FBA /* ProtocolsDevices.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		B5FE2DCD24E3D6AD009387AB /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -1080,7 +1230,8 @@
 				B589CFA9242C876900B547DC /* Frameworks */,
 				B589CFAA242C876900B547DC /* Resources */,
 				B5B06DD325305BE9007E5B98 /* Embed App Extensions */,
-				959EEDE9B3973364CC69A95D /* [CP] Embed Pods Frameworks */,
+				41F7E60F55D74C7BBEA8FA3D /* [CP] Embed Pods Frameworks */,
+				F1877C351258460647E10C6C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1146,7 +1297,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		959EEDE9B3973364CC69A95D /* [CP] Embed Pods Frameworks */ = {
+		41F7E60F55D74C7BBEA8FA3D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1185,6 +1336,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		F1877C351258460647E10C6C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SOKOL/Pods-SOKOL-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SOKOL/Pods-SOKOL-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SOKOL/Pods-SOKOL-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -1193,10 +1361,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				B58D81DF2545642E002FE1B7 /* moreDevicesBmvdPortCell.swift in Sources */,
+				B57C1C1825838E1D00074772 /* ListDeviceParametrs.swift in Sources */,
 				B589CFE7242CCE0300B547DC /* ViewModelConnected.swift in Sources */,
+				B5B40856255E65B6002EECD1 /* NetworkingDevices.swift in Sources */,
 				B5438D7A242CD9A200FAB0C5 /* TableViewViewModelType.swift in Sources */,
 				B589CFDD242CCC2800B547DC /* BluetoothService.swift in Sources */,
 				B5CAE99825494D8400C18FD3 /* ModelNetwork.swift in Sources */,
+				B5B40850255E6456002EECD1 /* ReportsController.swift in Sources */,
+				B5E1EB0525822F4400C43E15 /* OnlineDataMapCell.swift in Sources */,
 				B5438D82242DEB2500FAB0C5 /* DetailViewModelType.swift in Sources */,
 				B57914A2255BC10F005102D4 /* ModelNumber.swift in Sources */,
 				B589CFB4242C876900B547DC /* StartViewController.swift in Sources */,
@@ -1205,8 +1377,10 @@
 				B56BEB082431D10800C42F85 /* ViewModelApp.swift in Sources */,
 				B5B06E2925307929007E5B98 /* WIdgetSokol.intentdefinition in Sources */,
 				B54C93C22486214B00D82E5C /* ViewModelMoreDevices.swift in Sources */,
+				B5B40843255E6063002EECD1 /* ListDevices.swift in Sources */,
 				B59BA4F624E1805500B9F15A /* RegisterSokolMeteoController.swift in Sources */,
 				B5438D7C242CD9E300FAB0C5 /* TableViewCellViewModelType.swift in Sources */,
+				B5EF709A25666F4700CB0FBA /* OnlineDataCell.swift in Sources */,
 				B56FD9D7247BA79200DF0B41 /* StateController.swift in Sources */,
 				B54C93C4248628BB00D82E5C /* Image+Color.swift in Sources */,
 				B5311FB924C9B89800DC6C2B /* StretchyTableHeaderView.swift in Sources */,
@@ -1225,10 +1399,12 @@
 				B5DB4CFD243479190016A4BD /* DevicesListCellMain.swift in Sources */,
 				B57167942547DDA4003C8B1D /* AccountEnterController.swift in Sources */,
 				B593A8A5247E3F1C006D049F /* Localize.swift in Sources */,
+				B5B40864255ED9C9002EECD1 /* RegisterModel.swift in Sources */,
 				B58E0EBF24C078600052D165 /* ButtonView.swift in Sources */,
 				B596B8D7252343630007DC08 /* BlackBoxListCell.swift in Sources */,
 				B5168507252C4D4D00415D43 /* BlackBoxTable.swift in Sources */,
 				B596B8E725244E7C0007DC08 /* moreDevicesCell.swift in Sources */,
+				B5EF706C2563DCFA00CB0FBA /* ObjectViewCell.swift in Sources */,
 				B51684EC252AE0B400415D43 /* BlackBoxGraffics.swift in Sources */,
 				B5438D80242CDCFF00FAB0C5 /* TableViewCell.swift in Sources */,
 				B50AF269254823A800F66786 /* BlackBoxMeteoData+Alert.swift in Sources */,
@@ -1236,17 +1412,20 @@
 				B516855D252DB23900415D43 /* MeteoBlackBoxCell.swift in Sources */,
 				B589CFBA242C876900B547DC /* SokolMeteoConfig.xcdatamodeld in Sources */,
 				B58D81DB2545640A002FE1B7 /* MoreDevicesBmvdPortController.swift in Sources */,
+				B57C1C1525835D1E00074772 /* MapViewController.swift in Sources */,
 				B53B916924EC124300B388ED /* ConfiguratorBMVDSecondController.swift in Sources */,
 				B5C0514624713B9B00F63357 /* ConnectedMeteoCell.swift in Sources */,
 				B589CFDF242CCC8400B547DC /* Devices.swift in Sources */,
 				B589CFE5242CCDBD00B547DC /* ConnectedMeteoController.swift in Sources */,
 				B5C0514E247AABA600F63357 /* PasswordController.swift in Sources */,
+				B5EF70692563D61C00CB0FBA /* GroupController.swift in Sources */,
 				B58492ED247BBD9900C902C7 /* ViewModelState.swift in Sources */,
 				B5B54C5324E3D3F400788359 /* ViewModelData.swift in Sources */,
 				B58D81E725456F3D002FE1B7 /* moreDevicesBmvdPortHideCell.swift in Sources */,
 				B5438D7E242CDB1000FAB0C5 /* TableViewCellViewModel.swift in Sources */,
 				B589CFB0242C876900B547DC /* AppDelegate.swift in Sources */,
 				B5DB4D0324347B3D0016A4BD /* UIView+tap.swift in Sources */,
+				B5B4085E255EB2BA002EECD1 /* RegistrationController.swift in Sources */,
 				B5168511252C750B00415D43 /* ViewModelBlackBoxTable.swift in Sources */,
 				B56BEB032431D00800C42F85 /* Commons.swift in Sources */,
 				B5DB4D01243479320016A4BD /* DevicesListCell.swift in Sources */,
@@ -1254,8 +1433,10 @@
 				B5BA77CE24EE3AD50046A2DD /* BlackBoxMeteoDataController.swift in Sources */,
 				B58217BB247FD7FC00C669CA /* AlertCreateWarning.swift in Sources */,
 				B589CFB2242C876900B547DC /* SceneDelegate.swift in Sources */,
+				B5EF709425666C9400CB0FBA /* DeviceController.swift in Sources */,
 				B596B8CA252300C90007DC08 /* CustomLoadingBlackBox.swift in Sources */,
 				B53479F42542E4B100F96EEF /* UIViewController+Alert.swift in Sources */,
+				B5EF709E2566717600CB0FBA /* ProtocolsDevices.swift in Sources */,
 				B53B916724EBE92F00B388ED /* ModelBMVD.swift in Sources */,
 				B5C05151247B98C000F63357 /* MeteoDataController.swift in Sources */,
 				B596B8E22523489A0007DC08 /* ModelViewBlackBox.swift in Sources */,
@@ -1270,7 +1451,9 @@
 				B558882D24EBE272009E27A2 /* SecondConfigCell.swift in Sources */,
 				B57AED932536FB6D005F3C91 /* ListAvailTableView.swift in Sources */,
 				B5DB4CFB2434788D0016A4BD /* SeacrhBar+TextColor.swift in Sources */,
+				B5EF70652562614D00CB0FBA /* DeviceCell.swift in Sources */,
 				B58492E5247BA99A00C902C7 /* MoreDevicesController.swift in Sources */,
+				B5B4085B255E9D59002EECD1 /* MessageError.swift in Sources */,
 				B5DB4CFF243479230016A4BD /* DevicesListCellHeder.swift in Sources */,
 				B503B1F6254BEF6700EBAB31 /* AccountEditController.swift in Sources */,
 				B58D81EB25457307002FE1B7 /* ViewModelMoreDeviceBmvdPortHide.swift in Sources */,
@@ -1296,12 +1479,15 @@
 				B54E855C24DAA7440008AEEC /* Function.swift in Sources */,
 				B593A8A3247E3F02006D049F /* Nib.swift in Sources */,
 				B5BA77CC24ED0CBA0046A2DD /* SecondConfigBMVDCell.swift in Sources */,
+				B5EF709725666E9900CB0FBA /* OnlineDataDeviceCell.swift in Sources */,
 				B596B8D2252342E20007DC08 /* BlackBoxListController.swift in Sources */,
 				B531C9F1253EBD820008A092 /* SettingsBMVDController.swift in Sources */,
 				B593A8A1247E3EC1006D049F /* AlertCreate.swift in Sources */,
 				B528D594247CE1D8004244CA /* MenuController.swift in Sources */,
 				B5C33F96254F328B008E700F /* ConfirmationAlert.swift in Sources */,
 				B5A82A9A2498760B00F7A335 /* ConfiguratorFirstController.swift in Sources */,
+				B5B40849255E6394002EECD1 /* TabBarSokolMeteoController.swift in Sources */,
+				B5B4084D255E6435002EECD1 /* DevicesController.swift in Sources */,
 				B57AED8D2536F784005F3C91 /* CellDataPeripheral.swift in Sources */,
 				B593F0C9253EBF6B00DCE951 /* SettingsBmvdModel.swift in Sources */,
 				B59BA4F824E1810D00B9F15A /* WKWebView.swift in Sources */,

@@ -23,6 +23,7 @@ PODS:
   - SimpleCheckbox (2.1.0)
   - SteviaLayout (4.7.3)
   - UIDrawer (1.0)
+  - YandexMapsMobile (4.0.0-lite)
 
 DEPENDENCIES:
   - AdvancedPageControl
@@ -41,6 +42,7 @@ DEPENDENCIES:
   - SimpleCheckbox
   - SteviaLayout
   - UIDrawer (from `https://github.com/Que20/UIDrawer.git`, tag `1.0`)
+  - YandexMapsMobile (= 4.0.0-lite)
 
 SPEC REPOS:
   trunk:
@@ -60,6 +62,7 @@ SPEC REPOS:
     - RealmSwift
     - SimpleCheckbox
     - SteviaLayout
+    - YandexMapsMobile
 
 EXTERNAL SOURCES:
   UIDrawer:
@@ -89,7 +92,8 @@ SPEC CHECKSUMS:
   SimpleCheckbox: ddcd433ab8c3a8f57300bebda13151a8f302c7f9
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
   UIDrawer: 1bfbc152fee69f6809a41508000cf1b9bd4b1738
+  YandexMapsMobile: d7d7f3b452209b4c2787beb53bb2dfcea259c70c
 
-PODFILE CHECKSUM: 5a26a5933af99acc1067f57cfcb18a44a8a53dfe
+PODFILE CHECKSUM: c8119b09dd78e4b0d314ba0dd332d0f42ce21099
 
 COCOAPODS: 1.8.4

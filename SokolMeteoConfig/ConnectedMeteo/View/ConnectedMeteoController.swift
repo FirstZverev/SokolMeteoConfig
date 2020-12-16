@@ -204,7 +204,9 @@ extension ConnectedMeteoController: UITableViewDelegate {
 //            animateIn()
 //        } else {
             if indexPath.row == 3 {
-                navigationController?.pushViewController(passwordVC, animated: true)
+//                navigationController?.pushViewController(passwordVC, animated: true)
+                reload = 29
+                delegate?.buttonTap()
             } else if indexPath.row == 2 {
                 navigationController?.pushViewController(tabarConfigVC, animated: true)
                 reload = 10

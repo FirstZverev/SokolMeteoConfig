@@ -21,6 +21,7 @@ target 'SOKOL' do
 	pod 'FittedSheets'
 	pod 'SimpleCheckbox'
 	pod 'Alamofire'
+     	pod 'YandexMapsMobile', '4.0.0-lite'
 end
 
 post_install do |installer|

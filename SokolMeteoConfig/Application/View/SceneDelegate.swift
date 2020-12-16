@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import YandexMapsMobile
 
 @available(iOS 13.0, *)
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -15,6 +16,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        
+        YMKMapKit.setApiKey("ee8e40e7-b1c6-424f-91da-2542f45e5c3e")
         Thread.sleep(forTimeInterval: 0.0)
         
         let layout = UICollectionViewFlowLayout()
