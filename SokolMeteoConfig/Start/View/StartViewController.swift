@@ -22,6 +22,7 @@ class StartViewController: UIViewController {
     let generator = UIImpactFeedbackGenerator(style: .light)
     let devicesListVC = ListAvailDevices()
     let tabBarVC = TabBarController()
+    let accountEnterVC = AccountEnterController()
     
     var versionLabel: UILabel = {
         let versionLabel = UILabel()
@@ -109,7 +110,15 @@ extension StartViewController: UITableViewDelegate {
             navigationController?.pushViewController(BlackBoxListController(), animated: true)
 
         } else if indexPath.row == 2 {
-            navigationController?.pushViewController(AccountEnterController(), animated: true)
+//            let nav1 = UINavigationController(rootViewController: accountEnterVC)
+//            nav1.modalPresentationStyle = .fullScreen
+//            nav1.navigationBar.isHidden = true
+//            accountEnterVC.modalPresentationStyle = .overFullScreen
+//            self.present(accountEnterVC, animated: true, completion: nil)
+//            let accountEnter = AccountEnterController()
+//            show(accountEnter, sender: self)
+            accountEnterVC.pushAccountProfile = false
+            navigationController?.pushViewController(accountEnterVC, animated: true)
         } else if indexPath.row == 3 {
 //            navigationController?.pushViewController(BlackBoxGraffics(), animated: true)
             transitionSupport()

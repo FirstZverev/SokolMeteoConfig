@@ -51,6 +51,41 @@ class StateController: UIViewController {
         timer.invalidate()
         reload = -1
     }
+    override func viewWillAppear(_ animated: Bool) {
+        if demoMode {
+            if Access_Allowed == 0 {
+                delegate?.buttonTapState()
+            } else {
+                demoData()
+            }
+        }
+    }
+    
+    func demoData() {
+        let time = NSDate()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM.YYYY HH:mm:ss"
+        formatter.timeZone = TimeZone.current
+        let formatteddate = formatter.string(from: time as Date)
+        arrayStateMain["QTIM"] = "\(formatteddate)"
+        arrayStateMain["QGSM"] = "\(Int.random(in: 0...10))"
+        arrayStateMain["QGPS"] = "\(Int.random(in: 0...10))"
+        arrayStateMain["QAZI"] = "\(Int.random(in: 0...360))"
+        arrayStateMain["QPRO"] = "\(Int.random(in: 0...180))"
+        arrayStateMain["QPOP"] = "\(Int.random(in: 0...180))"
+        arrayStateMain["QBKN"] = "\(Int.random(in: 1000...1200))"
+        arrayStateMain["QPAK"] = "\(Int.random(in: 0...60))"
+        arrayStateMain["QBMT"] = "\(Int.random(in: 0...60))"
+        arrayStateMain["UBAT"] = "\(Double.random(in: 2.6...3.7).roundToDecimal(2))"
+        arrayStateMain["UEXT"] = "\(Double.random(in: 0...12).roundToDecimal(2))"
+        arrayStateMain["KS"] = "\(Int.random(in: 0...10))"
+        arrayStateMain["RSSI"] = "\(Int.random(in: -70 ... -10))"
+        arrayStateMain["TRAF"] = "\(Int.random(in: 0...10))"
+        arrayStateMain["QEVS"] = "\(Int.random(in: 0...1500))"
+
+        tableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white

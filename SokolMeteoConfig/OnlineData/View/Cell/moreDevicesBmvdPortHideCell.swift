@@ -19,7 +19,7 @@ class moreDevicesBmvdPortHideCell: UITableViewCell {
 
     weak var viewModel: TableViewCellViewModelType? {
         willSet(viewModel) {
-            guard let viewModel = viewModel else { return }
+//            guard let viewModel = viewModel else { return }
 //            label?.text = viewModel.name
 //            labelUbat?.text = viewModel.ubat
 //            imageUI?.image = UIImage(named: viewModel.image)

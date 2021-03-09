@@ -51,7 +51,7 @@ class SecondConfigBMVDCell: UITableViewCell {
         let labelMac = UILabel()
         labelMac.font = UIFont(name:"FuturaPT-Light", size: screenW / 23)
         labelMac.textAlignment = .left
-        labelMac.textColor = .black
+        labelMac.textColor = UIColor(rgb: 0x998F99)
         labelMac.translatesAutoresizingMaskIntoConstraints = false
         labelMac.numberOfLines = 0
         contentView.addSubview(labelMac)

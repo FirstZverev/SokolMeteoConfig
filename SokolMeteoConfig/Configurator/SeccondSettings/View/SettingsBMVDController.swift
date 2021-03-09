@@ -100,10 +100,18 @@ class SettingsBMVDController: UICollectionViewController, UICollectionViewDelega
         if nextItemNext == pageControl.drawer.numberOfPages {
             UIView.animate(withDuration: 1.0, animations: { [self] in
                 popVC()
+                if demoMode {
+                    guard let bmvd = Int(selectBmvd) else {return}
+                    arrayBmvdE[bmvd] = "1"
+                }
             })
         } else if nextItemNext == 2 {
             let a = collectionView.cellForItem(at: IndexPath(row: nextItemNext - 1, section: 0)) as! SettingsBmvdCell
             macAddress = a.textField.text ?? ""
+            if demoMode {
+                guard let bmvd = Int(selectBmvd) else {return}
+                arrayBmvdM[bmvd] = macAddress
+            }
             reload = 9
             delegate?.buttonTapSecondConfigurator()
             collectionView.scrollToItem(at: IndexPath(row: nextItemNext, section: 0), at: .centeredHorizontally, animated: true)

@@ -51,7 +51,7 @@ class OnlineDataCell: UITableViewCell {
         labelValue.font = UIFont(name:"FuturaPT-Medium", size: screenW / 20)
         labelValue.textAlignment = .right
         labelValue.textColor = .black
-        labelValue.text = "100 %"
+        labelValue.text = "0"
         labelValue.translatesAutoresizingMaskIntoConstraints = false
         labelValue.numberOfLines = 0
         contentView.addSubview(labelValue)
@@ -66,7 +66,7 @@ class OnlineDataCell: UITableViewCell {
 //        self.labelMac = labelMac
         
         let imageUI = UIImageView()
-        imageUI.image = UIImage(named: "temperature")
+        imageUI.image = UIImage(named: "setings")
         imageUI.layer.shadowColor = UIColor(rgb: 0xB64894).cgColor
         imageUI.layer.shadowRadius = 6.0
         imageUI.layer.shadowOpacity = 0.5
@@ -91,7 +91,7 @@ class OnlineDataCell: UITableViewCell {
             
             self.label!.centerYAnchor.constraint(equalTo: imageUI.centerYAnchor),
             self.label!.leadingAnchor.constraint(equalTo: self.imageUI!.trailingAnchor, constant: 10),
-            self.label!.trailingAnchor.constraint(equalTo: self.nextImage!.leadingAnchor, constant: -10),
+            self.label!.trailingAnchor.constraint(equalTo: self.labelValue!.leadingAnchor, constant: -10),
             self.label!.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -25),
             self.label!.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 25),
 
@@ -99,13 +99,14 @@ class OnlineDataCell: UITableViewCell {
 //            self.labelMac!.leadingAnchor.constraint(equalTo: self.label!.leadingAnchor),
 //            self.labelMac!.trailingAnchor.constraint(equalTo: self.nextImage!.leadingAnchor, constant: -20),
 
-            self.imageUI!.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 25),
+            self.imageUI!.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
             self.imageUI!.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             self.imageUI!.heightAnchor.constraint(equalToConstant: 40),
             self.imageUI!.widthAnchor.constraint(equalToConstant: 40),
             
             self.labelValue!.trailingAnchor.constraint(equalTo: self.nextImage.leadingAnchor, constant: -10),
             self.labelValue!.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            self.labelValue!.widthAnchor.constraint(equalToConstant: 100),
 
             self.nextImage!.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             self.nextImage!.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),

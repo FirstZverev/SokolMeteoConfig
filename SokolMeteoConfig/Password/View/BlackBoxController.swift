@@ -16,7 +16,9 @@ protocol BlackBoxDelegate: class {
 }
 
 class BlackBoxController: UIViewController, FSCalendarDelegate, FSCalendarDataSource {
-    
+    lazy var realm:Realm = {
+        return try! Realm()
+    }()
     private weak var calendar: FSCalendar!
     // first date in the range
     private var firstDate: Date?
@@ -137,8 +139,10 @@ class BlackBoxController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        reload = 27
-        self.delegate?.buttonTapBlackBox()
+        if Access_Allowed == 0 {
+            reload = 27
+            self.delegate?.buttonTapBlackBox()
+        }
     }
     
     override func viewDidLoad() {
@@ -179,9 +183,6 @@ class BlackBoxController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
                 print(dateLast)
                 self.delegate?.buttonTapBlackBox()
                 do {
-                    let realm: Realm  = {
-                        return try! Realm()
-                    }()
                     let config = Realm.Configuration(
                         schemaVersion: 1,
                         
@@ -189,6 +190,7 @@ class BlackBoxController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
                             if (oldSchemaVersion < 1) {
                             }
                         })
+
                     Realm.Configuration.defaultConfiguration = config
                     print(Realm.Configuration.defaultConfiguration.fileURL!)
                     
@@ -206,11 +208,186 @@ class BlackBoxController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
                     self.setAlert()
                     self.animateIn()
                 }
+                if demoMode {
+                    DispatchQueue.global(qos: .utility).sync {
+                        for i in 10...31 {
+                            var stringAll = ""
+                            for j in 10...23 {
+                                stringAll = "\(i)0121;\(j)5738;5550.9438;E;04905.6758;N;0;0;88;5;0;0;0;96,90;NA;t:2:\(Double.random(in: -25...30)),WD:1:\(Int.random(in: 1...20)),WV:2:\(Double.random(in: 0...10).roundToDecimal(2)),WM:2:\(Double.random(in: 0...10).roundToDecimal(2)),PR:2:\(Double.random(in: 0...10).roundToDecimal(2)),HM:1:0,RN:2:0.00,UV:1:0,UVI:1:0,L:1:0,LI:1:0,Upow:2:\(Double.random(in: 2.8...3.7).roundToDecimal(2)),Uext:2:0.0,KS:1:0,RSSI:1:-\(Int.random(in: 10...60)),TR:1:578,EVS:1:4"
+                                let result = stringAll.components(separatedBy: [":",";","=",",","\r","\n"])
+                                
+                                let fullString = stringAll.components(separatedBy: "\r\n")
+                                var ab = result
+                                if ab[0].count == 6 && ab[1].count == 6 {
+                                    ab[0].insert(".", at: ab[0].index(ab[0].startIndex, offsetBy: 2))
+                                    ab[0].insert(".", at: ab[0].index(ab[0].startIndex, offsetBy: 5))
+                                    
+                                    ab[1].insert(":", at: ab[1].index(ab[1].startIndex, offsetBy: 2))
+                                    ab[1].insert(":", at: ab[1].index(ab[1].startIndex, offsetBy: 5))
+                                    let a = "\(ab[0]) \(ab[1])"
+                                    let account = BoxModel()
+                                    account.id = countStringBlackBox
+                                    account.nameDevice = nameDevice
+                                    account.time = "\(stringTounixTime(dateString: a))"
+                                    account.allString = fullString[0]
+                                    if ab.contains("t") {
+                                        let indexOfPerson = ab.firstIndex{$0 == "t"}
+                                        if ab.count > indexOfPerson! + 2 {
+                                            //                                    print("t\(countStringBlackBox): \(ab[indexOfPerson! + 2])")
+                                            account.parametrt = "\(ab[indexOfPerson! + 2])"
+                                        }
+                                    }
+                                    if ab.contains("WD") {
+                                        let indexOfPerson = ab.firstIndex{$0 == "WD"}
+                                        if ab.count > indexOfPerson! + 2 {
+                                            //                                    print("WD\(countStringBlackBox): \(ab[indexOfPerson! + 2])")
+                                            account.parametrWD = "\(ab[indexOfPerson! + 2])"
+                                        }
+                                    }
+                                    if ab.contains("WV") {
+                                        let indexOfPerson = ab.firstIndex{$0 == "WV"}
+                                        if ab.count > indexOfPerson! + 2 {
+                                            //                                    print("WV\(countStringBlackBox): \(ab[indexOfPerson! + 2])")
+                                            account.parametrWV = "\(ab[indexOfPerson! + 2])"
+                                        }
+                                    }
+                                    if ab.contains("WM") {
+                                        let indexOfPerson = ab.firstIndex{$0 == "WM"}
+                                        if ab.count > indexOfPerson! + 2 {
+                                            //                                    print("WM\(countStringBlackBox): \(ab[indexOfPerson! + 2])")
+                                            account.parametrWM = "\(ab[indexOfPerson! + 2])"
+                                        }
+                                    }
+                                    if ab.contains("PR") {
+                                        let indexOfPerson = ab.firstIndex{$0 == "PR"}
+                                        if ab.count > indexOfPerson! + 2 {
+                                            //                                    print("PR\(countStringBlackBox): \(ab[indexOfPerson! + 2])")
+                                            account.parametrPR = "\(ab[indexOfPerson! + 2])"
+                                        }
+                                    }
+                                    if ab.contains("HM") {
+                                        let indexOfPerson = ab.firstIndex{$0 == "HM"}
+                                        if ab.count > indexOfPerson! + 2 {
+                                            //                                    print("HM\(countStringBlackBox): \(ab[indexOfPerson! + 2])")
+                                            account.parametrHM = "\(ab[indexOfPerson! + 2])"
+                                        }
+                                    }
+                                    if ab.contains("RN") {
+                                        let indexOfPerson = ab.firstIndex{$0 == "RN"}
+                                        if ab.count > indexOfPerson! + 2 {
+                                            //                                    print("RN\(countStringBlackBox): \(ab[indexOfPerson! + 2])")
+                                            account.parametrRN = "\(ab[indexOfPerson! + 2])"
+                                        }
+                                    }
+                                    if ab.contains("UV") {
+                                        let indexOfPerson = ab.firstIndex{$0 == "UV"}
+                                        if ab.count > indexOfPerson! + 2 {
+                                            //                                    print("UV\(countStringBlackBox): \(ab[indexOfPerson! + 2])")
+                                            account.parametrUV = "\(ab[indexOfPerson! + 2])"
+                                        }
+                                    }
+                                    if ab.contains("UVI") {
+                                        let indexOfPerson = ab.firstIndex{$0 == "UVI"}
+                                        if ab.count > indexOfPerson! + 2 {
+                                            //                                    print("UVI\(countStringBlackBox): \(ab[indexOfPerson! + 2])")
+                                            account.parametrUVI = "\(ab[indexOfPerson! + 2])"
+                                        }
+                                    }
+                                    if ab.contains("L") {
+                                        let indexOfPerson = ab.firstIndex{$0 == "L"}
+                                        if ab.count > indexOfPerson! + 2 {
+                                            //                                    print("L\(countStringBlackBox): \(ab[indexOfPerson! + 2])")
+                                            account.parametrL = "\(ab[indexOfPerson! + 2])"
+                                        }
+                                    }
+                                    if ab.contains("LI") {
+                                        let indexOfPerson = ab.firstIndex{$0 == "LI"}
+                                        if ab.count > indexOfPerson! + 2 {
+                                            //                                    print("LI\(countStringBlackBox): \(ab[indexOfPerson! + 2])")
+                                            account.parametrLI = "\(ab[indexOfPerson! + 2])"
+                                        }
+                                    }
+                                    if ab.contains("Upow") {
+                                        let indexOfPerson = ab.firstIndex{$0 == "Upow"}
+                                        if ab.count > indexOfPerson! + 2 {
+                                            //                                print("Upow\(countStringBlackBox): \(ab[indexOfPerson! + 2])")
+                                            account.parametrUpow = "\(ab[indexOfPerson! + 2])"
+                                        }
+                                    }
+                                    if ab.contains("Uext") {
+                                        let indexOfPerson = ab.firstIndex{$0 == "Uext"}
+                                        if ab.count > indexOfPerson! + 2 {
+                                            //                                    print("Uext\(countStringBlackBox): \(ab[indexOfPerson! + 2])")
+                                            account.parametrUext = "\(ab[indexOfPerson! + 2])"
+                                        }
+                                    }
+                                    if ab.contains("KS") {
+                                        let indexOfPerson = ab.firstIndex{$0 == "KS"}
+                                        if ab.count > indexOfPerson! + 2 {
+                                            //                                    print("KS\(countStringBlackBox): \(ab[indexOfPerson! + 2])")
+                                            account.parametrKS = "\(ab[indexOfPerson! + 2])"
+                                        }
+                                    }
+                                    if ab.contains("RSSI") {
+                                        let indexOfPerson = ab.firstIndex{$0 == "RSSI"}
+                                        if ab.count > indexOfPerson! + 2 {
+                                            //                                    print("RSSI\(countStringBlackBox): \(ab[indexOfPerson! + 2])")
+                                            account.parametrRSSI = "\(ab[indexOfPerson! + 2])"
+                                        }
+                                    }
+                                    if ab.contains("TR") {
+                                        let indexOfPerson = ab.firstIndex{$0 == "TR"}
+                                        if ab.count > indexOfPerson! + 2 {
+                                            //                                    print("TR\(countStringBlackBox): \(ab[indexOfPerson! + 2])")
+                                            account.parametrTR = "\(ab[indexOfPerson! + 2])"
+                                        }
+                                    }
+                                    if ab.contains("EVS") {
+                                        let indexOfPerson = ab.firstIndex{$0 == "EVS"}
+                                        if ab.count > indexOfPerson! + 2 {
+                                            //                                    print("EVS\(countStringBlackBox): \(ab[indexOfPerson! + 2])")
+                                            account.parametrEVS = "\(ab[indexOfPerson! + 2])"
+                                        }
+                                    }
+                                    let realm: Realm  = {
+                                        return try! Realm()
+                                    }()
+                                    do {
+                                        let config = Realm.Configuration(
+                                            schemaVersion: 1,
+                                            
+                                            migrationBlock: { migration, oldSchemaVersion in
+                                                if (oldSchemaVersion < 1) {
+                                                }
+                                            })
+                                        Realm.Configuration.defaultConfiguration = config
+                                        try realm.write {
+                                            realm.add(account)
+                                        }
+                                    } catch {
+                                        print("error getting xml string: \(error)")
+                                    }
+                                }
+                            }
+                            countStringBlackBox += 1
+                            DispatchQueue.main.async { [self] in
+                                alertView.labelCountSave.text = "\(countStringBlackBox)"
+                                stringAll.removeAll()
+                            }
+                        }
+                    }
+                    alertView.CustomEnter.isEnabled = true
+                    animateOut()
+                    let blackBoxMeteoDataController = BlackBoxMeteoDataController()
+                    blackBoxMeteoDataController.nameDeviceBlackBox = nameDevice
+                    navigationController?.pushViewController(blackBoxMeteoDataController, animated: true)
+                    alertView.CustomEnter.text("Обработка")
+                }
             } else {
                 showToast(message: "Необходимо выбрать дату", seconds: 1.0)
             }
         }
-            
+        
         confirationCalendar()
         constraints()
         viewAlpha.isHidden = true

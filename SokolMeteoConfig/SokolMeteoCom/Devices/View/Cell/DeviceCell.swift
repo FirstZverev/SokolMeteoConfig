@@ -88,7 +88,7 @@ class DeviceCell: UITableViewCell {
 //            self.labelMac!.leadingAnchor.constraint(equalTo: self.label!.leadingAnchor),
 //            self.labelMac!.trailingAnchor.constraint(equalTo: self.nextImage!.leadingAnchor, constant: -20),
 
-            self.imageUI!.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 25),
+            self.imageUI!.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
             self.imageUI!.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             self.imageUI!.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -25),
             self.imageUI!.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 25),

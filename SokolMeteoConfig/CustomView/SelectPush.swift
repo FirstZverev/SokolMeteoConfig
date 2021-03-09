@@ -34,6 +34,12 @@ class SelectPush: UIView {
         CustomMainLabel.text = title
         CustomEnter.setTitle(buttonTitle, for: .normal)
     }
+    func setEdit(title: String, body: String, buttonTitle: String, editOne: String, editTwo: String) {
+        CustomMainLabel.text = title
+        CustomEnter.setTitle(buttonTitle, for: .normal)
+        labelCom.text = editOne
+        labelCsv.text = editTwo
+    }
     
     @IBAction func ActionButton(_ sender: Any) {
         delegate?.buttonTapped2()

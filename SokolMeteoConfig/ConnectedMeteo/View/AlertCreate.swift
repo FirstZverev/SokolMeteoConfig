@@ -29,6 +29,17 @@ extension ConnectedMeteoController: AlertDelegate, UITextFieldDelegate {
         alertView.CustomTextField.text = ""
         delegate?.buttonTap()
         animationSuccess()
+        if demoMode {
+            print("demo")
+            Access_Allowed = 2
+            if let viewControllers = navigationController?.viewControllers {
+                for viewController in viewControllers {
+                    if viewController.isKind(of: MeteoDataController.self) {
+                        tabBarVC.mainVC.demoData()
+                    }
+                }
+            }
+        }
         if let viewControllers = navigationController?.viewControllers {
             for viewController in viewControllers {
                 if viewController.isKind(of: PasswordController.self) {

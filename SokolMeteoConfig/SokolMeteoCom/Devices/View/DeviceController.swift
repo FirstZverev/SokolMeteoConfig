@@ -12,7 +12,7 @@ import YandexMapsMobile
 
 class DeviceController: UICollectionViewController, UICollectionViewDelegateFlowLayout, DeviceDelegate {
     let vc = MapViewController()
-
+    var selectTag = 0
     func buttonTap() {
 //        TabBarSokolMeteoController().navigationController?.pushViewController(BlackBoxListController(), animated: true)
         let transition = CATransition()
@@ -27,7 +27,7 @@ class DeviceController: UICollectionViewController, UICollectionViewDelegateFlow
 
     fileprivate lazy var pageControl: AdvancedPageControlView = {
         let pageControl = AdvancedPageControlView()
-        pageControl.drawer = WormDrawer(numberOfPages: 2, height: 55, width: screenW / 2 - 10, space: 0, raduis: 15, currentItem: 0, indicatorColor: .white, dotsColor: .clear, isBordered: false)
+        pageControl.drawer = WormDrawer(numberOfPages: 2, height: 55, width: screenW / 2 - 10, space: 0, raduis: 15, currentItem: 0, indicatorColor: .white, dotsColor: .clear, isBordered: false, borderColor: .clear)
         pageControl.layer.shadowColor = UIColor(rgb: 0xB64894).cgColor
         pageControl.layer.shadowRadius = 3.0
         pageControl.layer.shadowOpacity = 0.3
@@ -90,23 +90,36 @@ class DeviceController: UICollectionViewController, UICollectionViewDelegateFlow
     }
     override func viewWillAppear(_ animated: Bool) {
         let cell = collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? OnlineDataDeviceCell
-        cell?.requestParametrs()
-        let ceell = cell?.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? OnlineDataMapCell
-        guard let select = selectItem,
-              let latitude : Double = Double(devicesList[select].latitude!),
-              let longitude : Double = Double(devicesList[select].longitude!)
-        else { return }
-        ceell?.mapView.mapWindow.map.move(with: YMKCameraPosition(target: YMKPoint(latitude: latitude, longitude: longitude), zoom: 15, azimuth: 0, tilt: 0),
-                                          animationType: YMKAnimation(type: YMKAnimationType.smooth, duration: 5),
-                                          cameraCallback: nil)
+        print("12321")
+        cell?.requestParametrs(index: selectTag)
+//        let ceell = cell?.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? OnlineDataMapCell
+//        guard let lat = devicesList[selectTag].latitude,
+//              let latitude : Double = Double(lat),
+//              let long = devicesList[selectTag].longitude,
+//              let longitude : Double = Double(long)
+//        else { return }
+//        ceell?.mapView.mapWindow.map.move(with: YMKCameraPosition(target: YMKPoint(latitude: latitude, longitude: longitude), zoom: 15, azimuth: 0, tilt: 0),
+//                                          animationType: YMKAnimation(type: YMKAnimationType.smooth, duration: 5),
+//                                          cameraCallback: nil)
+    }
+    override func viewDidDisappear(_ animated: Bool) {
     }
     override func viewWillDisappear(_ animated: Bool) {
+        collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: true)
         let cell = collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? OnlineDataDeviceCell
         let ceell = cell?.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? OnlineDataMapCell
+        cell?.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        
+        let cell2 = collectionView.cellForItem(at: IndexPath(item: 1, section: 0)) as? ForecastDataDeviceCell
+        let cell3 = cell2?.tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? SegmentedDateCell
+        cell3?.segmentedControl.selectedSegmentIndex = 0
+        cell3?.delegate?.senderSelectedIndex(tag: 2)
+
         ceell?.mapView.mapWindow.map.mapObjects.clear()
-        guard let select = selectItem,
-              let latitude : Double = Double(devicesList[select].latitude!),
-              let longitude : Double = Double(devicesList[select].longitude!)
+        guard let lat = devicesList[selectTag].latitude,
+              let latitude : Double = Double(lat),
+              let long = devicesList[selectTag].longitude,
+              let longitude : Double = Double(long)
         else { return }
         ceell?.mapView.mapWindow.map.move(with: YMKCameraPosition(target: YMKPoint(latitude: latitude, longitude: longitude), zoom: 0, azimuth: 0, tilt: 0),
                                           animationType: YMKAnimation(type: YMKAnimationType.linear, duration: 1),
@@ -125,6 +138,7 @@ class DeviceController: UICollectionViewController, UICollectionViewDelegateFlow
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView?.backgroundColor = .clear
         collectionView?.register(OnlineDataDeviceCell.self, forCellWithReuseIdentifier: "OnlineDataDeviceCell")
+        collectionView?.register(ForecastDataDeviceCell.self, forCellWithReuseIdentifier: "ForecastDataDeviceCell")
         collectionView.isPagingEnabled = true
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
@@ -151,9 +165,8 @@ class DeviceController: UICollectionViewController, UICollectionViewDelegateFlow
         labelGroup.centerXAnchor.constraint(equalTo: pageControl.centerXAnchor, constant: +pageControl.frame.width / 4 - 2).isActive = true
         labelGroup.widthAnchor.constraint(equalToConstant: screenW / 2 - 10).isActive = true
         labelGroup.heightAnchor.constraint(equalToConstant: 55).isActive = true
-
-
     }
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
@@ -161,13 +174,23 @@ class DeviceController: UICollectionViewController, UICollectionViewDelegateFlow
         return 2
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "OnlineDataDeviceCell", for: indexPath) as! OnlineDataDeviceCell
-        cell.delegate = self
-        cell.backgroundColor = .clear
-        print(indexPath)
-//        cell.imageUI.image = configModelStartSwipe[indexPath.row].image
-//        cell.imageHumanUI.image = configModelStartSwipe[indexPath.row].imageHuman
-        return cell
+        if indexPath.row == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "OnlineDataDeviceCell", for: indexPath) as! OnlineDataDeviceCell
+            cell.delegate = self
+            cell.backgroundColor = .clear
+//            cell.requestParametrs()
+
+            print(indexPath)
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ForecastDataDeviceCell", for: indexPath) as! ForecastDataDeviceCell
+            cell.tagSelectedIndex = 2
+            cell.delegate = self
+            cell.backgroundColor = .clear
+            cell.requestParametrs()
+            print(indexPath)
+            return cell
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -183,6 +206,13 @@ class DeviceController: UICollectionViewController, UICollectionViewDelegateFlow
         } else {
             labelObject.titleLabel?.font = UIFont(name: "FuturaPT-Light", size: screenW / 22)
             labelGroup.titleLabel?.font = UIFont(name: "FuturaPT-Medium", size: screenW / 22)
+        }
+        if offSet == 0 {
+            let cell = collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as? OnlineDataDeviceCell
+            cell?.requestParametrs(index: selectTag)
+        } else if offSet == width {
+            let cell = collectionView.cellForItem(at: IndexPath(item: 1, section: 0)) as? ForecastDataDeviceCell
+            cell?.requestParametrs()
         }
     }
 }

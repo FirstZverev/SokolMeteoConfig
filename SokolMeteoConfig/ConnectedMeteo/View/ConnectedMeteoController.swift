@@ -106,7 +106,9 @@ class ConnectedMeteoController: UIViewController, BlackBoxDelegate, TabBarDelega
             alertView.center.y = (screenH - CGFloat(keyboardSize.height)) / 2
         }
     }
-    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
     @objc func keyboardWillHide(notification: NSNotification) {
         alertView.frame.origin.y = initialY
     }
@@ -172,11 +174,39 @@ class ConnectedMeteoController: UIViewController, BlackBoxDelegate, TabBarDelega
     func buttonTapBlackBox() {
         delegate?.buttonTap()
         print("blackbox")
+        if demoMode {
+            if Access_Allowed == 0 {
+                buttonTapSetAlert()
+            }
+        }
     }
     
     func buttonTapTabBar() {
         delegate?.buttonTap()
         print("meteo")
+        if demoMode {
+            if let viewControllers = navigationController?.viewControllers {
+                for viewController in viewControllers {
+                    if viewController.isKind(of: TabBarController.self) {
+                        tabBarVC.mainVC.demoData()
+                    }
+                }
+            }
+        }
+    }
+    func buttonTapTabBarState() {
+        delegate?.buttonTap()
+        print("state")
+        if demoMode {
+            if let viewControllers = navigationController?.viewControllers {
+                for viewController in viewControllers {
+                    if viewController.isKind(of: TabBarController.self) {
+                        tabBarVC.searchVC.demoData()
+                    }
+                }
+            }
+        }
+
     }
     func buttonTabBar() {
         delegate?.buttonTap()
@@ -204,7 +234,7 @@ extension ConnectedMeteoController: UITableViewDelegate {
 //            animateIn()
 //        } else {
             if indexPath.row == 3 {
-//                navigationController?.pushViewController(passwordVC, animated: true)
+                navigationController?.pushViewController(passwordVC, animated: true)
                 reload = 29
                 delegate?.buttonTap()
             } else if indexPath.row == 2 {

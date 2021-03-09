@@ -18,3 +18,9 @@ class AccountModel: Object {
     @objc dynamic var password: String?
     @objc dynamic var save: Bool = false
 }
+
+class SelectAccount: Object {
+    @objc dynamic var user: String?
+    @objc dynamic var password: String?
+    @objc dynamic var save: Bool = false
+}

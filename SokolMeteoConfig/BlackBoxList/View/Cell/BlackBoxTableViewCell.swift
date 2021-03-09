@@ -16,7 +16,7 @@ class BlackBoxTableViewCell: UITableViewCell {
 
     weak var viewModel: TableViewCellViewModelType? {
         willSet(viewModel) {
-            guard let viewModel = viewModel else { return }
+//            guard let viewModel = viewModel else { return }
             imageUI?.image = UIImage(named: "timeBlackBox")
         }
     }

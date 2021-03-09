@@ -13,8 +13,14 @@ import NVActivityIndicatorView
 import SimpleCheckbox
 
 class AccountEnterController: UIViewController {
+    
+    var tagSelectProfile = 0
+    var pushAccountProfile = false
     let tabBarSokolMeteoVC = TabBarSokolMeteoController()
     let customNavigationBar = createCustomNavigationBar(title: "ВХОД В УЧЕТНУЮ ЗАПИСЬ",fontSize: screenW / 22)
+    let profileSelect = ProfileSelectController()
+    var viewModel: ServiceModel = ServiceModel()
+
     lazy var stackTextField: UIStackView = {
         let stackTextField = UIStackView()
         stackTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -55,7 +61,26 @@ class AccountEnterController: UIViewController {
         label.text = "Запомнить"
         return label
     }()
-    
+
+    var profileButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Выбрать профиль", for: .normal)
+        button.backgroundColor = UIColor(rgb: 0xBE449E)
+        button.layer.cornerRadius = 20
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(profileAction), for: .touchUpInside)
+        return button
+    }()
+    @objc func profileAction() {
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        transition.type = CATransitionType.push
+        transition.subtype = .fromLeft
+        view.window!.layer.add(transition, forKey: kCATransition)
+        profileSelect.pushAccount = true
+        navigationController?.pushViewController(profileSelect, animated: true)
+    }
     lazy var viewAlpha: UIView = {
         let viewAlpha = UIView(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH))
         viewAlpha.backgroundColor = UIColor.black.withAlphaComponent(0.7)
@@ -161,7 +186,21 @@ class AccountEnterController: UIViewController {
             viewAlpha.isHidden = false
 //            fetchInAccount()
             let userData = ["login": "\(IMEITextField.text ?? "")", "password": "\(passwordTextField.text ?? "")"]
-            networkingPostRequest(urlString: "http://185.27.193.112:8004/auth/login", userDataJSON: userData)
+            networkingPostRequest(urlString: "http://185.27.193.112:8004/auth/login", userDataJSON: userData) { (id, error) in
+                guard let id = id else { return }
+                idSession = id
+                if devicesList.count != 0 {
+                    DispatchQueue.main.async {
+                        devicesList.removeAll()
+                        self.tabBarSokolMeteoVC.firstVC.updateItemTableView()
+                    }
+                }
+                DispatchQueue.main.async { [self] in
+                    viewModel.sokolTemplateInfo = ["Не выбрано", "Не выбрано"]
+                    tabBarSokolMeteoVC.secondVC.viewModel = viewModel
+                    navigationController?.pushViewController(tabBarSokolMeteoVC, animated: true )
+                }
+            }
         } else {
             showToast(message: "Проверьте соединение", seconds: 1.0)
         }
@@ -195,9 +234,22 @@ class AccountEnterController: UIViewController {
             let realmCheck = realm.objects(AccountModel.self)
             if realmCheck.count != 0 {
                 try! realm.write {
-                    realmCheck.setValue(account.user, forKey: "user")
-                    realmCheck.setValue(account.password, forKey: "password")
-                    realmCheck.setValue(account.save, forKey: "save")
+                    if realmCheck.count == 1 {
+                        realmCheck[0].setValue(false, forKey: "save")
+                    } else {
+                        for i in 0...realmCheck.count - 1 {
+                            realmCheck[i].setValue(false, forKey: "save")
+                        }
+                    }
+                }
+            }
+            let realmboxing = realm.objects(AccountModel.self).filter("user = %@", account.user!)
+
+            if realmboxing.count != 0 {
+                try! realm.write {
+                    realmboxing.setValue(account.user, forKey: "user")
+                    realmboxing.setValue(account.password, forKey: "password")
+                    realmboxing.setValue(account.save, forKey: "save")
                 }
             } else {
                 try realm.write {
@@ -255,15 +307,39 @@ class AccountEnterController: UIViewController {
             return try! Realm()
         }()
         
-        let realmCheck = realm.objects(AccountModel.self)
-        if realmCheck.count != 0 {
-            IMEITextField.text = realmCheck[0].user
-            passwordTextField.text = realmCheck[0].password
-            checkBox.isChecked = realmCheck[0].save
-            checkBoxSender()
+        if pushAccountProfile {
+            let realmCheck = realm.objects(AccountModel.self)
+            if realmCheck.count != 0 {
+                IMEITextField.text = realmCheck[tagSelectProfile].user
+                passwordTextField.text = realmCheck[tagSelectProfile].password
+                checkBox.isChecked = realmCheck[tagSelectProfile].save
+                checkBoxSender()
+                profileButton.alpha = 1.0
+                profileButton.isEnabled = true
+            } else {
+                profileButton.alpha = 0.4
+                profileButton.isEnabled = false
+                checkBox.isChecked = false
+                checkBoxSender()
+            }
         } else {
-            checkBox.isChecked = false
-            checkBoxSender()
+            let realmboxing = realm.objects(AccountModel.self).filter("save = %@", true)
+            if realmboxing.count == 1 {
+                if realmboxing.count != 0 {
+                    IMEITextField.text = realmboxing[0].user
+                    passwordTextField.text = realmboxing[0].password
+                    checkBox.isChecked = realmboxing[0].save
+                    checkBoxSender()
+                    profileButton.alpha = 1.0
+                    profileButton.isEnabled = true
+                } else {
+                    profileButton.alpha = 0.4
+                    profileButton.isEnabled = false
+                    checkBox.isChecked = false
+                    checkBoxSender()
+                }
+            }
+
         }
     }
     override func viewDidLoad() {
@@ -281,7 +357,7 @@ class AccountEnterController: UIViewController {
         view.addSubview(viewAlpha)
     }
     
-    func networkingPostRequest(urlString: String, userDataJSON: [String: String]) {
+    func networkingPostRequest(urlString: String, userDataJSON: [String: String], completion: @escaping (_ photoFormat: String?,_ error: String?) -> () ) {
         guard let url = URL(string: urlString) else {return}
         
         var request = URLRequest(url: url)
@@ -297,26 +373,31 @@ class AccountEnterController: UIViewController {
             print(response)
             if let httpResponse = response as? HTTPURLResponse {
                 print(httpResponse.statusCode)
-                
-                let cookieStorage = HTTPCookieStorage.shared
-                let cookies = cookieStorage.cookies(for: response.url!)
-                if cookies?.first?.name != nil {
-                    print("name: \((cookies?.first?.name)!), value: \((cookies?.first?.value)!)")
-                    idSession = (cookies?.first?.value)!
-                }
             }
             do {
                 let json = try JSONSerialization.jsonObject(with: data, options: [])
                 print(json)
                 let jsonSecond = try JSONDecoder().decode(MessageError.self, from: data)
                 print(jsonSecond)
-                guard let JSESSIONID = jsonSecond.result else {return}
-                idSession = JSESSIONID
-                DispatchQueue.main.async {
-                    self.navigationController?.pushViewController(self.tabBarSokolMeteoVC, animated: true )
+                if let error = jsonSecond.localMessage {
+                    DispatchQueue.main.async {
+                        self.viewAlpha.isHidden = true
+                        self.showToast(message: error, seconds: 1.0)
+                    }
                 }
+                guard let JSESSIONID = jsonSecond.result else {return}
+                if jsonSecond.state == "OK" {
+                    DispatchQueue.main.async {
+                        self.realmSave()
+                        self.viewAlpha.isHidden = true
+                    }
+                } else {
+
+                }
+                completion(JSESSIONID, nil)
             } catch {
                 print(error)
+                completion(nil, NetworkResponse.unableToDecode.rawValue)
             }
         }.resume()
     }
@@ -326,6 +407,7 @@ class AccountEnterController: UIViewController {
         view.addSubview(backView)
         backView.addTapGesture {
             self.navigationController?.popViewController(animated: true)
+            self.dismiss(animated: true, completion: nil)
         }
         stackTextField.addArrangedSubview(IMEITextField)
         stackTextField.addArrangedSubview(passwordTextField)
@@ -334,7 +416,7 @@ class AccountEnterController: UIViewController {
         saveTextField.addArrangedSubview(checkBox)
         saveTextField.addArrangedSubview(saveLabel)
 
-        view.sv(stackTextField, nameDevice, saveButton, registrationButton)
+        view.sv(stackTextField, nameDevice, saveButton, profileButton, registrationButton)
         
         passwordTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
         IMEITextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
@@ -349,15 +431,22 @@ class AccountEnterController: UIViewController {
         nameDevice.bottomAnchor.constraint(equalTo: stackTextField.topAnchor, constant: -50).isActive = true
         nameDevice.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-        saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40).isActive = true
+        saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: screenW / 4).isActive = true
+        saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50).isActive = true
         saveButton.heightAnchor.constraint(equalToConstant: 45).isActive = true
-        saveButton.widthAnchor.constraint(equalToConstant: screenW / 2.5).isActive = true
+        saveButton.widthAnchor.constraint(equalToConstant: screenW / 2.2).isActive = true
         
+        profileButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -screenW / 4).isActive = true
+        profileButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -50).isActive = true
+        profileButton.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        profileButton.widthAnchor.constraint(equalToConstant: screenW / 2.2).isActive = true
+
         registrationButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         registrationButton.topAnchor.constraint(equalTo: saveButton.bottomAnchor, constant: 10).isActive = true
         registrationButton.heightAnchor.constraint(equalToConstant: 45).isActive = true
         registrationButton.widthAnchor.constraint(equalToConstant: screenW / 1.5).isActive = true
+        
+        
 
 
     }

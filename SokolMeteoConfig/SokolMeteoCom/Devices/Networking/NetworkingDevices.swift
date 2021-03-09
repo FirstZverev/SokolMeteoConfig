@@ -36,6 +36,7 @@ extension ObjectViewCell {
                 print(devicesList)
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
+//                    self.refreshControl.endRefreshing()
                 }
             } catch let error {
                 print(error)
@@ -64,10 +65,9 @@ extension OnlineDataDeviceCell {
                 print(httpResponse.statusCode)
             }
             do {
-                let devices = try JSONDecoder().decode(ListDeviceParametrs.self, from: data)
+                let devices = try JSONDecoder().decode(OnlineNetwork.self, from: data)
                 guard let result = devices.result else { return }
                 devicesParametrsList = result
-                print(devicesParametrsList)
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }

@@ -12,22 +12,10 @@ class ReportsController : UIViewController {
     
     var tableView: UITableView!
     let generator = UIImpactFeedbackGenerator(style: .light)
-
+    var viewModel: ServiceModel = ServiceModel()
+    let selectObectVC = SelectObectController()
     var devicesList: [DataDevices] = []
     
-    var emptyList: UILabel = {
-        let emptyList = UILabel()
-        emptyList.text = "СПИСОК ПУСТ"
-        emptyList.numberOfLines = 0
-        emptyList.textAlignment = .center
-//        emptyList.center.x = screenW / 2
-//        emptyList.center.y = screenH / 2
-        emptyList.font = UIFont(name: "FuturaPT-Light", size: screenW / 16)
-        emptyList.textColor = .gray
-        emptyList.translatesAutoresizingMaskIntoConstraints = false
-//        emptyList.isHidden = false
-        return emptyList
-    }()
     lazy var backView: UIImageView = {
         let backView = UIImageView()
         backView.frame = CGRect(x: 0, y: screenH / 12 - 50, width: 50, height: 50)
@@ -46,13 +34,14 @@ class ReportsController : UIViewController {
         tableView.height(screenH - (screenH / 12)).width(screenW)
         tableView.top(screenH / 12)
         tableView.backgroundColor = .white
-        tableView.addSubview(emptyList)
         self.tableView = tableView
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-//        networkingPostRequestListDevice(urlString: "https://sokolmeteo.com/api/device?start=0&count=10&sortDir=asc")
+//        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        tableView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -67,42 +56,45 @@ class ReportsController : UIViewController {
         view.sv(customNavigationBar, backView)
         customNavigationBar.hero.id = "SOKOLMETEO"
         backView.addTapGesture { [self] in self.popVC() }
-        emptyList.centerXAnchor.constraint(equalTo: tableView.centerXAnchor).isActive = true
-        emptyList.centerYAnchor.constraint(equalTo: tableView.centerYAnchor).isActive = true
-        emptyList.leadingAnchor.constraint(equalTo: tableView.leadingAnchor, constant: 30).isActive = true
-        emptyList.trailingAnchor.constraint(equalTo: tableView.trailingAnchor, constant: -30).isActive = true
     }
     
     func popVC() {
-        self.navigationController?.popViewController(animated: true)
+        tabBarController?.selectedIndex = 0
     }
     
     func registerCell() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(BlackBoxListCell.self, forCellReuseIdentifier: "BlackBoxListCell")
+        tableView.register(SecondConfigBMVDCell.self, forCellReuseIdentifier: "SecondConfigBMVDCell")
+        tableView.register(TemplatesCell.self, forCellReuseIdentifier: "TemplatesCell")
+
     }
     
 }
 
 extension ReportsController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "BlackBoxListCell", for: indexPath) as! BlackBoxListCell
-        cell.label.text = devicesList[indexPath.row].name
-        cell.imageUI.image = UIImage(named: configListBox[0].image)
-        return cell
+        if indexPath.row == 2 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TemplatesCell", for: indexPath) as! TemplatesCell
+            cell.labelName.text = viewModel.sokolTemplateName[indexPath.row]
+            cell.labelPickerTo.text = "Понедельник 2 ноября 2020"
+            cell.labelPickerFrom.text = "Воскрсение 8 ноября 2020"
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "SecondConfigBMVDCell", for: indexPath) as! SecondConfigBMVDCell
+            cell.label.text = viewModel.sokolTemplateName[indexPath.row]
+            cell.labelMac.text = viewModel.sokolTemplateInfo[indexPath.row]
+            cell.imageUI.image = UIImage(named: "EllipseSokolName")
+            return cell
+        }
     }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if devicesList.count == 0 {
-            emptyList.isHidden = false
-        } else {
-            emptyList.isHidden = true
-        }
-        return devicesList.count
+        return viewModel.sokolTemplateName.count
     }
     
     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
@@ -128,7 +120,18 @@ extension ReportsController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        if indexPath.row == 1 {
+            selectObectVC.viewModel = viewModel
+            selectObectVC.delegate = self
+            let navigationController = UINavigationController(rootViewController: selectObectVC)
+            navigationController.navigationBar.isHidden = true
+            self.present(navigationController, animated: true)
+        }
     }
 }
 
+extension ReportsController: SelectObectDelegate {
+    func selected() {
+        tableView.reloadData()
+    }
+}

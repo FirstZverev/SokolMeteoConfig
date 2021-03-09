@@ -36,7 +36,7 @@ class MoreDevicesController : UIViewController {
         emptyList.font = UIFont(name: "FuturaPT-Light", size: 20)
         emptyList.textColor = .gray
         emptyList.translatesAutoresizingMaskIntoConstraints = false
-//        emptyList.isHidden = false
+        //        emptyList.isHidden = false
         return emptyList
     }()
     
@@ -61,6 +61,27 @@ class MoreDevicesController : UIViewController {
                 reload = 2
                 self.delegate?.buttonTapBMVD()
                 self.tableView.reloadData()
+            }
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if demoMode {
+            countBMVD = 0
+            arrayBmvdCount.removeAll()
+            arrayCount.removeAll()
+            for i in 0...7 {
+                arrayBmvdU[countBMVD] = "\(Double.random(in: 2.8...3.7).roundToDecimal(2))"
+                arrayBmvdCount["\(i)T\(0)"] = "\(Double.random(in: 21...29).roundToDecimal(2))"
+                arrayBmvdCount["\(i)H\(1)"] = "\(Int.random(in: 0...5))"
+                arrayBmvdCount["\(i)h\(2)"] = "\(Int.random(in: 0...5))"
+                arrayBmvdCount["\(i)t\(3)"] = "\(Int.random(in: 20...30))"
+                arrayBmvdCount["\(i)h\(4)"] = "\(Int.random(in: 0...5))"
+                arrayBmvdCount["\(i)t\(5)"] = "\(Int.random(in: 20...30))"
+                arrayBmvdCount["\(i)l\(6)"] = "\(Int.random(in: 0...5))"
+                arrayBmvdR[countBMVD] = "\(Int.random(in: -70 ... -15))"
+                countBMVD += 1
+                arrayCount.append(i)
             }
         }
     }

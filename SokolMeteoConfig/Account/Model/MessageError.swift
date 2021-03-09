@@ -9,6 +9,8 @@
 import Foundation
 
 struct MessageError: Codable {
-    let state, errors, message, localMessage: String?
+    let state: String?
+    let errors: [String]?
+    let message, localMessage: String?
     let timestamp, result: String?
 }

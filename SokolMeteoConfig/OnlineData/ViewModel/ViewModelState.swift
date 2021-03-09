@@ -22,7 +22,7 @@ class ViewModelState: TableViewViewModelType {
         Menu(id: 6, name: "Поперечный наклон", image: "tilt-1", nameParametr: "QPOP"),
         Menu(id: 7, name: "Состояние маяка", nameParametr: "QBKN"),
         Menu(id: 8, name: "Минуты (без часа) когда начнется цикл измерения и отправки сообщения", image: "min-1", nameParametr: "QPAK"),
-        Menu(id: 9, name: "Минуты (без часа) когда нанется обмен с БМВД", image: "min", nameParametr: "QBMT"),
+        Menu(id: 9, name: "Минуты (без часа) когда начнется обмен с БМВД", image: "min", nameParametr: "QBMT"),
         Menu(id: 10, name: "Напряжение аккумулятора", image: "voltage", nameParametr: "UBAT"),
         Menu(id: 11, name: "Напряжение внешнего источника", image: "voltage", nameParametr: "UEXT"),
         Menu(id: 12, name: "Объем сгенерированных фотографий", nameParametr: "KS"),

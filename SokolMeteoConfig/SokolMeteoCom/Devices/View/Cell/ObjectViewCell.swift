@@ -18,7 +18,38 @@ class ObjectViewCell: UICollectionViewCell {
 //    weak var textView: UIView!
     var emptyList: UILabel!
     weak var delegate: DevicesDelegate?
+    let networkManager = NetworkManager()
+    var addDeviceVC = AddDeviceViewController()
+    
+    let generator = UIImpactFeedbackGenerator(style: .light)
 
+    var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+//        let title = NSLocalizedString("PullToRefresh", comment: "Отпустите")
+        refreshControl.tintColor = .purple
+//        refreshControl.attributedTitle = NSAttributedString(string: title)
+        refreshControl.addTarget(self,
+                                 action: #selector(refreshOptions(sender:)),
+                                 for: .valueChanged)
+        return refreshControl
+    }()
+    
+    var buttonPlus: UIButton!
+    
+    @objc func actionAddPush() {
+        delegate?.actionPushAdd(edit: false)
+    }
+    
+    @objc func refreshOptions(sender: UIRefreshControl) {
+        print("LOLOLOLO")
+        networkManager.networkingPostRequestListDevice { (data, error) in
+            DispatchQueue.main.async {
+                sender.endRefreshing()
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -31,13 +62,22 @@ class ObjectViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        networkingPostRequestListDevice(urlString: "http://185.27.193.112:8004/device/all?start=0&count=10&sortDir=asc")
-        
         self.initialize()
+//        requestParametrs()
     }
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.initialize()
+    }
+    
+    func requestParametrs() {
+        viewAlphaAlways.isHidden = false
+        networkManager.networkingPostRequestListDevice { (data, error) in
+            DispatchQueue.main.async {
+                viewAlphaAlways.isHidden = true
+                self.tableView.reloadData()
+            }
+        }
     }
     fileprivate func createTableView() {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -47,7 +87,8 @@ class ObjectViewCell: UICollectionViewCell {
 //        tableView.height(screenH - (screenH / 12)).width(screenW)
 //        tableView.top(screenH / 12)
         tableView.backgroundColor = .white
-        self.contentView.addSubview(tableView)
+        tableView.refreshControl = refreshControl
+        self.content.addSubview(tableView)
         self.tableView = tableView
     }
     func registerCell() {
@@ -81,69 +122,34 @@ class ObjectViewCell: UICollectionViewCell {
         emptyList.translatesAutoresizingMaskIntoConstraints = false
         self.tableView.addSubview(emptyList)
         self.emptyList = emptyList
+        
+        let buttonPlus = UIButton()
+        buttonPlus.setImage(UIImage(named: "pluisView"), for: .normal)
+        buttonPlus.showsTouchWhenHighlighted = true
+        buttonPlus.setTitleColor(UIColor(rgb: 0xB64894), for: .highlighted)
+        buttonPlus.translatesAutoresizingMaskIntoConstraints = false
+        buttonPlus.addTarget(self, action: #selector(actionAddPush), for: .touchUpInside)
+        self.content.addSubview(buttonPlus)
+        self.buttonPlus = buttonPlus
 
-        //        emptyList.isHidden = false
-
-//        let imageUI = UIImageView(frame: CGRect(x: 0, y: 0, width: screenW, height: screenW * 1.78))
-//        imageUI.image = UIImage(named: "swipe 0")
-//        imageUI.layer.shadowColor = UIColor(rgb: 0xB64894).cgColor
-//        imageUI.layer.shadowRadius = 6.0
-//        imageUI.layer.shadowOpacity = 0.5
-//        imageUI.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
-//        imageUI.translatesAutoresizingMaskIntoConstraints = false
-//        self.content.addSubview(imageUI)
-//        self.imageUI = imageUI
-        
-//        let textView = UIView()
-//        textView.backgroundColor = .white
-//        textView.layer.cornerRadius = 20
-//        textView.translatesAutoresizingMaskIntoConstraints = false
-//        textView.layer.shadowColor = UIColor(rgb: 0xB64894).cgColor
-//        textView.layer.shadowRadius = 6.0
-//        textView.layer.shadowOpacity = 0.5
-//        textView.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
-//        self.content.addSubview(textView)
-//        self.textView = textView
-        
-//        let label = UILabel()
-//        label.font = UIFont(name:"FuturaPT-Medium", size: screenW / 18)
-//        label.textAlignment = .center
-//        label.textColor = UIColor(rgb: 0x321550)
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        label.numberOfLines = 0
-//        self.textView.addSubview(label)
-//        self.label = label
-        
-//        let imageHumanUI = UIImageView()
-//        imageHumanUI.image = UIImage(named: "human 0")
-////        imageUI.layer.shadowColor = UIColor(rgb: 0xB64894).cgColor
-////        imageUI.layer.shadowRadius = 6.0
-////        imageUI.layer.shadowOpacity = 0.5
-////        imageUI.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
-//        imageHumanUI.translatesAutoresizingMaskIntoConstraints = false
-//        self.content.addSubview(imageHumanUI)
-//        self.imageHumanUI = imageHumanUI
-        
         NSLayoutConstraint.activate([
             self.content!.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
             self.content!.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
-            self.content!.topAnchor.constraint(equalTo: contentView.topAnchor),
+            self.content!.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 80),
             self.content!.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
 
-//            self.label!.centerXAnchor.constraint(equalTo: self.textView!.centerXAnchor),
-//            self.label!.centerYAnchor.constraint(equalTo: self.textView!.centerYAnchor),
-//            self.label!.leadingAnchor.constraint(equalTo: self.textView!.leadingAnchor,constant: 30),
-//            self.label!.trailingAnchor.constraint(equalTo: self.textView!.trailingAnchor,constant: -30),
-
-            self.tableView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: screenH / 12 ),
-            self.tableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            self.tableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            self.tableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            self.tableView.topAnchor.constraint(equalTo: self.content.topAnchor),
+            self.tableView.bottomAnchor.constraint(equalTo: self.content.bottomAnchor, constant: -100),
+            self.tableView.leadingAnchor.constraint(equalTo: self.content.leadingAnchor),
+            self.tableView.trailingAnchor.constraint(equalTo: self.content.trailingAnchor),
 
             self.emptyList.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
             self.emptyList.centerYAnchor.constraint(equalTo: tableView.centerYAnchor),
             self.emptyList.leadingAnchor.constraint(equalTo: tableView.leadingAnchor, constant: 30),
-            self.emptyList.trailingAnchor.constraint(equalTo: tableView.trailingAnchor, constant: -30)
+            self.emptyList.trailingAnchor.constraint(equalTo: tableView.trailingAnchor, constant: -30),
+            
+            self.buttonPlus.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -110),
+            self.buttonPlus.trailingAnchor.constraint(equalTo: self.content.trailingAnchor, constant: -20)
 
 //            self.textView!.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: screenH / 12),
 //            self.textView!.leadingAnchor.constraint(equalTo: self.content!.leadingAnchor, constant: 20),
@@ -156,16 +162,24 @@ class ObjectViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
     }
 }
 
-extension ObjectViewCell: UITableViewDelegate, UITableViewDataSource {
+extension ObjectViewCell: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DeviceCell", for: indexPath) as! DeviceCell
         cell.label.text = devicesList[indexPath.row].name
-        
+        cell.backgroundColor = .blue
+
+//        cell.nextImage.addTarget(self, action: #selector(optionSettingsAcction), for: .touchUpInside)
+        cell.nextImage.addTapGesture {
+            self.generator.impactOccurred()
+            self.delegate?.alertSetupVisualEffectView(name: devicesList[indexPath.row].name!, tag: indexPath.row)
+        }
         return cell
+    }
+    @objc func optionSettingsAcction() {
+        generator.impactOccurred()
     }
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -178,6 +192,14 @@ extension ObjectViewCell: UITableViewDelegate, UITableViewDataSource {
             emptyList.isHidden = true
         }
         return devicesList.count
+    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y >= 0 {
+            self.buttonPlus.transform = CGAffineTransform(translationX: 0, y: scrollView.contentOffset.y)
+        } else {
+            self.buttonPlus.transform = CGAffineTransform(translationX: 0, y: 0)
+        }
+
     }
     
     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
@@ -198,12 +220,13 @@ extension ObjectViewCell: UITableViewDelegate, UITableViewDataSource {
 //            cell?.contentView.backgroundColor = .white
 //        }
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectItem = indexPath.row
-        delegate?.buttonTap()
+        delegate?.buttonTap(tag: indexPath.row)
     }
 }

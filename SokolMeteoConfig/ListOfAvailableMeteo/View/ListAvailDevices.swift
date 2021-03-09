@@ -99,6 +99,7 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
         Access_Allowed = 0
         mainPassword = ""
         nameDevice = "Sokol-M_DEMO"
+        demoMode = true
         self.navigationController?.pushViewController(ConnectedMeteoController(), animated: true)
         
     }
@@ -257,7 +258,6 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
                 (rxData as NSData).getBytes(&rxByteArray, length: numberOfBytes)
                 let string = String(data: Data(rxByteArray), encoding: .utf8)
                 stringAll = stringAll + string!
-                print(string!)
                 let result = stringAll.components(separatedBy: [":",";","=",",","\r","\n"])
                 if blackBoxStart == true {
                     if string!.contains("\r\n") && string!.contains("Unknown command") != true && stringAll.contains("Begin Transmit") != true {
@@ -1334,6 +1334,8 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
         if CBPeripheralForDisconnect != nil {
             manager?.cancelPeripheralConnection(CBPeripheralForDisconnect)
         }
+        demoMode = false
+        print(viewDidAppear)
         searchBar.text = ""
         timer.invalidate()
         self.searchBar.endEditing(true)

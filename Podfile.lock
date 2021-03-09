@@ -1,25 +1,25 @@
 PODS:
-  - AdvancedPageControl (0.1.4)
-  - Alamofire (5.2.2)
+  - AdvancedPageControl (0.1.5)
+  - Alamofire (5.4.1)
   - BottomPopup (0.6.0)
   - Charts (3.6.0):
     - Charts/Core (= 3.6.0)
   - Charts/Core (3.6.0)
   - ESTabBarController-swift (2.8.0)
-  - FittedSheets (2.2.0)
-  - FSCalendar (2.8.1)
+  - FittedSheets (2.2.3)
+  - FSCalendar (2.8.2)
   - Hero (1.5.0)
-  - HorizonCalendar (1.5.0)
+  - HorizonCalendar (1.6.4)
   - MXSegmentedControl (1.1.0)
-  - NVActivityIndicatorView (5.0.1):
-    - NVActivityIndicatorView/Base (= 5.0.1)
-  - NVActivityIndicatorView/Base (5.0.1)
+  - NVActivityIndicatorView (5.1.1):
+    - NVActivityIndicatorView/Base (= 5.1.1)
+  - NVActivityIndicatorView/Base (5.1.1)
   - RAMAnimatedTabBarController (5.2.0)
-  - Realm (5.4.3):
-    - Realm/Headers (= 5.4.3)
-  - Realm/Headers (5.4.3)
-  - RealmSwift (5.4.3):
-    - Realm (= 5.4.3)
+  - Realm (10.5.0):
+    - Realm/Headers (= 10.5.0)
+  - Realm/Headers (10.5.0)
+  - RealmSwift (10.5.0):
+    - Realm (= 10.5.0)
   - SimpleCheckbox (2.1.0)
   - SteviaLayout (4.7.3)
   - UIDrawer (1.0)
@@ -75,20 +75,20 @@ CHECKOUT OPTIONS:
     :tag: '1.0'
 
 SPEC CHECKSUMS:
-  AdvancedPageControl: 2bb63992260869ef665e47da39001a432fb48c49
-  Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
+  AdvancedPageControl: df5912b03c7b78a7719d4f479b79f7eb3a2966bb
+  Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
   BottomPopup: 1d5649a3b29396238f0e8f3c82075a7bfcf37ba7
   Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
   ESTabBarController-swift: 05593a6ad64700b03c0eb60ff625916370aa4136
-  FittedSheets: 51021a5caab6c2fbc35e1be8b5c57177edfa0326
-  FSCalendar: 5245140456fcbcac5824c203b98bd8068bdfee1a
+  FittedSheets: 5533375af9ed713977b8e6d88b74c90e8f5df041
+  FSCalendar: e6a2eb9c571bf0719ed797ef807e08426753c241
   Hero: b7385b75e7259da62f4f85462f59a5082d66b058
-  HorizonCalendar: 7ee0dad09d9240d6ac1582afdd5a5b43ee09796d
+  HorizonCalendar: a71ce20c54942832a6b1bb162b7e55b738dfc3fe
   MXSegmentedControl: f39e46199a52cbc03b1c845e150215119f2542f5
-  NVActivityIndicatorView: 738e843cb8924e9e4fc3e559d0728031624bf860
+  NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   RAMAnimatedTabBarController: 6863a386e7ae2ab227cd60aa73ab8ff56cdacfdd
-  Realm: e3d5fcc50fd79ddf87a2d86301f6edbf57531f84
-  RealmSwift: db608068eccc54bce47928e8118bde13c120c307
+  Realm: e1c22c3d83b229afb70ebc10e1771c91e9542d12
+  RealmSwift: 6fc078d9d3fd7e58c71bfdbb694e252462f112a5
   SimpleCheckbox: ddcd433ab8c3a8f57300bebda13151a8f302c7f9
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
   UIDrawer: 1bfbc152fee69f6809a41508000cf1b9bd4b1738
@@ -96,4 +96,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: c8119b09dd78e4b0d314ba0dd332d0f42ce21099
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.10.0

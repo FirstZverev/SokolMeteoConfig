@@ -55,15 +55,31 @@ class TabBarController: UITabBarController, MeteoDelegate, StateDelegate, BMVDDe
     func buttonTapMeteo() {
         print("buttonTapMeteo")
         delegateConnectedMeteo?.buttonTapTabBar()
+        if demoMode {
+            if Access_Allowed == 0 {
+                delegateConnectedMeteo?.buttonTapSetAlert()
+            }
+        }
     }
     
     func buttonTapState() {
         print("buttonTapState")
-        delegateConnectedMeteo?.buttonTapTabBar()
+        delegateConnectedMeteo?.buttonTapTabBarState()
+        if demoMode {
+            if Access_Allowed == 0 {
+                delegateConnectedMeteo?.buttonTapSetAlert()
+            }
+        }
     }
     func buttonTapBMVD() {
         print("buttonTapBMVD")
         delegateConnectedMeteo?.buttonTapTabBar()
+        if demoMode {
+            if Access_Allowed == 0 {
+                delegateConnectedMeteo?.buttonTapSetAlert()
+            }
+        }
+
     }
   
     

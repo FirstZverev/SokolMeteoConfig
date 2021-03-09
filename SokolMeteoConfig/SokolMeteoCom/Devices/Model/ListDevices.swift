@@ -10,7 +10,8 @@ import Foundation
 
 struct ListDevices: Decodable {
     let state: String?
-    let errors, message, localMessage: String?
+    let errors: [String]?
+    let message, localMessage: String?
     let timestamp: String?
     let result: [DataDevices]?
 }
@@ -21,5 +22,17 @@ struct DataDevices: Decodable {
     let latitude, longitude: String?
     let forecastActive, exactFarmingActive, permittedToRead, permittedToWrite: Bool?
     let permittedToDelete: Bool?
-    let params, permissions: [String]?
+    let params: [String]?
+    let permissions: [DataDevicesPermissions]?
 }
+
+struct DataDevicesPermissions: Decodable {
+    let userID, userEmail, userPermissionID: String?
+
+    enum CodingKeys: String, CodingKey {
+        case userID = "userId"
+        case userEmail
+        case userPermissionID = "userPermissionId"
+    }
+}
+

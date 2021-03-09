@@ -137,13 +137,21 @@ extension ConfiguratorFirstController: UITextFieldDelegate {
                 self.blurEffect.isHidden = true
             }
         }
-        viewAlpha.isHidden = false
+        if demoMode {
+            viewAlpha.isHidden = true
+        } else {
+            viewAlpha.isHidden = false
+        }
         viewAlpha.addSubview(activityIndicator)
         activityIndicator.startAnimating()
         view.addSubview(viewAlpha)
     }
     override func viewWillAppear(_ animated: Bool) {
-        viewAlpha.isHidden = false
+        if demoMode {
+            viewAlpha.isHidden = true
+        } else {
+            viewAlpha.isHidden = false
+        }
         if KCNL == "GSM" {
             channelMode(gsmMode: false, deactivate: constraints2, activate: constraints)
         } else {
@@ -211,7 +219,11 @@ extension ConfiguratorFirstController: UITextFieldDelegate {
         notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
     @objc func saveUpdate() {
-        viewAlpha.isHidden = false
+        if demoMode {
+            showToast(message: "Данные успешно обновлены", seconds: 1.0)
+        } else {
+            viewAlpha.isHidden = false
+        }
         KCNL = "\(Channels(string: chanelTextField.text).channelsString())"
         KAPI = accessPointTextField.text ?? ""
         KUSR = userTextField.text ?? ""

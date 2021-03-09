@@ -11,9 +11,14 @@
 		B503B1EE2549553C00EBAB31 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = B503B1ED2549553C00EBAB31 /* Network.swift */; };
 		B503B1F22549575C00EBAB31 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B503B1F12549575C00EBAB31 /* NetworkManager.swift */; };
 		B503B1F6254BEF6700EBAB31 /* AccountEditController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B503B1F5254BEF6600EBAB31 /* AccountEditController.swift */; };
+		B507661B259325A50004C1FF /* NetworkResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B507661A259325A50004C1FF /* NetworkResponse.swift */; };
 		B50AF269254823A800F66786 /* BlackBoxMeteoData+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50AF268254823A800F66786 /* BlackBoxMeteoData+Alert.swift */; };
 		B50AF26D254833C400F66786 /* AccountAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = B50AF26C254833C400F66786 /* AccountAlert.xib */; };
 		B50AF271254833CD00F66786 /* AccountAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50AF270254833CD00F66786 /* AccountAlert.swift */; };
+		B50B1ACC25AF0F6F00A058EB /* PDFCreaterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1ACB25AF0F6F00A058EB /* PDFCreaterViewController.swift */; };
+		B50B1ACF25AF0FD700A058EB /* LineChartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1ACE25AF0FD700A058EB /* LineChartController.swift */; };
+		B50B1AE825B5BB8500A058EB /* GroupsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1AE725B5BB8300A058EB /* GroupsViewCell.swift */; };
+		B50B1AEC25B5C84200A058EB /* AddDeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50B1AEB25B5C84200A058EB /* AddDeviceViewController.swift */; };
 		B50E6D3C2525B04500874459 /* SwipingStartController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50E6D3B2525B04500874459 /* SwipingStartController.swift */; };
 		B50E6D402525B38C00874459 /* SwipeStartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50E6D3F2525B38C00874459 /* SwipeStartCell.swift */; };
 		B50E6D432525F46000874459 /* UiImage+Rotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50E6D422525F46000874459 /* UiImage+Rotation.swift */; };
@@ -26,6 +31,7 @@
 		B51C21052541C7F3009B2F84 /* SupportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51C21042541C7F3009B2F84 /* SupportController.swift */; };
 		B51E271F251A103B00F86019 /* DeviceNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51E271E251A103B00F86019 /* DeviceNameModel.swift */; };
 		B520149924DC35B200478D08 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = B520149824DC35B200478D08 /* Protocols.swift */; };
+		B523851F25B941D700555280 /* ModelForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B523851E25B941D600555280 /* ModelForecast.swift */; };
 		B528D590247BE2DA004244CA /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = B528D58F247BE2DA004244CA /* Common.swift */; };
 		B528D592247BE5D4004244CA /* StateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B528D591247BE5D4004244CA /* StateCell.swift */; };
 		B528D594247CE1D8004244CA /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B528D593247CE1D8004244CA /* MenuController.swift */; };
@@ -35,6 +41,9 @@
 		B53479F42542E4B100F96EEF /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53479F32542E4B100F96EEF /* UIViewController+Alert.swift */; };
 		B53B916724EBE92F00B388ED /* ModelBMVD.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53B916624EBE92F00B388ED /* ModelBMVD.swift */; };
 		B53B916924EC124300B388ED /* ConfiguratorBMVDSecondController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B53B916824EC124300B388ED /* ConfiguratorBMVDSecondController.swift */; };
+		B540DF7025C81D8D002B3FCA /* SelectObectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B540DF6F25C81D8D002B3FCA /* SelectObectController.swift */; };
+		B540DF7325C83969002B3FCA /* ProfileSelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B540DF7225C83969002B3FCA /* ProfileSelectController.swift */; };
+		B540DF7625C839E3002B3FCA /* ProfileSelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B540DF7525C839E3002B3FCA /* ProfileSelectCell.swift */; };
 		B5438D7A242CD9A200FAB0C5 /* TableViewViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5438D79242CD9A200FAB0C5 /* TableViewViewModelType.swift */; };
 		B5438D7C242CD9E300FAB0C5 /* TableViewCellViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5438D7B242CD9E300FAB0C5 /* TableViewCellViewModelType.swift */; };
 		B5438D7E242CDB1000FAB0C5 /* TableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5438D7D242CDB1000FAB0C5 /* TableViewCellViewModel.swift */; };
@@ -53,6 +62,8 @@
 		B56BEB082431D10800C42F85 /* ViewModelApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56BEB072431D10800C42F85 /* ViewModelApp.swift */; };
 		B56BEB0B2431F8ED00C42F85 /* CustomNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56BEB0A2431F8ED00C42F85 /* CustomNavigationView.swift */; };
 		B56BEB0D2432206500C42F85 /* ListAvailDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56BEB0C2432206500C42F85 /* ListAvailDevices.swift */; };
+		B56E6AB825936B19000ACC66 /* OnlineDeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56E6AB725936B19000ACC66 /* OnlineDeviceCell.swift */; };
+		B56E6ABB25948827000ACC66 /* ForecastDataDeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56E6ABA25948827000ACC66 /* ForecastDataDeviceCell.swift */; };
 		B56FD9D7247BA79200DF0B41 /* StateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56FD9D6247BA79200DF0B41 /* StateController.swift */; };
 		B57167942547DDA4003C8B1D /* AccountEnterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57167932547DDA4003C8B1D /* AccountEnterController.swift */; };
 		B571679E2547E4C5003C8B1D /* DownloadDaraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B571679D2547E4C5003C8B1D /* DownloadDaraController.swift */; };
@@ -78,6 +89,7 @@
 		B58492E8247BB03400C902C7 /* MeteoDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58492E7247BB03400C902C7 /* MeteoDataCell.swift */; };
 		B58492EB247BB08E00C902C7 /* ViewModelMeteoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58492EA247BB08E00C902C7 /* ViewModelMeteoData.swift */; };
 		B58492ED247BBD9900C902C7 /* ViewModelState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58492EC247BBD9900C902C7 /* ViewModelState.swift */; };
+		B589C76725932CB5001E186D /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589C76625932CB5001E186D /* HTTPMethod.swift */; };
 		B589CFB0242C876900B547DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFAF242C876900B547DC /* AppDelegate.swift */; };
 		B589CFB2242C876900B547DC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFB1242C876900B547DC /* SceneDelegate.swift */; };
 		B589CFB4242C876900B547DC /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B589CFB3242C876900B547DC /* StartViewController.swift */; };
@@ -110,6 +122,8 @@
 		B596B8DC252345270007DC08 /* ModelBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = B596B8DB252345270007DC08 /* ModelBox.swift */; };
 		B596B8E22523489A0007DC08 /* ModelViewBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = B596B8E12523489A0007DC08 /* ModelViewBlackBox.swift */; };
 		B596B8E725244E7C0007DC08 /* moreDevicesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B596B8E625244E7C0007DC08 /* moreDevicesCell.swift */; };
+		B597428325C42532003618F6 /* SegmentedDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B597428225C42532003618F6 /* SegmentedDateCell.swift */; };
+		B597428625C81549003618F6 /* TemplatesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B597428525C81549003618F6 /* TemplatesCell.swift */; };
 		B59BA4F624E1805500B9F15A /* RegisterSokolMeteoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59BA4F524E1805500B9F15A /* RegisterSokolMeteoController.swift */; };
 		B59BA4F824E1810D00B9F15A /* WKWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59BA4F724E1810D00B9F15A /* WKWebView.swift */; };
 		B59C4EC024A4622500192D82 /* Potocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = B59C4EBF24A4622500192D82 /* Potocols.swift */; };
@@ -140,6 +154,8 @@
 		B5C05151247B98C000F63357 /* MeteoDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C05150247B98C000F63357 /* MeteoDataController.swift */; };
 		B5C33F96254F328B008E700F /* ConfirmationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C33F95254F328B008E700F /* ConfirmationAlert.swift */; };
 		B5C33F9A254F3297008E700F /* ConfirmationAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C33F99254F3297008E700F /* ConfirmationAlert.xib */; };
+		B5C4D22E25BEA2FE00B1BF9D /* ServiceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C4D22D25BEA2FE00B1BF9D /* ServiceModel.swift */; };
+		B5C4D25425BFF27C00B1BF9D /* EditDeviceAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5C4D25325BFF27C00B1BF9D /* EditDeviceAlert.swift */; };
 		B5CAE99825494D8400C18FD3 /* ModelNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5CAE99725494D8400C18FD3 /* ModelNetwork.swift */; };
 		B5DB4CF72434778F0016A4BD /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DB4CF62434778F0016A4BD /* Color+Hex.swift */; };
 		B5DB4CFB2434788D0016A4BD /* SeacrhBar+TextColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DB4CFA2434788D0016A4BD /* SeacrhBar+TextColor.swift */; };
@@ -182,9 +198,14 @@
 		B503B1ED2549553C00EBAB31 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		B503B1F12549575C00EBAB31 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		B503B1F5254BEF6600EBAB31 /* AccountEditController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountEditController.swift; sourceTree = "<group>"; };
+		B507661A259325A50004C1FF /* NetworkResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkResponse.swift; sourceTree = "<group>"; };
 		B50AF268254823A800F66786 /* BlackBoxMeteoData+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BlackBoxMeteoData+Alert.swift"; sourceTree = "<group>"; };
 		B50AF26C254833C400F66786 /* AccountAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountAlert.xib; sourceTree = "<group>"; };
 		B50AF270254833CD00F66786 /* AccountAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountAlert.swift; sourceTree = "<group>"; };
+		B50B1ACB25AF0F6F00A058EB /* PDFCreaterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFCreaterViewController.swift; sourceTree = "<group>"; };
+		B50B1ACE25AF0FD700A058EB /* LineChartController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartController.swift; sourceTree = "<group>"; };
+		B50B1AE725B5BB8300A058EB /* GroupsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsViewCell.swift; sourceTree = "<group>"; };
+		B50B1AEB25B5C84200A058EB /* AddDeviceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDeviceViewController.swift; sourceTree = "<group>"; };
 		B50E6D3B2525B04500874459 /* SwipingStartController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipingStartController.swift; sourceTree = "<group>"; };
 		B50E6D3F2525B38C00874459 /* SwipeStartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeStartCell.swift; sourceTree = "<group>"; };
 		B50E6D422525F46000874459 /* UiImage+Rotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UiImage+Rotation.swift"; sourceTree = "<group>"; };
@@ -197,6 +218,7 @@
 		B51C21042541C7F3009B2F84 /* SupportController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportController.swift; sourceTree = "<group>"; };
 		B51E271E251A103B00F86019 /* DeviceNameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceNameModel.swift; sourceTree = "<group>"; };
 		B520149824DC35B200478D08 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		B523851E25B941D600555280 /* ModelForecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelForecast.swift; sourceTree = "<group>"; };
 		B528D58F247BE2DA004244CA /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		B528D591247BE5D4004244CA /* StateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateCell.swift; sourceTree = "<group>"; };
 		B528D593247CE1D8004244CA /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
@@ -206,6 +228,9 @@
 		B53479F32542E4B100F96EEF /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		B53B916624EBE92F00B388ED /* ModelBMVD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelBMVD.swift; sourceTree = "<group>"; };
 		B53B916824EC124300B388ED /* ConfiguratorBMVDSecondController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguratorBMVDSecondController.swift; sourceTree = "<group>"; };
+		B540DF6F25C81D8D002B3FCA /* SelectObectController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectObectController.swift; sourceTree = "<group>"; };
+		B540DF7225C83969002B3FCA /* ProfileSelectController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSelectController.swift; sourceTree = "<group>"; };
+		B540DF7525C839E3002B3FCA /* ProfileSelectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSelectCell.swift; sourceTree = "<group>"; };
 		B5438D79242CD9A200FAB0C5 /* TableViewViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewViewModelType.swift; sourceTree = "<group>"; };
 		B5438D7B242CD9E300FAB0C5 /* TableViewCellViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellViewModelType.swift; sourceTree = "<group>"; };
 		B5438D7D242CDB1000FAB0C5 /* TableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCellViewModel.swift; sourceTree = "<group>"; };
@@ -224,6 +249,8 @@
 		B56BEB072431D10800C42F85 /* ViewModelApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelApp.swift; sourceTree = "<group>"; };
 		B56BEB0A2431F8ED00C42F85 /* CustomNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationView.swift; sourceTree = "<group>"; };
 		B56BEB0C2432206500C42F85 /* ListAvailDevices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListAvailDevices.swift; sourceTree = "<group>"; };
+		B56E6AB725936B19000ACC66 /* OnlineDeviceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineDeviceCell.swift; sourceTree = "<group>"; };
+		B56E6ABA25948827000ACC66 /* ForecastDataDeviceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastDataDeviceCell.swift; sourceTree = "<group>"; };
 		B56FD9D6247BA79200DF0B41 /* StateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateController.swift; sourceTree = "<group>"; };
 		B57167932547DDA4003C8B1D /* AccountEnterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountEnterController.swift; sourceTree = "<group>"; };
 		B571679D2547E4C5003C8B1D /* DownloadDaraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadDaraController.swift; sourceTree = "<group>"; };
@@ -251,6 +278,7 @@
 		B58492E7247BB03400C902C7 /* MeteoDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoDataCell.swift; sourceTree = "<group>"; };
 		B58492EA247BB08E00C902C7 /* ViewModelMeteoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelMeteoData.swift; sourceTree = "<group>"; };
 		B58492EC247BBD9900C902C7 /* ViewModelState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelState.swift; sourceTree = "<group>"; };
+		B589C76625932CB5001E186D /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		B589CFAC242C876900B547DC /* SOKOL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SOKOL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B589CFAF242C876900B547DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B589CFB1242C876900B547DC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -285,6 +313,8 @@
 		B596B8DB252345270007DC08 /* ModelBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelBox.swift; sourceTree = "<group>"; };
 		B596B8E12523489A0007DC08 /* ModelViewBlackBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelViewBlackBox.swift; sourceTree = "<group>"; };
 		B596B8E625244E7C0007DC08 /* moreDevicesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = moreDevicesCell.swift; sourceTree = "<group>"; };
+		B597428225C42532003618F6 /* SegmentedDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedDateCell.swift; sourceTree = "<group>"; };
+		B597428525C81549003618F6 /* TemplatesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplatesCell.swift; sourceTree = "<group>"; };
 		B59BA4F524E1805500B9F15A /* RegisterSokolMeteoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterSokolMeteoController.swift; sourceTree = "<group>"; };
 		B59BA4F724E1810D00B9F15A /* WKWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WKWebView.swift; sourceTree = "<group>"; };
 		B59C4EBF24A4622500192D82 /* Potocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Potocols.swift; sourceTree = "<group>"; };
@@ -321,6 +351,8 @@
 		B5C05150247B98C000F63357 /* MeteoDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeteoDataController.swift; sourceTree = "<group>"; };
 		B5C33F95254F328B008E700F /* ConfirmationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationAlert.swift; sourceTree = "<group>"; };
 		B5C33F99254F3297008E700F /* ConfirmationAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConfirmationAlert.xib; sourceTree = "<group>"; };
+		B5C4D22D25BEA2FE00B1BF9D /* ServiceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceModel.swift; sourceTree = "<group>"; };
+		B5C4D25325BFF27C00B1BF9D /* EditDeviceAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDeviceAlert.swift; sourceTree = "<group>"; };
 		B5CAE99725494D8400C18FD3 /* ModelNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelNetwork.swift; sourceTree = "<group>"; };
 		B5DB4CF62434778F0016A4BD /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
 		B5DB4CFA2434788D0016A4BD /* SeacrhBar+TextColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SeacrhBar+TextColor.swift"; sourceTree = "<group>"; };
@@ -365,10 +397,19 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		B50B1AEA25B5C81900A058EB /* AddDeviceControllerView */ = {
+			isa = PBXGroup;
+			children = (
+				B50B1AEB25B5C84200A058EB /* AddDeviceViewController.swift */,
+			);
+			path = AddDeviceControllerView;
+			sourceTree = "<group>";
+		};
 		B528D58E247BE2C9004244CA /* Common */ = {
 			isa = PBXGroup;
 			children = (
 				B528D58F247BE2DA004244CA /* Common.swift */,
+				B5C4D22D25BEA2FE00B1BF9D /* ServiceModel.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -646,6 +687,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		B589C76525932CA7001E186D /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				B589C76625932CB5001E186D /* HTTPMethod.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		B589CFA3242C876900B547DC = {
 			isa = PBXGroup;
 			children = (
@@ -885,6 +934,8 @@
 				B51684EB252AE0B400415D43 /* BlackBoxGraffics.swift */,
 				B5168506252C4D4D00415D43 /* BlackBoxTable.swift */,
 				B5168509252C636A00415D43 /* BlackBoxTableView.swift */,
+				B50B1ACB25AF0F6F00A058EB /* PDFCreaterViewController.swift */,
+				B50B1ACE25AF0FD700A058EB /* LineChartController.swift */,
 				B596B8D5252343580007DC08 /* Cell */,
 			);
 			path = View;
@@ -1004,6 +1055,8 @@
 				B5B40847255E6335002EECD1 /* TabBarSokolMeteo */,
 				B5B40852255E657F002EECD1 /* Devices */,
 				B5B4084F255E6456002EECD1 /* ReportsController.swift */,
+				B597428525C81549003618F6 /* TemplatesCell.swift */,
+				B540DF6F25C81D8D002B3FCA /* SelectObectController.swift */,
 				B5B40860255ED98D002EECD1 /* Register */,
 			);
 			path = SokolMeteoCom;
@@ -1013,6 +1066,8 @@
 			isa = PBXGroup;
 			children = (
 				B5B40848255E6394002EECD1 /* TabBarSokolMeteoController.swift */,
+				B540DF7225C83969002B3FCA /* ProfileSelectController.swift */,
+				B540DF7525C839E3002B3FCA /* ProfileSelectCell.swift */,
 			);
 			path = TabBarSokolMeteo;
 			sourceTree = "<group>";
@@ -1035,6 +1090,7 @@
 				B5EF709325666C9400CB0FBA /* DeviceController.swift */,
 				B5EF70682563D61C00CB0FBA /* GroupController.swift */,
 				B57C1C1425835D1E00074772 /* MapViewController.swift */,
+				B50B1AEA25B5C81900A058EB /* AddDeviceControllerView */,
 				B5EF70632562613C00CB0FBA /* Cell */,
 			);
 			path = View;
@@ -1148,9 +1204,12 @@
 			isa = PBXGroup;
 			children = (
 				B5CAE99725494D8400C18FD3 /* ModelNetwork.swift */,
+				B523851E25B941D600555280 /* ModelForecast.swift */,
 				B503B1ED2549553C00EBAB31 /* Network.swift */,
 				B503B1F12549575C00EBAB31 /* NetworkManager.swift */,
 				B503B1D525494EB600EBAB31 /* URLRequestBuilder.swift */,
+				B507661A259325A50004C1FF /* NetworkResponse.swift */,
+				B589C76525932CA7001E186D /* Service */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1184,10 +1243,15 @@
 			isa = PBXGroup;
 			children = (
 				B5EF70642562614D00CB0FBA /* DeviceCell.swift */,
+				B56E6AB725936B19000ACC66 /* OnlineDeviceCell.swift */,
 				B5EF709925666F4700CB0FBA /* OnlineDataCell.swift */,
 				B5E1EB0425822F4400C43E15 /* OnlineDataMapCell.swift */,
 				B5EF706B2563DCFA00CB0FBA /* ObjectViewCell.swift */,
+				B5C4D25325BFF27C00B1BF9D /* EditDeviceAlert.swift */,
+				B50B1AE725B5BB8300A058EB /* GroupsViewCell.swift */,
 				B5EF709625666E9900CB0FBA /* OnlineDataDeviceCell.swift */,
+				B56E6ABA25948827000ACC66 /* ForecastDataDeviceCell.swift */,
+				B597428225C42532003618F6 /* SegmentedDateCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1230,8 +1294,8 @@
 				B589CFA9242C876900B547DC /* Frameworks */,
 				B589CFAA242C876900B547DC /* Resources */,
 				B5B06DD325305BE9007E5B98 /* Embed App Extensions */,
-				41F7E60F55D74C7BBEA8FA3D /* [CP] Embed Pods Frameworks */,
-				F1877C351258460647E10C6C /* [CP] Copy Pods Resources */,
+				E55D622B38E4591AF12EF1C5 /* [CP] Embed Pods Frameworks */,
+				61038F0C853CABFA47F3258F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1297,21 +1361,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		41F7E60F55D74C7BBEA8FA3D /* [CP] Embed Pods Frameworks */ = {
+		61038F0C853CABFA47F3258F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SOKOL/Pods-SOKOL-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SOKOL/Pods-SOKOL-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SOKOL/Pods-SOKOL-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SOKOL/Pods-SOKOL-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SOKOL/Pods-SOKOL-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SOKOL/Pods-SOKOL-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B96688438C8609A167AB6BA4 /* [CP] Check Pods Manifest.lock */ = {
@@ -1336,21 +1400,21 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F1877C351258460647E10C6C /* [CP] Copy Pods Resources */ = {
+		E55D622B38E4591AF12EF1C5 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SOKOL/Pods-SOKOL-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SOKOL/Pods-SOKOL-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Copy Pods Resources";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-SOKOL/Pods-SOKOL-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-SOKOL/Pods-SOKOL-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SOKOL/Pods-SOKOL-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SOKOL/Pods-SOKOL-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1368,6 +1432,7 @@
 				B589CFDD242CCC2800B547DC /* BluetoothService.swift in Sources */,
 				B5CAE99825494D8400C18FD3 /* ModelNetwork.swift in Sources */,
 				B5B40850255E6456002EECD1 /* ReportsController.swift in Sources */,
+				B50B1ACC25AF0F6F00A058EB /* PDFCreaterViewController.swift in Sources */,
 				B5E1EB0525822F4400C43E15 /* OnlineDataMapCell.swift in Sources */,
 				B5438D82242DEB2500FAB0C5 /* DetailViewModelType.swift in Sources */,
 				B57914A2255BC10F005102D4 /* ModelNumber.swift in Sources */,
@@ -1383,8 +1448,11 @@
 				B5EF709A25666F4700CB0FBA /* OnlineDataCell.swift in Sources */,
 				B56FD9D7247BA79200DF0B41 /* StateController.swift in Sources */,
 				B54C93C4248628BB00D82E5C /* Image+Color.swift in Sources */,
+				B56E6AB825936B19000ACC66 /* OnlineDeviceCell.swift in Sources */,
 				B5311FB924C9B89800DC6C2B /* StretchyTableHeaderView.swift in Sources */,
+				B523851F25B941D700555280 /* ModelForecast.swift in Sources */,
 				B59C6023251C778E00BDC6E6 /* ProtocolsPasswordVC.swift in Sources */,
+				B5C4D25425BFF27C00B1BF9D /* EditDeviceAlert.swift in Sources */,
 				B58492E8247BB03400C902C7 /* MeteoDataCell.swift in Sources */,
 				B58217B9247FD76300C669CA /* CustomAlertWarning.swift in Sources */,
 				B596B8C72522FEA80007DC08 /* LoadingView.swift in Sources */,
@@ -1394,7 +1462,9 @@
 				B5304137248FAA3800032C7F /* BlackBoxController.swift in Sources */,
 				B57914A5255BCD95005102D4 /* ModelExchange.swift in Sources */,
 				B5A82A9E2498762700F7A335 /* ConfiguratorThriedController.swift in Sources */,
+				B56E6ABB25948827000ACC66 /* ForecastDataDeviceCell.swift in Sources */,
 				B5A0307E24DBF78B0092F12B /* Model.swift in Sources */,
+				B597428325C42532003618F6 /* SegmentedDateCell.swift in Sources */,
 				B56BEB0B2431F8ED00C42F85 /* CustomNavigationView.swift in Sources */,
 				B5DB4CFD243479190016A4BD /* DevicesListCellMain.swift in Sources */,
 				B57167942547DDA4003C8B1D /* AccountEnterController.swift in Sources */,
@@ -1425,10 +1495,12 @@
 				B5438D7E242CDB1000FAB0C5 /* TableViewCellViewModel.swift in Sources */,
 				B589CFB0242C876900B547DC /* AppDelegate.swift in Sources */,
 				B5DB4D0324347B3D0016A4BD /* UIView+tap.swift in Sources */,
+				B597428625C81549003618F6 /* TemplatesCell.swift in Sources */,
 				B5B4085E255EB2BA002EECD1 /* RegistrationController.swift in Sources */,
 				B5168511252C750B00415D43 /* ViewModelBlackBoxTable.swift in Sources */,
 				B56BEB032431D00800C42F85 /* Commons.swift in Sources */,
 				B5DB4D01243479320016A4BD /* DevicesListCell.swift in Sources */,
+				B50B1AEC25B5C84200A058EB /* AddDeviceViewController.swift in Sources */,
 				B58492EB247BB08E00C902C7 /* ViewModelMeteoData.swift in Sources */,
 				B5BA77CE24EE3AD50046A2DD /* BlackBoxMeteoDataController.swift in Sources */,
 				B58217BB247FD7FC00C669CA /* AlertCreateWarning.swift in Sources */,
@@ -1446,6 +1518,7 @@
 				B593F0C4253EBEE600DCE951 /* SettingsBmvdCell.swift in Sources */,
 				B56B0E9B2547D01C00E7002B /* ProfileMeteoController.swift in Sources */,
 				B528D592247BE5D4004244CA /* StateCell.swift in Sources */,
+				B507661B259325A50004C1FF /* NetworkResponse.swift in Sources */,
 				B50E6D3C2525B04500874459 /* SwipingStartController.swift in Sources */,
 				B596B8DC252345270007DC08 /* ModelBox.swift in Sources */,
 				B558882D24EBE272009E27A2 /* SecondConfigCell.swift in Sources */,
@@ -1454,6 +1527,7 @@
 				B5EF70652562614D00CB0FBA /* DeviceCell.swift in Sources */,
 				B58492E5247BA99A00C902C7 /* MoreDevicesController.swift in Sources */,
 				B5B4085B255E9D59002EECD1 /* MessageError.swift in Sources */,
+				B50B1ACF25AF0FD700A058EB /* LineChartController.swift in Sources */,
 				B5DB4CFF243479230016A4BD /* DevicesListCellHeder.swift in Sources */,
 				B503B1F6254BEF6700EBAB31 /* AccountEditController.swift in Sources */,
 				B58D81EB25457307002FE1B7 /* ViewModelMoreDeviceBmvdPortHide.swift in Sources */,
@@ -1461,9 +1535,12 @@
 				B503B1F22549575C00EBAB31 /* NetworkManager.swift in Sources */,
 				B503B1D625494EB600EBAB31 /* URLRequestBuilder.swift in Sources */,
 				B58210F9251A0D3E006B4A4B /* BoxModel.swift in Sources */,
+				B540DF7625C839E3002B3FCA /* ProfileSelectCell.swift in Sources */,
 				B50E6D402525B38C00874459 /* SwipeStartCell.swift in Sources */,
 				B57167AC2547E61B003C8B1D /* ViewModelDownloadDaraController.swift in Sources */,
 				B589CFD7242CBD8F00B547DC /* ViewModel.swift in Sources */,
+				B5C4D22E25BEA2FE00B1BF9D /* ServiceModel.swift in Sources */,
+				B50B1AE825B5BB8500A058EB /* GroupsViewCell.swift in Sources */,
 				B50AF271254833CD00F66786 /* AccountAlert.swift in Sources */,
 				B589CFD5242CBCE500B547DC /* Menu.swift in Sources */,
 				B528D590247BE2DA004244CA /* Common.swift in Sources */,
@@ -1482,14 +1559,17 @@
 				B5EF709725666E9900CB0FBA /* OnlineDataDeviceCell.swift in Sources */,
 				B596B8D2252342E20007DC08 /* BlackBoxListController.swift in Sources */,
 				B531C9F1253EBD820008A092 /* SettingsBMVDController.swift in Sources */,
+				B540DF7325C83969002B3FCA /* ProfileSelectController.swift in Sources */,
 				B593A8A1247E3EC1006D049F /* AlertCreate.swift in Sources */,
 				B528D594247CE1D8004244CA /* MenuController.swift in Sources */,
 				B5C33F96254F328B008E700F /* ConfirmationAlert.swift in Sources */,
 				B5A82A9A2498760B00F7A335 /* ConfiguratorFirstController.swift in Sources */,
 				B5B40849255E6394002EECD1 /* TabBarSokolMeteoController.swift in Sources */,
+				B589C76725932CB5001E186D /* HTTPMethod.swift in Sources */,
 				B5B4084D255E6435002EECD1 /* DevicesController.swift in Sources */,
 				B57AED8D2536F784005F3C91 /* CellDataPeripheral.swift in Sources */,
 				B593F0C9253EBF6B00DCE951 /* SettingsBmvdModel.swift in Sources */,
+				B540DF7025C81D8D002B3FCA /* SelectObectController.swift in Sources */,
 				B59BA4F824E1810D00B9F15A /* WKWebView.swift in Sources */,
 				B57167A52547E60F003C8B1D /* CellMain.swift in Sources */,
 				B5A6D974247BA0D900F9C1C8 /* TabBarController.swift in Sources */,
@@ -1658,7 +1738,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.SokolMeteo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1681,7 +1761,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.SokolMeteo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

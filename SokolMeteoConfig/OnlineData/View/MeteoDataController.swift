@@ -53,6 +53,29 @@ class MeteoDataController: UIViewController {
         timer.invalidate()
         reload = -1
     }
+    override func viewWillAppear(_ animated: Bool) {
+        if demoMode {
+            if Access_Allowed == 0 {
+                delegate?.buttonTapMeteo()
+            } else {
+                demoData()
+            }
+        }
+    }
+    func demoData() {
+        arrayMeteoMain["t"] = "\(Double.random(in: -20.0...30.0).roundToDecimal(2)) °C"
+        arrayMeteoMain["WD"] = "\(Int.random(in: 0...8))"
+        arrayMeteoMain["WV"] = "\(Double.random(in: 0...7).roundToDecimal(2)) м/с"
+        arrayMeteoMain["WM"] = "\(Double.random(in: 0...10).roundToDecimal(2))"
+        arrayMeteoMain["PR"] = "\(Double.random(in: 20...100).roundToDecimal(2)) гПа"
+        arrayMeteoMain["HM"] = "\(Int.random(in: 30...100)) %"
+        arrayMeteoMain["RN"] = "\(Double.random(in: 740...790).roundToDecimal(2)) мм"
+        arrayMeteoMain["UV"] = "\(Double.random(in: 0.0...1.0).roundToDecimal(2)) Вт/м2"
+        arrayMeteoMain["UVI"] = "\(Int.random(in: 900...1100)) Дж"
+        arrayMeteoMain["L"] = "\(Int.random(in: 1000...2000)) lux"
+        arrayMeteoMain["LI"] = "\(Int.random(in: 1000...1500)) ДЖ"
+        tableView.reloadData()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -11,6 +11,7 @@ import YandexMapsMobile
 
 class MapViewController : UIViewController {
     
+    let viewModel : ServiceModel = ServiceModel()
     var mapView: YMKMapView = {
         var mapView = YMKMapView()
         mapView.translatesAutoresizingMaskIntoConstraints = false
@@ -51,6 +52,9 @@ class MapViewController : UIViewController {
 //        mapObjectsSave.remove(with: placemarkSave)
         mapView.mapWindow.map.mapObjects.clear()
     }
+    override func viewDidDisappear(_ animated: Bool) {
+        self.removeFromParent()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -74,6 +78,7 @@ class MapViewController : UIViewController {
     }
     
     func popVC() {
+//        viewModel.actionBack(nav: self.navigationController)
         self.navigationController?.popViewController(animated: true)
     }
 }

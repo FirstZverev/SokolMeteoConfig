@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationUsageDescription</key>
-	<string>Использования для карт</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -42,12 +40,14 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 		<key>NSAllowsArbitraryLoadsUsageDescription</key>
-		<string>Это позволит приложению &quot;$(PRODUCT_NAME)&quot; находить аксессуары и подключаться к ним по Bluetooth.</string>
+		<string>Это позволит приложению "$(PRODUCT_NAME)" находить аксессуары и подключаться к ним по Bluetooth.</string>
 	</dict>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Это позволит приложению &quot;$(PRODUCT_NAME)&quot; находить аксессуары и подключаться к ним по Bluetooth. Это приложение также сможет использовать Bluetooth, чтобы знать Вы поблизости</string>
+	<string>Это позволит приложению "$(PRODUCT_NAME)" находить аксессуары и подключаться к ним по Bluetooth. Это приложение также сможет использовать Bluetooth, чтобы знать Вы поблизости</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>$(PRODUCT_NAME) bluetooth use.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Использования для карт</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>futura-pt-light.ttf</string>

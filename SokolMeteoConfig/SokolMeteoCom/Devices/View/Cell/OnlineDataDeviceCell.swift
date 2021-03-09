@@ -8,18 +8,35 @@
 
 import UIKit
 import YandexMapsMobile
+import NVActivityIndicatorView
+
+var viewAlphaAlways: UIView = {
+    let viewAlpha = UIView(frame: CGRect(x: 0, y: 0, width: screenW, height: screenH))
+    viewAlpha.backgroundColor = UIColor.black.withAlphaComponent(0.7)
+    let view = NVActivityIndicatorView(frame: .zero, type: .ballGridPulse, color: UIColor.purple)
+    view.frame.size = CGSize(width: 50, height: 50)
+    view.layer.shadowColor = UIColor.white.cgColor
+    view.layer.shadowRadius = 5.0
+    view.layer.shadowOpacity = 0.7
+    view.layer.shadowOffset = CGSize(width: 0.0, height: 0.0)
+    view.center = viewAlpha.center
+    view.startAnimating()
+    viewAlpha.addSubview(view)
+    return viewAlpha
+}()
 
 class OnlineDataDeviceCell: UICollectionViewCell {
     
     var tableView: UITableView!
-//    var label: UILabel!
+    let networkManager = NetworkManager()
     weak var content: UIView!
 //    weak var imageUI: UIImageView!
 //    weak var imageHumanUI: UIImageView!
 //    weak var textView: UIView!
     var emptyList: UILabel!
     weak var delegate: DeviceDelegate?
-    
+    let viewmodel: ServiceModel = ServiceModel()
+    var tagSelect = 0
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -32,18 +49,26 @@ class OnlineDataDeviceCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        requestParametrs()
+        requestParametrs(index: selectItem!)
         self.initialize()
     }
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.initialize()
     }
-    
-    func requestParametrs() {
-        guard let select = selectItem,
-              let id = devicesList[select].id else {return}
-        networkingPostRequestListDevice(urlString: "http://185.27.193.112:8004/device/parameter/\(id)")
+    func requestParametrs(index: Int) {
+        print("111")
+        guard let id = devicesList[index].id else {return}
+        viewAlphaAlways.isHidden = false
+        networkManager.networkingPostRequestListDevice(urlString: "http://185.27.193.112:8004/record/all?deviceId=\(id)") { (result, error) in
+            guard let result = result else {return}
+            print("result: \(result)")
+            devicesParametrsList = result
+            DispatchQueue.main.async {
+                viewAlphaAlways.isHidden = true
+                self.tableView.reloadData()
+            }
+        }
     }
     fileprivate func createTableView() {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -53,7 +78,8 @@ class OnlineDataDeviceCell: UICollectionViewCell {
 //        tableView.height(screenH - (screenH / 12)).width(screenW)
 //        tableView.top(screenH / 12)
         tableView.backgroundColor = .white
-        self.contentView.addSubview(tableView)
+        self.content.addSubview(tableView)
+        viewAlphaAlways.isHidden = true
         self.tableView = tableView
     }
     func registerCell() {
@@ -61,9 +87,12 @@ class OnlineDataDeviceCell: UICollectionViewCell {
         tableView.dataSource = self
         tableView.register(OnlineDataCell.self, forCellReuseIdentifier: "OnlineDataCell")
         tableView.register(OnlineDataMapCell.self, forCellReuseIdentifier: "OnlineDataMapCell")
+        tableView.register(OnlineDeviceCell.self, forCellReuseIdentifier: "OnlineDeviceCell")
+
     }
     
     func initialize() {
+        
         let content = UIView()
         content.backgroundColor = .clear
         content.translatesAutoresizingMaskIntoConstraints = false
@@ -141,13 +170,13 @@ class OnlineDataDeviceCell: UICollectionViewCell {
 //            self.label!.leadingAnchor.constraint(equalTo: self.textView!.leadingAnchor,constant: 30),
 //            self.label!.trailingAnchor.constraint(equalTo: self.textView!.trailingAnchor,constant: -30),
 
-            self.tableView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: screenH / 12 ),
-            self.tableView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -50),
-            self.tableView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            self.tableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            self.tableView.topAnchor.constraint(equalTo: self.content.topAnchor, constant: screenH / 12 ),
+            self.tableView.bottomAnchor.constraint(equalTo: self.content.safeAreaLayoutGuide.bottomAnchor, constant: -70),
+            self.tableView.leadingAnchor.constraint(equalTo: self.content.leadingAnchor),
+            self.tableView.trailingAnchor.constraint(equalTo: self.content.trailingAnchor),
 
             self.emptyList.centerXAnchor.constraint(equalTo: tableView.centerXAnchor),
-            self.emptyList.centerYAnchor.constraint(equalTo: tableView.centerYAnchor),
+            self.emptyList.centerYAnchor.constraint(equalTo: tableView.centerYAnchor, constant: 150),
             self.emptyList.leadingAnchor.constraint(equalTo: tableView.leadingAnchor, constant: 30),
             self.emptyList.trailingAnchor.constraint(equalTo: tableView.trailingAnchor, constant: -30)
 
@@ -171,30 +200,96 @@ extension OnlineDataDeviceCell: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "OnlineDataMapCell", for: indexPath) as! OnlineDataMapCell
-            if devicesParametrsList.count != 0 {
-                guard let select = selectItem,
-                      let latitude : Double = Double(devicesList[select].latitude!),
-                      let longitude : Double = Double(devicesList[select].longitude!)
-                else { return OnlineDataMapCell() }
-                self.hero.isEnabled = true
-                cell.mapView.hero.id = "YandexMap"
-                cell.mapView.addTapGesture {
-                    self.delegate?.buttonTap()
-                }
-            let mapObjects = cell.mapView.mapWindow.map.mapObjects
-                let placemark = mapObjects.addPlacemark(with: YMKPoint(latitude: latitude, longitude: longitude))
-                placemark.opacity = 1.0
-                placemark.isDraggable = false
-                placemark.setIconWith(UIImage(named:"StickerMap")!)
+            guard let select = selectItem,
+                  let lat = devicesList[select].latitude,
+                  let latitude : Double = Double(lat),
+                  let long = devicesList[select].longitude,
+                  let longitude : Double = Double(long)
+            else { return OnlineDataMapCell() }
+            cell.mapView.mapWindow.map.move(with: YMKCameraPosition(target: YMKPoint(latitude: latitude, longitude: longitude), zoom: 15, azimuth: 0, tilt: 0),
+                                            animationType: YMKAnimation(type: YMKAnimationType.smooth, duration: 5),
+                                            cameraCallback: nil)
+            self.hero.isEnabled = true
+            cell.mapView.hero.id = "YandexMap"
+            cell.mapView.addTapGesture {
+                self.delegate?.buttonTap()
             }
-
+            let mapObjects = cell.mapView.mapWindow.map.mapObjects
+            let placemark = mapObjects.addPlacemark(with: YMKPoint(latitude: latitude, longitude: longitude))
+            placemark.opacity = 1.0
+            placemark.isDraggable = false
+            placemark.setIconWith(UIImage(named:"StickerMap")!)
             return cell
-            
+        } else if indexPath.row == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "OnlineDeviceCell", for: indexPath) as! OnlineDeviceCell
+            guard let select = selectItem else { return OnlineDataMapCell() }
+            cell.label.text = devicesList[select].name
+            cell.imageUI.image = UIImage(named: "EllipseSokolName")
+            cell.labelValue.text = "Обновлено 5 сек. назад"
+            return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "OnlineDataCell", for: indexPath) as! OnlineDataCell
-            cell.label.text = devicesParametrsList[indexPath.row - 1].name
-            guard let value = devicesParametrsList[indexPath.row - 1].calculationOrder else { return cell }
-            cell.labelValue.text = "\(value)"
+            cell.label.text = viewmodel.arrayParametr[indexPath.row - 2].name
+            let image = viewmodel.arrayParametr[indexPath.row - 2].code
+            cell.imageUI.image = viewmodel.imageOnlineSokol(imageString: image)
+            if image == "PR" {
+                guard let value = devicesParametrsList.last?.pr else { return cell }
+                cell.labelValue.text = "\(value)"
+            } else if image == "UV" {
+                guard let value = devicesParametrsList.last?.uv else { return cell }
+                cell.labelValue.text = "\(value)"
+            } else if image == "Uext" {
+                guard let value = devicesParametrsList.last?.uext else { return cell }
+                cell.labelValue.text = "\(value)"
+            } else if image == "WD2" {
+                guard let value = devicesParametrsList.last?.wd2 else { return cell }
+                cell.labelValue.text = "\(value)"
+            } else if image == "HM" {
+                guard let value = devicesParametrsList.last?.hm else { return cell }
+                cell.labelValue.text = "\(value)"
+            } else if image == "KS" {
+                guard let value = devicesParametrsList.last?.ks else { return cell }
+                cell.labelValue.text = "\(value)"
+            } else if image == "UVI" {
+                guard let value = devicesParametrsList.last?.uvi else { return cell }
+                cell.labelValue.text = "\(value)"
+            } else if image == "Upow" {
+                guard let value = devicesParametrsList.last?.upow else { return cell }
+                cell.labelValue.text = "\(value)"
+            } else if image == "L" {
+                guard let value = devicesParametrsList.last?.l else { return cell }
+                cell.labelValue.text = "\(value)"
+            } else if image == "WD" {
+                guard let value = devicesParametrsList.last?.wd else { return cell }
+                cell.labelValue.text = "\(value)"
+            } else if image == "PR1" {
+                guard let value = devicesParametrsList.last?.pr1 else { return cell }
+                cell.labelValue.text = "\(value)"
+            } else if image == "td" {
+                guard let value = devicesParametrsList.last?.td else { return cell }
+                cell.labelValue.text = "\(value)"
+            } else if image == "t" {
+                guard let value = devicesParametrsList.last?.t else { return cell }
+                cell.labelValue.text = "\(value)"
+            }  else if image == "RSSI" {
+                guard let value = devicesParametrsList.last?.rssi else { return cell }
+                cell.labelValue.text = "\(value)"
+            } else if image == "WM" {
+                guard let value = devicesParametrsList.last?.wm else { return cell }
+                cell.labelValue.text = "\(value)"
+            } else if image == "RN" {
+                guard let value = devicesParametrsList.last?.rn else { return cell }
+                cell.labelValue.text = "\(value)"
+            } else if image == "LI" {
+                guard let value = devicesParametrsList.last?.li else { return cell }
+                cell.labelValue.text = "\(value)"
+            } else if image == "TR" {
+                guard let value = devicesParametrsList.last?.tr else { return cell }
+                cell.labelValue.text = "\(value)"
+            } else if image == "WV" {
+                guard let value = devicesParametrsList.last?.wv else { return cell }
+                cell.labelValue.text = "\(value)"
+            }
             return cell
         }
     }
@@ -205,10 +300,11 @@ extension OnlineDataDeviceCell: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if devicesParametrsList.count == 0 {
             emptyList.isHidden = false
+            return 2
         } else {
             emptyList.isHidden = true
         }
-        return devicesParametrsList.count + 1
+        return viewmodel.arrayParametr.count + 2
     }
     
     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {

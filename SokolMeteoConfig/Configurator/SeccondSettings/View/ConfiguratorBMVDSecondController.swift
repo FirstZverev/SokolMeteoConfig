@@ -65,13 +65,23 @@ class ConfiguratorBMVDSecondController : UIViewController, SettingsBMVDDelegate 
     @objc func update(mySwitch: UISwitch) {
         let index = mySwitch.tag
         selectBmvd = "\(index)"
-        viewAlpha.isHidden = false
+        if demoMode {
+            arrayBmvdE[index] = "0"
+            viewAlpha.isHidden = true
+            tableView.reloadData()
+        } else {
+            viewAlpha.isHidden = false
+        }
         reload = 8
         buttonTapSecondConfigurator()
     }
     @objc func refresh(sender:AnyObject) {
         reload = 10
         buttonTapSecondConfigurator()
+        if demoMode {
+            tableView.reloadData()
+            refreshControl.endRefreshing()
+        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,7 +95,12 @@ class ConfiguratorBMVDSecondController : UIViewController, SettingsBMVDDelegate 
     }
     override func viewWillAppear(_ animated: Bool) {
         reload = 10
-        viewAlpha.isHidden = false
+        if demoMode {
+            viewAlpha.isHidden = true
+            tableView.reloadData()
+        } else {
+            viewAlpha.isHidden = false
+        }
         viewAlpha.addSubview(activityIndicator)
         activityIndicator.startAnimating()
         view.addSubview(viewAlpha)

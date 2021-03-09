@@ -13,5 +13,15 @@ protocol DeviceDelegate: class {
 }
 
 protocol DevicesDelegate: class {
-    func buttonTap()
+    func buttonTap(tag: Int)
+    func actionPushAdd(edit: Bool)
+    func alertSetupVisualEffectView(name: String, tag: Int)
+}
+
+protocol ForecastDelegate: class {
+    func senderSelectedIndex(tag: Int)
+}
+
+protocol SelectObectDelegate: class {
+    func selected()
 }

@@ -413,7 +413,11 @@ class PasswordController: UIViewController, UITextFieldDelegate, UIScrollViewDel
             if passwordFieldSecond.text == passwordFieldThreed.text && passwordFieldSecond.text!.count >= 2 {
                 newPassword = ((segmentedControl1.selectedSegmentIndex == 0) ? passwordFieldSecond.text ?? "" : passwordFieldSecondService.text ?? "")
                 setPasswordCheak = segmentedControl1.selectedSegmentIndex
-                viewAlpha.isHidden = false
+                if demoMode {
+                    self.showToast(message: "Пароль обновлен !", seconds: 1)
+                } else {
+                    viewAlpha.isHidden = false
+                }
                 delegatePassword?.buttonTapPassword()
             } else {
                 self.showToast(message: "Пароли несовпадают", seconds: 1)
@@ -422,7 +426,11 @@ class PasswordController: UIViewController, UITextFieldDelegate, UIScrollViewDel
             if passwordFieldSecondService.text == passwordFieldThreedService.text && passwordFieldSecondService.text!.count >= 2 {
                 newPassword = ((segmentedControl1.selectedSegmentIndex == 0) ? passwordFieldSecond.text ?? "" : passwordFieldSecondService.text ?? "")
                 setPasswordCheak = segmentedControl1.selectedSegmentIndex
-                viewAlpha.isHidden = false
+                if demoMode {
+                    self.showToast(message: "Пароль обновлен !", seconds: 1)
+                } else {
+                    viewAlpha.isHidden = false
+                }
                 delegatePassword?.buttonTapPassword()
             } else {
                 self.showToast(message: "Пароли несовпадают", seconds: 1)
@@ -431,7 +439,12 @@ class PasswordController: UIViewController, UITextFieldDelegate, UIScrollViewDel
             if passwordFieldHash.text?.count ?? 0 >= 8 {
                 reload = 0
                 mainPassword = passwordFieldHash.text ?? ""
-                viewAlpha.isHidden = false
+                if demoMode {
+                    updateHash()
+                    Access_Allowed = 2
+                } else {
+                    viewAlpha.isHidden = false
+                }
                 delegatePassword?.buttonTapPassword()
             } else {
                 self.showToast(message: "Хеш пароль должен быть больше 8 цифр", seconds: 1)
@@ -465,8 +478,13 @@ class PasswordController: UIViewController, UITextFieldDelegate, UIScrollViewDel
         view.addSubview(viewAlpha)
         
         if segmentedControl1.selectedSegmentIndex == 0 {
-            reload = 27
-            self.delegatePassword?.buttonTapPassword()
+            if Access_Allowed == 0 {
+                reload = 27
+                self.delegatePassword?.buttonTapPassword()
+                if demoMode {
+                    delegatePassword?.buttonTapSetAlert()
+                }
+            }
         } else if segmentedControl1.selectedSegmentIndex == 1 {
             if Access_Allowed != 2 {
                 delegatePassword?.buttonTapSetAlert()
@@ -489,8 +507,10 @@ class PasswordController: UIViewController, UITextFieldDelegate, UIScrollViewDel
         passwordSet.isEnabled = false
         print(page)
         if page == 0 {
-            reload = 27
-            delegatePassword?.buttonTapPassword()
+            if Access_Allowed == 0 {
+                reload = 27
+                delegatePassword?.buttonTapPassword()
+            }
         } else if page == 1 {
             if Access_Allowed != 2 {
                 reload = 27

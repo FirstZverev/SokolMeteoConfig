@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import YandexMapsMobile
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,9 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        print("1")
+        YMKMapKit.setApiKey("ee8e40e7-b1c6-424f-91da-2542f45e5c3e")
         Thread.sleep(forTimeInterval: 2.0)
-        self.window = UIWindow.init()
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
 

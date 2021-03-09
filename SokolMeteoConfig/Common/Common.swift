@@ -10,8 +10,11 @@ import Foundation
 
 var idSession = ""
 
+var demoMode = false
+
 var devicesList: [DataDevices] = []
-var devicesParametrsList: [DeviceListResult] = []
+var devicesParametrsList: [ResultOnline] = []
+var forecast: [ResultForecast] = []
 var selectItem: Int?
 
 var isNight = false
@@ -234,3 +237,25 @@ func unixTimeInttoStringOnlyDate(unixTime: Int) -> String {
 }
 
 var blackBoxStart = false
+
+struct ForecastModelName {
+    let id: String
+    let name: String
+    var value: String
+    let image: String
+}
+class ForcastModel {
+    
+    var forecastName = [ ForecastModelName(id: "tMin", name: "Минимальная температура", value: "", image: "temperature"),
+                         ForecastModelName(id: "tMax", name: "Максимальная температура", value: "", image: "temperature"),
+                         ForecastModelName(id: "rNight", name: "Количество осадков в ночное время", value: "", image: "intensiv"),
+                         ForecastModelName(id: "rDay", name: "Количество осадков в дневное время", value: "", image: "intensiv"),
+                         ForecastModelName(id: "wsNight", name: "Сила ветра в ночное время", value: "", image: "wind"),
+                         ForecastModelName(id: "wsDay", name: "Сила ветра в дневное время", value: "", image: "wind"),
+                         ForecastModelName(id: "wdNight", name: "Направление ветра в ночное время", value: "", image: "wind-1"),
+                         ForecastModelName(id: "wdDay", name: "Направление ветра в дневного время", value: "", image: "wind-1"),
+                         ForecastModelName(id: "hmNight", name: "Влажность в ночное время", value: "", image: "moi"),
+                         ForecastModelName(id: "hmDay", name: "Влажность в дневное время", value: "", image: "moi"),
+                         ForecastModelName(id: "p0Night", name: "Атмосферное давление в ночное время", value: "", image: "press"),
+                         ForecastModelName(id: "p0Day", name: "Атмосферное давление в дневное время", value: "", image: "press")]
+}

@@ -12,6 +12,7 @@ class GroupController : UIViewController {
     
     var tableView: UITableView!
     let generator = UIImpactFeedbackGenerator(style: .light)
+    let networkingManager = NetworkManager()
     
     private lazy var objectViewSwipe: UIView = {
         let content = UIView()
@@ -68,9 +69,22 @@ class GroupController : UIViewController {
         self.tableView = tableView
     }
     
+    fileprivate func networkAllDevice() {
+        networkingManager.networkingRequest(urlString: "https://sokolmeteo.com/api/device?start=0&count=10&sortDir=asc") { (data, error) in
+            guard let data = data else {
+                return self.networkAllDevice()
+            }
+            devicesList = data
+            print(devicesList)
+            self.tableView.reloadData()
+
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        networkingPostRequestListDevice(urlString: "https://sokolmeteo.com/api/device?start=0&count=10&sortDir=asc")
+        networkAllDevice()
+//        networkingPostRequestListDevice(urlString: "https://sokolmeteo.com/api/device?start=0&count=10&sortDir=asc")
     }
     
     override func viewDidLoad() {

@@ -41,9 +41,9 @@ class ThriedMeteoData: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        createTableView()
         self.sheetViewController?.handleScrollView(self.tableView)
         viewModel = ViewModelData()
-        createTableView()
         registerTableView()
         viewShow()
         

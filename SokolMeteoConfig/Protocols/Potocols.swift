@@ -21,5 +21,6 @@ protocol BMVDDelegate: class {
 }
 protocol TabBarDelegate: class {
     func buttonTapTabBar()
+    func buttonTapTabBarState()
     func buttonTapSetAlert()
 }
