@@ -21,7 +21,39 @@ class ServiceModel {
         guard let nav = nav else { return }
             nav.popToRootViewController(animated: true)
     }
-    let arrayParametr: [ModelParametr] = [
+    func imageForCode(code: String) -> UIImage {
+        switch code {
+        case "UV":
+            return UIImage(named: "uv")!
+        case "PR":
+            return UIImage(named: "press")!
+        case "Uext", "Upow":
+            return UIImage(named: "voltage")!
+        case "WD2":
+            return UIImage(named: "wind")!
+        case "HM":
+            return UIImage(named: "moi")!
+        case "UVI":
+            return UIImage(named: "uv-1")!
+        case "t":
+            return UIImage(named: "temperature")!
+        case "WM":
+            return UIImage(named: "wind-2")!
+        case "RN":
+            return UIImage(named: "intensiv")!
+        case "LI":
+            return UIImage(named: "gr")!
+        case "TR":
+            return UIImage(named: "mail")!
+        case "WV":
+            return UIImage(named: "wind-1")!
+        case "KS":
+            return UIImage(named: "setings")!
+        default:
+            return UIImage(named: "setings")!
+        }
+    }
+    var arrayParametr: [ModelParametr] = [
         ModelParametr(name: "Уровень ультрафиолета", image: "uv", code: "UV"),
         ModelParametr(name: "Атм.давление, гПа", image: "press", code: "PR"),
         ModelParametr(name: "Напряжение внешнего источника", image: "voltage", code: "Uext"),
@@ -96,6 +128,6 @@ class ServiceModel {
     
     var sokolTemplateName = ["Шаблон", "Объект", "Интервал"]
     var sokolTemplateInfo = ["Не выбрано", "Не выбрано"]
-
+    var tag = 0
 }
 

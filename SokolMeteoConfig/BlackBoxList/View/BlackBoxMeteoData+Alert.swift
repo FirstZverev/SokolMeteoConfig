@@ -102,7 +102,9 @@ extension BlackBoxMeteoDataController: AlertAccountDelegate {
         pushFileServer()
         viewAlpha.isHidden = false
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
-            self.navigationController?.pushViewController(DownloadDaraController(), animated: true)
+            let downloadDataViewController = DownloadDataController()
+            downloadDataViewController.tagSelectProfile = 0
+            self.navigationController?.present(downloadDataViewController, animated: true)
             self.viewAlpha.isHidden = true
         })
     }
@@ -179,7 +181,9 @@ extension BlackBoxMeteoDataController: AlertAccountDelegate {
                  
         // Set the URLRequest to POST and to the specified URL
         let urlMain = "http://185.27.193.112:8004"
-        let urlString = urlMain + "/data?credentials=\(base64Encoded(email: realmAccount.first?.user ?? "", password: realmAccount.first?.password ?? ""))&station=\(nameDeviceBlackBox ?? "")&start=\((realmCheck.first?.time)! + "000")&end=\((realmCheck.last?.time)! + "000")"
+//        let urlString = urlMain + "/data?credentials=\(base64Encoded(email: realmAccount.first?.user ?? "", password: realmAccount.first?.password ?? ""))&station=\(nameDeviceBlackBox ?? "")&start=\((realmCheck.first?.time)! + "000")&end=\((realmCheck.last?.time)! + "000")"
+        let urlString = urlMain + "/data?credentials=\(base64Encoded(email: realmAccount[0].user ?? "", password: realmAccount[0].password ?? ""))&station=\(nameDeviceBlackBox ?? "")&start=\((realmCheck.first?.time)! + "000")&end=\((realmCheck.last?.time)! + "000")"
+
         let url = URL(string: urlString)
         var request = URLRequest(url: url!)
         request.httpMethod = "POST"
@@ -205,6 +209,10 @@ extension BlackBoxMeteoDataController: AlertAccountDelegate {
         print("data: \(request)")
         request.httpBody = data
         request.setValue(String(data.count), forHTTPHeaderField: "Content-Length")
+//        idSession = "JSESSIONID=D39E08FC6A4F71ED7046871676111ED4"
+        print("idSession: \(idSession)")
+//        request.addValue(idSession, forHTTPHeaderField: "Cookie")
+
         let session = URLSession.shared
         let uploadTask = session.uploadTask(with: request as URLRequest, from: data,
                                             completionHandler: { (responseData, response, error) in
@@ -253,7 +261,7 @@ extension BlackBoxMeteoDataController: ConfirmationAlertDelegate {
                 schemaVersion: 1,
                 
                 migrationBlock: { migration, oldSchemaVersion in
-                    if (oldSchemaVersion < 1) {
+                    if (oldSchemaVersion < 2) {
                     }
                 })
             Realm.Configuration.defaultConfiguration = config

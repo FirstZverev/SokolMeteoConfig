@@ -53,7 +53,7 @@ class MapViewController : UIViewController {
         mapView.mapWindow.map.mapObjects.clear()
     }
     override func viewDidDisappear(_ animated: Bool) {
-        self.removeFromParent()
+        
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,6 +79,6 @@ class MapViewController : UIViewController {
     
     func popVC() {
 //        viewModel.actionBack(nav: self.navigationController)
-        self.navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
 }

@@ -40,14 +40,20 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 		<key>NSAllowsArbitraryLoadsUsageDescription</key>
-		<string>Это позволит приложению "$(PRODUCT_NAME)" находить аксессуары и подключаться к ним по Bluetooth.</string>
+		<string>Some message to appease Apple</string>
 	</dict>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>Это позволит приложению "$(PRODUCT_NAME)" находить аксессуары и подключаться к ним по Bluetooth. Это приложение также сможет использовать Bluetooth, чтобы знать Вы поблизости</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>$(PRODUCT_NAME) bluetooth use.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Использования для картографии</string>
 	<key>NSLocationUsageDescription</key>
 	<string>Использования для карт</string>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>ConfigurationIntent</string>
+	</array>
 	<key>UIAppFonts</key>
 	<array>
 		<string>futura-pt-light.ttf</string>
@@ -79,7 +85,7 @@
 		<string>fetch</string>
 	</array>
 	<key>UIFileSharingEnabled</key>
-	<true/>
+	<false/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

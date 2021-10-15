@@ -14,8 +14,22 @@ class ReportsController : UIViewController {
     let generator = UIImpactFeedbackGenerator(style: .light)
     var viewModel: ServiceModel = ServiceModel()
     let selectObectVC = SelectObectController()
-    var devicesList: [DataDevices] = []
+    var networkManager = NetworkManager()
+    let savedReportsVC = SavedFilesController()
     
+    private lazy var natificationButton: UIButton = {
+        let natification = UIButton()
+        natification.setImage(UIImage(named: "reports"), for: .normal)
+        natification.translatesAutoresizingMaskIntoConstraints = false
+        natification.addTarget(self, action: #selector(naticAction), for: .touchUpInside)
+        return natification
+    }()
+    @objc func naticAction() {
+        savedReportsVC.isBackBox = false
+        let navigationController = UINavigationController(rootViewController: savedReportsVC)
+        navigationController.navigationBar.isHidden = true
+        self.present(navigationController, animated: true)
+    }
     lazy var backView: UIImageView = {
         let backView = UIImageView()
         backView.frame = CGRect(x: 0, y: screenH / 12 - 50, width: 50, height: 50)
@@ -25,6 +39,112 @@ class ReportsController : UIViewController {
         backView.addSubview(back)
         return backView
     }()
+    var saveButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = UIColor(rgb: 0xBE449E)
+        button.layer.cornerRadius = 10
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Выполнить отчет", for: .normal)
+        button.addTarget(self, action: #selector(actionSave), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func actionSave() {
+        viewAlphaAlways.isHidden = false
+        let report = ReportData(id: devicesList[viewModel.tag].id!, startDate: orderDateTo, endDate: orderDateFrom)
+        networkManager.networkingReport(reportData: report) { (data, error) in
+            DispatchQueue.main.async {
+                guard let data = data else {return}
+                print("print data: \(data)")
+                self.saveCSV(data: data, isShare: false)
+            }
+        }
+    }
+    func saveCSV(data: [DeviceListResult], isShare: Bool) {
+//        let realmboxing = realm.objects(BoxModel.self).filter("nameDevice = %@", nameDeviceBlackBox!)
+        let file = "Отчет" + " №\(viewModel.sokolTemplateInfo[1]) от \(orderDateTo) до \(orderDateFrom)"
+        var contents = ""
+//        contents += "\n"
+        
+//        for index in data {
+//            if index.records?.count != 0 {
+//                contents += "\(index.name!)\n"
+//                for record in index.records! {
+//                    contents += "\(record.date!), \(record.value!)\n"
+//                }
+//            }
+        for index in data {
+            guard let name = index.name  else {return}
+            let redactName = name.replacingOccurrences(of: ",", with: " ", options: .literal, range: nil)
+            contents += "\(redactName)," + "Значение,"
+        }
+        contents += "\n"
+        var count = 0
+        var countMax = 1
+        for index in data {
+            if index.records!.count > countMax {
+                countMax = index.records!.count
+            }
+        }
+        for _ in 0...countMax {
+            for index in data {
+                if index.records?.count != 0 {
+                    guard let record = index.records else {   return   }
+                    if index.records!.count - 1 >= count {
+                        let date = convertDateFormatter(date: record[count].date!)
+                        contents += "\(date), \(record[count].value!),"
+                    } else {
+                        contents += ", ,"
+                    }
+                } else {
+                    contents += ", ,"
+                }
+            }
+            count += 1
+            contents += "\n"
+        }
+//        contents += "\n"
+
+
+        WorkWithFiles.createFile(name: viewModel.sokolTemplateInfo[1], isBackBox: false) { (url) in
+            let fileURL = url.appendingPathComponent(file).appendingPathExtension("csv")
+            DispatchQueue.main.async {
+                FileManager.default.createFile(atPath: fileURL.path, contents: Data(contents.utf8))
+                    viewAlphaAlways.isHidden = true
+                    self.naticAction()
+            }
+        }
+
+//        let paths = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true)
+//        let documentsDirectory = paths[0]
+//        let docURL = URL(string: documentsDirectory)!
+//        let dataPath = docURL.appendingPathComponent("MyFolder")
+//        if !FileManager.default.fileExists(atPath: dataPath.absoluteString) {
+//            do {
+//                try FileManager.default.createDirectory(atPath: dataPath.absoluteString, withIntermediateDirectories: true, attributes: nil)
+//            } catch {
+//                print(error.localizedDescription)
+//            }
+//        }
+    }
+    func convertDateFormatter(date: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"//this your string date format
+//        dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
+//        dateFormatter.locale = Locale(identifier: "your_loc_id")
+        let convertedDate = dateFormatter.date(from: date)
+
+        guard dateFormatter.date(from: date) != nil else {
+            assert(false, "no date from string")
+            return ""
+        }
+
+        dateFormatter.dateFormat = "d MMM yyyy HH:mm"///this is what you want to convert format
+//        dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone?
+        let timeStamp = dateFormatter.string(from: convertedDate!)
+
+        return timeStamp
+    }
     
     fileprivate func createTableView() {
         let tableView = UITableView(frame: .zero, style: .plain)
@@ -38,6 +158,13 @@ class ReportsController : UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        if viewModel.sokolTemplateInfo[1] == "Не выбрано" {
+            saveButton.alpha = 0.5
+            saveButton.isEnabled = false
+        } else {
+            saveButton.alpha = 1.0
+            saveButton.isEnabled = true
+        }
 //        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -47,15 +174,38 @@ class ReportsController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        let now = Date()
+        let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: now)
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd.MM.yyyy"
+        formatter.timeZone = .current
+        orderDateTo = formatter.string(from: now)
+        orderDateFrom = formatter.string(from: tomorrow!)
 //        var realmDevice = realm.objects(DeviceNameModel.self)
 //        let a = map(realmDevice) {$0.name}
-        let customNavigationBar = createCustomNavigationBar(title: "SOKOLMETEO",fontSize: screenW / 22)
+        let customNavigationBar = createCustomNavigationBar(title: "ОТЧЕТЫ",fontSize: screenW / 22)
         self.hero.isEnabled = true
         createTableView()
         registerCell()
         view.sv(customNavigationBar, backView)
+        view.addSubview(saveButton)
         customNavigationBar.hero.id = "SOKOLMETEO"
         backView.addTapGesture { [self] in self.popVC() }
+        
+        saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        saveButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30).isActive = true
+        saveButton.heightAnchor.constraint(equalToConstant: 45).isActive = true
+        saveButton.widthAnchor.constraint(equalToConstant: screenW / 1.5).isActive = true
+        
+        view.addSubview(natificationButton)
+        
+        natificationButton.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        natificationButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        natificationButton.bottomAnchor.constraint(equalTo: view.topAnchor, constant: screenH / 12 - 3).isActive = true
+        natificationButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -20).isActive = true
+
+
+
     }
     
     func popVC() {
@@ -77,8 +227,6 @@ extension ReportsController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.row == 2 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "TemplatesCell", for: indexPath) as! TemplatesCell
             cell.labelName.text = viewModel.sokolTemplateName[indexPath.row]
-            cell.labelPickerTo.text = "Понедельник 2 ноября 2020"
-            cell.labelPickerFrom.text = "Воскрсение 8 ноября 2020"
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "SecondConfigBMVDCell", for: indexPath) as! SecondConfigBMVDCell
@@ -132,6 +280,13 @@ extension ReportsController: UITableViewDelegate, UITableViewDataSource {
 
 extension ReportsController: SelectObectDelegate {
     func selected() {
+        if viewModel.sokolTemplateInfo[1] == "Не выбрано" {
+            saveButton.alpha = 0.5
+            saveButton.isEnabled = false
+        } else {
+            saveButton.alpha = 1.0
+            saveButton.isEnabled = true
+        }
         tableView.reloadData()
     }
 }

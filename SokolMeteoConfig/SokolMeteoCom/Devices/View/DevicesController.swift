@@ -15,6 +15,7 @@ class DevicesController: UICollectionViewController, UICollectionViewDelegateFlo
         setAlert(name: name)
         animateIn()
     }
+    var tagSelectProfile = 0
     var tag = 0
     var deviceVC = DeviceController()
     var addDeviceVC = AddDeviceViewController()
@@ -22,15 +23,13 @@ class DevicesController: UICollectionViewController, UICollectionViewDelegateFlo
     let profileSelect = ProfileSelectController()
     let viewModel: ServiceModel = ServiceModel()
     func buttonTap(tag: Int) {
-//        let cell = deviceVC.collectionView.cellForItem(at: IndexPath(item: 0, section: 0)) as! OnlineDataDeviceCell
-
-//        cell.requestParametrs()
         deviceVC.selectTag = tag
         navigationController?.pushViewController(deviceVC, animated: true)
     }
     func actionPushAdd(edit: Bool) {
         addDeviceVC.editBool = edit
         addDeviceVC.tag = self.tag
+        addDeviceVC.tagSelectProfile = tagSelectProfile
         self.navigationController?.pushViewController(addDeviceVC, animated: true)
     }
     
@@ -78,7 +77,9 @@ class DevicesController: UICollectionViewController, UICollectionViewDelegateFlo
     }()
     
     @objc func naticAction() {
-        
+        let downloadDataViewController = DownloadDataController()
+        downloadDataViewController.tagSelectProfile = tagSelectProfile
+        tabBarController?.navigationController?.present(downloadDataViewController, animated: true)
     }
     @objc func profileAction() {
         let transition = CATransition()
@@ -217,7 +218,6 @@ class DevicesController: UICollectionViewController, UICollectionViewDelegateFlo
         view.addSubview(labelGroup)
         view.addSubview(profileButton)
         view.addSubview(natificationButton)
-
     }
     override func viewDidAppear(_ animated: Bool) {
         labelObject.centerYAnchor.constraint(equalTo: pageControl.centerYAnchor).isActive = true

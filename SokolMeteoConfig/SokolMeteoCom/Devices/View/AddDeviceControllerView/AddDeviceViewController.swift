@@ -8,12 +8,14 @@
 
 import UIKit
 import RealmSwift
+import SimpleCheckbox
 
 class AddDeviceViewController : UIViewController, UITextFieldDelegate {
     
     let networkManager = NetworkManager()
     var editBool = false
     var tag = 0
+    var tagSelectProfile = 0
     let viewModel: ServiceModel = ServiceModel()
 
     lazy var backView: UIImageView = {
@@ -29,7 +31,7 @@ class AddDeviceViewController : UIViewController, UITextFieldDelegate {
     var saveButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = UIColor(rgb: 0xBE449E)
-        button.layer.cornerRadius = 20
+        button.layer.cornerRadius = 10
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(actionSave), for: .touchUpInside)
         return button
@@ -98,6 +100,32 @@ class AddDeviceViewController : UIViewController, UITextFieldDelegate {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
+    lazy var checkBox: Checkbox = {
+        let checkBox = Checkbox()
+        checkBox.checkedBorderColor = UIColor(rgb: 0xBE449E)
+        checkBox.uncheckedBorderColor = UIColor(rgb: 0x998F99)
+        checkBox.checkmarkColor = .white
+        checkBox.borderStyle = .square
+        checkBox.borderLineWidth = 1
+        checkBox.checkboxFillColor = UIColor(rgb: 0xBE449E)
+        checkBox.checkmarkStyle = .tick
+        checkBox.useHapticFeedback = true
+        checkBox.isChecked = true
+        checkBox.borderCornerRadius = 5
+        checkBox.translatesAutoresizingMaskIntoConstraints = false
+        checkBox.addTarget(self, action: #selector(checkboxValueChanged(sender:)), for: .valueChanged)
+        return checkBox
+    }()
+    lazy var saveLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont(name:"FuturaPT-Light", size: 18)
+        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        label.text = "Прогноз"
+        return label
+    }()
     lazy var backgroundView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -117,43 +145,39 @@ class AddDeviceViewController : UIViewController, UITextFieldDelegate {
         return textField
     }()
     
+    @objc func checkboxValueChanged(sender: Checkbox!) {
+        checkBoxSender()
+    }
+    fileprivate func checkBoxSender() {
+        if checkBox.isChecked == false {
+            checkBox.checkmarkColor = UIColor(rgb: 0xBE449E)
+            checkBox.checkboxFillColor = .clear
+        } else {
+            checkBox.checkmarkColor = .white
+            checkBox.checkboxFillColor = UIColor(rgb: 0xBE449E)
+        }
+    }
+    
     @objc func actionSave() {
         var userData: [String : Any] = [:]
-        var email: String?
-        var config = Realm.Configuration(
-            schemaVersion: 1,
-            
-            migrationBlock: { migration, oldSchemaVersion in
-                if (oldSchemaVersion < 1) {
-                }
-            })
-        config.deleteRealmIfMigrationNeeded = true
-
-        Realm.Configuration.defaultConfiguration = config
-        
-        let realm: Realm = {
-            return try! Realm()
-        }()
-        
-        let realmCheck = realm.objects(AccountModel.self)
-        if realmCheck.count != 0 {
-            email = realmCheck[0].user
-        }
+        guard let permissions = devicesList[tag].permissions else {return}
         if editBool {
             userData = [
                 "id": "\(devicesList[tag].id ?? "")",
                 "name": "\(nameDeviceTextField.text ?? "")",
                 "imei": "\(imeiDeviceTextField.text ?? "")",
                 "password": "\(passwordDeviceTextField.text ?? "")",
+                "forecastActive": checkBox.isChecked,
                 "permissions": [
                     [
-                        "userEmail": email,
-                        "userPermissionId": viewModel.userPermissionId[3]
+                        "userId": permissions.first?.userID,
+                        "userEmail": permissions.first?.userEmail,
+                        "userPermissionId": permissions.first?.userPermissionID
                     ]
                 ]
             ]
         } else {
-            userData = ["name": "\(nameDeviceTextField.text ?? "")", "imei": "\(imeiDeviceTextField.text ?? "")", "password": "\(passwordDeviceTextField.text ?? "")"]
+            userData = ["name": "\(nameDeviceTextField.text ?? "")", "imei": "\(imeiDeviceTextField.text ?? "")", "password": "\(passwordDeviceTextField.text ?? "")", "forecastActive": checkBox.isChecked]
         }
         print("userData: \(userData)")
         viewAlphaAlways.isHidden = false
@@ -178,9 +202,12 @@ class AddDeviceViewController : UIViewController, UITextFieldDelegate {
             passwordDeviceTextField.text = ""
             saveButton.setTitle("Добавить устройство", for: .normal)
         }
+        guard let bool = devicesList[tag].forecastActive else {return}
+        checkBox.isChecked = bool
+        checkBoxSender()
     }
     override func viewWillDisappear(_ animated: Bool) {
-
+        
     }
 
     override func viewDidLoad() {
@@ -208,6 +235,8 @@ class AddDeviceViewController : UIViewController, UITextFieldDelegate {
         backgroundView.addSubview(nameDeviceTextField)
         backgroundView.addSubview(imeiDeviceTextField)
         backgroundView.addSubview(passwordDeviceTextField)
+        backgroundView.addSubview(checkBox)
+        backgroundView.addSubview(saveLabel)
         view.addSubview(saveButton)
         
         Mainlabel.topAnchor.constraint(equalTo: view.topAnchor, constant: (screenH / 12) + 20).isActive = true
@@ -243,6 +272,15 @@ class AddDeviceViewController : UIViewController, UITextFieldDelegate {
         passwordDeviceTextField.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -15).isActive = true
         passwordDeviceTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
         passwordDeviceTextField.widthAnchor.constraint(equalToConstant: screenW / 2 - 15).isActive = true
+        
+        checkBox.topAnchor.constraint(equalTo: passwordDeviceLabel.bottomAnchor, constant: 30).isActive = true
+        checkBox.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor, constant: 10).isActive = true
+        checkBox.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        checkBox.widthAnchor.constraint(equalToConstant: 20).isActive = true
+
+        saveLabel.centerYAnchor.constraint(equalTo: checkBox.centerYAnchor).isActive = true
+        saveLabel.leadingAnchor.constraint(equalTo: checkBox.trailingAnchor, constant: 10).isActive = true
+
         
         infoLabel.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor, constant: -15).isActive = true
         infoLabel.topAnchor.constraint(equalTo: passwordDeviceTextField.bottomAnchor, constant: 22).isActive = true

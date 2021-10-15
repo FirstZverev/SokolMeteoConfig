@@ -327,8 +327,13 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
                             if ab.contains("UV") {
                                 let indexOfPerson = ab.firstIndex{$0 == "UV"}
                                 if ab.count > indexOfPerson! + 2 {
-//                                    print("UV\(countStringBlackBox): \(ab[indexOfPerson! + 2])")
-                                    account.parametrUV = "\(ab[indexOfPerson! + 2])"
+                                    guard let result = Double(ab[indexOfPerson! + 2]) else { return }
+                                    print("UV \(result)")
+                                    if verDevice >= 133 {
+                                        account.parametrUV = "\(Double(result))"
+                                    } else {
+                                        account.parametrUV = "\(Double(result) / 100)"
+                                    }
                                 }
                             }
                             if ab.contains("UVI") {
@@ -341,8 +346,12 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
                             if ab.contains("L") {
                                 let indexOfPerson = ab.firstIndex{$0 == "L"}
                                 if ab.count > indexOfPerson! + 2 {
-//                                    print("L\(countStringBlackBox): \(ab[indexOfPerson! + 2])")
-                                    account.parametrL = "\(ab[indexOfPerson! + 2])"
+                                    guard let result = Int(ab[indexOfPerson! + 2]) else { return }
+                                    if verDevice >= 133 {
+                                        account.parametrL = "\(result)"
+                                    } else {
+                                        account.parametrL = "\(result * 2)"
+                                    }
                                 }
                             }
                             if ab.contains("LI") {
@@ -399,10 +408,10 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
                             }()
                             do {
                                 let config = Realm.Configuration(
-                                    schemaVersion: 1,
+                                    schemaVersion: 2,
                                     
                                     migrationBlock: { migration, oldSchemaVersion in
-                                        if (oldSchemaVersion < 1) {
+                                        if (oldSchemaVersion < 2) {
                                         }
                                     })
                                 Realm.Configuration.defaultConfiguration = config
@@ -858,9 +867,14 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
                     if result.contains("UV") {
                         let indexOfPerson = result.firstIndex{$0 == "UV"}
                         if result.count > indexOfPerson! + 2 {
-                            arrayMeteo[7] = "\(result[indexOfPerson! + 2]) Вт/м2"
-                            arrayMeteoMain["UV"] = "\(result[indexOfPerson! + 2]) Вт/м2"
-
+                            guard let result = Double(result[indexOfPerson! + 2]) else { return }
+                            if verDevice >= 133 {
+                                arrayMeteo[7] = "\(Double(result)) Вт/м2"
+                                arrayMeteoMain["UV"] = "\(result) Вт/м2"
+                            } else {
+                                arrayMeteo[7] = "\(Double(result) / 100) Вт/м2"
+                                arrayMeteoMain["UV"] = "\(Double(result) / 100) Вт/м2"
+                            }
                         }
                     }
                     if result.contains("UVI") {
@@ -873,8 +887,14 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
                     if result.contains("L") {
                         let indexOfPerson = result.firstIndex{$0 == "L"}
                         if result.count > indexOfPerson! + 2 {
-                            arrayMeteo[9] = "\(result[indexOfPerson! + 2]) lux"
-                            arrayMeteoMain["L"] = "\(result[indexOfPerson! + 2]) lux"
+                            guard let result = Int(result[indexOfPerson! + 2]) else { return }
+                            if verDevice >= 133 {
+                                arrayMeteo[9] = "\(result) lux"
+                                arrayMeteoMain["L"] = "\(result) lux"
+                            } else {
+                                arrayMeteo[9] = "\(result * 2) lux"
+                                arrayMeteoMain["L"] = "\(result * 2) lux"
+                            }
                         }
                     }
                     if result.contains("LI") {
@@ -1071,7 +1091,10 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
                         if result.count > indexOfPerson! + 1 {
                             print(result[indexOfPerson! + 1])
                             connectedMeteoVC.deviceNameLabel.text = "\(nameDevice.uppercased())" + " (FW: \(result[indexOfPerson! + 1]))"
+                            let sum = result[indexOfPerson! + 1].replacingOccurrences(of: ".", with: "", options: .literal, range: nil)
                             connectedMeteoVC.viewAlpha.isHidden = true
+                            guard let intSum = Int(sum) else { return }
+                            verDevice = intSum
                         }
                     }
                     if result.contains("IMEI") {
@@ -1089,10 +1112,10 @@ class ListAvailDevices: UIViewController, ConnectedMeteoDelegate {
     fileprivate func realmSave(nameDevice: String, imei: String) {
         do {
             let config = Realm.Configuration(
-                schemaVersion: 1,
+                schemaVersion: 2,
                 
                 migrationBlock: { migration, oldSchemaVersion in
-                    if (oldSchemaVersion < 1) {
+                    if (oldSchemaVersion < 2) {
                     }
                 })
             Realm.Configuration.defaultConfiguration = config

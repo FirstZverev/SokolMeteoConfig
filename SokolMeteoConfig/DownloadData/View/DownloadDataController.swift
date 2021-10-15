@@ -22,17 +22,15 @@ struct ModelDate {
 
 }
 
-class DownloadDaraController: UIViewController {
+class DownloadDataController: UIViewController {
     
-    let realm: Realm = {
-        return try! Realm()
-    }()
     let customNavigationBar = createCustomNavigationBar(title: "ВЫГРУЖЕННЫЕ ДАННЫЕ",fontSize: screenW / 22)
     var tableView: UITableView!
     var dateCount: [ModelDate] = []
     var dictionary: [String : [ModelDate]] = [:]
     var countDateTime: [String] = []
-    
+    var tagSelectProfile = 0
+        
     var emptyList: UILabel = {
         let emptyList = UILabel()
         emptyList.text = "У ВАС ЕЩЕ НЕТ ЗАПИСЕЙ"
@@ -85,35 +83,52 @@ class DownloadDaraController: UIViewController {
         
     }
     @objc func actionAcccountButton() {
-        self.navigationController?.popViewController(animated: true)
+//        self.navigationController?.dismiss(animated: true)
+        dismiss(animated: true)
     }
     func fetchFilms() {
-        let realmCheck = realm.objects(AccountModel.self)
-        let urlMain = "http://185.27.193.112:8004/"
-        let urlString = urlMain + "/data?credentials=\(base64Encoded(email: realmCheck[0].user!, password: realmCheck[0].password!))&page=0&count=100"
-        
-        let request = AF.request(urlString)
-            .validate()
-            .responseDecodable(of: Network.self) { (response) in
-//                guard let network = response.value else {return}
-//                print(network.timestamp!)
-            }
-        // 2
-        request.responseDecodable(of: Network.self) { [self] (response) in
-          guard let films = response.value else { return }
-            self.dateCount.removeAll()
-            self.dictionary.removeAll()
-            self.countDateTime.removeAll()
-            guard films.result != nil else {return}
-            for i in 0...films.result!.count - 1 {
-                self.dateCount.append(ModelDate(name: (films.result?[i].station)!, date: unixTimetoStringOnlyDate(unixTime: (films.result?[i].created)!), dateMin: unixTimetoString(unixTime: (films.result?[i].created)!), time: 1, start: unixTimetoStringOnlyDate(unixTime: (films.result?[i].start)!), end: unixTimetoStringOnlyDate(unixTime: (films.result?[i].end)!), state: films.result?[i].state, sentTime: unixTimetoString(unixTime: (films.result?[i].sent) ?? 0)))
-                if self.countDateTime.contains(unixTimetoStringOnlyDate(unixTime: (films.result?[i].created)!)) {} else {
-                self.countDateTime.append(unixTimetoStringOnlyDate(unixTime: (films.result?[i].created)!))
+        do {
+            let config = Realm.Configuration(
+                schemaVersion: 2,
+                
+                migrationBlock: { migration, oldSchemaVersion in
+                    if (oldSchemaVersion < 2) {
+                    }
+                })
+            Realm.Configuration.defaultConfiguration = config
+            let realm: Realm  = try {
+                return try Realm()
+            }()
+            let realmCheck = realm.objects(AccountModel.self)
+            let urlMain = "http://185.27.193.112:8004/"
+            let urlString = urlMain + "/data?credentials=\(base64Encoded(email: realmCheck[tagSelectProfile].user!, password: realmCheck[tagSelectProfile].password!))&page=0&count=100"
+            
+            let request = AF.request(urlString)
+                .validate()
+                .responseDecodable(of: Network.self) { (response) in
+                    //                guard let network = response.value else {return}
+                    //                print(network.timestamp!)
                 }
+            // 2
+            request.responseDecodable(of: Network.self) { [self] (response) in
+                guard let films = response.value else { return }
+                self.dateCount.removeAll()
+                self.dictionary.removeAll()
+                self.countDateTime.removeAll()
+                guard films.result != nil,
+                      films.result?.count != 0 else { return                 self.tableView.reloadData() }
+                for i in 0...films.result!.count - 1 {
+                    self.dateCount.append(ModelDate(name: (films.result?[i].station)!, date: unixTimetoStringOnlyDate(unixTime: (films.result?[i].created)!), dateMin: unixTimetoString(unixTime: (films.result?[i].created)!), time: 1, start: unixTimetoStringOnlyDate(unixTime: (films.result?[i].start)!), end: unixTimetoStringOnlyDate(unixTime: (films.result?[i].end)!), state: films.result?[i].state, sentTime: unixTimetoString(unixTime: (films.result?[i].sent) ?? 0)))
+                    if self.countDateTime.contains(unixTimetoStringOnlyDate(unixTime: (films.result?[i].created)!)) {} else {
+                        self.countDateTime.append(unixTimetoStringOnlyDate(unixTime: (films.result?[i].created)!))
+                    }
+                }
+                self.dictionary = Dictionary(grouping: self.dateCount, by: { $0.date })
+                self.tableView.reloadData()
+                refreshControl.endRefreshing()
             }
-            self.dictionary = Dictionary(grouping: self.dateCount, by: { $0.date })
-            self.tableView.reloadData()
-            refreshControl.endRefreshing()
+        } catch {
+            print("error getting xml string: \(error)")
         }
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -137,11 +152,11 @@ class DownloadDaraController: UIViewController {
     }
     
     func showView() {
-        backView.tintColor = .black
+        backView.tintColor = .white
         view.addSubview(backView)
-        backView.addTapGesture {
-            self.navigationController?.popViewController(animated: true)
-        }
+//        backView.addTapGesture {
+//            self.navigationController?.dismiss(animated: true)
+//        }
         customNavigationBar.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         customNavigationBar.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         customNavigationBar.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
@@ -184,7 +199,7 @@ class DownloadDaraController: UIViewController {
     }
 }
 
-extension DownloadDaraController: UITableViewDelegate, UITableViewDataSource {
+extension DownloadDataController: UITableViewDelegate, UITableViewDataSource {
     
     private func registerTableView() {
         self.tableView.dataSource = self

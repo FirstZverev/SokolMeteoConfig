@@ -63,7 +63,7 @@ class OnlineDataDeviceCell: UICollectionViewCell {
         networkManager.networkingPostRequestListDevice(urlString: "http://185.27.193.112:8004/record/all?deviceId=\(id)") { (result, error) in
             guard let result = result else {return}
             print("result: \(result)")
-            devicesParametrsList = result
+            deviceOnlineParametrsList = result
             DispatchQueue.main.async {
                 viewAlphaAlways.isHidden = true
                 self.tableView.reloadData()
@@ -206,8 +206,15 @@ extension OnlineDataDeviceCell: UITableViewDelegate, UITableViewDataSource {
                   let long = devicesList[select].longitude,
                   let longitude : Double = Double(long)
             else { return OnlineDataMapCell() }
-            cell.mapView.mapWindow.map.move(with: YMKCameraPosition(target: YMKPoint(latitude: latitude, longitude: longitude), zoom: 15, azimuth: 0, tilt: 0),
-                                            animationType: YMKAnimation(type: YMKAnimationType.smooth, duration: 5),
+            cell.mapView.mapWindow.map.move(with:
+                                                YMKCameraPosition(target:
+                                                                    YMKPoint(latitude: latitude,
+                                                                             longitude: longitude),
+                                                                  zoom: 15,
+                                                                  azimuth: 0,
+                                                                  tilt: 0),
+                                            animationType: YMKAnimation(type: YMKAnimationType.smooth,
+                                                                        duration: 5),
                                             cameraCallback: nil)
             self.hero.isEnabled = true
             cell.mapView.hero.id = "YandexMap"
@@ -225,71 +232,76 @@ extension OnlineDataDeviceCell: UITableViewDelegate, UITableViewDataSource {
             guard let select = selectItem else { return OnlineDataMapCell() }
             cell.label.text = devicesList[select].name
             cell.imageUI.image = UIImage(named: "EllipseSokolName")
-            cell.labelValue.text = "Обновлено 5 сек. назад"
+            cell.labelValue.text = "Обновлено ... сек. назад"
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "OnlineDataCell", for: indexPath) as! OnlineDataCell
-            cell.label.text = viewmodel.arrayParametr[indexPath.row - 2].name
-            let image = viewmodel.arrayParametr[indexPath.row - 2].code
-            cell.imageUI.image = viewmodel.imageOnlineSokol(imageString: image)
-            if image == "PR" {
-                guard let value = devicesParametrsList.last?.pr else { return cell }
-                cell.labelValue.text = "\(value)"
-            } else if image == "UV" {
-                guard let value = devicesParametrsList.last?.uv else { return cell }
-                cell.labelValue.text = "\(value)"
-            } else if image == "Uext" {
-                guard let value = devicesParametrsList.last?.uext else { return cell }
-                cell.labelValue.text = "\(value)"
-            } else if image == "WD2" {
-                guard let value = devicesParametrsList.last?.wd2 else { return cell }
-                cell.labelValue.text = "\(value)"
-            } else if image == "HM" {
-                guard let value = devicesParametrsList.last?.hm else { return cell }
-                cell.labelValue.text = "\(value)"
-            } else if image == "KS" {
-                guard let value = devicesParametrsList.last?.ks else { return cell }
-                cell.labelValue.text = "\(value)"
-            } else if image == "UVI" {
-                guard let value = devicesParametrsList.last?.uvi else { return cell }
-                cell.labelValue.text = "\(value)"
-            } else if image == "Upow" {
-                guard let value = devicesParametrsList.last?.upow else { return cell }
-                cell.labelValue.text = "\(value)"
-            } else if image == "L" {
-                guard let value = devicesParametrsList.last?.l else { return cell }
-                cell.labelValue.text = "\(value)"
-            } else if image == "WD" {
-                guard let value = devicesParametrsList.last?.wd else { return cell }
-                cell.labelValue.text = "\(value)"
-            } else if image == "PR1" {
-                guard let value = devicesParametrsList.last?.pr1 else { return cell }
-                cell.labelValue.text = "\(value)"
-            } else if image == "td" {
-                guard let value = devicesParametrsList.last?.td else { return cell }
-                cell.labelValue.text = "\(value)"
-            } else if image == "t" {
-                guard let value = devicesParametrsList.last?.t else { return cell }
-                cell.labelValue.text = "\(value)"
-            }  else if image == "RSSI" {
-                guard let value = devicesParametrsList.last?.rssi else { return cell }
-                cell.labelValue.text = "\(value)"
-            } else if image == "WM" {
-                guard let value = devicesParametrsList.last?.wm else { return cell }
-                cell.labelValue.text = "\(value)"
-            } else if image == "RN" {
-                guard let value = devicesParametrsList.last?.rn else { return cell }
-                cell.labelValue.text = "\(value)"
-            } else if image == "LI" {
-                guard let value = devicesParametrsList.last?.li else { return cell }
-                cell.labelValue.text = "\(value)"
-            } else if image == "TR" {
-                guard let value = devicesParametrsList.last?.tr else { return cell }
-                cell.labelValue.text = "\(value)"
-            } else if image == "WV" {
-                guard let value = devicesParametrsList.last?.wv else { return cell }
-                cell.labelValue.text = "\(value)"
-            }
+            guard let value = deviceOnlineParametrsList[indexPath.row - 2].records?.last?.value,
+                  let name = deviceOnlineParametrsList[indexPath.row - 2].name,
+                  let image = deviceOnlineParametrsList[indexPath.row - 2].code else { return cell}
+            cell.label.text = name
+            cell.labelValue.text = "\(value)"
+            cell.imageUI.image = viewmodel.imageForCode(code: image)
+
+
+//            if image == "PR" {
+//                guard let value = deviceOnlineParametrsList.last?.records?.last?.value else { return cell }
+//                cell.labelValue.text = "\(value)"
+//            } else if image == "UV" {
+//                guard let value = devicesParametrsList.last?.uv else { return cell }
+//                cell.labelValue.text = "\(value)"
+//            } else if image == "Uext" {
+//                guard let value = devicesParametrsList.last?.uext else { return cell }
+//                cell.labelValue.text = "\(value)"
+//            } else if image == "WD2" {
+//                guard let value = devicesParametrsList.last?.wd2 else { return cell }
+//                cell.labelValue.text = "\(value)"
+//            } else if image == "HM" {
+//                guard let value = devicesParametrsList.last?.hm else { return cell }
+//                cell.labelValue.text = "\(value)"
+//            } else if image == "KS" {
+//                guard let value = devicesParametrsList.last?.ks else { return cell }
+//                cell.labelValue.text = "\(value)"
+//            } else if image == "UVI" {
+//                guard let value = devicesParametrsList.last?.uvi else { return cell }
+//                cell.labelValue.text = "\(value)"
+//            } else if image == "Upow" {
+//                guard let value = devicesParametrsList.last?.upow else { return cell }
+//                cell.labelValue.text = "\(value)"
+//            } else if image == "L" {
+//                guard let value = devicesParametrsList.last?.l else { return cell }
+//                cell.labelValue.text = "\(value)"
+//            } else if image == "WD" {
+//                guard let value = devicesParametrsList.last?.wd else { return cell }
+//                cell.labelValue.text = "\(value)"
+//            } else if image == "PR1" {
+//                guard let value = devicesParametrsList.last?.pr1 else { return cell }
+//                cell.labelValue.text = "\(value)"
+//            } else if image == "td" {
+//                guard let value = devicesParametrsList.last?.td else { return cell }
+//                cell.labelValue.text = "\(value)"
+//            } else if image == "t" {
+//                guard let value = devicesParametrsList.last?.t else { return cell }
+//                cell.labelValue.text = "\(value)"
+//            }  else if image == "RSSI" {
+//                guard let value = devicesParametrsList.last?.rssi else { return cell }
+//                cell.labelValue.text = "\(value)"
+//            } else if image == "WM" {
+//                guard let value = devicesParametrsList.last?.wm else { return cell }
+//                cell.labelValue.text = "\(value)"
+//            } else if image == "RN" {
+//                guard let value = devicesParametrsList.last?.rn else { return cell }
+//                cell.labelValue.text = "\(value)"
+//            } else if image == "LI" {
+//                guard let value = devicesParametrsList.last?.li else { return cell }
+//                cell.labelValue.text = "\(value)"
+//            } else if image == "TR" {
+//                guard let value = devicesParametrsList.last?.tr else { return cell }
+//                cell.labelValue.text = "\(value)"
+//            } else if image == "WV" {
+//                guard let value = devicesParametrsList.last?.wv else { return cell }
+//                cell.labelValue.text = "\(value)"
+//            }
             return cell
         }
     }
@@ -298,13 +310,13 @@ extension OnlineDataDeviceCell: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if devicesParametrsList.count == 0 {
+        if deviceOnlineParametrsList.count == 0 {
             emptyList.isHidden = false
             return 2
         } else {
             emptyList.isHidden = true
         }
-        return viewmodel.arrayParametr.count + 2
+        return deviceOnlineParametrsList.count + 2
     }
     
     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {

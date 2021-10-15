@@ -7,9 +7,7 @@
 //
 
 import UIKit
-import RealmSwift
 import NVActivityIndicatorView
-import SimpleCheckbox
 
 class RegistrationController: UIViewController {
     
@@ -35,31 +33,6 @@ class RegistrationController: UIViewController {
         stackTextField.axis = .horizontal
         stackTextField.spacing = 15
         return stackTextField
-    }()
-    
-    lazy var checkBox: Checkbox = {
-        let checkBox = Checkbox()
-        checkBox.checkedBorderColor = UIColor(rgb: 0xBE449E)
-        checkBox.uncheckedBorderColor = UIColor(rgb: 0x998F99)
-        checkBox.checkmarkColor = .white
-        checkBox.borderStyle = .square
-        checkBox.borderLineWidth = 1
-        checkBox.checkboxFillColor = UIColor(rgb: 0xBE449E)
-        checkBox.checkmarkStyle = .tick
-        checkBox.useHapticFeedback = true
-        checkBox.isChecked = true
-        checkBox.translatesAutoresizingMaskIntoConstraints = false
-        checkBox.addTarget(self, action: #selector(checkboxValueChanged(sender:)), for: .valueChanged)
-        return checkBox
-    }()
-    lazy var saveLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont(name:"FuturaPT-Light", size: screenW / 20)
-        label.textColor = .black
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .left
-        label.text = "Запомнить"
-        return label
     }()
     
     lazy var viewAlpha: UIView = {
@@ -164,7 +137,7 @@ class RegistrationController: UIViewController {
         let button = UIButton()
         button.setTitle("Зарегистрироваться", for: .normal)
         button.backgroundColor = UIColor(rgb: 0xBE449E)
-        button.layer.cornerRadius = 20
+        button.layer.cornerRadius = 10
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(actionSave), for: .touchUpInside)
         return button
@@ -178,107 +151,40 @@ class RegistrationController: UIViewController {
 
     }
     
-    fileprivate func checkBoxSender() {
-        if checkBox.isChecked == false {
-            checkBox.checkmarkColor = UIColor(rgb: 0xBE449E)
-            checkBox.checkboxFillColor = .clear
-        } else {
-            checkBox.checkmarkColor = .white
-            checkBox.checkboxFillColor = UIColor(rgb: 0xBE449E)
-        }
-    }
-    
-    @objc func checkboxValueChanged(sender: Checkbox!) {
-        checkBoxSender()
-    }
-    
     @objc func actionSave() {
-        if Reachability.isConnectedToNetwork(){
-            viewAlpha.isHidden = false
-//            fetchInAccount()
-//            let fields = ["name": "\(firstNameTextField.text ?? "")", "surname": "\(secondNameTextField.text ?? "")"]
-//            let userData = ["email": "\(emailTextField.text ?? "")", "password": "\(passwordTextField.text ?? "")"]
-            let userData: [String: Any] = ["email": "\(emailTextField.text ?? "")", "password": "\(passwordTextField.text ?? "")", "fields": ["name": "\(firstNameTextField.text ?? "")", "surname": "\(secondNameTextField.text ?? "")"]]
-            networkingPostRequest(urlString: "https://sokolmeteo.com/platform/api/user/register", userDataJSON: userData)
-        } else {
-            showToast(message: "Проверьте соединение", seconds: 1.0)
-        }
-    }
-    fileprivate func realmSave() {
-        do {
-            var config = Realm.Configuration(
-                schemaVersion: 1,
+        if passwordTextField.text == passwordRepeatTextField.text {
+            if Reachability.isConnectedToNetwork(){
+                viewAlpha.isHidden = false
+                let userRegister = RegisterData(email: emailTextField.text!, password: passwordTextField.text!, name: firstNameTextField.text!, surname: secondNameTextField.text!)
                 
-                migrationBlock: { migration, oldSchemaVersion in
-                    if (oldSchemaVersion < 1) {
+                RegisterViewModel.registration(user: userRegister) { (message) in
+                    DispatchQueue.main.async {
+                        self.viewAlpha.isHidden = true
                     }
-                })
-            config.deleteRealmIfMigrationNeeded = true
-
-            Realm.Configuration.defaultConfiguration = config
-            print(Realm.Configuration.defaultConfiguration.fileURL!)
-
-            let account = AccountModel()
-            account.user = emailTextField.text
-            account.password = passwordTextField.text
-            if checkBox.isChecked == true {
-                account.save = true
-            } else {
-                account.save = false
-            }
-            let realm: Realm = {
-                return try! Realm()
-            }()
-            
-            let realmCheck = realm.objects(AccountModel.self)
-            if realmCheck.count != 0 {
-                try! realm.write {
-                    realmCheck.setValue(account.user, forKey: "user")
-                    realmCheck.setValue(account.password, forKey: "password")
-                    realmCheck.setValue(account.save, forKey: "save")
+                    if message == "OK" {
+                        DispatchQueue.main.async {
+                            self.showToast(message: "Ссылку для активации отправлена на \(self.emailTextField.text!)", seconds: 1.0)
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                self.navigationController?.popViewController(animated: true)
+                            }
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            self.showToast(message: message, seconds: 1.0)
+                        }
+                    }
                 }
             } else {
-                try realm.write {
-                    realm.add(account)
-                }
+                showToast(message: "Проверьте соединение", seconds: 1.0)
             }
-            //            let workouts = realm.objects(BoxModel.self).filter("time != '0'")
-            //            try! realm.write {
-            //                workouts.setValue("0", forKey: "time")
-            //            }
-            
-        } catch {
-            print("error getting xml string: \(error)")
+        } else {
+            showToast(message: "Пароли не совпадают", seconds: 1.0)
         }
     }
+    
 
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        var config = Realm.Configuration(
-            schemaVersion: 1,
-            
-            migrationBlock: { migration, oldSchemaVersion in
-                if (oldSchemaVersion < 1) {
-                }
-            })
-        config.deleteRealmIfMigrationNeeded = true
-
-        Realm.Configuration.defaultConfiguration = config
-        
-        let realm: Realm = {
-            return try! Realm()
-        }()
-        
-        let realmCheck = realm.objects(AccountModel.self)
-        if realmCheck.count != 0 {
-            emailTextField.text = realmCheck[0].user
-            passwordTextField.text = realmCheck[0].password
-            checkBox.isChecked = realmCheck[0].save
-            checkBoxSender()
-        } else {
-            checkBox.isChecked = false
-            checkBoxSender()
-        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -294,48 +200,6 @@ class RegistrationController: UIViewController {
         registerKeyboardNotification()
     }
     
-    func networkingPostRequest(urlString: String, userDataJSON: [String: Any]) {
-        guard let url = URL(string: urlString) else {return}
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        
-        guard let httpBody = try? JSONSerialization.data(withJSONObject: userDataJSON, options: []) else { return }
-        request.httpBody = httpBody
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        let session = URLSession.shared
-        session.dataTask(with: request) { (data, response, error) in
-            guard let response = response, let data = data else { return }
-            print(response)
-            if let httpResponse = response as? HTTPURLResponse {
-                print(httpResponse.statusCode)
-                
-                let cookieStorage = HTTPCookieStorage.shared
-                let cookies = cookieStorage.cookies(for: response.url!)
-                if cookies?.first?.name != nil {
-                    print("name: \((cookies?.first?.name)!), value: \((cookies?.first?.value)!)")
-                    idSession = (cookies?.first?.value)!
-                }
-            }
-            do {
-                let json = try JSONSerialization.jsonObject(with: data, options: [])
-                print(json)
-                if let httpResponse = response as? HTTPURLResponse {
-                    if httpResponse.statusCode != 200 {
-                        let jsonSecond = try JSONDecoder().decode(MessageError.self, from: data)
-                        print(jsonSecond)
-                    }
-                }
-                DispatchQueue.main.async {
-                    self.navigationController?.popViewController(animated: true)
-                }
-            } catch {
-                print(error)
-            }
-        }.resume()
-    }
-    
     func showView() {
         backView.tintColor = .black
         view.addSubview(backView)
@@ -349,9 +213,6 @@ class RegistrationController: UIViewController {
         stackTextField.addArrangedSubview(passwordTextField)
         stackTextField.addArrangedSubview(passwordRepeatTextField)
         stackTextField.addArrangedSubview(saveTextField)
-
-        saveTextField.addArrangedSubview(checkBox)
-        saveTextField.addArrangedSubview(saveLabel)
         
         scrollView.topAnchor.constraint(equalTo: view.topAnchor, constant: screenW / 12).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
@@ -369,9 +230,6 @@ class RegistrationController: UIViewController {
         emailTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         passwordRepeatTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
-
-        checkBox.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        checkBox.widthAnchor.constraint(equalToConstant: 20).isActive = true
 
         stackTextField.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor).isActive = true
         stackTextField.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true

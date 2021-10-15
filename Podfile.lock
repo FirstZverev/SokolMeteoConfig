@@ -15,11 +15,11 @@ PODS:
     - NVActivityIndicatorView/Base (= 5.1.1)
   - NVActivityIndicatorView/Base (5.1.1)
   - RAMAnimatedTabBarController (5.2.0)
-  - Realm (10.5.0):
-    - Realm/Headers (= 10.5.0)
-  - Realm/Headers (10.5.0)
-  - RealmSwift (10.5.0):
-    - Realm (= 10.5.0)
+  - Realm (10.7.5):
+    - Realm/Headers (= 10.7.5)
+  - Realm/Headers (10.7.5)
+  - RealmSwift (10.7.5):
+    - Realm (= 10.7.5)
   - SimpleCheckbox (2.1.0)
   - SteviaLayout (4.7.3)
   - UIDrawer (1.0)
@@ -87,8 +87,8 @@ SPEC CHECKSUMS:
   MXSegmentedControl: f39e46199a52cbc03b1c845e150215119f2542f5
   NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   RAMAnimatedTabBarController: 6863a386e7ae2ab227cd60aa73ab8ff56cdacfdd
-  Realm: e1c22c3d83b229afb70ebc10e1771c91e9542d12
-  RealmSwift: 6fc078d9d3fd7e58c71bfdbb694e252462f112a5
+  Realm: 06f5c67f87cb8c5f27b122218ce22e9a77314517
+  RealmSwift: b46535b52e69b9ed33912f0fcb3182ab0a5743ee
   SimpleCheckbox: ddcd433ab8c3a8f57300bebda13151a8f302c7f9
   SteviaLayout: c2ecdcff57d44e38fd2f65e54ad52aeae28ca0c4
   UIDrawer: 1bfbc152fee69f6809a41508000cf1b9bd4b1738
@@ -96,4 +96,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: c8119b09dd78e4b0d314ba0dd332d0f42ce21099
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1

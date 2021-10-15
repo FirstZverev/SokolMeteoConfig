@@ -23,7 +23,13 @@ extension DevicesController: AlertDelegate {
         if alertView.checkBoxOne.isChecked == true {
             actionPushAdd(edit: true)
         } else {
-            print("delete")
+            networkManager.networkingPostRequestDeleteDevice(id: devicesList[tag].id!) { (result, error) in
+                if result == "OK" {
+                    DispatchQueue.main.async {
+                        self.showToast(message: "\(devicesList[self.tag].name!) поставлена в очередь на удаление", seconds: 1.5)
+                    }
+                }
+            }
         }
     }
     

@@ -19,8 +19,9 @@ class DeviceController: UICollectionViewController, UICollectionViewDelegateFlow
         transition.duration = 0.5
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         transition.type = CATransitionType.fade
-        self.navigationController?.view.layer.add(transition, forKey: nil)
-        self.navigationController?.pushViewController(vc, animated: false)
+        view.layer.add(transition, forKey: nil)
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
     var offSet: CGFloat = 1
     var width: CGFloat = screenW
@@ -103,6 +104,7 @@ class DeviceController: UICollectionViewController, UICollectionViewDelegateFlow
 //                                          cameraCallback: nil)
     }
     override func viewDidDisappear(_ animated: Bool) {
+        
     }
     override func viewWillDisappear(_ animated: Bool) {
         collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: true)

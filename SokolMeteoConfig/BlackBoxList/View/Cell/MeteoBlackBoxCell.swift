@@ -128,11 +128,14 @@ class MeteoBlackBoxCell: UITableViewCell {
             
             self.nextImage!.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
             self.nextImage!.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            
+            self.nextImage!.heightAnchor.constraint(equalToConstant: 24),
+            self.nextImage!.widthAnchor.constraint(equalToConstant: 24),
+
             self.separator!.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
             self.separator!.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -30),
             self.separator!.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 30),
             self.separator!.heightAnchor.constraint(equalToConstant: 2),
+
 
             self.saveButton!.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5),
             self.saveButton!.trailingAnchor.constraint(equalTo: self.save2Button!.leadingAnchor, constant: -10),

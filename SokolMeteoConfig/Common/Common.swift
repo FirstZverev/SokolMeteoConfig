@@ -15,6 +15,7 @@ var demoMode = false
 var devicesList: [DataDevices] = []
 var devicesParametrsList: [ResultOnline] = []
 var forecast: [ResultForecast] = []
+var deviceOnlineParametrsList = [DeviceListResult]()
 var selectItem: Int?
 
 var isNight = false
@@ -80,7 +81,7 @@ var KPAK = "..."
 var KPBM = "..."
 var KCNL = "..."
 var KBCH = "..."
-
+var verDevice = 100
 
 var QRCODE = ""
 var kCBAdvDataManufacturerData = ""
@@ -111,6 +112,8 @@ var countStringBlackBox: Int = 0
 var dateLast: Int = 0
 var dateFirst: Int = 0
 var setPasswordCheak = -1
+var orderDateTo = ""
+var orderDateFrom = ""
 
 func unixTimetoStringOnlyDate(unixTime: Int) -> String {
     let unixtimeReal = unixTime / 1000
@@ -150,13 +153,23 @@ func base64Encoded(email: String, password: String) -> String {
 
 func stringTounixTime(dateString: String) -> Int {
     let dateFormatter = DateFormatter()
+    dateFormatter.timeZone = TimeZone(identifier: "UTC")
     dateFormatter.dateFormat = "dd.MM.yy HH:mm:ss"
 //    dateFormatter.timeStyle = DateFormatter.Style.medium
 //    dateFormatter.dateStyle = DateFormatter.Style.short
-    dateFormatter.timeZone = .current
     let date = dateFormatter.date(from: dateString)!
     let unixtime = date.timeIntervalSince1970
     return Int(unixtime)
+}
+func unixTimeStringtoStringFullAgain(unixTimeInt: Int) -> String {
+    let date = Date(timeIntervalSince1970: TimeInterval(unixTimeInt))
+    let dateFormatter = DateFormatter()
+//    dateFormatter.timeStyle = DateFormatter.Style.short
+//    dateFormatter.dateStyle = DateFormatter.Style.short
+    dateFormatter.dateFormat = "dd.MM.yy HH:mm:ss"
+    dateFormatter.timeZone = .current
+    let localDate = dateFormatter.string(from: date)
+    return localDate
 }
 func stringTounixTimeOnlyData(dateString: String) -> Int {
     let dateFormatter = DateFormatter()

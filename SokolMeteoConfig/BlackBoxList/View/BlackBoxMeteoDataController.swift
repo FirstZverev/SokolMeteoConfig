@@ -11,7 +11,8 @@ import RealmSwift
 import NVActivityIndicatorView
 
 class BlackBoxMeteoDataController: UIViewController {
-    
+    let savedReportsVC = SavedFilesController()
+
     let realm: Realm = {
         return try! Realm()
     }()
@@ -144,6 +145,10 @@ class BlackBoxMeteoDataController: UIViewController {
         self.hero.isEnabled = true
         customNavigationBar.hero.id = "OnlineToMeteo"
 
+        customNavigationBar.alpha = 0.0
+        saveButton.alpha = 0.0
+        save2Button.alpha = 0.0
+        save3Button.alpha = 0.0
 
         view.sv(
             customNavigationBar
@@ -222,7 +227,7 @@ class BlackBoxMeteoDataController: UIViewController {
     }
     func saveCSV(isShare: Bool) {
         let realmboxing = realm.objects(BoxModel.self).filter("nameDevice = %@", nameDeviceBlackBox!)
-        let file = "Черный ящик" + " №\(nameDeviceBlackBox!) от \(unixTimeStringtoStringFull(unixTime: (realmboxing.first!.time!))) до \(unixTimeStringtoStringFull(unixTime: realmboxing.last!.time!)).csv"
+        let file = "Черный ящик" + " №\(nameDeviceBlackBox!) от \(unixTimeStringtoStringFull(unixTime: (realmboxing.first!.time!))) до \(unixTimeStringtoStringFull(unixTime: realmboxing.last!.time!))"
         var contents = ""
         print(realmboxing.count)
         contents += "Дата, Время, Напряжение батареи, Температура, Направление ветра, Скорость ветра, Порыв ветра, Атмосферное давление, Влажность, Интенсивность осадков, Уровень ультрафиолетового излучения, Накопленное значение ультрафиолетового излучения, Уровень освещенности, Накопленное значение видимого излучения, Накопленные события и ошибки, Уровень сигнала GSM, Напряжение внешнего источника 12V, Количество переданных сообщений, БМВД №0 Уровень сигнала, БМВД №0 Напряжение батареи, БМВД №0 Порт №1 Влажность почвы, БМВД №0 Порт №1 Температура почвы, БМВД №0 Порт №2 Влажность почвы, БМВД №0 Порт №2 Температура почвы, БМВД №0 Порт №3 Влажность почвы, БМВД №0 Порт №3 Температура почвы, БМВД №0 Порт №4 Влажность листа, БМВД №1 Уровень сигнала, БМВД №1 Напряжение батареи, БМВД №1 Порт №1 Влажность почвы, БМВД №1 Порт №1 Температура почвы, БМВД №1 Порт №2 Влажность почвы, БМВД №1 Порт №2 Температура почвы, БМВД №1 Порт №3 Влажность почвы, БМВД №1 Порт №3 Температура почвы, БМВД №1 Порт №4 Влажность листа, БМВД №2 Уровень сигнала, БМВД №2 Напряжение батареи, БМВД №2 Порт №1 Влажность почвы, БМВД №2 Порт №1 Температура почвы, БМВД №2 Порт №2 Влажность почвы, БМВД №2 Порт №2 Температура почвы, БМВД №2 Порт №3 Влажность почвы, БМВД №2 Порт №3 Температура почвы, БМВД №2 Порт №4 Влажность листа, БМВД №3 Уровень сигнала, БМВД №3 Напряжение батареи, БМВД №3 Порт №1 Влажность почвы, БМВД №3 Порт №1 Температура почвы, БМВД №3 Порт №2 Влажность почвы, БМВД №3 Порт №2 Температура почвы, БМВД №3 Порт №3 Влажность почвы, БМВД №3 Порт №3 Температура почвы, БМВД №3 Порт №4 Влажность листа, БМВД №4 Уровень сигнала, БМВД №4 Напряжение батареи, БМВД №4 Порт №1 Влажность почвы, БМВД №4 Порт №1 Температура почвы, БМВД №4 Порт №2 Влажность почвы, БМВД №4 Порт №2 Температура почвы, БМВД №4 Порт №3 Влажность почвы, БМВД №4 Порт №3 Температура почвы, БМВД №4 Порт №4 Влажность листа, БМВД №5 Уровень сигнала, БМВД №5 Напряжение батареи, БМВД №5 Порт №1 Влажность почвы, БМВД №5 Порт №1 Температура почвы, БМВД №5 Порт №2 Влажность почвы, БМВД №5 Порт №2 Температура почвы, БМВД №5 Порт №3 Влажность почвы, БМВД №5 Порт №3 Температура почвы, БМВД №5 Порт №4 Влажность листа, БМВД №6 Уровень сигнала, БМВД №6 Напряжение батареи, БМВД №6 Порт №1 Влажность почвы, БМВД №6 Порт №1 Температура почвы, БМВД №6 Порт №2 Влажность почвы, БМВД №6 Порт №2 Температура почвы, БМВД №6 Порт №3 Влажность почвы, БМВД №6 Порт №3 Температура почвы, БМВД №6 Порт №4 Влажность листа, БМВД №7 Уровень сигнала, БМВД №7 Напряжение батареи, БМВД №7 Порт №1 Влажность почвы, БМВД №7 Порт №1 Температура почвы, БМВД №7 Порт №2 Влажность почвы, БМВД №7 Порт №2 Температура почвы, БМВД №7 Порт №3 Влажность почвы, БМВД №7 Порт №3 Температура почвы, БМВД №7 Порт №4 Влажность листа\n"
@@ -246,27 +251,21 @@ class BlackBoxMeteoDataController: UIViewController {
             contents += "\(realmboxing[i].parametrUext ?? "-"),"
             contents += "\(realmboxing[i].parametrTR ?? "-")\n"
         }
-        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        
-        let fileURL = dir.appendingPathComponent(file)
-        var filesToShare = [Any]()
-        do {
-            try contents.write(to: fileURL, atomically: true, encoding: .utf8)
-            
-            if isShare {
-                filesToShare.append(fileURL)
-            
-                let activityViewController = UIActivityViewController(activityItems: filesToShare, applicationActivities: nil)
-                self.present(activityViewController, animated: true, completion: nil)
-            } else {
-                self.showToast(message: "Запись прошла успешно " + " \(file)", seconds: 1.0)
+        WorkWithFiles.createFile(name: nameDeviceBlackBox, isBackBox: true) { (url) in
+            let fileURL = url.appendingPathComponent(file).appendingPathExtension("csv")
+            DispatchQueue.main.async {
+                FileManager.default.createFile(atPath: fileURL.path, contents: Data(contents.utf8))
+                    viewAlphaAlways.isHidden = true
+                    self.naticAction()
             }
         }
-        catch {
-            print("Error: \(error)")
-            self.showToast(message: "Error", seconds: 1.0)
-            
-        }
+    }
+    @objc func naticAction() {
+        savedReportsVC.isBackBox = true
+        let navigationController = UINavigationController(rootViewController: savedReportsVC)
+        navigationController.navigationBar.isHidden = true
+        
+        self.present(navigationController, animated: true)
     }
 }
 

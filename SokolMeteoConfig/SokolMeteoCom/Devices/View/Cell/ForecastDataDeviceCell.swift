@@ -133,7 +133,7 @@ extension ForecastDataDeviceCell: UITableViewDelegate, UITableViewDataSource {
             guard let select = selectItem else { return OnlineDeviceCell() }
             cell.label.text = devicesList[select].name
             cell.imageUI.image = UIImage(named: "EllipseSokolName")
-            cell.labelValue.text = "Обновлено 5 сек. назад"
+            cell.labelValue.text = "Обновлено ... сек. назад"
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "OnlineDataCell", for: indexPath) as! OnlineDataCell

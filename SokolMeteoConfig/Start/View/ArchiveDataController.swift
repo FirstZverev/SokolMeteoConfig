@@ -1,9 +1,9 @@
 //
-//  ViewController.swift
-//  SokolMeteoConfig
+//  ArchiveDataController.swift
+//  SOKOL
 //
-//  Created by Володя Зверев on 26.03.2020.
-//  Copyright © 2020 zverev. All rights reserved.
+//  Created by Володя Зверев on 20.04.2021.
+//  Copyright © 2021 zverev. All rights reserved.
 //
 
 import UIKit
@@ -13,7 +13,7 @@ import UIDrawer
 import RealmSwift
 import Alamofire
 
-class StartViewController: UIViewController {
+class ArchiveDataController: UIViewController {
 
     var tableView: UITableView!
     var viewModel: TableViewViewModelType?
@@ -22,21 +22,18 @@ class StartViewController: UIViewController {
     let devicesListVC = ListAvailDevices()
     let tabBarVC = TabBarController()
     let accountEnterVC = AccountEnterController()
-    let archiveDataVC = ArchiveDataController()
     
-    var versionLabel: UILabel = {
-        let versionLabel = UILabel()
-        versionLabel.frame = CGRect(x: 0, y: screenH - 40, width: screenW - 20, height: 20)
-        versionLabel.font = UIFont(name:"FuturaPT-Medium", size: screenW / 22)
-        versionLabel.textColor = .black
-        let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-        if let version = appVersion {
-            versionLabel.text = "v. \(version)"
-        }
-        versionLabel.textAlignment = .left
-        versionLabel.center.x = screenW/2
-        return versionLabel
+    fileprivate lazy var backView: UIImageView = {
+        let backView = UIImageView()
+        backView.frame = CGRect(x: 0, y: screenH / 12 - 50, width: 50, height: 50)
+        let back = UIImageView(image: UIImage(named: "back")!)
+        back.image = back.image!.withRenderingMode(.alwaysTemplate)
+        back.frame = CGRect(x: 10, y: 0 , width: 20, height: 20)
+        back.center.y = backView.bounds.height / 3 * 2 - 1
+        backView.addSubview(back)
+        return backView
     }()
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.view.isUserInteractionEnabled = true
@@ -46,7 +43,7 @@ class StartViewController: UIViewController {
     
     
     override func viewDidAppear(_ animated: Bool) {
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
     }
     override var shouldAutorotate: Bool {
@@ -61,13 +58,19 @@ class StartViewController: UIViewController {
         print("1617009029 время : \(unixTimeStringtoStringFull(unixTime: "1617009029"))")
         view.backgroundColor = .white
         registerTableView()
-        viewModel = ViewModel()
-        let customNavigationBar = createCustomNavigationBar(title: "МЕНЮ", fontSize: screenW / 22)
+        viewModel = ViewModelArchive()
+        let customNavigationBar = createCustomNavigationBar(title: "АРХИВ ДАННЫХ", fontSize: screenW / 22)
         customNavigationBar.hero.id = "customNavigationBar"
 
         view.sv(customNavigationBar)
-        view.addSubview(versionLabel)
+        backView.tintColor = .black
         
+        view.addSubview(backView)
+        backView.addTapGesture { [self] in self.popVC() }
+
+    }
+    func popVC() {
+        navigationController?.popViewController(animated: true)
     }
 
     private func registerTableView() {
@@ -99,7 +102,7 @@ class StartViewController: UIViewController {
 
 }
 
-extension StartViewController: UITableViewDelegate {
+extension ArchiveDataController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
@@ -107,30 +110,28 @@ extension StartViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.row == 0 {
-            transitionSearchMeteo()
-        } else if indexPath.row == 1 {
-            navigationController?.pushViewController(archiveDataVC, animated: true)
+            let navigationController = UINavigationController(rootViewController: BlackBoxListController())
+            navigationController.navigationBar.isHidden = true
+            self.present(navigationController, animated: true)
 
-        } else if indexPath.row == 2 {
-//            let nav1 = UINavigationController(rootViewController: accountEnterVC)
-//            nav1.modalPresentationStyle = .fullScreen
-//            nav1.navigationBar.isHidden = true
-//            accountEnterVC.modalPresentationStyle = .overFullScreen
-//            self.present(accountEnterVC, animated: true, completion: nil)
-//            let accountEnter = AccountEnterController()
-//            show(accountEnter, sender: self)
-            accountEnterVC.pushAccountProfile = false
-            navigationController?.pushViewController(accountEnterVC, animated: true)
-        } else if indexPath.row == 3 {
-//            navigationController?.pushViewController(BlackBoxGraffics(), animated: true)
-            transitionSupport()
+        } else if indexPath.row == 1 {
+            let vc = SavedFilesController()
+            vc.isBackBox = false
+            let navigationController = UINavigationController(rootViewController: vc)
+            navigationController.navigationBar.isHidden = true
+            self.present(navigationController, animated: true)
         } else {
-            transitionSettingsApp()
+            let vc = SavedFilesController()
+            vc.isBackBox = true
+            let navigationController = UINavigationController(rootViewController: vc)
+            navigationController.navigationBar.isHidden = true
+            self.present(navigationController, animated: true)
+
         }
     }
 }
 
-extension StartViewController: UITableViewDataSource {
+extension ArchiveDataController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
         generator.impactOccurred()
@@ -163,7 +164,7 @@ extension StartViewController: UITableViewDataSource {
         }
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel?.numberOfRows() ?? 0
+        return (viewModel?.numberOfRows()) ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -180,6 +181,7 @@ extension StartViewController: UITableViewDataSource {
             cell?.imageUI?.isHidden = true
             cell?.label?.isHidden = true
             cell?.label2?.isHidden = false
+            cell?.label2?.textAlignment = .center
             cell?.imageUI2?.isHidden = false
         } else {
             cell?.imageUI?.isHidden = false
@@ -187,8 +189,8 @@ extension StartViewController: UITableViewDataSource {
             cell?.label2?.isHidden = true
             cell?.imageUI2?.isHidden = true
         }
-        cell?.imageUI?.image = UIImage(named: "firstView\(indexPath.row + 1)")
-        cell?.imageUI2?.image = UIImage(named: "firstView\(indexPath.row + 1)")
+        cell?.imageUI?.image = UIImage(named: "firstView2")
+        cell?.imageUI2?.image = UIImage(named: "firstView2")
         cell?.selectionStyle = .none
         guard let tableViewCell = cell, let viewModel = viewModel else { return UITableViewCell() }
         
@@ -200,7 +202,7 @@ extension StartViewController: UITableViewDataSource {
     }
 }
 
-extension StartViewController {
+extension ArchiveDataController {
     fileprivate func transitionSettingsApp() {
         self.generator.impactOccurred()
         let viewController = MenuController()
@@ -218,7 +220,7 @@ extension StartViewController {
     }
 }
 
-extension StartViewController: UIViewControllerTransitioningDelegate {
+extension ArchiveDataController: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return DrawerPresentationController(presentedViewController: presented, presenting: presenting, blurEffectStyle: isNight ? .light : .dark, topGap: screenH / 4, modalWidth: 0, cornerRadius: 20)
     }

@@ -54,10 +54,10 @@ class BlackBoxListController : UIViewController {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         
         var config = Realm.Configuration(
-            schemaVersion: 1,
+            schemaVersion: 2,
             
             migrationBlock: { migration, oldSchemaVersion in
-                if (oldSchemaVersion < 1) {
+                if (oldSchemaVersion < 2) {
                 }
             })
         config.deleteRealmIfMigrationNeeded = true
@@ -92,7 +92,7 @@ class BlackBoxListController : UIViewController {
     }
     
     func popVC() {
-        self.navigationController?.popViewController(animated: true)
+        self.dismiss(animated: true)
     }
     
     func registerCell() {

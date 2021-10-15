@@ -20,6 +20,8 @@ class AccountEnterController: UIViewController {
     let customNavigationBar = createCustomNavigationBar(title: "ВХОД В УЧЕТНУЮ ЗАПИСЬ",fontSize: screenW / 22)
     let profileSelect = ProfileSelectController()
     var viewModel: ServiceModel = ServiceModel()
+    var initialY: CGFloat!
+    let networkManager = NetworkManager()
 
     lazy var stackTextField: UIStackView = {
         let stackTextField = UIStackView()
@@ -36,6 +38,17 @@ class AccountEnterController: UIViewController {
         stackTextField.spacing = 15
         return stackTextField
     }()
+    lazy var alertView: CustomAlert = {
+        let alertView: CustomAlert = CustomAlert.loadFromNib()
+        alertView.delegate = self
+        return alertView
+    }()
+    let visualEffectView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .dark)
+       let view = UIVisualEffectView(effect: blurEffect)
+//        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     lazy var checkBox: Checkbox = {
         let checkBox = Checkbox()
@@ -48,6 +61,7 @@ class AccountEnterController: UIViewController {
         checkBox.checkmarkStyle = .tick
         checkBox.useHapticFeedback = true
         checkBox.isChecked = true
+        checkBox.borderCornerRadius = 5
         checkBox.translatesAutoresizingMaskIntoConstraints = false
         checkBox.addTarget(self, action: #selector(checkboxValueChanged(sender:)), for: .valueChanged)
         return checkBox
@@ -66,7 +80,7 @@ class AccountEnterController: UIViewController {
         let button = UIButton()
         button.setTitle("Выбрать профиль", for: .normal)
         button.backgroundColor = UIColor(rgb: 0xBE449E)
-        button.layer.cornerRadius = 20
+        button.layer.cornerRadius = 10
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(profileAction), for: .touchUpInside)
         return button
@@ -142,7 +156,7 @@ class AccountEnterController: UIViewController {
         let button = UIButton()
         button.setTitle("Войти", for: .normal)
         button.backgroundColor = UIColor(rgb: 0xBE449E)
-        button.layer.cornerRadius = 20
+        button.layer.cornerRadius = 10
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(actionSave), for: .touchUpInside)
         return button
@@ -154,6 +168,16 @@ class AccountEnterController: UIViewController {
         button.layer.cornerRadius = 20
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(actionRegister), for: .touchUpInside)
+        return button
+    }()
+    
+    var fogetButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Забыли пароль?", for: .normal)
+        button.setTitleColor(UIColor(rgb: 0x998F99), for: .normal)
+        button.layer.cornerRadius = 20
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(actionFoget), for: .touchUpInside)
         return button
     }()
     
@@ -181,12 +205,22 @@ class AccountEnterController: UIViewController {
     @objc func actionRegister() {
         self.navigationController?.pushViewController(RegistrationController(), animated: true)
     }
+    @objc func actionFoget() {
+        setAlert()
+        animateIn()
+    }
     @objc func actionSave() {
         if Reachability.isConnectedToNetwork(){
             viewAlpha.isHidden = false
 //            fetchInAccount()
             let userData = ["login": "\(IMEITextField.text ?? "")", "password": "\(passwordTextField.text ?? "")"]
             networkingPostRequest(urlString: "http://185.27.193.112:8004/auth/login", userDataJSON: userData) { (id, error) in
+                if error != nil {
+                    DispatchQueue.main.async {
+                        self.viewAlpha.isHidden = true
+                        self.showToast(message: error!, seconds: 1.0)
+                    }
+                }
                 guard let id = id else { return }
                 idSession = id
                 if devicesList.count != 0 {
@@ -198,6 +232,7 @@ class AccountEnterController: UIViewController {
                 DispatchQueue.main.async { [self] in
                     viewModel.sokolTemplateInfo = ["Не выбрано", "Не выбрано"]
                     tabBarSokolMeteoVC.secondVC.viewModel = viewModel
+                    tabBarSokolMeteoVC.firstVC.tagSelectProfile = tagSelectProfile
                     navigationController?.pushViewController(tabBarSokolMeteoVC, animated: true )
                 }
             }
@@ -206,12 +241,11 @@ class AccountEnterController: UIViewController {
         }
     }
     fileprivate func realmSave() {
-        do {
             var config = Realm.Configuration(
-                schemaVersion: 1,
+                schemaVersion: 2,
                 
                 migrationBlock: { migration, oldSchemaVersion in
-                    if (oldSchemaVersion < 1) {
+                    if (oldSchemaVersion < 2) {
                     }
                 })
             config.deleteRealmIfMigrationNeeded = true
@@ -246,24 +280,27 @@ class AccountEnterController: UIViewController {
             let realmboxing = realm.objects(AccountModel.self).filter("user = %@", account.user!)
 
             if realmboxing.count != 0 {
+                tagSelectProfile = realmboxing[0].id
                 try! realm.write {
                     realmboxing.setValue(account.user, forKey: "user")
                     realmboxing.setValue(account.password, forKey: "password")
                     realmboxing.setValue(account.save, forKey: "save")
                 }
             } else {
-                try realm.write {
-                    realm.add(account)
+                do {
+                    tagSelectProfile = realmCheck.count
+                    account.id = realmCheck.count
+                    try realm.write {
+                        realm.add(account)
+                    }
+                } catch {
+                    print("error getting xml string: \(error)")
                 }
             }
             //            let workouts = realm.objects(BoxModel.self).filter("time != '0'")
             //            try! realm.write {
             //                workouts.setValue("0", forKey: "time")
             //            }
-            
-        } catch {
-            print("error getting xml string: \(error)")
-        }
     }
     
     func fetchInAccount() {
@@ -293,10 +330,10 @@ class AccountEnterController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         var config = Realm.Configuration(
-            schemaVersion: 1,
+            schemaVersion: 2,
             
             migrationBlock: { migration, oldSchemaVersion in
-                if (oldSchemaVersion < 1) {
+                if (oldSchemaVersion < 2) {
                 }
             })
         config.deleteRealmIfMigrationNeeded = true
@@ -338,12 +375,30 @@ class AccountEnterController: UIViewController {
                     checkBox.isChecked = false
                     checkBoxSender()
                 }
+            } else {
+                profileButton.alpha = 0.4
+                profileButton.isEnabled = false
             }
 
         }
     }
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            initialY = alertView.frame.origin.y
+            alertView.center.y = (screenH - CGFloat(keyboardSize.height)) / 2
+        }
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    @objc func keyboardWillHide(notification: NSNotification) {
+        alertView.frame.origin.y = initialY
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        alertView.CustomTextField.delegate = self
+        initialY = alertView.frame.origin.y
         view.backgroundColor = .white
         view.sv(
             customNavigationBar
@@ -355,6 +410,10 @@ class AccountEnterController: UIViewController {
         viewAlpha.addSubview(activityIndicator)
         activityIndicator.startAnimating()
         view.addSubview(viewAlpha)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+
     }
     
     func networkingPostRequest(urlString: String, userDataJSON: [String: String], completion: @escaping (_ photoFormat: String?,_ error: String?) -> () ) {
@@ -369,6 +428,9 @@ class AccountEnterController: UIViewController {
         
         let session = URLSession.shared
         session.dataTask(with: request) { (data, response, error) in
+            if let stringError = error?.localizedDescription {
+                completion(nil, stringError)
+            }
             guard let response = response, let data = data else { return }
             print(response)
             if let httpResponse = response as? HTTPURLResponse {
@@ -396,7 +458,7 @@ class AccountEnterController: UIViewController {
                 }
                 completion(JSESSIONID, nil)
             } catch {
-                print(error)
+                print("\(error)")
                 completion(nil, NetworkResponse.unableToDecode.rawValue)
             }
         }.resume()
@@ -415,8 +477,8 @@ class AccountEnterController: UIViewController {
 
         saveTextField.addArrangedSubview(checkBox)
         saveTextField.addArrangedSubview(saveLabel)
-
-        view.sv(stackTextField, nameDevice, saveButton, profileButton, registrationButton)
+        
+        view.sv(stackTextField, nameDevice, saveButton, profileButton, registrationButton, fogetButton)
         
         passwordTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
         IMEITextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
@@ -446,13 +508,8 @@ class AccountEnterController: UIViewController {
         registrationButton.heightAnchor.constraint(equalToConstant: 45).isActive = true
         registrationButton.widthAnchor.constraint(equalToConstant: screenW / 1.5).isActive = true
         
-        
-
-
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
+        fogetButton.centerYAnchor.constraint(equalTo: checkBox.centerYAnchor).isActive = true
+        fogetButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
     }
 }
 
@@ -487,7 +544,7 @@ extension AccountEnterController: UITextFieldDelegate {
         if textField.text?.last == " " {
             textField.text?.removeLast()
         }
-        checkMaxLength(textField: textField, maxLength: 15)
+        checkMaxLength(textField: textField, maxLength: 50)
     }
     func checkMaxLength(textField: UITextField!, maxLength: Int) {
         if textField.text!.count > maxLength {

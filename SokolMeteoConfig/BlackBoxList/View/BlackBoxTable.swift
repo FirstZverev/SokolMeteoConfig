@@ -378,6 +378,8 @@ class BlackBoxTable: UIViewController {
     }
 
     func popVC() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+         appDelegate.myOrientation = .portrait
         self.navigationController?.popViewController(animated: true)
     }
     

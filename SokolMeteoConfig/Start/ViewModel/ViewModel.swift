@@ -37,3 +37,32 @@ class ViewModel: TableViewViewModelType {
         self.selectedIndexPath = indexPath
     }
 }
+
+class ViewModelArchive: TableViewViewModelType {
+    
+    private var selectedIndexPath: IndexPath?
+    
+    var menuMain = [
+        Menu(id: 1, name: "МЕТЕОСТАНЦИИ"),
+        Menu(id: 2, name: "ОТЧЕТЫ"),
+        Menu(id: 3, name: "ЧЁРНЫЙ ЯЩИК"),
+    ]
+    
+    func numberOfRows() -> Int {
+        return menuMain.count
+    }
+    
+    func cellViewModel(forIndexPath indexPath: IndexPath) -> TableViewCellViewModelType? {
+        let menu = menuMain[indexPath.row]
+        return TableViewCellViewModel(menu: menu)
+    }
+    
+    func viewModelForSelectedRow() -> DetailViewModelType? {
+        guard let selectedIndexPath = selectedIndexPath else { return nil }
+        return DetailModelView(menu: menuMain[selectedIndexPath.row])
+    }
+    
+    func selectRow(atIndexPath indexPath: IndexPath) {
+        self.selectedIndexPath = indexPath
+    }
+}

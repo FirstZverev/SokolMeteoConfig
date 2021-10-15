@@ -21,4 +21,9 @@ struct DeviceListResult: Decodable {
     let calculationOrder: Int?
     let primary, show: Bool?
     let unit, minValue, maxValue, color: String?
+    let records: [Records]?
+}
+
+struct Records: Decodable {
+    let date, value : String?
 }

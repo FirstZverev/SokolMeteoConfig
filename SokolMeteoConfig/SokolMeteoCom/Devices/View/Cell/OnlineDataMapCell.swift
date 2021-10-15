@@ -33,6 +33,10 @@ class OnlineDataMapCell: UITableViewCell {
         mapView.hero.id = "YandexMap"
         mapView.layer.cornerRadius = 20
         mapView.clipsToBounds = true
+        mapView.mapWindow.map.isScrollGesturesEnabled = false
+        mapView.mapWindow.map.isFastTapEnabled = false
+        mapView.mapWindow.map.isRotateGesturesEnabled = false
+        mapView.mapWindow.map.isZoomGesturesEnabled = false
         self.contentView.addSubview(mapView)
         self.mapView = mapView
 

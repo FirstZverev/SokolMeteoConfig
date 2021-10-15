@@ -83,7 +83,7 @@ class BlackBoxGraffics: UIViewController {
         leftAxis.labelTextColor = .black
         let lvlBlackBoxInt = 4
         leftAxis.axisMaximum = Double(lvlBlackBoxInt + 10)
-        leftAxis.axisMinimum = 0
+        leftAxis.axisMinimum = Double(lvlBlackBoxInt - 10)
         leftAxis.drawGridLinesEnabled = true
         leftAxis.granularityEnabled = true
         
@@ -200,6 +200,7 @@ class BlackBoxGraffics: UIViewController {
         lineChartData.setDrawValues(false)
         lineChartView.data = lineChartData
         lineChartView.leftAxis.axisMaximum = Double(lvlBlackBoxInt.max()! + 10)
+        lineChartView.leftAxis.axisMinimum = Double(lvlBlackBoxInt.min()! - 10)
         lineChartView.setVisibleXRangeMaximum(Double(int))
         lineChartView.setVisibleXRangeMinimum(Double(int))
 //        lineChartView.animate(xAxisDuration: 1)
@@ -207,6 +208,7 @@ class BlackBoxGraffics: UIViewController {
         lineChartData.setDrawValues(false)
         lineChartView.data = lineChartData
         lineChartView.leftAxis.axisMaximum = Double(lvlBlackBoxInt.max()! + 10)
+        lineChartView.leftAxis.axisMinimum = Double(lvlBlackBoxInt.min()! - 10)
         lineChartView.setVisibleXRangeMinimum(0)
 //        lineChartView.animate(xAxisDuration: 1)
     }
@@ -317,6 +319,7 @@ class BlackBoxGraffics: UIViewController {
         lineChartData.setDrawValues(false)
         lineChartView.data = lineChartData
         lineChartView.leftAxis.axisMaximum = Double(lvlBlackBoxInt.max()! + 10)
+        lineChartView.leftAxis.axisMinimum = Double(lvlBlackBoxInt.min()! - 10)
         lineChartView.setVisibleXRangeMaximum(1)
 //        lineChartView.animate(xAxisDuration: 1)
         
@@ -324,6 +327,8 @@ class BlackBoxGraffics: UIViewController {
     }
     
     func popVC() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+         appDelegate.myOrientation = .portrait
         self.navigationController?.popViewController(animated: true)
     }
     

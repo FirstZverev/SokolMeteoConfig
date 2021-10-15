@@ -14,6 +14,7 @@ class DeviceNameModel: Object {
     @objc dynamic var passwordDevice: String?
 }
 class AccountModel: Object {
+    @objc dynamic var id = 0
     @objc dynamic var user: String?
     @objc dynamic var password: String?
     @objc dynamic var save: Bool = false

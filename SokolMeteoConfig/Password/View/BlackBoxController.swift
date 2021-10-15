@@ -184,10 +184,10 @@ class BlackBoxController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
                 self.delegate?.buttonTapBlackBox()
                 do {
                     let config = Realm.Configuration(
-                        schemaVersion: 1,
+                        schemaVersion: 2,
                         
                         migrationBlock: { migration, oldSchemaVersion in
-                            if (oldSchemaVersion < 1) {
+                            if (oldSchemaVersion < 2) {
                             }
                         })
 
@@ -354,10 +354,10 @@ class BlackBoxController: UIViewController, FSCalendarDelegate, FSCalendarDataSo
                                     }()
                                     do {
                                         let config = Realm.Configuration(
-                                            schemaVersion: 1,
+                                            schemaVersion: 2,
                                             
                                             migrationBlock: { migration, oldSchemaVersion in
-                                                if (oldSchemaVersion < 1) {
+                                                if (oldSchemaVersion < 2) {
                                                 }
                                             })
                                         Realm.Configuration.defaultConfiguration = config

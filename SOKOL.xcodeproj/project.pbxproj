@@ -55,6 +55,7 @@
 		B54E855C24DAA7440008AEEC /* Function.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54E855B24DAA7440008AEEC /* Function.swift */; };
 		B558882D24EBE272009E27A2 /* SecondConfigCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B558882C24EBE272009E27A2 /* SecondConfigCell.swift */; };
 		B55982C124E167D6005C9FA9 /* ThriedMeteoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B55982C024E167D6005C9FA9 /* ThriedMeteoData.swift */; };
+		B560E9F82604B337004593CF /* AlertFogetPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = B560E9F72604B337004593CF /* AlertFogetPassword.swift */; };
 		B566FEC424D9858700F41A33 /* TextFieldCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = B566FEC324D9858700F41A33 /* TextFieldCustom.swift */; };
 		B56B0E9B2547D01C00E7002B /* ProfileMeteoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56B0E9A2547D01B00E7002B /* ProfileMeteoController.swift */; };
 		B56BEB032431D00800C42F85 /* Commons.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56BEB022431D00800C42F85 /* Commons.swift */; };
@@ -66,7 +67,7 @@
 		B56E6ABB25948827000ACC66 /* ForecastDataDeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56E6ABA25948827000ACC66 /* ForecastDataDeviceCell.swift */; };
 		B56FD9D7247BA79200DF0B41 /* StateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56FD9D6247BA79200DF0B41 /* StateController.swift */; };
 		B57167942547DDA4003C8B1D /* AccountEnterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57167932547DDA4003C8B1D /* AccountEnterController.swift */; };
-		B571679E2547E4C5003C8B1D /* DownloadDaraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B571679D2547E4C5003C8B1D /* DownloadDaraController.swift */; };
+		B571679E2547E4C5003C8B1D /* DownloadDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B571679D2547E4C5003C8B1D /* DownloadDataController.swift */; };
 		B57167A52547E60F003C8B1D /* CellMain.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57167A42547E60F003C8B1D /* CellMain.swift */; };
 		B57167AC2547E61B003C8B1D /* ViewModelDownloadDaraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57167AB2547E61B003C8B1D /* ViewModelDownloadDaraController.swift */; };
 		B57167BD25481B1C003C8B1D /* SelectPush.xib in Resources */ = {isa = PBXBuildFile; fileRef = B57167BC25481B1C003C8B1D /* SelectPush.xib */; };
@@ -135,6 +136,12 @@
 		B5A82A9A2498760B00F7A335 /* ConfiguratorFirstController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A82A992498760B00F7A335 /* ConfiguratorFirstController.swift */; };
 		B5A82A9C2498761500F7A335 /* ConfiguratorSecondController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A82A9B2498761500F7A335 /* ConfiguratorSecondController.swift */; };
 		B5A82A9E2498762700F7A335 /* ConfiguratorThriedController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A82A9D2498762700F7A335 /* ConfiguratorThriedController.swift */; };
+		B5AD7F5F2625DA26002FA769 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5AD7F5E2625DA26002FA769 /* NetworkExtension.framework */; };
+		B5AD7F6226281F4B002FA769 /* RealmConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AD7F6126281F4B002FA769 /* RealmConfiguration.swift */; };
+		B5AD7F66262973A5002FA769 /* SavedReportsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AD7F65262973A4002FA769 /* SavedReportsController.swift */; };
+		B5AD7F6A26297BA7002FA769 /* SavedReportsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AD7F6926297BA7002FA769 /* SavedReportsCell.swift */; };
+		B5AD7F6F262987DA002FA769 /* WorkWithFiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AD7F6E262987DA002FA769 /* WorkWithFiles.swift */; };
+		B5AD7F732629B434002FA769 /* Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AD7F722629B433002FA769 /* Units.swift */; };
 		B5B06E2925307929007E5B98 /* WIdgetSokol.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = B5B06E2425307927007E5B98 /* WIdgetSokol.intentdefinition */; };
 		B5B40843255E6063002EECD1 /* ListDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B40842255E6063002EECD1 /* ListDevices.swift */; };
 		B5B40849255E6394002EECD1 /* TabBarSokolMeteoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B40848255E6394002EECD1 /* TabBarSokolMeteoController.swift */; };
@@ -163,6 +170,9 @@
 		B5DB4CFF243479230016A4BD /* DevicesListCellHeder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DB4CFE243479230016A4BD /* DevicesListCellHeder.swift */; };
 		B5DB4D01243479320016A4BD /* DevicesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DB4D00243479320016A4BD /* DevicesListCell.swift */; };
 		B5DB4D0324347B3D0016A4BD /* UIView+tap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DB4D0224347B3D0016A4BD /* UIView+tap.swift */; };
+		B5E05BED262EBD8F00FA4E79 /* SupportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E05BEC262EBD8F00FA4E79 /* SupportModel.swift */; };
+		B5E05BF0262EBEBB00FA4E79 /* ArchiveDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E05BEF262EBEBB00FA4E79 /* ArchiveDataController.swift */; };
+		B5E05BF3262EE61900FA4E79 /* SavedFilesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E05BF2262EE61900FA4E79 /* SavedFilesController.swift */; };
 		B5E1EB0525822F4400C43E15 /* OnlineDataMapCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E1EB0425822F4400C43E15 /* OnlineDataMapCell.swift */; };
 		B5EF70652562614D00CB0FBA /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EF70642562614D00CB0FBA /* DeviceCell.swift */; };
 		B5EF70692563D61C00CB0FBA /* GroupController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EF70682563D61C00CB0FBA /* GroupController.swift */; };
@@ -242,6 +252,7 @@
 		B54E855B24DAA7440008AEEC /* Function.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Function.swift; sourceTree = "<group>"; };
 		B558882C24EBE272009E27A2 /* SecondConfigCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondConfigCell.swift; sourceTree = "<group>"; };
 		B55982C024E167D6005C9FA9 /* ThriedMeteoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ThriedMeteoData.swift; path = "../New Group/ThriedMeteoData.swift"; sourceTree = "<group>"; };
+		B560E9F72604B337004593CF /* AlertFogetPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertFogetPassword.swift; sourceTree = "<group>"; };
 		B566FEC324D9858700F41A33 /* TextFieldCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCustom.swift; sourceTree = "<group>"; };
 		B56B0E9A2547D01B00E7002B /* ProfileMeteoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileMeteoController.swift; sourceTree = "<group>"; };
 		B56BEB022431D00800C42F85 /* Commons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Commons.swift; sourceTree = "<group>"; };
@@ -253,7 +264,7 @@
 		B56E6ABA25948827000ACC66 /* ForecastDataDeviceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastDataDeviceCell.swift; sourceTree = "<group>"; };
 		B56FD9D6247BA79200DF0B41 /* StateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateController.swift; sourceTree = "<group>"; };
 		B57167932547DDA4003C8B1D /* AccountEnterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountEnterController.swift; sourceTree = "<group>"; };
-		B571679D2547E4C5003C8B1D /* DownloadDaraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadDaraController.swift; sourceTree = "<group>"; };
+		B571679D2547E4C5003C8B1D /* DownloadDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadDataController.swift; sourceTree = "<group>"; };
 		B57167A42547E60F003C8B1D /* CellMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellMain.swift; sourceTree = "<group>"; };
 		B57167AB2547E61B003C8B1D /* ViewModelDownloadDaraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelDownloadDaraController.swift; sourceTree = "<group>"; };
 		B57167BC25481B1C003C8B1D /* SelectPush.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectPush.xib; sourceTree = "<group>"; };
@@ -326,6 +337,13 @@
 		B5A82A992498760B00F7A335 /* ConfiguratorFirstController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguratorFirstController.swift; sourceTree = "<group>"; };
 		B5A82A9B2498761500F7A335 /* ConfiguratorSecondController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConfiguratorSecondController.swift; path = ../ConfiguratorSecondController.swift; sourceTree = "<group>"; };
 		B5A82A9D2498762700F7A335 /* ConfiguratorThriedController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfiguratorThriedController.swift; sourceTree = "<group>"; };
+		B5AD7F5C2625D571002FA769 /* SOKOL.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SOKOL.entitlements; sourceTree = "<group>"; };
+		B5AD7F5E2625DA26002FA769 /* NetworkExtension.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NetworkExtension.framework; path = System/Library/Frameworks/NetworkExtension.framework; sourceTree = SDKROOT; };
+		B5AD7F6126281F4B002FA769 /* RealmConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmConfiguration.swift; sourceTree = "<group>"; };
+		B5AD7F65262973A4002FA769 /* SavedReportsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedReportsController.swift; sourceTree = "<group>"; };
+		B5AD7F6926297BA7002FA769 /* SavedReportsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedReportsCell.swift; sourceTree = "<group>"; };
+		B5AD7F6E262987DA002FA769 /* WorkWithFiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkWithFiles.swift; sourceTree = "<group>"; };
+		B5AD7F722629B433002FA769 /* Units.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Units.swift; sourceTree = "<group>"; };
 		B5B06DC325305BE7007E5B98 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		B5B06DC525305BE7007E5B98 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		B5B06E2225307927007E5B98 /* WIdgetSokol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WIdgetSokol.swift; sourceTree = "<group>"; };
@@ -360,6 +378,9 @@
 		B5DB4CFE243479230016A4BD /* DevicesListCellHeder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesListCellHeder.swift; sourceTree = "<group>"; };
 		B5DB4D00243479320016A4BD /* DevicesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesListCell.swift; sourceTree = "<group>"; };
 		B5DB4D0224347B3D0016A4BD /* UIView+tap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+tap.swift"; sourceTree = "<group>"; };
+		B5E05BEC262EBD8F00FA4E79 /* SupportModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportModel.swift; sourceTree = "<group>"; };
+		B5E05BEF262EBEBB00FA4E79 /* ArchiveDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveDataController.swift; sourceTree = "<group>"; };
+		B5E05BF2262EE61900FA4E79 /* SavedFilesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedFilesController.swift; sourceTree = "<group>"; };
 		B5E1EB0425822F4400C43E15 /* OnlineDataMapCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnlineDataMapCell.swift; sourceTree = "<group>"; };
 		B5EF70642562614D00CB0FBA /* DeviceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCell.swift; sourceTree = "<group>"; };
 		B5EF70682563D61C00CB0FBA /* GroupController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupController.swift; sourceTree = "<group>"; };
@@ -378,6 +399,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DDE95C0F85DE55FA2C214808 /* Pods_SOKOL.framework in Frameworks */,
+				B5AD7F5F2625DA26002FA769 /* NetworkExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -609,6 +631,7 @@
 			children = (
 				B57167932547DDA4003C8B1D /* AccountEnterController.swift */,
 				B503B1F5254BEF6600EBAB31 /* AccountEditController.swift */,
+				B560E9F72604B337004593CF /* AlertFogetPassword.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -626,7 +649,7 @@
 		B571679C2547E4B3003C8B1D /* View */ = {
 			isa = PBXGroup;
 			children = (
-				B571679D2547E4C5003C8B1D /* DownloadDaraController.swift */,
+				B571679D2547E4C5003C8B1D /* DownloadDataController.swift */,
 				B57167A32547E5FC003C8B1D /* Cell */,
 			);
 			path = View;
@@ -698,6 +721,7 @@
 		B589CFA3242C876900B547DC = {
 			isa = PBXGroup;
 			children = (
+				B5AD7F5C2625D571002FA769 /* SOKOL.entitlements */,
 				B589CFAE242C876900B547DC /* SokolMeteoConfig */,
 				B5B06E2125307927007E5B98 /* WIdgetSokol */,
 				B589CFAD242C876900B547DC /* Products */,
@@ -810,6 +834,7 @@
 				B58E0EBE24C078600052D165 /* ButtonView.swift */,
 				B50E6D3B2525B04500874459 /* SwipingStartController.swift */,
 				B51C21042541C7F3009B2F84 /* SupportController.swift */,
+				B5E05BEF262EBEBB00FA4E79 /* ArchiveDataController.swift */,
 				B558882E24EBE2DB009E27A2 /* Cell */,
 			);
 			path = View;
@@ -828,6 +853,7 @@
 			isa = PBXGroup;
 			children = (
 				B589CFD4242CBCE500B547DC /* Menu.swift */,
+				B5E05BEC262EBD8F00FA4E79 /* SupportModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1023,6 +1049,26 @@
 			path = Configurator;
 			sourceTree = "<group>";
 		};
+		B5AD7F642629737E002FA769 /* SaveReports */ = {
+			isa = PBXGroup;
+			children = (
+				B5AD7F65262973A4002FA769 /* SavedReportsController.swift */,
+				B5E05BF2262EE61900FA4E79 /* SavedFilesController.swift */,
+				B5AD7F6926297BA7002FA769 /* SavedReportsCell.swift */,
+				B5AD7F6D262987BB002FA769 /* ModelSaved */,
+			);
+			path = SaveReports;
+			sourceTree = "<group>";
+		};
+		B5AD7F6D262987BB002FA769 /* ModelSaved */ = {
+			isa = PBXGroup;
+			children = (
+				B5AD7F6E262987DA002FA769 /* WorkWithFiles.swift */,
+				B5AD7F722629B433002FA769 /* Units.swift */,
+			);
+			path = ModelSaved;
+			sourceTree = "<group>";
+		};
 		B5B06DBD25305B72007E5B98 /* Widget */ = {
 			isa = PBXGroup;
 			children = (
@@ -1057,6 +1103,8 @@
 				B5B4084F255E6456002EECD1 /* ReportsController.swift */,
 				B597428525C81549003618F6 /* TemplatesCell.swift */,
 				B540DF6F25C81D8D002B3FCA /* SelectObectController.swift */,
+				B5AD7F6126281F4B002FA769 /* RealmConfiguration.swift */,
+				B5AD7F642629737E002FA769 /* SaveReports */,
 				B5B40860255ED98D002EECD1 /* Register */,
 			);
 			path = SokolMeteoCom;
@@ -1275,6 +1323,7 @@
 		DB9B5784B740B297DC09784F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B5AD7F5E2625DA26002FA769 /* NetworkExtension.framework */,
 				B5B06DC325305BE7007E5B98 /* WidgetKit.framework */,
 				B5B06DC525305BE7007E5B98 /* SwiftUI.framework */,
 				63B450DB6E069CAEAC28A75D /* Pods_SOKOL.framework */,
@@ -1295,7 +1344,7 @@
 				B589CFAA242C876900B547DC /* Resources */,
 				B5B06DD325305BE9007E5B98 /* Embed App Extensions */,
 				E55D622B38E4591AF12EF1C5 /* [CP] Embed Pods Frameworks */,
-				61038F0C853CABFA47F3258F /* [CP] Copy Pods Resources */,
+				9FC0546E32B4A86A4D32CB39 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1361,7 +1410,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		61038F0C853CABFA47F3258F /* [CP] Copy Pods Resources */ = {
+		9FC0546E32B4A86A4D32CB39 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1461,6 +1510,7 @@
 				B50E6D432525F46000874459 /* UiImage+Rotation.swift in Sources */,
 				B5304137248FAA3800032C7F /* BlackBoxController.swift in Sources */,
 				B57914A5255BCD95005102D4 /* ModelExchange.swift in Sources */,
+				B5AD7F6A26297BA7002FA769 /* SavedReportsCell.swift in Sources */,
 				B5A82A9E2498762700F7A335 /* ConfiguratorThriedController.swift in Sources */,
 				B56E6ABB25948827000ACC66 /* ForecastDataDeviceCell.swift in Sources */,
 				B5A0307E24DBF78B0092F12B /* Model.swift in Sources */,
@@ -1489,6 +1539,7 @@
 				B589CFE5242CCDBD00B547DC /* ConnectedMeteoController.swift in Sources */,
 				B5C0514E247AABA600F63357 /* PasswordController.swift in Sources */,
 				B5EF70692563D61C00CB0FBA /* GroupController.swift in Sources */,
+				B5E05BF3262EE61900FA4E79 /* SavedFilesController.swift in Sources */,
 				B58492ED247BBD9900C902C7 /* ViewModelState.swift in Sources */,
 				B5B54C5324E3D3F400788359 /* ViewModelData.swift in Sources */,
 				B58D81E725456F3D002FE1B7 /* moreDevicesBmvdPortHideCell.swift in Sources */,
@@ -1531,11 +1582,13 @@
 				B5DB4CFF243479230016A4BD /* DevicesListCellHeder.swift in Sources */,
 				B503B1F6254BEF6700EBAB31 /* AccountEditController.swift in Sources */,
 				B58D81EB25457307002FE1B7 /* ViewModelMoreDeviceBmvdPortHide.swift in Sources */,
+				B5E05BF0262EBEBB00FA4E79 /* ArchiveDataController.swift in Sources */,
 				B56BEB0D2432206500C42F85 /* ListAvailDevices.swift in Sources */,
 				B503B1F22549575C00EBAB31 /* NetworkManager.swift in Sources */,
 				B503B1D625494EB600EBAB31 /* URLRequestBuilder.swift in Sources */,
 				B58210F9251A0D3E006B4A4B /* BoxModel.swift in Sources */,
 				B540DF7625C839E3002B3FCA /* ProfileSelectCell.swift in Sources */,
+				B5AD7F6226281F4B002FA769 /* RealmConfiguration.swift in Sources */,
 				B50E6D402525B38C00874459 /* SwipeStartCell.swift in Sources */,
 				B57167AC2547E61B003C8B1D /* ViewModelDownloadDaraController.swift in Sources */,
 				B589CFD7242CBD8F00B547DC /* ViewModel.swift in Sources */,
@@ -1543,6 +1596,7 @@
 				B50B1AE825B5BB8500A058EB /* GroupsViewCell.swift in Sources */,
 				B50AF271254833CD00F66786 /* AccountAlert.swift in Sources */,
 				B589CFD5242CBCE500B547DC /* Menu.swift in Sources */,
+				B560E9F82604B337004593CF /* AlertFogetPassword.swift in Sources */,
 				B528D590247BE2DA004244CA /* Common.swift in Sources */,
 				B520149924DC35B200478D08 /* Protocols.swift in Sources */,
 				B503B1EE2549553C00EBAB31 /* Network.swift in Sources */,
@@ -1551,6 +1605,7 @@
 				B59C4EC024A4622500192D82 /* Potocols.swift in Sources */,
 				B58217B5247FCC1800C669CA /* AnimationLottie.swift in Sources */,
 				B58D81E32545654D002FE1B7 /* ViewModelMoreDeviceBmvdPort.swift in Sources */,
+				B5AD7F66262973A5002FA769 /* SavedReportsController.swift in Sources */,
 				B5438D84242DEB4600FAB0C5 /* DetailModelView.swift in Sources */,
 				B5A82A9C2498761500F7A335 /* ConfiguratorSecondController.swift in Sources */,
 				B54E855C24DAA7440008AEEC /* Function.swift in Sources */,
@@ -1570,11 +1625,14 @@
 				B57AED8D2536F784005F3C91 /* CellDataPeripheral.swift in Sources */,
 				B593F0C9253EBF6B00DCE951 /* SettingsBmvdModel.swift in Sources */,
 				B540DF7025C81D8D002B3FCA /* SelectObectController.swift in Sources */,
+				B5E05BED262EBD8F00FA4E79 /* SupportModel.swift in Sources */,
 				B59BA4F824E1810D00B9F15A /* WKWebView.swift in Sources */,
 				B57167A52547E60F003C8B1D /* CellMain.swift in Sources */,
 				B5A6D974247BA0D900F9C1C8 /* TabBarController.swift in Sources */,
-				B571679E2547E4C5003C8B1D /* DownloadDaraController.swift in Sources */,
+				B5AD7F732629B434002FA769 /* Units.swift in Sources */,
+				B571679E2547E4C5003C8B1D /* DownloadDataController.swift in Sources */,
 				B5A82A98249875B300F7A335 /* TabBarConfiguratorController.swift in Sources */,
+				B5AD7F6F262987DA002FA769 /* WorkWithFiles.swift in Sources */,
 				B566FEC424D9858700F41A33 /* TextFieldCustom.swift in Sources */,
 				B593A89F247E3CA9006D049F /* CustomAlert.swift in Sources */,
 				B516850D252C744400415D43 /* BlackBoxTableViewCell.swift in Sources */,
@@ -1729,6 +1787,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SOKOL.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 49436C2U7G;
@@ -1738,7 +1797,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3.02;
 				PRODUCT_BUNDLE_IDENTIFIER = com.SokolMeteo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1752,6 +1811,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SOKOL.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 49436C2U7G;
@@ -1761,7 +1821,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3.02;
 				PRODUCT_BUNDLE_IDENTIFIER = com.SokolMeteo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
